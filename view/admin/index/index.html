@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    {include file="common/_require"}
+    <style>
+        .layui-form-pane .layui-form-label{
+            width: 200px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left: 200px;
+        }
+    </style>
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        
+
+        {include file="common/_header"}
+
+
+        {include file="common/left_index"}
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">
+                <div>
+                    <span class="layui-breadcrumb">
+                        <a><cite>系统信息</cite></a>
+                    </span>
+                </div>
+                <div class="layui-col-md6">
+                    <form class="layui-form layui-form-pane">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">网站名称</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly >
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">系统版本</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly value="1.0.0" >
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">ThinkPHP版本</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly value="{:app()->version()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">PHP版本</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{$Think.PHP_VERSION}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">服务器版本</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{:php_uname('s')}{:php_uname('r')}">
+                            </div>
+                        </div>
+                       
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">PHP运行方式</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{:php_sapi_name()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">PHP安装路径</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{$Think.DEFAULT_INCLUDE_PATH}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">Zend版本</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{:Zend_Version()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">服务器当前时间</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{:date('Y-m-d H:i:s')}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">超时时间</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{:get_cfg_var('max_execution_time')}秒">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">内存限制</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{:get_cfg_var('memory_limit')}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">服务器解释引擎</div>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" readonly  value="{$Request.server.SERVER_SOFTWARE}">
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {include file="common/_footer"}
+       
+    </div>
+    
+    <script>
+        
+    </script>
+</body>
+
+</html>

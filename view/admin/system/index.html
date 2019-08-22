@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统管理</title>
+    {include file="common/_require"}
+</head>
+
+<body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+        {include file="common/_header"}
+
+        {include file="common/left_system"}
+
+        <div class="layui-body">
+
+            <div style="padding:15px">
+                <div class="main-header">
+                    <span class="layui-breadcrumb">
+                        <a>首页</a>
+                        <a><cite>系统设置</cite></a>
+                    </span>
+                </div>
+                <div class="main-container">
+                    <div class="layui-col-md6">
+                        <fieldset class="layui-elem-field">
+                            <legend>系统管理</legend>
+                            <div class="layui-field-box">
+                                <form class="layui-form layui-form-pane" action="{:url('admin/System/update')}" method="post">
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-label">网站名称</div>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="site_name" value="{:get_system_config('site_name')}" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-label">网站描述</div>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="site_desc" value="{:get_system_config('site_desc')}" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-label">网站logo</div>
+                                        <div class="layui-input-block">
+                                            <div>
+                                                <div class="layui-btn upload-site-logo">上传logo</div>
+                                            </div>
+                                            <div>
+                                                <img class="site-logo" src="{:get_source_link(get_system_config('site_logo'))}" alt="">
+                                            </div>
+                                            <input type="hidden" name="site_logo" value="{:get_system_config('site_logo')}" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-label">备案号</div>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="site_beian" value="{:get_system_config('site_beian')}" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-label">主域名</div>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="main_domain" value="{:get_system_config('main_domain')}" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-label">资源域名</div>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="resource_domain" value="{:get_system_config('resource_domain')}" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-form-text">
+                                        <div class="layui-form-label">统计代码</div>
+                                        <div class="layui-input-block">
+                                            <textarea name="site_tongji" class="layui-textarea">{:get_system_config('site_tongji')}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <button class="layui-btn layui-btn-fluid" submit lay-submit lay-filter="site-info">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {include file="common/_footer"}
+
+        <script>
+            layui.use(['layer','upload'],function(){
+                var upload = layui.upload;
+                
+
+                var uploadSiteLogo = upload.render({
+                    elem:'.upload-site-logo',
+                    url:'{:url("api/Files/save")}',
+                    data:{
+                        type:1,
+                        dir:'site_logo'
+                    },
+                    accept:'images',
+                    done:function(result){
+                        if(result.code == 0){
+                            layer.msg('上传成功');
+                            $('input[name="site_logo"]').val(result.data.save_name);
+                            $('.site-logo').attr('src',result.data.src);
+                        }else{
+                            layer.msg(result.msg)
+                        }
+                    }
+                })
+
+            })
+        </script>
+    </div>`
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登陆</title>
+
+    {include file="common/_require"}
+
+    <style>
+        .login{
+            margin-top: 20vh;
+        }
+
+        .title{
+            text-align: center;
+            font-size: 22px;
+            line-height: 2;
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <div class="ul-container">
+        <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md4 layui-col-md-offset4">
+                    <div class="login">
+                        <div class="title">
+                            超微H5应用
+                        </div>
+                        <div>
+                            
+
+                            <form class="layui-form layui-form-pane" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">用户名</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="account" required lay-verify="required"
+                                            placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="password" required lay-verify="required"
+                                            placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="layui-form-item">
+                                    
+                                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登陆</button>
+                                    
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        layui.use(['form','layer'],function(){
+            var form = layui.form;
+
+            var loadLayer = null;
+
+            form.on('submit(login)',function(data){
+                loadLayer = layer.load(2);
+                $.post('{:url("admin/Login/auth")}',data.field,function(result){
+                    layer.close(loadLayer);
+                    if(result.code == 0){
+                        layer.msg('登陆成功');
+                        setTimeout(() => {
+                            location.href = '{:url("admin/Index/index")}'
+                        }, 1200);
+                    }else{
+                        layer.msg(result.msg);
+                    }
+                })
+
+                return false;
+            })
+        })
+    </script>
+</body>
+
+</html>
