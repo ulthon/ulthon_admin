@@ -14,7 +14,7 @@
 
 #### 最新演示
 
-[在线演示](http://ulthon_admin.ulthon.com)
+[在线演示](http://ulthon_admin.ulthon.com/admin)
 
 账号: admin 密码: 123456
 
