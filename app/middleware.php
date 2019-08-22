@@ -10,5 +10,5 @@ return [
     // 页面Trace调试
     // \think\middleware\TraceDebug::class,
 
-    '\\app\\middleware\ConfigInit'
+    '\app\\middleware\ConfigInit'
 ];
