@@ -30,7 +30,7 @@ class CreateTableSystemConfig extends Migrator
     {
         $table = $this->table('system_config',['comment'=>'系统配置表']);
         $table->addColumn('name','string',['limit'=>30,'comment'=>'配置名称']);
-        $table->addColumn('value','string',['limit'=>200,'comment'=>'值']);
+        $table->addColumn('value','string',['limit'=>500,'comment'=>'值']);
         $table->addIndex('name');
         $table->save();
     }
