@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基本资料</title>
+    {include file="common/_require"}
+</head>
+<body class="layui-layout-body">
+    
+    <div class="layui-layout layui-layout-admin">
+        {include file="common/_header"}
+    
+        {include file="common/left_admin"}
+    
+        <div class="layui-body">
+    
+            <div style="padding:15px">
+                <div class="main-header">
+                    <span class="layui-breadcrumb">
+                        <a>首页</a>
+                        <a><cite>基本资料</cite></a>
+                    </span>
+                </div>
+                <div class="main-container">
+                    <div class="layui-row">
+                        <div class="layui-col-md6">
+                            <fieldset class="layui-elem-field">
+                                <legend>资料管理</legend>
+                                <div class="layui-field-box">
+                                    <form action="{:url('Admin/update')}" method="POST" class="layui-form">
+                                        <div class="layui-form-item">
+                                            <div class="layui-form-label">登录账号</div>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="account" value="{$admin.account}" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-form-label">昵称</div>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="nickname" value="{$admin.nickname}" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-form-label">头像</div>
+                                            <div class="layui-input-block">
+                                                <div>
+                                                    <div class="layui-btn upload-admin-avatar">上传</div>
+                                                </div>
+                                                <div>
+                                                    <img class="layui-circle admin-avatar" style="width: 80px" src="{$admin.avatar}" alt="" srcset="">
+                                                </div>
+                                                <input type="hidden" name="avatar" value="{$admin->getData('avatar')}" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <button class="layui-btn layui-btn-fluid" type="submit">保存</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        {include file="common/_footer"}
+
+        <script>
+            layui.use(['layer','upload'],function(){
+                var upload = layui.upload;
+                
+
+                var uploadSiteLogo = upload.render({
+                    elem:'.upload-admin-avatar',
+                    url:'{:url("api/Files/save")}',
+                    data:{
+                        type:1,
+                        dir:'admin_avatar'
+                    },
+                    accept:'images',
+                    done:function(result){
+                        if(result.code == 0){
+                            layer.msg('上传成功');
+                            $('input[name="avatar"]').val(result.data.save_name);
+                            $('.admin-avatar').attr('src',result.data.src);
+                        }else{
+                            layer.msg(result.msg)
+                        }
+                    }
+                })
+
+            })
+        </script>
+    </div>
+</body>
+</html>

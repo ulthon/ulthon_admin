@@ -48,4 +48,11 @@ class Login extends Common
 
         return json_message();
     }
+
+    public function logout()
+    {
+        Session::clear();
+
+        $this->success('已经安全退出','Login/Index');
+    }
 }

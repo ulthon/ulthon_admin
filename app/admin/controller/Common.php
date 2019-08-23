@@ -5,6 +5,7 @@ use app\BaseController;
 use think\facade\Session;
 use app\model\Admin;
 use think\exception\HttpResponseException;
+use think\facade\View;
 
 class Common extends BaseController{
 
@@ -29,6 +30,8 @@ class Common extends BaseController{
                 }
             }
         }
+
+        View::assign('admin',$this->adminInfo);
 
     }
 }

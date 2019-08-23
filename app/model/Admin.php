@@ -10,4 +10,9 @@ use think\Model;
 class Admin extends Model
 {
     //
+
+    public function getAvatarAttr($value)
+    {
+        return \get_source_link($value);
+    }
 }

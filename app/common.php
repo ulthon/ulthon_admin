@@ -33,13 +33,18 @@ function json_message($data = [],$code = 0,$msg = '')
     ]);
 }
 
-function get_system_config($name,$default = '')
+function get_system_config($name = '',$default = '')
 {
+
 
     $list = Cache::get('system_config');
 
     if(empty($list)){
         $list = SystemConfig::column('value','name');
+    }
+
+    if($name === ''){
+        return $list;
     }
 
     if(isset($list[$name])){
