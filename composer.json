@@ -1,18 +1,20 @@
 {
-    "name": "topthink/think",
-    "description": "the new thinkphp framework",
+    "name": "ulthon/ulthon_admin",
+    "description": "quick start a project with management background using thinkphp6",
     "type": "project",
     "keywords": [
         "framework",
         "thinkphp",
-        "ORM"
+        "ORM",
+        "ulthon",
+        "admin"
     ],
-    "homepage": "http://thinkphp.cn/",
+    "homepage": "http://ulthon_admin.ulthon.com/",
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "ulthon",
+            "email": "ulthon@163.com"
         }
     ],
     "require": {
