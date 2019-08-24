@@ -35,8 +35,6 @@ function json_message($data = [],$code = 0,$msg = '')
 
 function get_system_config($name = '',$default = '')
 {
-
-
     $list = Cache::get('system_config');
 
     if(empty($list)){
@@ -138,4 +136,28 @@ function posturl($url,$data){
     $output = curl_exec($curl);
     curl_close($curl);
     return $output;
+}
+
+function format_size($filesize) {
+
+    if($filesize >= 1073741824) {
+
+     $filesize = round($filesize / 1073741824 * 100) / 100 . ' GB';
+
+    } elseif($filesize >= 1048576) {
+
+     $filesize = round($filesize / 1048576 * 100) / 100 . ' MB';
+
+    } elseif($filesize >= 1024) {
+
+     $filesize = round($filesize / 1024 * 100) / 100 . ' KB';
+
+    } else {
+
+     $filesize = $filesize . ' 字节';
+
+    }
+
+    return $filesize;
+
 }

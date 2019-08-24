@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文件管理</title>
+    {include file="common/_require"}
+</head>
+
+<body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+        {include file="common/_header"}
+
+        {include file="common/left_file"}
+
+        <div class="layui-body">
+
+            <div style="padding:15px">
+                <div class="main-header">
+                    <span class="layui-breadcrumb">
+                        <a>首页</a>
+                        <a><cite>文件管理</cite></a>
+                    </span>
+                </div>
+                <div class="main-container">
+                    <div>
+
+                    </div>
+                    <div>
+                        <table class="layui-table">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>预览</th>
+                                    <th>名称</th>
+                                    <th>文件信息</th>
+                                    <th>状态时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {php}$empty = '<tr><td colspan="10">暂无数据</td></tr>';{/php}
+                                {volist name="list" id="vo" empty="$empty"}
+                                <tr>
+                                    <td>{$vo.id}</td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <p>保存名称:{$vo->getData('save_name')}</p>
+                                        <p>文件名:{$vo->getData('file_name')}</p>
+                                    </td>
+                                    <td>
+                                        
+                                        <p>文件类型: {$vo.mime_type}</p>
+                                        <p>文件用途: <span style="color: red">{$vo.type}</span> </p>
+                                        <p>文件大小: {$vo.file_size}</p>
+                                        <p>文件指纹: {$vo.file_md5}</p>
+                                    </td>
+                                    <td>
+                                        <p style="color: red">{$vo.status}</p>
+                                        <p>上传时间:{$vo.create_time}</p>
+                                        <p>使用时间:{$vo.used_time}</p>
+                                        <p>清除时间:{$vo.delete_time}</p>
+                                        <p>清除时间:{$vo.clear_time}</p>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                {/volist}
+                                
+                            </tbody>
+                        </table>
+                        <div>
+                            {$list|raw}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {include file="common/_footer"}
+    </div>
+</body>
+
+</html>

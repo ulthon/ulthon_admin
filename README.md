@@ -23,7 +23,7 @@
 
 #### 最新演示
 
-[在线演示](http://ulthon_admin.ulthon.com/admin)
+[在线演示](http://ulthon-admin.ulthon.com/admin)
 
 账号: admin 密码: 123456
 
@@ -36,7 +36,7 @@
 - 账户管理(0.5h,已完成)
 - 用户管理
 - 权限管理
-- 文件管理
+- 文件管理(开发中)
 
 
 ### 开发注意

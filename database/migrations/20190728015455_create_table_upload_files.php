@@ -40,7 +40,7 @@ class CreateTableUploadFiles extends Migrator
         $table->addColumn('used_time','integer',['limit'=>10,'comment'=>'标记使用时间，如果为空，可能仅作为了预览图']);
         $table->addColumn('delete_time','integer',['limit'=>10,'comment'=>'删除时间']);
         $table->addColumn('clear_time','integer',['limit'=>10,'comment'=>'清空时间']);
-        $table->addColumn('type','integer',['limit'=>2,'default'=>1,'comment'=>'文件类型，1：系统logo;2:微信公众号授权二维码;3：微信公众号授权头像;4:应用文章图片;5:应用封面']);
+        $table->addColumn('type','integer',['limit'=>2,'default'=>1,'comment'=>'文件类型，1：系统logo;2:管理员头像']);
         $table->addIndex('save_name');
         $table->addIndex('create_time');
         $table->addIndex('used_time');

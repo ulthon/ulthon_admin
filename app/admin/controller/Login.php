@@ -28,7 +28,10 @@ class Login extends Common
         $post_data = $this->request->post();
 
         $validate = Validate::rule('account',Rule::isRequire())
-        ->rule('password',Rule::isRequire());
+        ->rule('password',Rule::isRequire())
+        ->rule('captcha',function($value){
+            return \captcha_check($value)?true:'验证码错误';
+        });
 
         if(!$validate->check($post_data)){
             return json_message($validate->getError());
