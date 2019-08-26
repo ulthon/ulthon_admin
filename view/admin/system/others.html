@@ -38,7 +38,7 @@
 
                         <div class="layui-col-md6">
                             <fieldset class="layui-elem-field " >
-                                <legend>七牛存储设置</legend>
+                                <legend>阿里OSS存储设置 <a href="https://www.aliyun.com/product/oss?source=5176.11533457&userCode=2fzx2rfo&type=copy" target="_blank"><i class="layui-icon layui-icon-help"></i></a></legend>
                                 <div class="layui-field-box">
                                     <form class="layui-form layui-form-pane" action="{:url('admin/System/update')}" method="post">
                                         <div class="layui-form-item">
@@ -79,25 +79,25 @@
 
                         <div class="layui-col-md6">
                             <fieldset class="layui-elem-field " >
-                                <legend>万维易源短信配置</legend>
+                                <legend>阿里短信配置 <a href="https://www.aliyun.com/acts/alicomcloud/new-discount?userCode=2fzx2rfo" target="_blank"><i class="layui-icon layui-icon-help"></i></a></legend>
                                 <div class="layui-field-box">
                                     <form class="layui-form layui-form-pane" action="{:url('admin/System/update')}" method="post">
                                         <div class="layui-form-item">
-                                            <div class="layui-form-label">AppId</div>
+                                            <div class="layui-form-label">AccessKey</div>
                                             <div class="layui-input-block">
-                                                <input type="text" name="yiyuan_app_id" value="{:get_system_config('yiyuan_app_id')}"  class="layui-input">
+                                                <input type="text" name="ali_msn_access_key" value="{:get_system_config('ali_msn_access_key')}"  class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-form-item">
-                                            <div class="layui-form-label">AppSecret</div>
+                                            <div class="layui-form-label">AccessSecret</div>
                                             <div class="layui-input-block">
-                                                <input type="text" name="yiyuan_app_secret" value="{:get_system_config('yiyuan_app_secret')}"  class="layui-input">
+                                                <input type="text" name="ali_msn_access_secret" value="{:get_system_config('ali_msn_access_secret')}"  class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-form-item">
                                             <div class="layui-form-label">模板ID</div>
                                             <div class="layui-input-block">
-                                                <input type="text" name="yiyuan_msn_tpl_id" value="{:get_system_config('yiyuan_msn_tpl_id')}"  class="layui-input">
+                                                <input type="text" name="ali_msg_tpl_id" value="{:get_system_config('ali_msg_tpl_id')}"  class="layui-input">
                                             </div>
                                         </div>
                                         
