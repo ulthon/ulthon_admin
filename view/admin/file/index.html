@@ -48,7 +48,13 @@
                                 <tr>
                                     <td>{$vo.id}</td>
                                     <td>
-                                        
+                                        {switch $vo.mime_type}
+                                            {case image/png|image/gif|image/jpeg } 
+                                            <a href="{$vo.src}" target="_blank"><img onerror="this.src = '/static/images/error.jpg'" src="{$vo.src}" alt=""></a>  
+                                            {/case}
+                                            {default /}
+                                            <a href="{$vo.src}" target="_blank" class="layui-btn layui-btn-sm">打开源文件</a>
+                                        {/switch}
                                     </td>
                                     <td>
                                         <p>保存名称:{$vo->getData('save_name')}</p>
