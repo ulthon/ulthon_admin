@@ -2,9 +2,16 @@
 namespace app;
 
 use app\model\UploadFiles as AppUploadFiles;
+use think\facade\Filesystem;
 
 class UploadFiles  
 {
+
+    public static function add()
+    {
+        return new AppUploadFiles();
+    }
+
     public static function create($data,$allowFiled = [],$replace = false)
     {
         return AppUploadFiles::create($data,$allowFiled,$replace);
@@ -26,8 +33,15 @@ class UploadFiles
         ]);
     }
 
-    public static function clear()
+    public static function clear($id)
     {
-        
+        $model_file = AppUploadFiles::find($id);
+
+        $model_file->clear_time = time();
+        $model_file->status = 3;
+
+        $model_file->save();
+
+        return Filesystem::delete($model_file->getData('save_name'));
     }
 }

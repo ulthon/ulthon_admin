@@ -6,8 +6,8 @@ use app\BaseController;
 use think\facade\Config;
 use EasyWeChat\Factory;
 use app\model\WxPublicAccount;
-use app\model\UploadFiles;
 use app\model\SystemConfig;
+use app\UploadFiles as AppUploadFiles;
 use think\facade\Cache;
 
 class WxOpen extends BaseController
@@ -58,21 +58,24 @@ class WxOpen extends BaseController
         
         
         if(!empty($model_auth_account->getData('head_img'))){
-            UploadFiles::destroy(['save_name'=>$model_auth_account->getData('head_img')]);
+            
+            AppUploadFiles::delete($model_auth_account->getData('head_img'));
         }
         
         $model_auth_account->head_img = \save_url_file($wx_public_account_info['authorizer_info']['head_img'],3);
-        UploadFiles::update(['used_time'=>time()],['save_name'=>$model_auth_account->getData('head_img')]);
+        
+        AppUploadFiles::use($model_auth_account->getData('head_img'));
         $model_auth_account->service_type_info = $wx_public_account_info['authorizer_info']['service_type_info']['id'];
         $model_auth_account->verify_type_info = $wx_public_account_info['authorizer_info']['verify_type_info']['id'];
         $model_auth_account->user_name = $wx_public_account_info['authorizer_info']['user_name'];
         $model_auth_account->alias = $wx_public_account_info['authorizer_info']['alias'];
 
         if(!empty($model_auth_account->getData('qrcode_url'))){
-            UploadFiles::destroy(['save_name'=>$model_auth_account->getData('qrcode_url')]);
+            AppUploadFiles::delete($model_auth_account->getData('qrcode_url'));
         }
         $model_auth_account->qrcode_url = save_url_file($wx_public_account_info['authorizer_info']['qrcode_url'],2);
-        UploadFiles::update(['used_time'=>time()],['save_name'=>$model_auth_account->getData('qrcode_url')]);
+        
+        AppUploadFiles::use($model_auth_account->getData('qrcode_url'));
         $model_auth_account->business_info = json_encode($wx_public_account_info['authorizer_info']['business_info']);
         $model_auth_account->principal_name = $wx_public_account_info['authorizer_info']['principal_name'];
         $model_auth_account->signature = $wx_public_account_info['authorizer_info']['signature'];

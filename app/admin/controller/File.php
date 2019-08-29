@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\model\UploadFiles;
+use app\UploadFiles as AppUploadFiles;
 use think\facade\View;
 use think\Request;
 
@@ -18,9 +19,15 @@ class File extends Common
         //
 
         $type = $this->request->param('type',1);
+        $status = $this->request->param('status','');
 
-        $list = UploadFiles::where('type',$type)->order('id desc')->paginate();
+        $model_list = UploadFiles::where('type',$type)->order('id desc');
 
+        if($status != ''){
+            $model_list->where('status',$status);
+        }
+
+        $list = $model_list->paginate();
         View::assign('list',$list);
 
         return View::fetch();
@@ -90,5 +97,12 @@ class File extends Common
     public function delete($id)
     {
         //
+    }
+
+    public function clear($id)
+    {
+        AppUploadFiles::clear($id);
+
+        return json_message();
     }
 }

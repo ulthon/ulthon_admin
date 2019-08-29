@@ -70,18 +70,25 @@
         {include file="common/_footer"}
 
         <script>
-            layui.use(['layer','upload'],function(){
+            layui.config({
+                base:'/static/lib/layui/lib/cropper/'
+            }).use(['layer','upload','croppers'],function(){
                 var upload = layui.upload;
+                var croppers = layui.croppers;
                 
 
-                var uploadSiteLogo = upload.render({
+                var uploadSiteLogo = croppers.render({
                     elem:'.upload-admin-avatar',
                     url:'{:url("api/Files/save")}',
                     data:{
                         type:2,
                         dir:'admin_avatar'
-                    },
-                    accept:'images',
+                    }
+                    ,saveW:150     //保存宽度
+                    ,saveH:150
+                    ,mark:1/1    //选取比例
+                    ,area:'900px'  //弹窗宽度
+                    ,accept:'images',
                     done:function(result){
                         if(result.code == 0){
                             layer.msg('上传成功');

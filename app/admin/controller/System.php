@@ -6,10 +6,10 @@ use think\Request;
 use think\facade\View;
 use app\model\SystemConfig;
 use think\facade\Cache;
-use app\model\UploadFiles;
 use EasyWeChat\Factory;
 use think\facade\Config;
 use app\model\WxPublicAccount;
+use app\UploadFiles as AppUploadFiles;
 
 class System extends Common
 {
@@ -43,9 +43,9 @@ class System extends Common
         foreach ($post_data as $key => $value) {
             if(\in_array($key,$upload_files_config)){
                 $old_save_name = get_system_config($key);
-                UploadFiles::update(['used_time'=>time()],['save_name'=>$value]);
+                AppUploadFiles::use($value);
                 if($old_save_name != $value){
-                    UploadFiles::destroy(['save_name'=>$old_save_name]);
+                    AppUploadFiles::delete($old_save_name);
                 }
             }
             if(isset($list[$key])){

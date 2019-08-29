@@ -5,8 +5,8 @@ namespace app\api\controller;
 use think\Request;
 use think\facade\Filesystem;
 use think\facade\Config;
-use app\model\UploadFiles;
 use app\BaseController;
+use app\UploadFiles as AppUploadFiles;
 
 class Files extends BaseController
 {
@@ -40,7 +40,7 @@ class Files extends BaseController
         }
 
         $dir_name = $request->param('dir','data');
-        $model_file = new UploadFiles();
+        $model_file = AppUploadFiles::add();
         $model_file->file_name = $file->getOriginalName();
         $model_file->mime_type = $file->getOriginalMime();
         $model_file->ext_name = $file->extension();

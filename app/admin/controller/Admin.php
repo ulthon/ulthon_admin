@@ -3,9 +3,8 @@
 namespace app\admin\controller;
 
 use app\model\Admin as AppAdmin;
-use app\model\UploadFiles;
+use app\UploadFiles as AppUploadFiles;
 use think\facade\View;
-use think\Request;
 
 class Admin extends Common
 {
@@ -58,8 +57,8 @@ class Admin extends Common
         $model_admin = AppAdmin::find($this->adminInfo['id']);
 
         if($model_admin->getData('avatar') != $post_data['avatar']){
-            UploadFiles::destroy(['save_name'=>$model_admin->getData('avatar')]);
-            UploadFiles::update(['used_time'=>time()],['save_name'=>$post_data['avatar']]);
+            AppUploadFiles::delete($model_admin->getData('avatar'));
+            AppUploadFiles::use($post_data['avatar']);
         }
 
 
