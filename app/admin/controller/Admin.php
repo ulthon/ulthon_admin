@@ -68,4 +68,22 @@ class Admin extends Common
 
         return $this->success('保存成功','Admin/edit');
     }
+
+    public function index()
+    {
+
+        $admin_list = AppAdmin::where('id','<>',1)->paginate();
+        View::assign('list',$admin_list);
+        return View::fetch();
+    }
+
+    public function create()
+    {
+        return View::fetch();
+    }
+
+    public function save()
+    {
+        
+    }
 }

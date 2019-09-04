@@ -15,4 +15,11 @@ class Admin extends Model
     {
         return \get_source_link($value);
     }
+
+    public function getGroupAttr()
+    {
+        if(empty($this->getData('group_id'))){
+            return '未分组';
+        }
+    }
 }

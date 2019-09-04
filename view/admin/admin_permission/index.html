@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>应用管理</title>
+    {include file="common/_require"}
+</head>
+
+<body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+        {include file="common/_header"}
+
+        {include file="common/left_admin_manage"}
+
+        <div class="layui-body">
+
+            <div style="padding:15px">
+                <div class="main-header">
+                    <span class="layui-breadcrumb">
+                        <a>首页</a>
+                        <a><cite>系统信息</cite></a>
+                    </span>
+                </div>
+                <div class="main-container">
+                    <div>
+                        <div class="layui-btn-container">
+                            <div class="layui-btn">添加权限</div>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="layui-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>权限名称</th>
+                                    <th>权限URL</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {volist name='list' id='vo'}
+                                    
+                                <tr class="item" data-id="{$vo.id}">
+                                    <td>{$vo.id}</td>
+                                    <td>
+                                        <span>{$vo.name}</span>
+                                        <div class="layui-btn layui-btn-sm set-name" data-name="{$vo.name}">设置</div>
+                                    </td>
+                                    <td>
+                                        <span>{$vo.app}/{$vo.controller}/{$vo.action}</span>
+                                        <div class="layui-btn layui-btn-sm set-url" data-url="{$vo.app}/{$vo.controller}/{$vo.action}">设置</div>
+                                    </td>
+                                    <td>
+                                        <div class="layui-btn-container">
+                                            <div class="layui-btn layui-btn-sm delete">删除</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/volist}
+                               {if condition="count($list) eq 0" }
+                                   <tr>
+                                       <td colspan="3">暂无数据</td>
+                                   </tr>
+                               {/if}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {include file="common/_footer"}
+
+        <script>
+        
+            layui.use(['layer'],function(){
+                $('.set-name').click(function(){
+                    var item = this;
+                    layer.prompt({
+                        value:$(item).data('name')
+                    },function(value,index){
+                        $.post('{:url("AdminPermission/update")}',{
+                            id:$(item).parents('tr').data('id'),
+                            name:value
+                        },function(result){
+                            layer.close(index)
+                            $(item).siblings('span').text(value)
+                        })
+                    })
+                })
+                $('.set-url').click(function(){
+                    var item = this;
+                    layer.prompt({
+                        value:$(item).data('url')
+                    },function(value,index){
+                        $.post('{:url("AdminPermission/update")}',{
+                            id:$(item).parents('tr').data('id'),
+                            url:value
+                        },function(result){
+                            layer.close(index)
+                            $(item).siblings('span').text(value)
+                        })
+                    })
+                })
+
+                $('.delete').click(function(){
+                    
+                })
+            })
+        
+        </script>
+    </div>
+</body>
+
+</html>
