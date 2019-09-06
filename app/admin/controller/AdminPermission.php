@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\model\AdminPermission as AppAdminPermission;
+use think\facade\Cache;
 use think\facade\View;
 use think\Request;
 
@@ -17,7 +18,7 @@ class AdminPermission extends Common
     {
         //
 
-        $list = AppAdminPermission::paginate();
+        $list = AppAdminPermission::order('app,controller,action')->paginate();
 
         View::assign('list',$list);
 
@@ -51,6 +52,8 @@ class AdminPermission extends Common
 
         $model_permission->save();
 
+        Cache::delete('logged_admin_permission');
+
         return json_message();
     }
 
@@ -63,5 +66,8 @@ class AdminPermission extends Common
     public function delete($id)
     {
         //
+        AppAdminPermission::destroy($id);
+        Cache::delete('logged_admin_permission');
+        return json_message();
     }
 }

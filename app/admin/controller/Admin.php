@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\model\Admin as AppAdmin;
+use app\model\AdminLog;
 use app\UploadFiles as AppUploadFiles;
 use think\facade\View;
 
@@ -85,5 +86,15 @@ class Admin extends Common
     public function save()
     {
         
+    }
+
+    public function adminLog()
+    {
+
+        $list = AdminLog::order('id desc')->paginate(10);
+
+        View::assign('list',$list);
+
+        return View::fetch();
     }
 }
