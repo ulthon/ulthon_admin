@@ -29,18 +29,18 @@
                             <fieldset class="layui-elem-field">
                                 <legend>添加分组</legend>
                                     <div class="layui-field-box">
-                                        <form action="{:url('save')}" class="layui-form" method="POST" >
+                                        <form action="{:url('update',['id'=>$admin_group.id])}" class="layui-form" method="POST" >
                                             <div class="layui-form-item">
                                                 <div class="layui-form-label">分组名称</div>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="name" class="layui-input">
+                                                    <input type="text" name="name" class="layui-input" value="{$admin_group.name}">
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
                                                 <div class="layui-form-label">分组权限</div>
                                                 <div class="layui-input-block">
                                                     {volist name='permission_list' id='vo'}
-                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}" value="{$vo.id}" lay-skin="primary" checked>
+                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}" value="{$vo.id}" lay-skin="primary" {if condition="in_array($vo.id,$admin_group.permissions)"}checked{/if}>
                                                     {/volist}
                                                 </div>
                                             </div>

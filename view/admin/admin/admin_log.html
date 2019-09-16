@@ -60,7 +60,7 @@
                                         <p>访问IP:{$vo.ip}</p>
                                     </td>
                                     <td>
-                                        <div class="layui-btn layui-btn-sm" onclick="layer.open({type:1,area:['400px','600px'],content:$(this).parents('tr').data('param')})">查看详情</div>
+                                        <div class="layui-btn layui-btn-sm" onclick="layer.open({type:1,area:['400px','600px'],content:JSON.stringify($(this).parents('tr').data('param'))})">查看详情</div>
                                         <br>
                                         {$vo.param}
                                     </td>

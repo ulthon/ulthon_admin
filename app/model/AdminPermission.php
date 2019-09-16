@@ -21,4 +21,15 @@ class AdminPermission extends Model
 
         return $status[intval($value)];
     }
+
+    public function getNameAttr($value)
+    {
+        if(empty($value)){
+            $value = $this->getData('app').'/'.$this->getData('controller').'/'.$this->getData('action');
+        }
+
+        return $value;
+    }
+
+    
 }

@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\model\AdminGroup as AppAdminGroup;
+use app\model\AdminPermission;
 use think\facade\View;
 use think\Request;
 
@@ -16,7 +17,7 @@ class AdminGroup extends Common
     public function index()
     {
         //
-        $list = AppAdminGroup::select();
+        $list = AppAdminGroup::order('id desc')->select();
         View::assign('list',$list);
 
         return View::fetch();
@@ -30,7 +31,9 @@ class AdminGroup extends Common
     public function create()
     {
         //
+        $premission_list = AdminPermission::order('app,controller,action')->select();
 
+        View::assign('permission_list',$premission_list);
         return View::fetch();
     }
 
@@ -43,6 +46,22 @@ class AdminGroup extends Common
     public function save(Request $request)
     {
         //
+        $post_data = $request->post();
+        
+        $model_admin_group = AppAdminGroup::where('name',$post_data['name'])->find();
+
+        if(!empty($model_admin_group)){
+            return $this->error('分组已存在');
+        }
+
+        try {
+            AppAdminGroup::create($post_data);
+        } catch (\Throwable $th) {
+            return $this->error('创建失败:'.$th->getMessage());
+        }
+
+        return $this->success('创建成功','index');
+
     }
 
     /**
@@ -65,6 +84,14 @@ class AdminGroup extends Common
     public function edit($id)
     {
         //
+
+        $model_admin_group = AppAdminGroup::find($id);
+
+        $premission_list = AdminPermission::order('app,controller,action')->select();
+        View::assign('permission_list',$premission_list);
+        View::assign('admin_group',$model_admin_group);
+
+        return View::fetch();
     }
 
     /**
@@ -77,6 +104,16 @@ class AdminGroup extends Common
     public function update(Request $request, $id)
     {
         //
+        $model_admin_group = AppAdminGroup::find($id);
+        if(empty($model_admin_group)){
+            return $this->error('分组不存在');
+        }
+
+        $post_data = $request->post();
+        
+        $model_admin_group->save($post_data);
+
+        return $this->success('修改成功','index');
     }
 
     /**
@@ -88,5 +125,7 @@ class AdminGroup extends Common
     public function delete($id)
     {
         //
+        AppAdminGroup::destroy($id);
+        $this->success('删除成功');
     }
 }

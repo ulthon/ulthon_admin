@@ -39,7 +39,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                {volist name='list' id='vo'}
+                                    <tr>
+                                        <td>{$vo.id}</td>
+                                        <td>{$vo.name}</td>
+                                        <td>
+                                            <div class="layui-btn-container">
+                                                <a href="{:url('edit',['id'=>$vo.id])}" class="layui-btn layui-btn-sm">编辑</a>
+                                                <div data-href="{:url('delete',['id'=>$vo.id])}" class="layui-btn layui-btn-sm delete">删除</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {/volist}
                                 {if condition="count($list) eq 0" }
                                     <tr>
                                     <td colspan="3">暂无数据</td>
@@ -54,6 +65,20 @@
     
     
         {include file="common/_footer"}
+
+        <script>
+            $('.delete').click(function(){
+                var item = this;
+                layer.confirm('确定要删除吗?',function(){
+                    $.get($(item).data('href'),function(result){
+                        if(result.code == 0){
+                            $(item).parents('tr').remove();
+                        }
+                        layer.msg(result.msg);
+                    })
+                })
+            })
+        </script>
     </div>
 </body>
 </html>
