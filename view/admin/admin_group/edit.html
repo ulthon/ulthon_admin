@@ -33,6 +33,7 @@
                                             <div class="layui-form-item">
                                                 <div class="layui-form-label">分组名称</div>
                                                 <div class="layui-input-block">
+                                                    
                                                     <input type="text" name="name" class="layui-input" value="{$admin_group.name}">
                                                 </div>
                                             </div>
@@ -40,7 +41,12 @@
                                                 <div class="layui-form-label">分组权限</div>
                                                 <div class="layui-input-block">
                                                     {volist name='permission_list' id='vo'}
+                                                    {if condition="empty($vo->getData('name'))" }
+                                                        
                                                         <input type="checkbox" name="permissions[]" title="{$vo.name}" value="{$vo.id}" lay-skin="primary" {if condition="in_array($vo.id,$admin_group.permissions)"}checked{/if}>
+                                                        {else /}
+                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}({$vo->getData('app')}/{$vo->getData('controller')}/{$vo->getData('action')})" value="{$vo.id}" lay-skin="primary" {if condition="in_array($vo.id,$admin_group.permissions)"}checked{/if}>
+                                                    {/if}
                                                     {/volist}
                                                 </div>
                                             </div>

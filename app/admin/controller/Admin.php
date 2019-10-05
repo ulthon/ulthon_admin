@@ -3,9 +3,11 @@
 namespace app\admin\controller;
 
 use app\model\Admin as AppAdmin;
+use app\model\AdminGroup;
 use app\model\AdminLog;
 use app\UploadFiles as AppUploadFiles;
 use think\facade\View;
+use think\helper\Str;
 
 class Admin extends Common
 {
@@ -80,12 +82,64 @@ class Admin extends Common
 
     public function create()
     {
+
+        $admin_group_list = AdminGroup::select();
+
+        View::assign('group_list',$admin_group_list);
+
         return View::fetch();
     }
 
     public function save()
     {
-        
+        $post_data = $this->request->post();
+
+        $admin_model = AppAdmin::where('account',$post_data['account'])->find();
+
+        if(!empty($admin_model)){
+            $this->error('管理员已存在');
+        }
+
+        if(empty($post_data['password'])){
+            $post_data['password'] = '123456';
+        }
+
+
+        $post_data['salt'] = Str::random(6);
+
+        $post_data['password'] = md5($post_data['password'].$post_data['salt']);
+
+        AppAdmin::create($post_data);
+
+        $this->success('添加成功','index');
+
+    }
+
+    public function editAccount($id)
+    {
+        $model_admin = AppAdmin::find($id);
+        $admin_group_list = AdminGroup::select();
+        View::assign('group_list',$admin_group_list);
+        View::assign('admin',$model_admin);
+        return View::fetch();
+    }
+
+    public function updateAccount()
+    {
+        $post_data = $this->request->post();
+
+        if(!empty($post_data['password'])){
+            $post_data['salt'] = Str::random(6);
+
+            $post_data['password'] = md5($post_data['password'].$post_data['salt']);
+        }else{
+            unset($post_data['password']);
+        }
+
+        AppAdmin::update($post_data);
+
+        $this->success('修改成功','index');
+
     }
 
     public function adminLog()
@@ -96,5 +150,13 @@ class Admin extends Common
         View::assign('list',$list);
 
         return View::fetch();
+    }
+
+    public function delete($id)
+    {
+        AppAdmin::destroy($id);
+
+        
+        return json_message();
     }
 }

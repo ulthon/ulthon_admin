@@ -44,16 +44,16 @@
                             <tbody>
                                 {volist name='$list' id='vo'}
                                     
-                                <tr>
+                                <tr data-id="{$vo.id}">
                                     <td>{$vo.id}</td>
                                     <td><img src="{$vo.avatar}" alt=""></td>
                                     <td>{$vo.account}</td>
                                     <td>{$vo.nickname}</td>
-                                    <td>{$vo.group}</td>
+                                    <td>{$vo.group.name|default="未分组"}</td>
                                     <td>
                                         <div class="layui-btn-container">
-                                            <a class="layui-btn layui-btn-sm" href="{:url('Admin/editaccount',['id'=>{$vo.id}])}">编辑</a>
-                                            <div class="layui-btn layui-btn-sm">
+                                            <a class="layui-btn layui-btn-sm" href="{:url('Admin/editAccount',['id'=>$vo.id])}">编辑</a>
+                                            <div class="layui-btn layui-btn-sm delete">
                                                 删除
                                             </div>
                                         </div>
@@ -74,6 +74,23 @@
 
 
         {include file="common/_footer"}
+
+        <script>
+        
+            $('.delete').click(function(){
+                var item = this;
+                layer.confirm('确定要删除吗？',function(){
+                    $.get('{:url("delete")}',{
+                        id:$(item).parents('tr').data('id')
+                    },function(result){
+                        layer.msg('删除成功');
+
+                        $(item).parents('tr').remove();
+                    })
+                })
+            })
+        
+        </script>
     </div>
 </body>
 
