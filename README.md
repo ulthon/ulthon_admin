@@ -1,77 +1,52 @@
+ThinkPHP 6.0
+===============
 
-# ulthon_admin
+> 运行环境要求PHP7.1+。
 
-## 奥宏后台管理小模板
+## 主要新特性
 
+* 采用`PHP7`强类型（严格模式）
+* 支持更多的`PSR`规范
+* 原生多应用支持
+* 更强大和易用的查询
+* 全新的事件系统
+* 模型事件和数据库事件统一纳入事件系统
+* 模板引擎分离出核心
+* 内部功能中间件化
+* SESSION/Cookie机制改进
+* 对Swoole以及协程支持改进
+* 对IDE更加友好
+* 统一和精简大量用法
 
-### 使用ThinkPHP6快速开始一个有管理后台的项目
+## 安装
 
-#### 介绍
+~~~
+composer create-project topthink/think tp 6.0.*-dev
+~~~
 
-这不是一个完整的后台解决方案或产品,没有过多的功能和开发规则.
+如果需要更新框架使用
+~~~
+composer update topthink/framework
+~~~
 
-基于thinkphp6的系统后台管理模板,仅实现通用的基本的功能,基于ThinkPHP6,Layui,Jquery,支持各类数据库.
+## 文档
 
+[完全开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
 
-本项目的定位是实现几个基本的功能,节约您的一些开发时间,没有过多的开发限制.
+## 参与开发
 
-比如每个后台都要有账号的登录/编辑,这种小的功能,几乎每次做项目时都要做,花时间又没有什么成就感,您可以使用本模板,节省这部分时间.
+请参阅 [ThinkPHP 核心框架包](https://github.com/top-think/framework)。
 
-类似的功能还有服务器信息/系统配置等.
+## 版权信息
 
-实现功能的同时没有制定更多的开发规则,您完全可以把本项目的代码修按照您的意愿改掉.
+ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
 
-#### 最新演示
+本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
-[在线演示](http://ulthon-admin.ulthon.com/admin)
+版权所有Copyright © 2006-2019 by ThinkPHP (http://thinkphp.cn)
 
-账号: admin 密码: 123456
+All rights reserved。
 
+ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
 
-#### 功能
-
-- 服务器信息(0.2h,已完成)
-- 系统配置(0.5h,已完成)
-- 管理员管理(开发中)
-- 账户管理(0.5h,已完成)
-- 用户管理(开发中)
-- 权限管理(开发中)
-- 文件管理(2h已完成)
-- 后台日志
-
-
-### 开发注意
-
-#### 后台页面仅仅使用了`TP`的模板包含特性
-
-
-#### 支持所有(`TP6`支持的)类型数据库
-
-填写正确的数据库连接配置,
-
-执行`php think migrate:run`安装数据库
-
-执行`php think seed:run`初始化数据
-
-#### 使用了配置全局中间件
-
-
-在这个中间件里把数据库的配置信息设置到项目中.
-
-中间件: `\app\\middleware\ConfigInit`
-
-#### 文件上传
-
-经过这个类上传的文件会保存到`public`下,
-
-`TP`原本配置会保存到`public/storage`下,本项目修改了配置,直接保存到`public`下.
-
-类:`\app\api\controller\Files::save()`
-
-## 版权协议
-
-`木兰协议`
-
-## 开发维护
-
-[临沂奥宏网络科技有限公司](http://ulthon.com)
+更多细节参阅 [LICENSE.txt](LICENSE.txt)

@@ -436,12 +436,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "768f12f01daa0bd96ef4ad8771d80fb6fec137c8"
+                "reference": "cb8817c29981c2f735ee352a9432f22d6765839e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/768f12f01daa0bd96ef4ad8771d80fb6fec137c8",
-                "reference": "768f12f01daa0bd96ef4ad8771d80fb6fec137c8",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/cb8817c29981c2f735ee352a9432f22d6765839e",
+                "reference": "cb8817c29981c2f735ee352a9432f22d6765839e",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -496,7 +496,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2019-10-08T14:53:51+00:00"
+            "time": "2019-10-09T07:30:48+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -656,16 +656,16 @@
         },
         {
             "name": "topthink/think-multi-app",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-multi-app.git",
-                "reference": "27bb12fa049e8479a453c75087ef9ad1bda6d730"
+                "reference": "e652d444d771589279c1a4a993d2b74cdc07b180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/27bb12fa049e8479a453c75087ef9ad1bda6d730",
-                "reference": "27bb12fa049e8479a453c75087ef9ad1bda6d730",
+                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/e652d444d771589279c1a4a993d2b74cdc07b180",
+                "reference": "e652d444d771589279c1a4a993d2b74cdc07b180",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -702,7 +702,7 @@
                 }
             ],
             "description": "thinkphp6 multi app support",
-            "time": "2019-10-08T02:20:35+00:00"
+            "time": "2019-10-09T07:32:11+00:00"
         },
         {
             "name": "topthink/think-orm",
