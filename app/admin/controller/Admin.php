@@ -104,6 +104,10 @@ class Admin extends Common
             $post_data['password'] = '123456';
         }
 
+        if($admin_model->getData('avatar') != $post_data['avatar']){
+            AppUploadFiles::delete($admin_model->getData('avatar'));
+            AppUploadFiles::use($post_data['avatar']);
+        }
 
         $post_data['salt'] = Str::random(6);
 
@@ -128,6 +132,8 @@ class Admin extends Common
     {
         $post_data = $this->request->post();
 
+        $admin_model = AppAdmin::find($post_data['id']);
+
         if(!empty($post_data['password'])){
             $post_data['salt'] = Str::random(6);
 
@@ -136,6 +142,10 @@ class Admin extends Common
             unset($post_data['password']);
         }
 
+        if($admin_model->getData('avatar') != $post_data['avatar']){
+            AppUploadFiles::delete($admin_model->getData('avatar'));
+            AppUploadFiles::use($post_data['avatar']);
+        }
         AppAdmin::update($post_data);
 
         $this->success('修改成功','index');
