@@ -11,7 +11,7 @@ class PermissionRecord
     {
 
         $current_access_info = [
-            'app'=>$request->app(),
+            'app'=>app('http')->getName(),
             'controller'=>$request->controller(),
             'action'=>$request->action()
         ];

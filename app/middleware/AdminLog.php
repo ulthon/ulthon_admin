@@ -19,13 +19,13 @@ class AdminLog
         }
 
 
-        $is_exit = $logged_admin_permission->where('app',$request->app())
+        $is_exit = $logged_admin_permission->where('app',app('http')->getName())
         ->where('controller',$request->controller())
         ->where('action',$request->action());
 
         if(!$is_exit->isEmpty()){
             AppAdminLog::create([
-                'app'=>$request->app(),
+                'app'=>app('http')->getName(),
                 'controller'=>$request->controller(),
                 'action'=>$request->action(),
                 'param'=>$request->param(),

@@ -61,7 +61,6 @@ class ExceptionHandle extends Handle
     public function render($request, Throwable $e): Response
     {
         // 添加自定义异常处理机制
-
         // 其他错误交给系统处理
         return parent::render($request, $e);
     }
