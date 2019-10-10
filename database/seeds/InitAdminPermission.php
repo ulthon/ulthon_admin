@@ -1,6 +1,7 @@
 <?php
 
 use think\migration\Seeder;
+use app\model\AdminPermission;
 
 class InitAdminPermission extends Seeder
 {
@@ -254,7 +255,7 @@ class InitAdminPermission extends Seeder
             $model_permission = AdminPermission::where($current_access_info)->find();
 
             if(empty($model_permission)){
-                $current_access_info['name'] = $permissions['name'];
+                $current_access_info['name'] = $permission['name'];
                 AdminPermission::create($current_access_info);
             }
         }
