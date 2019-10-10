@@ -16,6 +16,10 @@ class PermissionRecord
             'action'=>$request->action()
         ];
 
+        if(in_array('',$current_access_info)){
+            return $next($request);
+        }
+
         $model_permission = AdminPermission::where($current_access_info)->find();
 
         if(empty($model_permission)){

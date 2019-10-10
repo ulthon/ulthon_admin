@@ -3,7 +3,7 @@
 use think\migration\Migrator;
 use think\migration\db\Column;
 
-class CreateTableSystemConfig extends Migrator
+class CreateTableAdminGroup extends Migrator
 {
     /**
      * Change Method.
@@ -28,10 +28,16 @@ class CreateTableSystemConfig extends Migrator
      */
     public function change()
     {
-        $table = $this->table('system_config',['comment'=>'系统配置表','signed'=>false]);
-        $table->addColumn('name','string',['limit'=>30,'comment'=>'配置名称']);
-        $table->addColumn('value','text',['comment'=>'值']);
-        $table->addIndex('name');
+        $table = $this->table('admin_group',[
+            'comment'=>'管理员组',
+            'signed'=>false
+        ]);
+
+        $table->addColumn('name','string',['limit'=>20,'comment'=>'组名']);
+        $table->addColumn('create_time','integer',['limit'=>11,'default'=>0,'comment'=>'添加时间']);
+        $table->addColumn('update_time','integer',['limit'=>11,'default'=>0,'comment'=>'更新时间']);
+        $table->addColumn('delete_time','integer',['limit'=>11,'default'=>0,'comment'=>'删除时间']);
+        $table->addColumn('permissions','text',['comment'=>'拥有权限']);
         $table->create();
     }
 }

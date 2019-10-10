@@ -28,7 +28,7 @@ class CreateTableUploadFiles extends Migrator
      */
     public function change()
     {
-        $table = $this->table('upload_files',['comment'=>'上传的文件']);
+        $table = $this->table('upload_files',['comment'=>'上传的文件','signed'=>false]);
         $table->addColumn('save_name','string',['limit'=>100,'comment'=>'文件存储地址']);
         $table->addColumn('file_name','string',['limit'=>100,'comment'=>'文件原始名称']);
         $table->addColumn('mime_type','string',['limit'=>30,'comment'=>'mime type 类型']);
@@ -41,12 +41,14 @@ class CreateTableUploadFiles extends Migrator
         $table->addColumn('delete_time','integer',['limit'=>10,'comment'=>'删除时间']);
         $table->addColumn('clear_time','integer',['limit'=>10,'comment'=>'清空时间']);
         $table->addColumn('type','integer',['limit'=>2,'default'=>1,'comment'=>'文件类型，1：系统logo;2:管理员头像']);
+        $table->addColumn('status','integer',['limit'=>2,'default'=>0,'comment'=>'文件状态:0,上传未使用,1:已使用,2:已删除,3已清除']);
         $table->addIndex('save_name');
         $table->addIndex('create_time');
         $table->addIndex('used_time');
         $table->addIndex('delete_time');
         $table->addIndex('clear_time');
         $table->addIndex('type');
+        $table->addIndex('status');
         $table->create();
         
         
