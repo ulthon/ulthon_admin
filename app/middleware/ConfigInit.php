@@ -16,7 +16,7 @@ class ConfigInit
         Arr::set($filesystem_config,'default','public');
 
         Config::set($filesystem_config, 'filesystem');
-            
+        
         // 社微信开放平台
         // $wx_open_app = [];
         // $wx_open_app = Arr::add($wx_open_app,'app_id',get_system_config('wx_open_app_id'));
