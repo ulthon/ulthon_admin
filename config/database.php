@@ -67,7 +67,7 @@ return [
             // 数据库名
             'database'        => App::getRootPath().'ul.db',
             // 用户名
-            'username'        => Env::get('database.username', 'root'),
+            'username'        => Env::get('database.username', ''),
             // 密码
             'password'        => Env::get('database.password', ''),
             // 端口
