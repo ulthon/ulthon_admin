@@ -28,6 +28,31 @@
 账号: admin 密码: 123456
 
 
+#### 快速试用
+
+
+    1.安装
+    git clone https://gitee.com/ulthon/ulthon_admin.git
+    或者
+    composer create-project ulthon/ulthon_admin:dev-master
+    2.进入目录
+    cd ulthon_admin/
+    3.安装依赖
+    composer install
+    4.初始化数据库
+    php think migrate:run
+    php think seed:run
+    5.使用内置服务器
+    php think run -p 8010
+    6.访问前台
+    127.0.0.1:8010/index.php/index
+    7.访问后台
+    127.0.0.1:8010/index.php/admin
+
+后台帐号密码：admin/123456
+
+如果希望去掉index.php，可以参考tp文档，在nginx或apache环境配置，内置服务器必须带index.php
+
 #### 功能
 
 - 服务器信息(0.2h,已完成)
