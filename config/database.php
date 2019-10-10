@@ -1,5 +1,6 @@
 <?php
 use think\facade\Env;
+use think\facade\App;
 
 return [
     // 默认使用的数据库连接配置
