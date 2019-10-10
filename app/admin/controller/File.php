@@ -21,7 +21,7 @@ class File extends Common
         $type = $this->request->param('type',1);
         $status = $this->request->param('status','');
 
-        $model_list = UploadFiles::where('type',$type)->order('id desc');
+        $model_list = UploadFiles::withTrashed()->where('type',$type)->order('id desc');
 
         if($status != ''){
             $model_list->where('status',$status);

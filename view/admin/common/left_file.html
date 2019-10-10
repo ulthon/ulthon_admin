@@ -6,7 +6,7 @@
                 <a class="" href="javascript:;">文件管理</a>
                 <dl class="layui-nav-child">
                     {volist name=":config('upload_type')" id="vo"}    
-                    <dd><a href="{:url('File/index',['type'=>$key])}">{$vo}</a></dd>
+                    <dd class="left-nav-item" data-name="index-{$key}"><a href="{:url('File/index',['type'=>$key])}">{$vo}</a></dd>
                     {/volist}
                 </dl>
             </li>

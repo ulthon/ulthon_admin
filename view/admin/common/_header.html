@@ -1,15 +1,15 @@
 <div class="layui-header">
-    <div class="layui-logo">{:get_system_config('site_name')}</div>
+    <a class="layui-logo" href="/">{:get_system_config('site_name')}</a>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
-        <li class="layui-nav-item"><a href="{:url('admin/Index/index')}">首页</a></li>
-        <li class="layui-nav-item"><a href="{:url('admin/User/index')}">用户管理</a></li>
-        <li class="layui-nav-item"><a href="{:url('File/index')}">文件管理</a></li>
-        <li class="layui-nav-item"><a href="{:url('admin/Admin/index')}">管理员管理</a></li>
-        <li class="layui-nav-item"><a href="{:url('admin/System/index')}">系统设置</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="Index" ><a href="{:url('admin/Index/index')}">首页</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="User" ><a href="{:url('admin/User/index')}">用户管理</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="File" ><a href="{:url('admin/File/index')}">文件管理</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="Admin" ><a href="{:url('admin/Admin/index')}">管理员管理</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="System" ><a href="{:url('admin/System/index')}">系统设置</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item">
+        <li class="layui-nav-item header-nav-item" data-name="Login">
             <a href="javascript:;">
                 <img src="{$admin.avatar}" class="layui-nav-img">
                 {$admin.nickname}

@@ -9,11 +9,18 @@ use app\UploadFiles as AppUploadFiles;
 use think\facade\View;
 use think\helper\Str;
 
+/**
+ * 管理员账号管理
+ */
 class Admin extends Common
 {
+    /**
+     * 当前登录的管理员编辑账户
+     *
+     * @return void
+     */
     public function edit()
     {
-
 
         $model_admin = AppAdmin::find($this->adminInfo['id']);
 
@@ -22,11 +29,21 @@ class Admin extends Common
         return View::fetch();
     }
 
+    /**
+     * 当前登录的管理员修改密码
+     *
+     * @return void
+     */
     public function password()
     {
         return View::fetch();
     }
 
+    /**
+     * 当前登陆的管理员保存修改密码
+     *
+     * @return void
+     */
     public function passwordUpdate()
     {
 
@@ -54,6 +71,11 @@ class Admin extends Common
 
     }
 
+    /**
+     * 当前登陆的管理员更新账户
+     *
+     * @return void
+     */
     public function update()
     {
         $post_data = $this->request->post();
@@ -64,7 +86,6 @@ class Admin extends Common
             AppUploadFiles::use($post_data['avatar']);
         }
 
-
         $model_admin->data($post_data);
 
         $model_admin->save();
@@ -72,14 +93,24 @@ class Admin extends Common
         return $this->success('保存成功','Admin/edit');
     }
 
+    /**
+     * 管理员列表
+     *
+     * @return void
+     */
     public function index()
     {
 
-        $admin_list = AppAdmin::where('id','<>',1)->paginate();
+        $admin_list = AppAdmin::where('id','<>',1)->order('id desc')->paginate();
         View::assign('list',$admin_list);
         return View::fetch();
     }
 
+    /**
+     * 添加管理员账号
+     *
+     * @return void
+     */
     public function create()
     {
 
@@ -90,6 +121,12 @@ class Admin extends Common
         return View::fetch();
     }
 
+
+    /**
+     * 保存添加的管理员账号
+     *
+     * @return void
+     */
     public function save()
     {
         $post_data = $this->request->post();
@@ -104,8 +141,7 @@ class Admin extends Common
             $post_data['password'] = '123456';
         }
 
-        if($admin_model->getData('avatar') != $post_data['avatar']){
-            AppUploadFiles::delete($admin_model->getData('avatar'));
+        if(!empty($post_data['avatar'])){
             AppUploadFiles::use($post_data['avatar']);
         }
 
@@ -119,6 +155,12 @@ class Admin extends Common
 
     }
 
+    /**
+     * 编辑管理员账号
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function editAccount($id)
     {
         $model_admin = AppAdmin::find($id);
@@ -128,6 +170,11 @@ class Admin extends Common
         return View::fetch();
     }
 
+    /**
+     * 更新管理员账号
+     *
+     * @return void
+     */
     public function updateAccount()
     {
         $post_data = $this->request->post();
@@ -152,6 +199,11 @@ class Admin extends Common
 
     }
 
+    /**
+     * 管理员操作日志
+     *
+     * @return void
+     */
     public function adminLog()
     {
 
@@ -162,6 +214,12 @@ class Admin extends Common
         return View::fetch();
     }
 
+    /**
+     * 删除管理员
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id)
     {
         AppAdmin::destroy($id);

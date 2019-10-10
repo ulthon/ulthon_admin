@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>文件管理</title>
     {include file="common/_require"}
+
+    <script>
+        var currentHeaderNavItem = 'File';
+        var currentLeftNavItem = 'index-{$Request.param.type|default=1}';
+    </script>
 </head>
 
 <body class="layui-layout-body">

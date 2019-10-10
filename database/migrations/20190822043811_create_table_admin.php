@@ -36,6 +36,7 @@ class CreateTableAdmin extends Migrator
         $table->addColumn('avatar','string',['limit'=>40,'comment'=>'头像地址']);
         $table->addColumn('create_time','integer',['limit'=>10,'default'=>0,'comment'=>'添加时间']);
         $table->addColumn('delete_time','integer',['limit'=>10,'default'=>0,'comment'=>'删除时间']);
+        $table->addColumn('group_id','integer',['limit'=>10,'default'=>0,'comment'=>'管理员组']);
         $table->addIndex('account');
         $table->addIndex('delete_time');
         $table->create();

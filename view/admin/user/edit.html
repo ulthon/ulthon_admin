@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>基本资料</title>
     {include file="common/_require"}
+
+    <script>
+        var currentHeaderNavItem = 'User';
+        var currentLeftNavItem = 'index';
+    </script>
 </head>
 
 <body class="layui-layout-body">
@@ -62,7 +67,7 @@
                                                     <div class="layui-btn upload-admin-avatar">上传</div>
                                                 </div>
                                                 <div>
-                                                    <img class="layui-circle admin-avatar" style="width: 80px" src=""
+                                                    <img class="layui-circle admin-avatar" style="width: 80px" src="{$user.avatar}"
                                                         alt="{$user.avatar}" srcset="">
                                                 </div>
                                                 <input type="hidden" name="avatar" value="{$user->getData('avatar')}" class="layui-input">

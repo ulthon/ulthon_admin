@@ -17,5 +17,22 @@
         var element = layui.element;
 
     });
+
+    $(function(){
+        if(typeof currentHeaderNavItem != "undefined"){
+            $('.header-nav-item').each(function(i,e){
+                if($(e).data('name') == currentHeaderNavItem){
+                    $(e).addClass('layui-this')
+                }
+            })
+        }
+        if(typeof currentLeftNavItem != "undefined"){
+            $('.left-nav-item').each(function(i,e){
+                if($(e).data('name') == currentLeftNavItem){
+                    $(e).addClass('layui-this')
+                }
+            })
+        }
+    })
 </script>
 {:get_system_config('site_tongji')}

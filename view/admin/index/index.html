@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>layout 后台大布局 - Layui</title>
+    <title>{:get_system_config('site_name')}</title>
     {include file="common/_require"}
     <style>
         .layui-form-pane .layui-form-label{
@@ -14,6 +14,11 @@
             margin-left: 200px;
         }
     </style>
+
+    <script>
+        var currentHeaderNavItem = 'Index';
+        var currentLeftNavItem = 'index';
+    </script>
 </head>
 
 <body class="layui-layout-body">
