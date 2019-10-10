@@ -37,7 +37,7 @@ return [
             // 数据库编码默认采用utf8
             'charset'           => Env::get('database.charset', 'utf8'),
             // 数据库表前缀
-            'prefix'            => Env::get('database.prefix', ''),
+            'prefix'            => Env::get('database.prefix', 'ul_'),
 
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
             'deploy'            => 0,
@@ -77,7 +77,7 @@ return [
             // 数据库编码默认采用utf8
             'charset'         => Env::get('database.charset', 'utf8'),
             // 数据库表前缀
-            'prefix'          => Env::get('database.prefix', ''),
+            'prefix'          => Env::get('database.prefix', 'ul_'),
             // 数据库调试模式
             'debug'           => Env::get('database.debug', true),
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
