@@ -62,7 +62,7 @@ function get_source_link($url)
         $resource_domain = get_system_config('resource_domain');
 
         if(empty($resource_domain)){
-            request()->host();
+            $resource_domain = request()->host().':'. request()->port();
         }
         return 'http://'.$resource_domain.'/'.$url;
     }
