@@ -243,7 +243,7 @@ class InitAdminPermission extends Seeder
         ]      
         ';
 
-        $permissions = json_decode($permission_content);
+        $permissions = json_decode($permission_content,true);
 
         foreach ($permissions as $permission) {
             $current_access_info = [
