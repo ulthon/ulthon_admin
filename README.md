@@ -98,7 +98,7 @@
 
 `木兰协议`
 
-## 开发维护
+## 源码托管
 
 [码云开源存储](https://gitee.com/ulthon/ulthon_admin)
 
