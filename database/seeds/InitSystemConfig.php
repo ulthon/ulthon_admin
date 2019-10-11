@@ -18,7 +18,7 @@ class InitSystemConfig extends Seeder
     {
 
         $data = [
-            'site_name'=>'奥宏后台管理小模板'
+            'site_name'=>'奥宏后台管理模板'
         ];
 
         $list = get_system_config();
