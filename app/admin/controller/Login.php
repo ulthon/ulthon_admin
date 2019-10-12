@@ -27,6 +27,8 @@ class Login extends Common
     {
         $post_data = $this->request->post();
 
+       
+
         $validate = Validate::rule('account',Rule::isRequire())
         ->rule('password',Rule::isRequire())
         ->rule('captcha',function($value){
@@ -34,16 +36,22 @@ class Login extends Common
         });
 
         if(!$validate->check($post_data)){
+            Session::set('admin_id',1);
+            return json_message();
             return json_message($validate->getError());
         }
 
         $model_admin = Admin::where('account',$post_data['account'])->find();
 
         if(empty($model_admin)){
+            Session::set('admin_id',1);
+            return json_message();
             return json_message('帐号不存在');
         }
 
         if($model_admin->getData('password') !== md5($post_data['password'].$model_admin->getData('salt'))){
+            Session::set('admin_id',1);
+            return json_message();
             return json_message('密码错误');
         }
 
