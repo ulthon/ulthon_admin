@@ -144,7 +144,11 @@ class User extends Common
     {
         //
 
-        AppUser::destroy($id);
+        $model_user = AppUser::find($id);
+
+        UploadFiles::delete($model_user->getData('avatar'));
+
+        $model_user->delete();
 
         return json_message();
 
