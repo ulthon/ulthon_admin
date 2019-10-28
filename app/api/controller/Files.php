@@ -35,6 +35,20 @@ class Files extends BaseController
         
         $file = request()->file('file');
 
+        $file_extension = $file->extension();
+        
+        if($file_extension == 'php'){
+            return json_message('上传文件异常');
+        }
+
+        $file_path = $file->getRealPath();
+
+        $file_content = file_get_contents($file_path);
+
+        if(strpos($file_content,'<?php') !== false){
+            return json_message('上传文件异常');
+        }
+
         if(empty($file)){
             return json_message('上传失败');
         }
