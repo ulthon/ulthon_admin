@@ -35,7 +35,7 @@ class UploadFiles
 
     public static function clear($id)
     {
-        $model_file = AppUploadFiles::find($id);
+        $model_file = AppUploadFiles::withTrashed()->find($id);
 
         $model_file->clear_time = time();
         $model_file->status = 3;
