@@ -4,7 +4,7 @@ use think\facade\App;
 
 return [
     // 默认使用的数据库连接配置
-    'default'         => Env::get('database.driver', 'mysql'),
+    'default'         => Env::get('database.driver', 'sqlite'),
 
     // 自定义时间查询规则
     'time_query_rule' => [],
@@ -24,13 +24,13 @@ return [
             // 数据库类型
             'type'              => Env::get('database.type', 'mysql'),
             // 服务器地址
-            'hostname'          => Env::get('database.hostname', '39.101.138.149'),
+            'hostname'          => Env::get('database.hostname', ''),
             // 数据库名
-            'database'          => Env::get('database.database', 'reporter_ulthon_'),
+            'database'          => Env::get('database.database', ''),
             // 用户名
-            'username'          => Env::get('database.username', 'reporter_ulthon_'),
+            'username'          => Env::get('database.username', ''),
             // 密码
-            'password'          => Env::get('database.password', 'n8DHsiHw6pXyirtF'),
+            'password'          => Env::get('database.password', ''),
             // 端口
             'hostport'          => Env::get('database.hostport', '3306'),
             // 数据库连接参数
