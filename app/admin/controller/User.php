@@ -129,7 +129,7 @@ class User extends Common
             UploadFiles::use($post_data['avatar']);
         }
 
-        AppUser::update($post_data);
+        $model_user->save($post_data);
 
         $this->success('修改成功','index');
     }
