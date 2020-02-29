@@ -102,12 +102,12 @@
                                     </td>
                                     <td>
                                         <div class="layui-btn-container">
+                                            {if condition="empty($vo->getData('clear_time'))" }
                                             {if condition="!empty($vo->getData('used_time')) && empty($vo->getData('delete_time'))" }
                                             <div class="layui-btn layui-btn-sm force-clear">强制清除文件</div>
                                             {else /}
-                                                {if condition="empty($vo->getData('clear_time'))" }
                                                     <div class="layui-btn layui-btn-sm clear">清除文件</div>
-                                                {/if}
+                                            {/if}
                                             {/if}
                                             {if condition="empty($vo->getData('clear_time'))" }
                                                 <a class="layui-btn layui-btn-sm" href="{$vo.src}" target="_blank">下载</a>
@@ -150,6 +150,7 @@
                         },function(result){
                             if(result.code == 0){
                                 layer.msg('删除成功');
+                                $(item).parents('td').children().remove()
                             }else{
                                 layer.msg(result.msg)
                             }
@@ -165,6 +166,7 @@
                         },function(result){
                             if(result.code == 0){
                                 layer.msg('删除成功');
+                                $(item).parents('td').children().remove()
                             }else{
                                 layer.msg(result.msg)
                             }
