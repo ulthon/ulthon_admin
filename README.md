@@ -54,6 +54,15 @@
 
 如果希望去掉index.php，可以参考tp文档，在nginx或apache环境配置，内置服务器必须带index.php
 
+
+#### 重置密码
+
+重置密码为123456.
+
+```
+php think reset_password
+```
+
 #### 功能
 
 - 服务器信息(0.2h,已完成)
