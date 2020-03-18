@@ -28,6 +28,11 @@ class System extends Common
 
         return View::fetch();
     }
+    public function agreement()
+    {
+
+        return View::fetch();
+    }
 
     public function update()
     {
@@ -41,6 +46,11 @@ class System extends Common
         $list = SystemConfig::column('value','name');
         
         foreach ($post_data as $key => $value) {
+
+            if(!is_string($value)){
+                $value = serialize($value);
+            }
+
             if(\in_array($key,$upload_files_config)){
                 $old_save_name = get_system_config($key);
                 AppUploadFiles::use($value);
