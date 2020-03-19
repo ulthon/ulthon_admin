@@ -1,0 +1,100 @@
+@media screen and (max-width: 768px){
+    .layui-body{
+        left: 0;
+    }
+
+    .layui-layout-admin .layui-footer{
+        left: 0;
+    }
+
+    .layui-layout-admin .layui-logo{
+        width: 115px;
+    }
+
+    .layui-layout-admin .layui-side{
+        width: 100%;
+        overflow-x: hidden;
+        height: 100%;
+        position: unset;
+    }
+
+    .layui-layer-content .layui-hide-xs{
+        display: unset !important;
+    }
+
+    .layui-nav-tree{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.left-bottom-options{
+    position: fixed;
+    left: 20px;
+    bottom: 60px;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    font-size: 35px;
+    padding: 3px 5px;
+}
+
+.skin-1 .layui-nav-tree .layui-nav-item a:hover{
+    background-color: #6699CC;
+}
+
+.skin-1 .layui-bg-black{
+    background-color: #66CCFF !important; 
+}
+
+.skin-1 .layui-nav-tree .layui-nav-child dd.layui-this, 
+.skin-1 .layui-nav-tree .layui-nav-child dd.layui-this a, 
+.skin-1 .layui-nav-tree .layui-this, 
+.skin-1 .layui-nav-tree .layui-this > a, 
+.skin-1 .layui-nav-tree .layui-this > a:hover{
+    background-color: #6699CC;
+}
+
+.skin-1 .layui-layout-admin .layui-logo{
+    color: #fff;
+}
+
+.skin-1 .layui-layout-admin .layui-header{
+    background-color: #66CCFF;
+}
+
+.skin-1 .layui-nav {
+    background-color: #66CCFF;
+}
+
+.skin-1 .layui-nav .layui-nav-item a {
+    color: #FFFFFF
+}
+
+.skin-1 .layui-nav .layui-nav-child a {
+    color: #66CCFF;
+}
+
+.skin-1 .layui-nav .layui-this::after,
+.skin-1 .layui-nav-bar,
+.skin-1 .layui-nav-tree .layui-nav-itemed::after {
+    background-color: #CCFFFF;
+}
+
+.skin-1 .layui-tab-brief > .layui-tab-title .layui-this{
+    color: #66CCFF;
+}
+
+.skin-1 .layui-tab-brief > .layui-tab-more li.layui-this::after, .layui-tab-brief > .layui-tab-title .layui-this::after{
+    border-color: #66CCFF;
+}
+
+.skin-1 .layui-btn{
+    background-color: #66CCFF;
+}
+.skin-1 .layui-form-radio > i:hover, .layui-form-radioed > i{
+    color: #66CCFF;
+}
+
+.skin-1 .layui-elem-quote{
+    border-color: #66CCFF;
+}

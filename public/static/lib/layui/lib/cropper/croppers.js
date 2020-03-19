@@ -10,21 +10,21 @@ layui.config({
     var html = "<link rel=\"stylesheet\" href=\"/static/lib/layui/lib/cropper/cropper.css\">\n" +
         "<div class=\"layui-fluid showImgEdit\" style=\"display: none\">\n" +
         "    <div class=\"layui-form-item\">\n" +
-        "        <div class=\"layui-input-inline layui-btn-container\" style=\"width: auto;\">\n" +
+        "        <div class=\"layui-input-inline layui-btn-container\" style=\"width: auto;margin-left:0\">\n" +
         "            <label for=\"cropper_avatarImgUpload\" class=\"layui-btn layui-btn-primary\">\n" +
         "                <i class=\"layui-icon\">&#xe67c;</i>选择图片\n" +
         "            </label>\n" +
         "            <input class=\"layui-upload-file\" id=\"cropper_avatarImgUpload\" type=\"file\" value=\"选择图片\" name=\"file\">\n" +
         "        </div>\n" +
-        "        <div class=\"layui-form-mid layui-word-aux\">头像的尺寸限定150x150px,大小在50kb以内</div>\n" +
+        "        <div class=\"layui-form-mid layui-word-aux\" style=\"margin-left:0\">头像的尺寸限定150x150px,大小在50kb以内</div>\n" +
         "    </div>\n" +
         "    <div class=\"layui-row layui-col-space15\">\n" +
-        "        <div class=\"layui-col-xs9\">\n" +
+        "        <div class=\"layui-col-xs12 layui-col-md9 \">\n" +
         "            <div class=\"readyimg\" style=\"height:450px;background-color: rgb(247, 247, 247);\">\n" +
         "                <img src=\"\" >\n" +
         "            </div>\n" +
         "        </div>\n" +
-        "        <div class=\"layui-col-xs3\">\n" +
+        "        <div class=\"layui-col-xs12 layui-col-md3 \">\n" +
         "            <div class=\"img-preview\" style=\"width:200px;height:200px;overflow:hidden\">\n" +
         "            </div>\n" +
         "        </div>\n" +
@@ -62,6 +62,14 @@ layui.config({
                 url = e.url,
                 data = e.data,
                 done = e.done;
+
+            if(area === true){
+                if(window.innerWidth > 900){
+                    area = '900px'
+                }else{
+                    area = ['100%','100%']
+                }
+            }
 
             var content = $('.showImgEdit')
                 ,image = $(".showImgEdit .readyimg img")

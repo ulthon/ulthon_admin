@@ -1,42 +1,76 @@
 <link rel="stylesheet" href="/static/css/reset.css">
 <link rel="stylesheet" href="/static/css/pagination.css">
 <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
+<link rel="stylesheet" href="/static/css/common.css">
 <script src="/static/lib/jquery/jquery-3.4.1.min.js"></script>
+<script src="/static/lib/jquery/jquery.cookie.js"></script>
 <script src="/static/lib/layui/layui.js"></script>
 <script src="/static/js/common.js"></script>
 
 <style>
-    .main-container{
+    .main-container {
         margin-top: 10px;
     }
-    .layui-table img{
+
+    .layui-table img {
         max-width: 60px;
-        max-height: 60px;;;
+        max-height: 60px;
     }
 </style>
 
 <script>
+
     //JavaScript代码区域
-    layui.use(['element','layer'], function () {
+    layui.use(['element', 'layer', 'util'], function () {
         var element = layui.element;
+        var util = layui.util;
+        var defaultCookieSetting = {
+            path:'/',
+            expires: 7,
+        }
+        //执行
+        util.fixbar({
+            bar1: '&#xe656;'
+            , click: function (type) {
+                console.log(type);
+                if (type === 'bar1') {
+                    var skinName = $.cookie('skin-name')
+                    $('body').removeClass()
+                    if(skinName == 'skin-1'){
+                        $.cookie('skin-name','skin-0',defaultCookieSetting)
+                        $('body').addClass('skin-0')
+                    }else{
+                        $.cookie('skin-name','skin-1',defaultCookieSetting)
+                        $('body').addClass('skin-1')
+
+                    }
+                }
+            }
+        });
+        $('.layui-side').addClass('layui-hide-xs')
 
     });
 
-    $(function(){
-        if(typeof currentHeaderNavItem != "undefined"){
-            $('.header-nav-item').each(function(i,e){
-                if($(e).data('name') == currentHeaderNavItem){
-                    $(e).addClass('layui-this')
-                }
-            })
-        }
-        if(typeof currentLeftNavItem != "undefined"){
-            $('.left-nav-item').each(function(i,e){
-                if($(e).data('name') == currentLeftNavItem){
-                    $(e).addClass('layui-this')
-                }
-            })
-        }
+    $(function () {
+        var skinName = $.cookie('skin-name')
+
+        $('body').addClass(skinName)
+        setTimeout(() => {
+            if (typeof currentHeaderNavItem != "undefined") {
+                $('.header-nav-item').each(function (i, e) {
+                    if ($(e).data('name') == currentHeaderNavItem) {
+                        $(e).addClass('layui-this')
+                    }
+                })
+            }
+            if (typeof currentLeftNavItem != "undefined") {
+                $('.left-nav-item').each(function (i, e) {
+                    if ($(e).data('name') == currentLeftNavItem) {
+                        $(e).addClass('layui-this')
+                    }
+                })
+            }
+        }, 1);
     })
 </script>
 {:get_system_config('site_tongji')}

@@ -1,14 +1,14 @@
 <div class="layui-header">
     <a class="layui-logo" href="/">{:get_system_config('site_name')}</a>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
+    <!-- 头部区域（可配合layui已有的水平导航） PC端显示 -->
+    <ul class="layui-nav layui-layout-left layui-hide-xs pc-nav-container">
         <li class="layui-nav-item header-nav-item" data-name="Index" ><a href="{:url('admin/Index/index')}">首页</a></li>
         <li class="layui-nav-item header-nav-item" data-name="User" ><a href="{:url('admin/User/index')}">用户管理</a></li>
         <li class="layui-nav-item header-nav-item" data-name="File" ><a href="{:url('admin/File/index')}">文件管理</a></li>
         <li class="layui-nav-item header-nav-item" data-name="Admin" ><a href="{:url('admin/Admin/index')}">管理员管理</a></li>
         <li class="layui-nav-item header-nav-item" data-name="System" ><a href="{:url('admin/System/index')}">系统设置</a></li>
     </ul>
-    <ul class="layui-nav layui-layout-right">
+    <ul class="layui-nav layui-layout-right layui-hide-xs">
         <li class="layui-nav-item header-nav-item" data-name="Login">
             <a href="javascript:;">
                 <img src="{$admin.avatar}" class="layui-nav-img">
@@ -22,4 +22,64 @@
 
         <li class="layui-nav-item"><a href="{:url('Login/logout')}">退出</a></li>
     </ul>
+
+
+    <!-- 手机端显示 -->
+
+    <div class="left-bottom-options layui-show-xs-block layui-hide-md layui-icon layui-icon-right">
+        
+    </div>
+
+    <div class="layui-nav layui-layout-right layui-show-xs-block layui-hide-md">
+        <li class="layui-nav-item">
+            <a href="javascript:;" class="mobile-nav-current-title">菜单</a>
+            <dl class="layui-nav-child mobile-nav-container"> <!-- 二级菜单 -->
+
+            </dl>
+        </li>
+        <li class="layui-nav-item header-nav-item" data-name="Login">
+            <a href="javascript:;">
+                <img src="{$admin.avatar}" class="layui-nav-img">
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a href="{:url('Admin/edit')}">基本资料</a></dd>
+            <dd><a href="{:url('Admin/password')}">安全设置</a></dd>
+            <dd><a href="{:url('Login/logout')}">退出</a></dd>
+            </dl>
+        </li>
+    </div>
 </div>
+
+<div class="tpl" style="display: none;">
+    <dd class="mobile-nav-item header-nav-item"><a href="{:url('Admin/edit')}">基本资料</a></dd>
+</div>
+<script>
+
+    $(function(){
+        $('.pc-nav-container').children().each(function(n,e){
+            var nav = $('.tpl .mobile-nav-item').clone();
+
+            nav.data('name',$(e).data('name'))
+
+            nav.html($(e).html())
+
+            nav.appendTo('.mobile-nav-container')
+
+        })
+
+        $('.left-bottom-options').click(function(){
+            layer.open({
+                type:1,
+                content:$('.layui-side'),
+                anim:3,
+                offset:'l',
+                area:['60%','100%'],
+                shadeClose:true,
+                title:false,
+                closeBtn:false,
+                
+            })
+        })
+    })
+
+</script>

@@ -55,11 +55,10 @@
                                         <div class="layui-form-item">
                                             <div class="layui-form-label">密码</div>
                                             <div class="layui-input-block">
-                                                <input type="password" name="password"
-                                                    value="" class="layui-input">
+                                                <input type="password" name="password" value="" class="layui-input">
                                             </div>
                                         </div>
-                                        
+
                                         <div class="layui-form-item">
                                             <div class="layui-form-label">头像</div>
                                             <div class="layui-input-block">
@@ -67,10 +66,11 @@
                                                     <div class="layui-btn upload-admin-avatar">上传</div>
                                                 </div>
                                                 <div>
-                                                    <img class="layui-circle admin-avatar" style="width: 80px" src="{$user.avatar}"
-                                                        alt="{$user.avatar}" srcset="">
+                                                    <img class="layui-circle admin-avatar" style="width: 80px"
+                                                        src="{$user.avatar}" alt="{$user.avatar}" srcset="">
                                                 </div>
-                                                <input type="hidden" name="avatar" value="{$user->getData('avatar')}" class="layui-input">
+                                                <input type="hidden" name="avatar" value="{$user->getData('avatar')}"
+                                                    class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-form-item">
@@ -91,7 +91,7 @@
         <script>
             layui.config({
                 base: '/static/lib/layui/lib/cropper/'
-            }).use(['layer', 'upload', 'croppers','form'], function () {
+            }).use(['layer', 'upload', 'croppers', 'form'], function () {
                 var upload = layui.upload;
                 var croppers = layui.croppers;
 
@@ -103,13 +103,13 @@
                         type: 3,
                         dir: 'user_avatar'
                     },
-                    saveW: 150 //保存宽度
-                        ,
-                    saveH: 150,
-                    mark: 1 / 1 //选取比例
-                        ,
-                    area: '900px' //弹窗宽度
-                        ,
+                    saveW: 200, //保存宽度
+                    
+                    saveH: 200,
+                    mark: 1 / 1, //选取比例
+                    
+                    area: true, //弹窗宽度
+                    
                     accept: 'images',
                     done: function (result) {
                         if (result.code == 0) {
