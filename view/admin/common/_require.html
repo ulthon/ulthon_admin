@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/static/css/reset.css">
 <link rel="stylesheet" href="/static/css/pagination.css">
 <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
+<link rel="stylesheet" href="/static/css/{:cookie('skin-name','')}.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <script src="/static/lib/jquery/jquery-3.4.1.min.js"></script>
 <script src="/static/lib/jquery/jquery.cookie.js"></script>
@@ -44,6 +45,8 @@
                         $('body').addClass('skin-1')
 
                     }
+
+                    location.reload()
                 }
             }
         });

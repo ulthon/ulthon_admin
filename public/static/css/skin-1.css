@@ -1,0 +1,61 @@
+
+.layui-nav-tree .layui-nav-item a:hover{
+    background-color: #6699CC;
+}
+
+.layui-bg-black{
+    background-color: #66CCFF !important; 
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, 
+.layui-nav-tree .layui-nav-child dd.layui-this a, 
+.layui-nav-tree .layui-this, 
+.layui-nav-tree .layui-this > a, 
+.layui-nav-tree .layui-this > a:hover{
+    background-color: #6699CC;
+}
+
+.layui-layout-admin .layui-logo{
+    color: #fff;
+}
+
+.layui-layout-admin .layui-header{
+    background-color: #66CCFF;
+}
+
+.layui-nav {
+    background-color: #66CCFF;
+}
+
+.layui-nav .layui-nav-item a {
+    color: #FFFFFF
+}
+
+.layui-nav .layui-nav-child a {
+    color: #66CCFF;
+}
+
+.layui-nav .layui-this::after,
+.layui-nav-bar,
+.layui-nav-tree .layui-nav-itemed::after {
+    background-color: #CCFFFF;
+}
+
+.layui-tab-brief > .layui-tab-title .layui-this{
+    color: #66CCFF;
+}
+
+.layui-tab-brief > .layui-tab-more li.layui-this::after, .layui-tab-brief > .layui-tab-title .layui-this::after{
+    border-color: #66CCFF;
+}
+
+.layui-btn{
+    background-color: #66CCFF;
+}
+.layui-form-radio > i:hover, .layui-form-radioed > i{
+    color: #66CCFF;
+}
+
+.layui-elem-quote{
+    border-color: #66CCFF;
+}
