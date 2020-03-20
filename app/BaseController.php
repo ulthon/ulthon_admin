@@ -13,6 +13,7 @@ declare (strict_types = 1);
 namespace app;
 
 use think\App;
+use think\app\Url;
 use think\exception\ValidateException;
 use think\Validate;
 use think\facade\View;
@@ -108,7 +109,13 @@ abstract class BaseController
         if(is_null($jump_to_url)){
             $jump_to_url = \request()->server('HTTP_REFERER');
         }else{
-            $jump_to_url = url($jump_to_url);
+            if($jump_to_url instanceof Url){
+
+                $jump_to_url = $jump_to_url;
+            }else{
+                $jump_to_url = url($jump_to_url);
+
+            }
         }
 
         $data = [
@@ -131,7 +138,13 @@ abstract class BaseController
         if(is_null($jump_to_url)){
             $jump_to_url = \request()->server('HTTP_REFERER');
         }else{
-            $jump_to_url = url($jump_to_url);
+            if($jump_to_url instanceof Url){
+
+                $jump_to_url = $jump_to_url;
+            }else{
+                $jump_to_url = url($jump_to_url);
+
+            }
         }
 
         $data = [
