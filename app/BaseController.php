@@ -114,7 +114,6 @@ abstract class BaseController
                 $jump_to_url = $jump_to_url;
             }else{
                 $jump_to_url = url($jump_to_url);
-
             }
         }
 

@@ -50,7 +50,7 @@
                             <tbody>
                                 {volist name='list' id='vo'}
                                     
-                                <tr data-id="{$vo.id}">
+                                <tr class="item" data-id="{$vo.id}">
                                     <td>{$vo.id}</td>
                                     <td>{$vo.account}</td>
                                     <td><img src="{$vo.avatar}" alt=""></td>
@@ -90,11 +90,11 @@
                 var item = this;
                 layer.confirm('确定要删除吗？',function(){
                     $.get('{:url("delete")}',{
-                        id:$(item).parents('tr').data('id')
+                        id:$(item).parents('.item').data('id')
                     },function(result){
                         layer.msg('删除成功');
 
-                        $(item).parents('tr').remove();
+                        $(item).parents('.item').remove();
                     })
                 })
             })

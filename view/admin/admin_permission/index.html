@@ -93,7 +93,7 @@
                         value: $(item).data('name')
                     }, function (value, index) {
                         $.post('{:url("AdminPermission/update")}', {
-                            id: $(item).parents('tr').data('id'),
+                            id: $(item).parents('.item').data('id'),
                             name: value
                         }, function (result) {
                             layer.close(index)
@@ -107,7 +107,7 @@
                         value: $(item).data('url')
                     }, function (value, index) {
                         $.post('{:url("AdminPermission/update")}', {
-                            id: $(item).parents('tr').data('id'),
+                            id: $(item).parents('.item').data('id'),
                             url: value
                         }, function (result) {
                             layer.close(index)
@@ -120,11 +120,11 @@
                     var item = this;
                     layer.confirm('确定要删除吗?', function () {
                         $.get('{:url("AdminPermission/delete")}', {
-                            id: $(item).parents('tr').data('id')
+                            id: $(item).parents('.item').data('id')
                         }, function (result) {
                             if (result.code == 0) {
                                 layer.msg('删除成功');
-                                $(item).parents('tr').remove();
+                                $(item).parents('.item').remove();
                             } else {
                                 layer.msg(result.msg)
                             }
@@ -134,14 +134,14 @@
 
                 $('.is-log').click(function () {
                     var item = this;
-                    var isLog = $(item).parents('tr').data('is-log')
+                    var isLog = $(item).parents('.item').data('is-log')
                     if (isLog == 0) {
                         isLog = 1
                     } else {
                         isLog = 0
                     }
                     $.post('{:url("AdminPermission/update")}', {
-                        id: $(item).parents('tr').data('id'),
+                        id: $(item).parents('.item').data('id'),
                         is_log: isLog
                     }, function () {
                         if (isLog == 1) {
@@ -150,6 +150,7 @@
                             $(item).text('不记录')
 
                         }
+                        $(item).parents('.item').data('is-log',isLog)
                     })
                 })
             })

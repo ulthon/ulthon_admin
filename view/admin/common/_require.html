@@ -17,6 +17,31 @@
         max-width: 60px;
         max-height: 60px;
     }
+
+    .table-card-box{
+        
+        
+    }
+
+    .table-card-item{
+        background-color: #eee;
+        margin-bottom: 2px;
+        margin-top: 3px;
+    }
+
+    .table-card-item img{
+        max-width: 60px;
+        max-height: 60px;
+    }
+
+    .table-card-item .item-title{
+        background-color: #666;
+        color: #fff;
+        padding: 5px;
+    }
+    .table-card-item .item-value{
+        padding: 5px;
+    }
 </style>
 
 <script>
@@ -26,7 +51,7 @@
         var element = layui.element;
         var util = layui.util;
         var defaultCookieSetting = {
-            path:'/',
+            path: '/',
             expires: 7,
         }
         //执行
@@ -37,11 +62,11 @@
                 if (type === 'bar1') {
                     var skinName = $.cookie('skin-name')
                     $('body').removeClass()
-                    if(skinName == 'skin-1'){
-                        $.cookie('skin-name','skin-0',defaultCookieSetting)
+                    if (skinName == 'skin-1') {
+                        $.cookie('skin-name', 'skin-0', defaultCookieSetting)
                         $('body').addClass('skin-0')
-                    }else{
-                        $.cookie('skin-name','skin-1',defaultCookieSetting)
+                    } else {
+                        $.cookie('skin-name', 'skin-1', defaultCookieSetting)
                         $('body').addClass('skin-1')
 
                     }
@@ -73,7 +98,52 @@
                     }
                 })
             }
+
+
+            // 表格转卡片
+
+
+
+            var tableContainer = $('.layui-table').parent()
+
+            $('.layui-table').addClass('layui-hide-xs')
+
+            var cardList = $('<div class="table-card layui-show-xs-block layui-hide-md"></div>').prependTo(tableContainer)
+
+            $('.layui-table tbody tr').each(function () {
+                var trItem = this;
+
+                var boxItem = $('.tpl .table-card-box').clone()
+
+                $.each($(trItem).data(),function(index,value){
+                    
+                    $(boxItem).data(index,value)
+                })
+
+                $(trItem).find('td').each(function (index, ele) {
+                    var itemItem = $('.tpl .table-card-item').clone()
+                    $(itemItem).find('.item-title').text($('.layui-table thead th').eq(index).text())
+                    $(ele).children().clone().appendTo($(itemItem).find('.item-value'))
+
+                    $(itemItem).appendTo(boxItem)
+                })
+
+                $(boxItem).appendTo(cardList)
+            })
+
         }, 1);
+
+
     })
 </script>
 {:get_system_config('site_tongji')}
+
+<div class="tpl" style="display: none;">
+    <div class="table-card-box item">
+
+    </div>
+    <div class="table-card-item">
+        <div class="item-title"></div>
+        <div class="item-value"></div>
+    </div>
+</div>

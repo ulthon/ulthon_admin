@@ -72,7 +72,7 @@
                                     <td colspan="10">暂无数据</td>
                                 </tr>';{/php}
                                 {volist name="list" id="vo" empty="$empty"}
-                                <tr data-id="{$vo.id}">
+                                <tr class="item" data-id="{$vo.id}">
                                     <td>{$vo.id}</td>
                                     <td>
                                         {switch $vo.mime_type}
@@ -143,11 +143,11 @@
 
                 $('.clear').click(function () {
                     var item = this;
-                    console.log($(item).parents('tr').data('id'));
+                    console.log($(item).parents('.item').data('id'));
 
                     layer.confirm('确定要清除吗?清除后不能恢复', function () {
                         $.get('{:url("File/clear")}', {
-                            id: $(item).parents('tr').data('id')
+                            id: $(item).parents('.item').data('id')
                         }, function (result) {
                             if (result.code == 0) {
                                 layer.msg('删除成功');
@@ -163,7 +163,7 @@
 
                     layer.confirm('确定要强制清除吗?该文件有可能正在使用', function () {
                         $.get('{:url("File/clear")}', {
-                            id: $(item).parents('tr').data('id')
+                            id: $(item).parents('.item').data('id')
                         }, function (result) {
                             if (result.code == 0) {
                                 layer.msg('删除成功');
