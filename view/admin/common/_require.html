@@ -19,14 +19,14 @@
     }
 
     .table-card-box{
-        
-        
+        margin-top: 15px;
+        background-color: #eee;
+        padding: 15px 5px;
     }
 
     .table-card-item{
-        background-color: #eee;
-        margin-bottom: 2px;
-        margin-top: 3px;
+        
+        margin-top: 5px;
     }
 
     .table-card-item img{
@@ -35,12 +35,13 @@
     }
 
     .table-card-item .item-title{
-        background-color: #666;
-        color: #fff;
         padding: 5px;
+        font-size: 16px;
     }
     .table-card-item .item-value{
         padding: 5px;
+        margin: 5px;
+        background-color: #fff;
     }
 </style>
 
@@ -123,7 +124,13 @@
                 $(trItem).find('td').each(function (index, ele) {
                     var itemItem = $('.tpl .table-card-item').clone()
                     $(itemItem).find('.item-title').text($('.layui-table thead th').eq(index).text())
-                    $(ele).children().clone().appendTo($(itemItem).find('.item-value'))
+
+                    if($(ele).children().length == 0){
+                        $(itemItem).find('.item-value').html($(ele).html())
+                    }else{
+
+                        $(ele).children().clone().appendTo($(itemItem).find('.item-value'))
+                    }
 
                     $(itemItem).appendTo(boxItem)
                 })
