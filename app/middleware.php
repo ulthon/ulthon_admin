@@ -1,6 +1,8 @@
 <?php
 
 return [
+    // 全局跨域
+    \think\middleware\AllowCrossDomain::class,
     // 全局请求缓存
     // \think\middleware\CheckRequestCache::class,
     // 多语言加载
