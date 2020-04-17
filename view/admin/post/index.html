@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>内容管理</title>
+  {include file="common/_require"}
+
+  <script>
+    var currentHeaderNavItem = 'Post';
+    var currentLeftNavItem = 'post';
+  </script>
+</head>
+
+<body class="layui-layout-body">
+
+  <div class="layui-layout layui-layout-admin">
+    {include file="common/_header"}
+
+    {include file="common/left_post"}
+
+    <div class="layui-body">
+
+      <div style="padding:15px">
+        <div class="main-header">
+          <span class="layui-breadcrumb">
+            <a>首页</a>
+            <a><cite>系统信息</cite></a>
+          </span>
+        </div>
+        <div class="main-container">
+          <div>
+            <a href="{:url('create')}" class="layui-btn">添加</a>
+          </div>
+        </div>
+        <div>
+          <table class="layui-table" lay-skin="line">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>封面</th>
+                <th>简介</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {volist name='list' id='vo'}
+
+              <tr class="item" data-id="{$vo.id}">
+                <td>{$vo.id}</td>
+                <td>{$vo.title}</td>
+
+                <td>{$vo.value}</td>
+                <td>{$vo.sort}</td>
+                <td>
+                  <div class="layui-btn-container">
+                    <a class="layui-btn layui-btn-sm"
+                      href="{:url('edit',['id'=>$vo.id])}">编辑</a>
+                    <div class="layui-btn layui-btn-sm delete">删除</div>
+                  </div>
+                </td>
+              </tr>
+              {/volist}
+              {if condition="count($list) == 0" }
+              <tr>
+                <td colspan="7">暂无数据</td>
+              </tr>
+              {/if}
+            </tbody>
+          </table>
+          <div>
+            {$list|raw}
+          </div>
+        </div>
+      </div>
+    </div>
+    {include file="common/_footer"}
+  </div>
+</body>
+
+</html>

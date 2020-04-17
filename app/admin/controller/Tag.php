@@ -5,7 +5,7 @@ namespace app\admin\controller;
 
 use think\Request;
 
-class Article extends Common
+class Tag
 {
     /**
      * 显示资源列表

@@ -80,3 +80,29 @@
     white-space: normal;
     word-break: break-all;
 }
+.layui-form-radio{
+  white-space: nowrap;
+}
+
+
+.quick-input-item{
+  width: 120px;
+  margin: 3px 0;
+}
+
+.quick-input-item.sm-quick-input-item .layui-btn{
+    line-height: 24px;
+    height: 24px;
+    font-size: 12px;
+    padding: 0 12px;
+    
+}
+
+.quick-input-item.sm-quick-input-item .layui-input{
+  line-height: 24px;
+  height: 24px;
+}
+
+.ul-flex{
+  display: flex;
+}
