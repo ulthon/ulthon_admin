@@ -12,5 +12,33 @@
                 <a class="" href="{:url('admin/System/agreement')}">用户协议管理</a>
             </li>
         </ul>
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">PC管理</a>
+                <dl class="layui-nav-child">
+
+                    <dd class="left-nav-item" data-name="pc-nav-1"><a
+                            href="{:url('Nav/index',['type'=>1,'show_target'=>1])}">PC导航管理</a></dd>
+                    <dd class="left-nav-item" data-name="pc-nav-2"><a
+                            href="{:url('Nav/index',['type'=>2,'show_target'=>1])}">友情链接管理</a></dd>
+                    <dd class="left-nav-item" data-name="pc-nav-3"><a
+                            href="{:url('Nav/index',['type'=>3,'show_img'=>1,'show_target'=>1])}">PC轮播图管理</a></dd>
+
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">小程序</a>
+                <dl class="layui-nav-child">
+
+                    <dd class="left-nav-item" data-name="pc-nav-4"><a
+                            href="{:url('Nav/index',['type'=>4,'show_img'=>1,'show_xcx'=>1])}">首页导航管理</a></dd>
+                    <dd class="left-nav-item" data-name="pc-nav-5"><a
+                            href="{:url('Nav/index',['type'=>5,'show_img'=>1,'show_xcx'=>1])}">轮播图管理</a></dd>
+
+                </dl>
+            </li>
+        </ul>
     </div>
 </div>

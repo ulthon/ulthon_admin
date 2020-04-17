@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PC导航管理</title>
+  {include file="common/_require"}
+
+  <script>
+    var currentHeaderNavItem = 'System';
+    var currentLeftNavItem = 'pc-nav-{$Request.param.type|default="1"}';
+  </script>
+</head>
+
+<body class="layui-layout-body">
+
+  <div class="layui-layout layui-layout-admin">
+    {include file="common/_header"}
+
+    {include file="common/left_system"}
+
+    <div class="layui-body">
+
+      <div style="padding:15px">
+        <div class="main-header">
+          <span class="layui-breadcrumb">
+            <a>首页</a>
+            <a><cite>系统信息</cite></a>
+          </span>
+        </div>
+        <div class="main-container">
+          <div class="layui-row">
+            <div class="layui-col-md6">
+              <fieldset class="layui-elem-field">
+                <legend>添加</legend>
+                <div class="layui-field-box">
+                  <form action="{:url('save')}" method="POST" class="layui-form">
+                    
+                    <input type="hidden" name="type" value="{$Request.param.type}">
+                    <input type="hidden" name="show_img" value="{$Request.param.show_img|default='0'}">
+                    <input type="hidden" name="show_target" value="{$Request.param.show_target|default='0'}">
+                    <input type="hidden" name="show_xcx" value="{$Request.param.show_xcx|default='0'}">
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">标题</div>
+                      <div class="layui-input-block">
+                        <input type="text" name="title" required lay-verify="required" value="" class="layui-input">
+                      </div>
+                    </div>
+                    
+                    {if $Request.param.show_img == 1 }
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">图片</div>
+                      <div class="layui-input-block">
+                        <input type="hidden" name="img">
+                        <div>
+                          <div class="layui-btn upload">上传</div>
+                        </div>
+                        <div>
+                          <img class="nav-img" src="" style="display: none;max-width: 200px;max-height: 200px;" alt="">
+                        </div>
+                      </div>
+                    </div>
+                    {/if}
+                    {if $Request.param.show_target == 1 }
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">打开方式</div>
+                      <div class="layui-input-block">
+                        <input type="radio" name="target" value="1" title="当前页面" checked>
+                        <input type="radio" name="target" value="2" title="新页面">
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">链接</div>
+                      <div class="layui-input-block">
+                        <input type="text" name="value" required lay-verify="required" value="" class="layui-input">
+                      </div>
+                    </div>
+                    {/if}
+                    {if $Request.param.show_xcx == 1 }
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">小程序打开类型</div>
+                      <div class="layui-input-block">
+                        <input type="radio" name="xcx_type" value="1" title="导航页面">
+                        <input type="radio" name="xcx_type" value="2" title="普通页面">
+                        <input type="radio" name="xcx_type" value="3" title="web-view">
+                        <input type="radio" name="xcx_type" value="4" title="其他小程序">
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">小程序页面</div>
+                      <div class="layui-input-block">
+                        <input type="text" name="value" value="" class="layui-input">
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">小程序appid</div>
+                      <div class="layui-input-block">
+                        <input type="text" name="xcx_appid" value="" class="layui-input">
+                        <div class="layui-form-mid layui-word-aux">小程序打开类型为其他小程序时生效</div>
+                      </div>
+                    </div>
+                    {/if}
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">排序</div>
+                      <div class="layui-input-block">
+                        <input type="number" name="sort" value="" class="layui-input">
+                      </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                      <button class="layui-btn layui-btn-fluid" type="submit">创建</button>
+                    </div>
+                  </form>
+                </div>
+              </fieldset>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      {include file="common/_footer"}
+    </div>
+
+    <script>
+
+
+      layui.use(['upload','form'], function () {
+        var upload = layui.upload
+
+
+        var uploadTitleImg = upload.render({
+          elem: '.upload',
+          url: '{:url("api/Files/save")}',
+          data: {
+            type: 6,
+            dir: 'nav'
+          },
+          accept: 'images',
+          acceptMime: 'image/jpg,image/png,image/gif',
+          done: function (result) {
+            if (result.code == 0) {
+              layer.msg('上传成功');
+              $('input[name="img"]').val(result.data.save_name);
+              $('.nav-img').attr('src', result.data.src).show();
+            } else {
+              layer.msg(result.msg)
+            }
+          }
+        })
+      })
+
+    </script>
+</body>
+
+</html>
