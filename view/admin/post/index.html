@@ -59,8 +59,7 @@
                 <td>{$vo.sort}</td>
                 <td>
                   <div class="layui-btn-container">
-                    <a class="layui-btn layui-btn-sm"
-                      href="{:url('edit',['id'=>$vo.id])}">编辑</a>
+                    <a class="layui-btn layui-btn-sm" href="{:url('edit',['id'=>$vo.id])}">编辑</a>
                     <div class="layui-btn layui-btn-sm delete">删除</div>
                   </div>
                 </td>
@@ -81,6 +80,22 @@
     </div>
     {include file="common/_footer"}
   </div>
+
+
+  <script>
+    $('.delete').click(function () {
+      var item = this;
+      layer.confirm('确定要删除吗？', function () {
+        $.get('{:url("delete")}', {
+          id: $(item).parents('.item').data('id')
+        }, function (result) {
+          layer.msg('删除成功');
+
+          $(item).parents('.item').remove();
+        })
+      })
+    })
+  </script>
 </body>
 
 </html>

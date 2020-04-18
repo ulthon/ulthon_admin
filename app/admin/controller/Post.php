@@ -189,5 +189,15 @@ class Post extends Common
   public function delete($id)
   {
     //
+
+    $model_post = ModelPost::find($id);
+
+    $model_post->delete();
+
+    PostCategory::where('post_id',$id)->delete();
+
+    PostTag::where('post_id',$id)->delete();
+
+    return json_message();
   }
 }
