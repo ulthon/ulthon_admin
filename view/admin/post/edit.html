@@ -217,7 +217,16 @@
                         <div class="layui-form-mid layui-word-aux">越大越靠前</div>
                       </div>
                     </div>
-
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">模板</div>
+                      <div class="layui-input-block">
+                        <select name="tpl_name">
+                          {volist name=':config("view_type.post")' id='tpl_name' key="tpl_fix"}
+                          <option value="{$tpl_fix}">{$tpl_name}</option>
+                          {/volist}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </fieldset>
               </div>
@@ -338,6 +347,7 @@
         status: '{$post->getData("status")}',
         is_top: '{$post->getData("is_top")}',
         jump_to_url_status: '{$post->getData("jump_to_url_status")}',
+        tpl_name: '{$post->getData("tpl_name")}',
       })
 
       form.on('submit(save)', function (data) {
@@ -350,7 +360,7 @@
         console.log(formData);
 
         $.post('{:url("update")}', formData, function (result) {
-          
+
           layer.msg('添加成功')
           setTimeout(() => {
             location.href = result.data.jump_to_url
@@ -417,7 +427,7 @@
 
       function loadCategory() {
         $.get('{:url("Category/index")}', function (result) {
-          
+
           result.data.forEach(category => {
             var prefix = '';
             for (let prefixLevelIndex = 0; prefixLevelIndex < category.level; prefixLevelIndex++) {
@@ -430,10 +440,10 @@
             domCategory.find('input').attr('title', prefix + category.title)
 
             if (categoryList.indexOf(category.id) >= 0) {
-              
+
               domCategory.find('input').attr('checked', 'checked')
-              
-              
+
+
             }
             domCategory.appendTo('.category-list')
 

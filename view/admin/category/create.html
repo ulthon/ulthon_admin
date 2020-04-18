@@ -48,14 +48,42 @@
                       <select name="pid">
                         <option value="0">--无上级分类--</option>
                         {volist name='$list_category' id='category'}
-                        
+
                         <option value="{$category.id}">{:str_repeat('|--',$category.level)}{$category.title}</option>
                         {/volist}
 
-                      </select>     
+                      </select>
                     </div>
                   </div>
-                  
+                  <div class="layui-form-item">
+                    <div class="layui-form-label">副标题/描述</div>
+                    <div class="layui-input-block">
+                      <textarea name="desc" class="layui-textarea"></textarea>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-form-label">附图</div>
+                    <div class="layui-input-block">
+                      <input type="hidden" name="title_img">
+                      <div>
+                        <div class="layui-btn upload-title-img">上传</div>
+                      </div>
+                      <div>
+                        <img src="" class="title-img" style="display: none;max-width: 200px;max-height: 200px;;" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-form-label">模板</div>
+                    <div class="layui-input-block">
+                      <select name="tpl_name">
+                        {volist name=':config("view_type.category")' id='view_type' key="tpl_name"}
+                          <option value="{$tpl_name}">{$view_type}</option>
+                        {/volist}
+                      </select>
+                    </div>
+                  </div>
+
                   <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" submit lay-submit lay-filter="site-info">提交</button>
                   </div>
@@ -73,8 +101,27 @@
 
   <script>
 
-    layui.use(['form'],function(){
+    layui.use(['form', 'upload'], function () {
+      var upload = layui.upload;
 
+      upload.render({
+        elem: '.upload-title-img',
+        url: '{:url("api/Files/save")}',
+        data: {
+          type: 4,
+          dir: 'article'
+        },
+        accept: 'images',
+        done: function (result) {
+          if (result.code == 0) {
+            layer.msg('上传成功');
+            $('input[name="title_img"]').val(result.data.save_name)
+            $('.title-img').attr('src', result.data.src).show();
+          } else {
+            layer.msg(result.msg)
+          }
+        }
+      })
     })
 
   </script>

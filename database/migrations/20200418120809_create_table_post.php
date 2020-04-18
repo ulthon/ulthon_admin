@@ -48,6 +48,7 @@ class CreateTablePost extends Migrator
         $table->addColumn(ColumnFormat::integerTypeStatus('type')->setComment('类型,1:文章,有分类有标签,2:页面,无分类无标签'));
         $table->addColumn(Column::make('files','text')->setComment('附件'));
         $table->addColumn(Column::make('pictures','text')->setComment('相册'));
+        $table->addColumn(ColumnFormat::stringShort('tpl_name')->setComment('模板名称'));
         $table->addIndex('type');
         $table->addIndex('status');
         $table->addIndex('delete_time');

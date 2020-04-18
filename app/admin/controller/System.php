@@ -33,6 +33,11 @@ class System extends Common
 
         return View::fetch();
     }
+    public function theme()
+    {
+
+        return View::fetch();
+    }
 
     public function update()
     {

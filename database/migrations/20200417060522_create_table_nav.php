@@ -39,6 +39,7 @@ class CreateTableNav extends Migrator
         $table->addColumn(ColumnFormat::timestamp('delete_time'));
         $table->addColumn(Column::make('type','integer')->setLimit(10)->setSigned(false)->setComment('类型,用于区分业务场景:1:PC导航,2:PC轮播图,3:PC友情链接'));
         $table->addColumn(Column::make('img','string')->setLimit(100)->setComment('图片'));
+        $table->addColumn(ColumnFormat::stringLong('desc')->setComment('副标题描述'));
         $table->addColumn(Column::make('target','string')->setLimit(10)->setSigned(false)->setComment('网页链接打开对象,_BLANK,_SELF,iframe_name'));
         $table->addColumn(Column::make('xcx_type','integer')->setLimit(10)->setComment('小程序打开方式,1:小程序导航页面,2:普通页面,3:web-view,4:其他小程序,5:电话'));
         $table->addColumn(Column::make('value','string')->setLimit(100)->setComment('对象值,有可能是网页链接,小程序导航页面路径,小程序普通页面路径,电话'));

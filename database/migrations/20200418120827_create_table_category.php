@@ -37,6 +37,9 @@ class CreateTableCategory extends Migrator
         ->addColumn(ColumnFormat::timestamp('delete_time'))
         ->addColumn(ColumnFormat::integer('pid')->setComment('上级id'))
         ->addColumn(ColumnFormat::integer('level')->setDefault(1)->setComment('层级'))
+        ->addColumn(ColumnFormat::stringShort('tpl_name')->setComment('模板名称'))
+        ->addColumn(ColumnFormat::stringUrl('title_img')->setComment('附图'))
+        ->addColumn(ColumnFormat::stringLong('desc')->setComment('副标题描述'))
         ->addIndex('pid')
         ->create();
     }

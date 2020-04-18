@@ -18,7 +18,6 @@ class Nav extends Common
   public function index(Request $request)
   {
     //
-
     $type = $request->param('type',1);
 
     $list = ModelNav::order('sort asc')->order('id asc')->where('type',$type)->paginate();
