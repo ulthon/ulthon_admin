@@ -14,6 +14,11 @@ class Post extends Model
 {
   //
 
+  public static $stausNameList = [
+    0=>'不发布',
+    1=>'发布'
+  ];
+
   use SoftDelete;
 
   protected $defaultSoftDelete = 0;
@@ -26,6 +31,11 @@ class Post extends Model
   public function tags()
   {
     return $this->hasMany(PostTag::class,'post_id');
+  }
+
+  public function getStatusNameAttr()
+  {
+    return self::$stausNameList[$this->getData('status')];
   }
 
   public function setPubishTimeAttr($value)
