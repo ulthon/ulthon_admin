@@ -1,4 +1,6 @@
+@media screen and (max-width: 768px){
 
+}
 .layui-nav-tree .layui-nav-item a:hover{
     background-color: #6699CC;
 }
@@ -17,6 +19,7 @@
 
 .layui-layout-admin .layui-logo{
     color: #fff;
+    line-height: 45px;
 }
 
 .layui-layout-admin .layui-header{
@@ -27,8 +30,17 @@
     background-color: #66CCFF;
 }
 
+.layui-header{
+    height: 45px;
+}
+
+.layui-nav .layui-nav-item{
+    line-height: 45px;
+}
+
 .layui-nav .layui-nav-item a {
-    color: #FFFFFF
+    color: #FFFFFF;
+    
 }
 
 .layui-nav .layui-nav-child a {
@@ -94,4 +106,41 @@
   float: left;
   font-weight: normal;
   font-size: 14px;
+}
+
+.layui-nav-tree .layui-nav-item a{
+    height: 35px;
+    line-height: 35px;
+}
+
+.layui-nav-tree{
+    width: 140px;
+}
+.layui-layout-admin .layui-side{
+    width: 140px;
+    top: 45px;
+}
+.layui-layout-admin .layui-footer{
+    left: 140px;
+    height: 35px;
+    line-height: 35px;
+}
+.layui-layout-admin .layui-body{
+    top: 45px;
+}
+
+.layui-side-scroll{
+    width: 140px;
+}
+
+.layui-body{
+    left: 140px;
+}
+
+.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{
+    background-color: #66CCFF;
+}
+
+.layui-nav-tree .layui-nav-bar{
+    background-color: #66CCFF;
 }

@@ -23,7 +23,7 @@ class Post extends Common
   {
     //
 
-    $list = ModelPost::paginate();
+    $list = ModelPost::order('id desc')->paginate();
 
     View::assign('list', $list);
 
