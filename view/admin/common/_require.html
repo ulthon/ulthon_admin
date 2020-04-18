@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/static/css/reset.css">
 <link rel="stylesheet" href="/static/css/pagination.css">
 <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
-<link rel="stylesheet" href="/static/css/{:cookie('skin-name','')}.css">
+<link rel="stylesheet" href="/static/css/{$Request.cookie.skin_name|default='skin-0'}.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <script src="/static/lib/jquery/jquery-3.4.1.min.js"></script>
 <script src="/static/lib/jquery/jquery.cookie.js"></script>
@@ -24,13 +24,13 @@
             , click: function (type) {
                 console.log(type);
                 if (type === 'bar1') {
-                    var skinName = $.cookie('skin-name')
+                    var skinName = $.cookie('skin_name')
                     $('body').removeClass()
                     if (skinName == 'skin-1') {
-                        $.cookie('skin-name', 'skin-0', defaultCookieSetting)
+                        $.cookie('skin_name', 'skin-0', defaultCookieSetting)
                         $('body').addClass('skin-0')
                     } else {
-                        $.cookie('skin-name', 'skin-1', defaultCookieSetting)
+                        $.cookie('skin_name', 'skin-1', defaultCookieSetting)
                         $('body').addClass('skin-1')
 
                     }

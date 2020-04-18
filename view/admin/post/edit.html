@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>应用管理</title>
+  <title>文章编辑</title>
   {include file="common/_require"}
   <link rel="stylesheet" href="/static/lib/quill/quill.snow.css">
   <script src="/static/lib/quill/quill.min.js"></script>
@@ -15,11 +15,9 @@
   </script>
 
   <style>
-
-    #toolbar select{
+    #toolbar select {
       display: none !important;
     }
-
   </style>
 </head>
 
@@ -36,41 +34,43 @@
         <div class="main-header">
           <span class="layui-breadcrumb">
             <a>首页</a>
-            <a><cite>系统信息</cite></a>
+            <a><cite>文章编辑</cite></a>
           </span>
         </div>
         <div class="main-container">
           <div class="layui-row">
-            <form action="{:url('save')}" method="POST" class="layui-form" lay-filter="*">
+            <form action="{:url('update')}" method="POST" class="layui-form" lay-filter="*">
+              <input type="hidden" name="id" value="{$post.id}">
               <div class="layui-col-md9 layui-col-lg10">
                 <fieldset class="layui-elem-field">
-                  <legend>添加</legend>
+                  <legend>编辑</legend>
                   <div class="layui-field-box">
 
 
                     <div class="layui-form-item">
                       <div class="layui-form-label">标题</div>
                       <div class="layui-input-block">
-                        <input type="text" name="title" required lay-verify="required" class="layui-input">
+                        <input type="text" name="title" required lay-verify="required" value="{$post->title}"
+                          class="layui-input">
                       </div>
                     </div>
 
                     <div class="layui-form-item">
                       <div class="layui-form-label">封面</div>
                       <div class="layui-input-block">
-                        <input type="hidden" name="poster">
+                        <input type="hidden" name="poster" value="{$post->getData('poster')}">
                         <div>
                           <div class="layui-btn upload-poster">上传</div>
                         </div>
                         <div>
-                          <img src="" class="poster" style="display: none;max-width: 200px;max-height: 200px;;" alt="">
+                          <img src="{$post->poster}" class="poster" style="max-width: 200px;max-height: 200px;;" alt="">
                         </div>
                       </div>
                     </div>
                     <div class="layui-form-item">
                       <div class="layui-form-label">描述</div>
                       <div class="layui-input-block">
-                        <textarea name="desc" class="layui-textarea"></textarea>
+                        <textarea name="desc" class="layui-textarea">{$post->getData('desc')}</textarea>
                       </div>
                     </div>
 
@@ -119,6 +119,7 @@
                         <div id="editor" style="height: 600px;">
 
                         </div>
+                        <div id="content" style="display: none;">{:json_encode($post->content)}</div>
                       </div>
                     </div>
 
@@ -137,13 +138,14 @@
                       <div class="layui-form-label">状态</div>
                       <div class="layui-input-block">
                         <input type="radio" name="status" value="1" title="发布">
-                        <input type="radio" name="status" value="0" title="不发布" checked>
+                        <input type="radio" name="status" value="0" title="不发布">
                       </div>
                     </div>
                     <div class="layui-form-item">
                       <div class="layui-form-label">发表时间</div>
                       <div class="layui-input-block">
-                        <input type="text" name="publish_time" class="layui-input publish-time">
+                        <input type="text" name="publish_time" value="{$post->publish_time}"
+                          class="layui-input publish-time">
                       </div>
                     </div>
                     <div class="layui-form-item">
@@ -176,7 +178,8 @@
                         </div>
                         <div class="quick-input-item sm-quick-input-item" title="输入新标签,使用空格分隔可一次添加多个标签">
                           <div class="">
-                            <input type="text" name="" placeholder="输入新标签" autocomplete="off" id="new-tags" class="layui-input">
+                            <input type="text" name="" placeholder="输入新标签" autocomplete="off" id="new-tags"
+                              class="layui-input">
                             <div class="layui-btn create-tags">新增</div>
                           </div>
                         </div>
@@ -187,13 +190,14 @@
                       <div class="layui-form-label">是否置顶</div>
                       <div class="layui-input-block">
                         <input type="radio" name="is_top" value="1" title="置顶">
-                        <input type="radio" name="is_top" value="0" title="不置顶" checked>
+                        <input type="radio" name="is_top" value="0" title="不置顶">
                       </div>
                     </div>
                     <div class="layui-form-item">
                       <div class="layui-form-label">跳转链接</div>
                       <div class="layui-input-block">
-                        <input type="text" name="jump_to_url" class="layui-input">
+                        <input type="text" name="jump_to_url" value="{$post->getData('jump_to_url')}"
+                          class="layui-input">
                       </div>
                     </div>
 
@@ -201,7 +205,7 @@
                       <div class="layui-form-label">跳转链接状态</div>
                       <div class="layui-input-block">
                         <input type="radio" name="jump_to_url_status" value="0" title="不显示">
-                        <input type="radio" name="jump_to_url_status" value="1" title="仅显示" checked>
+                        <input type="radio" name="jump_to_url_status" value="1" title="仅显示">
                         <input type="radio" name="jump_to_url_status" value="2" title="自动跳转">
                       </div>
                     </div>
@@ -209,7 +213,7 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">排序</div>
                       <div class="layui-input-block">
-                        <input type="number" name="sort" class="layui-input">
+                        <input type="number" name="sort" value="{$post->getData('sort')}" class="layui-input">
                         <div class="layui-form-mid layui-word-aux">越大越靠前</div>
                       </div>
                     </div>
@@ -233,20 +237,20 @@
       </div>
       <option value="0" class="new-category-item">选择父分类</option>
 
-
     </div>
   </div>
 
   <script>
-
-    layui.use(['form', 'upload','laydate'], function () {
+    var categoryList = JSON.parse('{:json_encode($post->categorys->column("category_id"))}')
+    var tagList = JSON.parse('{:json_encode($post->tags->column("tag_id"))}')
+    layui.use(['form', 'upload', 'laydate'], function () {
       var upload = layui.upload;
       var form = layui.form;
       var laydate = layui.laydate;
 
       laydate.render({
-        elem:'.publish-time',
-        type:'datetime'
+        elem: '.publish-time',
+        type: 'datetime'
       })
 
       var currentRange = {
@@ -261,6 +265,9 @@
         },
 
       });
+
+      quill.setContents(JSON.parse($('#content').text()))
+
 
       quill.on('selection-change', function (range, oldRange, source) {
         if (range) {
@@ -327,6 +334,12 @@
         return false;
       });
 
+      form.val('*', {
+        status: '{$post->getData("status")}',
+        is_top: '{$post->getData("is_top")}',
+        jump_to_url_status: '{$post->getData("jump_to_url_status")}',
+      })
+
       form.on('submit(save)', function (data) {
 
         var formData = data.field;
@@ -336,8 +349,8 @@
 
         console.log(formData);
 
-        $.post('{:url("save")}',formData,function(result){
-          console.log(result);
+        $.post('{:url("update")}', formData, function (result) {
+          
           layer.msg('添加成功')
           setTimeout(() => {
             location.href = result.data.jump_to_url
@@ -364,6 +377,9 @@
             var domTag = $('.tpl .tag-item').clone();
             domTag.attr('title', tag.title)
             domTag.val(tag.id)
+            if (tagList.indexOf(tag.id) >= 0) {
+              domTag.attr('checked', 'checked')
+            }
             domTag.appendTo('.tag-list')
           });
           form.render('checkbox')
@@ -376,7 +392,7 @@
       $('.create-tags').click(function () {
         var value = $.trim($('#new-tags').val());
 
-        if(value.length == 0){
+        if (value.length == 0) {
           return false;
         }
 
@@ -390,7 +406,7 @@
 
       var categoryPage = 1;
       initCategory();
-      function initCategory(){
+      function initCategory() {
         $('.category-list').children().remove();
         $('.new-category-option-list').find('.new-category-item').remove();
         $('.new-category-option-list').find('.layui-form-select').remove();
@@ -400,26 +416,32 @@
       }
 
       function loadCategory() {
-        $.get('{:url("Category/index")}',function(result){
-          console.log(result);
+        $.get('{:url("Category/index")}', function (result) {
+          
           result.data.forEach(category => {
             var prefix = '';
             for (let prefixLevelIndex = 0; prefixLevelIndex < category.level; prefixLevelIndex++) {
               prefix += '|--'
-              
+
             }
             var domCategory = $('.tpl .category-item').clone();
 
             domCategory.find('input').val(category.id)
-            domCategory.find('input').attr('title', prefix+category.title)
+            domCategory.find('input').attr('title', prefix + category.title)
 
+            if (categoryList.indexOf(category.id) >= 0) {
+              
+              domCategory.find('input').attr('checked', 'checked')
+              
+              
+            }
             domCategory.appendTo('.category-list')
 
             var domNewCategory = $('.tpl .new-category-item').clone();
-            
-            domNewCategory.text(prefix+category.title)
+
+            domNewCategory.text(prefix + category.title)
             domNewCategory.val(category.id)
-            domNewCategory.attr('title',category.title)
+            domNewCategory.attr('title', category.title)
 
             domNewCategory.appendTo('.new-category-option-list select')
 
@@ -427,22 +449,22 @@
           form.render()
         })
       }
-      $('.create-category').click(function(){
+      $('.create-category').click(function () {
         var pid = $('.new-category-option-list').find('select').val();
         var title = $('#new-category').val()
 
-        $.post('{:url("Category/save")}',{
-          title:title,
-          pid:pid
-        },function(result){
-          if(result.code == 0){
+        $.post('{:url("Category/save")}', {
+          title: title,
+          pid: pid
+        }, function (result) {
+          if (result.code == 0) {
             layer.msg('添加成功')
             initCategory();
-          }else{
+          } else {
             layer.msg(result.msg)
           }
         })
-        
+
       })
 
     })

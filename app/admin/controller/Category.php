@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace app\admin\controller;
 
+use app\model\Category as ModelCategory;
 use think\facade\View;
 use think\Request;
 
@@ -18,6 +19,14 @@ class Category extends Common
   {
     //
 
+    $list = ModelCategory::getListLevel();
+
+    if($this->request->isAjax()){
+      return json_message($list);
+    }
+
+    View::assign('list',$list);
+
     return View::fetch();
   }
 
@@ -29,6 +38,10 @@ class Category extends Common
   public function create()
   {
     //
+
+    $list = ModelCategory::getListLevel();
+
+    View::assign('list_category',$list);
 
     return View::fetch();
   }
@@ -42,6 +55,33 @@ class Category extends Common
   public function save(Request $request)
   {
     //
+
+    $post_data = $request->post();
+
+    if(empty($post_data['title'])){
+      return $this->error('标题不能为空',null,500);
+    }
+
+    $model_category = ModelCategory::where('title',$post_data['title'])
+    ->where('pid',$post_data['pid'])
+    ->find();
+
+    if(!empty($model_category)){
+      $this->error('相同名称相同级别不能出现两次',null,500);
+    }
+
+    if($post_data['pid'] != 0){
+      
+      $model_parent_category = ModelCategory::where('id',$post_data['pid'])->find();
+      
+      $post_data['level'] = $model_parent_category->level + 1;
+
+    }
+
+    ModelCategory::create($post_data);
+
+    return $this->success('添加成功','index');
+
   }
 
   /**
@@ -64,6 +104,15 @@ class Category extends Common
   public function edit($id)
   {
     //
+
+    $model_category = ModelCategory::find($id);
+    
+    $list = ModelCategory::getListLevel();
+
+    View::assign('list_category',$list);
+    View::assign('category',$model_category);
+
+    return View::fetch();
   }
 
   /**
@@ -76,6 +125,36 @@ class Category extends Common
   public function update(Request $request, $id)
   {
     //
+
+    
+    $post_data = $request->post();
+
+    $model_category = ModelCategory::where('title',$post_data['title'])
+    ->where('pid',$post_data['pid'])
+    ->where('id','<>',$id)
+    ->find();
+
+    if(!empty($model_category)){
+      $this->error('相同名称相同级别不能出现两次');
+    }
+
+    if($post_data['pid'] != 0){
+      
+      $model_parent_category = ModelCategory::where('id',$post_data['pid'])->find();
+      
+      $post_data['level'] = $model_parent_category->level + 1;
+
+    }else{
+      $post_data['level'] = 1;
+    }
+
+    $model_category = ModelCategory::find($id);
+
+    $model_category->save($post_data);
+
+    return $this->success('保存成功','index');
+
+
   }
 
   /**
@@ -87,5 +166,25 @@ class Category extends Common
   public function delete($id)
   {
     //
+
+    if($id == 0){
+      return json_message('错误');
+    }
+
+    $model_category = ModelCategory::find($id);
+
+    $pid = 0;
+
+    if($model_category->pid != 0){
+
+      $pid = $model_category->pid;
+    }
+
+    ModelCategory::where('pid',$id)->update(['pid'=>$pid]);
+
+    $model_category->delete();
+
+    return json_message();
+
   }
 }

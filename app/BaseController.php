@@ -125,7 +125,10 @@ abstract class BaseController
 
         if(\request()->isAjax()){
             $data['jump_to_url'] = (string)$jump_to_url;
-            throw new HttpResponseException(json_message($data,0,$msg));
+            if($code == 200){
+              $code = 0;
+            }
+            throw new HttpResponseException(json_message($data,$code,$msg));
         }
 
         View::assign($data);
@@ -154,7 +157,10 @@ abstract class BaseController
 
         if(\request()->isAjax()){
             $data['jump_to_url'] = (string)$jump_to_url;
-            throw new HttpResponseException(json_message($data,0,$msg));
+            if($code == 200){
+              $code = 0;
+            }
+            throw new HttpResponseException(json_message($data,$code,$msg));
         }
 
         View::assign($data);
