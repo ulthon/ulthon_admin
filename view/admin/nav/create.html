@@ -73,14 +73,14 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">打开方式</div>
                       <div class="layui-input-block">
-                        <input type="radio" name="target" value="1" title="当前页面" checked>
-                        <input type="radio" name="target" value="2" title="新页面">
+                        <input type="radio" name="target" value="_self" title="当前页面" checked>
+                        <input type="radio" name="target" value="_blank" title="新页面">
                       </div>
                     </div>
                     <div class="layui-form-item">
                       <div class="layui-form-label">链接</div>
                       <div class="layui-input-block">
-                        <input type="text" name="value" required lay-verify="required" value="" class="layui-input">
+                        <input type="text" name="value" value="" class="layui-input">
                       </div>
                     </div>
                     {/if}
@@ -114,7 +114,13 @@
                         <input type="number" name="sort" value="" class="layui-input">
                       </div>
                     </div>
-
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">状态</div>
+                      <div class="layui-input-block">
+                        <input type="radio" name="status" value="1" title="显示" checked>
+                        <input type="radio" name="status" value="0" title="不显示">
+                      </div>
+                    </div>
                     <div class="layui-form-item">
                       <button class="layui-btn layui-btn-fluid" type="submit">创建</button>
                     </div>

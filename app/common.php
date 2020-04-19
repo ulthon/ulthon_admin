@@ -54,6 +54,10 @@ function get_system_config($name = '', $default = '')
 
 function get_source_link($url)
 {
+
+  if(empty($url)){
+    $url = '/static/images/avatar.jpeg';
+  }
   if (strpos($url, '/') === 0) {
     return $url;
   }

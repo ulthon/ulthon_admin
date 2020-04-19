@@ -217,8 +217,8 @@
                       <div class="layui-form-label">模板</div>
                       <div class="layui-input-block">
                         <select name="tpl_name">
-                          {volist name=':config("view_type.post")' id='tpl_name' key="tpl_fix"}
-                          <option value="{$tpl_fix}">{$tpl_name}</option>
+                          {volist name=':config("view_type.post")' id='tpl_name'}
+                          <option value="{$key}">{$tpl_name}</option>
                           {/volist}
                         </select>
                       </div>

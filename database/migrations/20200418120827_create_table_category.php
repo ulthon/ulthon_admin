@@ -40,7 +40,10 @@ class CreateTableCategory extends Migrator
         ->addColumn(ColumnFormat::stringShort('tpl_name')->setComment('模板名称'))
         ->addColumn(ColumnFormat::stringUrl('title_img')->setComment('附图'))
         ->addColumn(ColumnFormat::stringLong('desc')->setComment('副标题描述'))
+        ->addColumn(ColumnFormat::integerTypeStatus('status')->setComment('0:不显示,1:显示'))
         ->addIndex('pid')
+        ->addIndex('status')
+        ->addIndex('delete_time')
         ->create();
     }
 }

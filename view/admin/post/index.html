@@ -40,11 +40,13 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>名称</th>
+                <th >名称</th>
                 <th>封面</th>
-                <th>简介</th>
+                <th >简介</th>
                 <th>排序</th>
                 <th>状态</th>
+                <th>分类</th>
+                <th>标签</th>
                 <th>操作</th>
               </tr>
             </thead>
@@ -53,12 +55,22 @@
 
               <tr class="item" data-id="{$vo.id}">
                 <td>{$vo.id}</td>
-                <td>{$vo.title}</td>
+                <td style="max-width: 160px;">{$vo.title}</td>
 
                 <td><img src="{$vo.poster}" alt=""></td>
-                <td>{$vo.desc}</td>
+                <td style="max-width: 200px;">{$vo.desc_short}</td>
                 <td>{$vo.sort}</td>
                 <td>{$vo.status_name}</td>
+                <td>
+                  {volist name='vo.categorys_list' id='category'}
+                    <p>{:str_repeat('|--',$category.level)}{$category.title}</p>
+                  {/volist}
+                </td>
+                <td>
+                  {volist name='vo.tags_list' id='tag'}
+                  <span class="layui-badge layui-bg-blue">{$tag.title}</span>
+                  {/volist}
+                </td>
                 <td>
                   <div class="layui-btn-container">
                     <a class="layui-btn layui-btn-sm" href="{:url('edit',['id'=>$vo.id])}">编辑</a>

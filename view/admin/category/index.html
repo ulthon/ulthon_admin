@@ -52,6 +52,7 @@
                   <td> {:str_repeat('|--',$vo.level)} {$vo.title}</td>
                   <td>
                     <div class="layui-btn-container">
+                      <a class="layui-btn layui-btn-sm" href="{:url('index/Category/read',['id'=>$vo.id])}">查看</a>
                       <a class="layui-btn layui-btn-sm" href="{:url('edit',['id'=>$vo.id])}">编辑</a>
                       <div class="layui-btn layui-btn-sm delete">删除</div>
                     </div>

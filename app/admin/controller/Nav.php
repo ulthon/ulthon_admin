@@ -54,9 +54,9 @@ class Nav extends Common
 
     return $this->success('添加成功', url('index',[
       'type'=>$request->param('type',1),
-      'show_img'=>$request->param('show_img'),
-      'show_target'=>$request->param('show_target'),
-      'show_xcx'=>$request->param('show_xcx'),
+      'show_img'=>$request->param('show_img',0),
+      'show_target'=>$request->param('show_target',0),
+      'show_xcx'=>$request->param('show_xcx',0),
     ]));
   }
 
@@ -104,10 +104,10 @@ class Nav extends Common
     $model_nav->save($post_data);
 
     return $this->success('保存成功', url('index',[
-      'type'=>$model_nav->getData('type'),
-      'show_img'=>$request->param('show_img'),
-      'show_target'=>$request->param('show_target'),
-      'show_xcx'=>$request->param('show_xcx'),
+      'type'=>$model_nav->getData('type',1),
+      'show_img'=>$request->param('show_img',0),
+      'show_target'=>$request->param('show_target',0),
+      'show_xcx'=>$request->param('show_xcx',0),
     ]));
   }
 

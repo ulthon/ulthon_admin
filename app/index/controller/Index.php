@@ -5,7 +5,7 @@ namespace app\index\controller;
 use think\facade\View;
 use think\Request;
 
-class Index extends BaseController
+class Index extends Common
 {
     /**
      * 显示资源列表
@@ -16,9 +16,7 @@ class Index extends BaseController
     {
         //
 
-        dump($this->request->action());
-
-        return $this->fetch('');
+        return $this->fetch();
     }
 
     /**

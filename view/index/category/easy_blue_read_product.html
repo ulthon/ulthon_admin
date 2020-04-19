@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+  <title>{:get_system_config('site_name')}-首页</title>
+
+  {include file='common/_easy_blue_require'/}
+</head>
+
+<body>
+  {include file='common/_easy_blue_header'/}
+  <div style="margin-top: 80px;">
+
+    <!-- banner部分 -->
+    <div class="banner product" style="background-image: url('{$category.title_img}');">
+      <div class="title">
+        <p>{$category.title}</p>
+        <p class="en">{$category.desc}</p>
+      </div>
+    </div>
+    <!-- main部分 -->
+    <div class="main product">
+      <div class="layui-container">
+        {volist name='$category.posts_list' id='post'}
+          
+        <div class="content layui-row">
+          <div class="layui-col-xs12 layui-col-sm6 layui-col-md7 layui-col-lg6 content-img"><img
+              src="{$post.poster}"></div>
+          <div class="layui-col-xs12 layui-col-sm6 layui-col-md5 layui-col-lg6 right">
+            <p class="label">{$post.title}</p>
+            <p class="detail">{$post.desc_short}</p>
+            <div><a href="{:url('Post/read',['id'=>$post.id])}">查看产品 ></a></div>
+          </div>
+        </div>
+        {/volist}
+
+      </div>
+    </div>
+  </div>
+  {include file='common/_easy_blue_footer'/}
+
+
+</body>
+
+</html>

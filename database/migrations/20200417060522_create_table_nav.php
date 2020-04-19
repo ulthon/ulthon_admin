@@ -44,9 +44,11 @@ class CreateTableNav extends Migrator
         $table->addColumn(Column::make('xcx_type','integer')->setLimit(10)->setComment('小程序打开方式,1:小程序导航页面,2:普通页面,3:web-view,4:其他小程序,5:电话'));
         $table->addColumn(Column::make('value','string')->setLimit(100)->setComment('对象值,有可能是网页链接,小程序导航页面路径,小程序普通页面路径,电话'));
         $table->addColumn(Column::make('xcx_appid','string')->setLimit(30)->setComment('小程序appid,目标是其他小程序是有效'));
+        $table->addColumn(ColumnFormat::integerTypeStatus('status')->setComment('0:下架,1:显示'));
         $table->addIndex('delete_time');
         $table->addIndex('type');
         $table->addIndex('sort');
+        $table->addIndex('status');
         $table->create();
     }
 }

@@ -8,12 +8,12 @@
 </head>
 <body>
     <h1>{$msg}</h1>
-    <h2> <span id="counting">3</span>秒后跳转 <a href="{$jump_to_url}">立即跳转</a></h2>
+    <h2> <span id="counting">3</span>秒后跳转 <a href="{$jump_to_url|raw}">立即跳转</a></h2>
     <script>
         var counting = 3;
         setInterval(() => {
             if(counting == 1){
-                location.href = '{$jump_to_url}';
+                location.href = '{$jump_to_url|raw}';
             }
             counting--
             document.getElementById('counting').innerHTML = counting

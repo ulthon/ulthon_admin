@@ -77,13 +77,19 @@
                     <div class="layui-form-label">模板</div>
                     <div class="layui-input-block">
                       <select name="tpl_name">
-                        {volist name=':config("view_type.category")' id='view_type' key="tpl_name"}
-                          <option value="{$tpl_name}">{$view_type}</option>
+                        {volist name=':config("view_type.category")' id='view_type'}
+                          <option value="{$key}">{$view_type}</option>
                         {/volist}
                       </select>
                     </div>
                   </div>
-
+                  <div class="layui-form-item">
+                    <div class="layui-form-label">状态</div>
+                    <div class="layui-input-block">
+                      <input type="radio" name="status" value="1" title="显示" checked>
+                      <input type="radio" name="status" value="0" title="不显示">
+                    </div>
+                  </div>
                   <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" submit lay-submit lay-filter="site-info">提交</button>
                   </div>

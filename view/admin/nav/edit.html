@@ -37,8 +37,9 @@
                 <legend>编辑</legend>
                 <div class="layui-field-box">
                   <form action="{:url('update')}" method="POST" class="layui-form" lay-filter="*">
-                    <input type="hidden" name="show_img" value="{$Request.param.show_img}">
-                    <input type="hidden" name="show_target" value="{$Request.param.show_target}">
+                    <input type="hidden" name="show_img" value="{$Request.param.show_img|default='0'}">
+                    <input type="hidden" name="show_target" value="{$Request.param.show_target|default='0'}">
+                    <input type="hidden" name="show_xcx" value="{$Request.param.show_xcx|default='0'}">
                     <input type="hidden" name="id" value="{$nav.id}">
                     <div class="layui-form-item">
                       <div class="layui-form-label">标题</div>
@@ -53,7 +54,7 @@
                         <textarea name="desc" class="layui-textarea">{$nav.desc}</textarea>
                       </div>
                     </div>
-                    
+
                     {if $Request.param.show_img == 1 }
                     <div class="layui-form-item">
                       <div class="layui-form-label">图片</div>
@@ -79,7 +80,7 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">链接</div>
                       <div class="layui-input-block">
-                        <input type="text" name="value" required lay-verify="required" value="{$nav.value}"
+                        <input type="text" name="value" value="{$nav.value}"
                           class="layui-input">
                       </div>
                     </div>
@@ -114,7 +115,13 @@
                         <input type="number" name="sort" value="{$nav.sort}" class="layui-input">
                       </div>
                     </div>
-
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">状态</div>
+                      <div class="layui-input-block">
+                        <input type="radio" name="status" value="1" title="显示">
+                        <input type="radio" name="status" value="0" title="不显示">
+                      </div>
+                    </div>
                     <div class="layui-form-item">
                       <button class="layui-btn layui-btn-fluid" type="submit">保存</button>
                     </div>
@@ -134,13 +141,14 @@
     <script>
 
 
-      layui.use(['upload','form'], function () {
+      layui.use(['upload', 'form'], function () {
         var upload = layui.upload
         var form = layui.form
 
-        form.val('*',{
-          target:'{$nav->getData("target")}',
-          xcx_type:'{$nav->getData("xcx_type")}',
+        form.val('*', {
+          target: '{$nav->getData("target")}',
+          xcx_type: '{$nav->getData("xcx_type")}',
+          status: '{$nav->getData("status")}',
         })
 
         var uploadTitleImg = upload.render({

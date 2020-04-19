@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace app\model;
 
@@ -10,9 +11,19 @@ use think\Model;
  */
 class Nav extends Model
 {
-    //
-    public function getImgAttr($value)
-    {
-      return get_source_link($value);
-    }
+
+  public static $statusName = [
+    0=>'不显示',
+    1=>'显示'
+  ];
+  //
+  public function getImgAttr($value)
+  {
+    return get_source_link($value);
+  }
+
+  public function getStatusNameAttr()
+  {
+    return self::$statusName[$this->getData('status')];
+  }
 }

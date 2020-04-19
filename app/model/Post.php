@@ -33,6 +33,39 @@ class Post extends Model
     return $this->hasMany(PostTag::class,'post_id');
   }
 
+  public function getCategorysListAttr()
+  {
+    $list_post_categorys = $this->getAttr('categorys');
+
+    $list = array_column($list_post_categorys->append(['category'])->toArray(),'category');
+
+    $list = array2level($list,0,0);
+
+    return $list;
+  }
+
+  public function getTagsListAttr()
+  {
+    $list_post_tags = $this->getAttr('tags');
+
+    $list = array_column($list_post_tags->append(['tag'])->toArray(),'tag');
+
+    $list = array2level($list);
+
+    return $list;
+  }
+
+  public function getDescShortAttr()
+  {
+    $desc = $this->getData('desc');
+
+    if(strlen($desc) > 100){
+      $desc = mb_substr($desc,0,100).'...';
+    }
+
+    return $desc;
+  }
+
   public function getStatusNameAttr()
   {
     return self::$stausNameList[$this->getData('status')];

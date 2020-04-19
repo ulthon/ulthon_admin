@@ -1,47 +1,68 @@
 <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree" lay-filter="test">
-            <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="index">
-                <a class="" href="{:url('admin/System/index')}">系统管理</a>
-            </li>
-            <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="others">
-                <a class="" href="{:url('admin/System/others')}">第三方管理</a>
-            </li>
-            <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="theme">
-                <a class="" href="{:url('admin/System/theme')}">主题管理</a>
-            </li>
-            <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="agreement">
-                <a class="" href="{:url('admin/System/agreement')}">用户协议管理</a>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-nav-tree" lay-filter="test">
-            <li class="layui-nav-item layui-nav-itemed">
-                <a class="" href="javascript:;">PC管理</a>
-                <dl class="layui-nav-child">
+  <div class="layui-side-scroll">
+    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="index">
+        <a class="" href="{:url('admin/System/index')}">系统管理</a>
+      </li>
+      <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="others">
+        <a class="" href="{:url('admin/System/others')}">第三方管理</a>
+      </li>
+      <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="theme">
+        <a class="" href="{:url('admin/System/theme')}">主题管理</a>
+      </li>
+      <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="agreement">
+        <a class="" href="{:url('admin/System/agreement')}">用户协议管理</a>
+      </li>
+    </ul>
 
-                    <dd class="left-nav-item" data-name="pc-nav-1"><a
-                            href="{:url('Nav/index',['type'=>1,'show_target'=>1])}">PC导航管理</a></dd>
-                    <dd class="left-nav-item" data-name="pc-nav-2"><a
-                            href="{:url('Nav/index',['type'=>2,'show_target'=>1])}">友情链接管理</a></dd>
-                    <dd class="left-nav-item" data-name="pc-nav-3"><a
-                            href="{:url('Nav/index',['type'=>3,'show_img'=>1,'show_target'=>1])}">PC轮播图管理</a></dd>
 
-                </dl>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-nav-tree" lay-filter="test">
-            <li class="layui-nav-item layui-nav-itemed">
-                <a class="" href="javascript:;">小程序</a>
-                <dl class="layui-nav-child">
 
-                    <dd class="left-nav-item" data-name="pc-nav-4"><a
-                            href="{:url('Nav/index',['type'=>4,'show_img'=>1,'show_xcx'=>1])}">首页导航管理</a></dd>
-                    <dd class="left-nav-item" data-name="pc-nav-5"><a
-                            href="{:url('Nav/index',['type'=>5,'show_img'=>1,'show_xcx'=>1])}">轮播图管理</a></dd>
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a class="" href="javascript:;">简约蓝主题管理</a>
+        <dl class="layui-nav-child">
 
-                </dl>
-            </li>
-        </ul>
-    </div>
+          <dd class="left-nav-item" data-name="easy_blue"><a href="{:url('System/easyBlue')}">一般参数</a></dd>
+
+          <dd class="left-nav-item" data-name="pc-nav-6">
+            <a href="{:url('Nav/index',['type'=>6,'show_img'=>1,'show_target'=>1])}">首页布局块1</a>
+          </dd>
+          <dd class="left-nav-item" data-name="pc-nav-7">
+            <a href="{:url('Nav/index',['type'=>7,'show_img'=>1,'show_target'=>1])}">首页布局块2</a>
+          </dd>
+
+        </dl>
+      </li>
+    </ul>
+
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a class="" href="javascript:;">PC管理</a>
+        <dl class="layui-nav-child">
+
+          <dd class="left-nav-item" data-name="pc-nav-1"><a
+              href="{:url('Nav/index',['type'=>1,'show_target'=>1])}">PC导航管理</a></dd>
+          <dd class="left-nav-item" data-name="pc-nav-2"><a
+              href="{:url('Nav/index',['type'=>2,'show_target'=>1])}">友情链接管理</a></dd>
+          <dd class="left-nav-item" data-name="pc-nav-3"><a
+              href="{:url('Nav/index',['type'=>3,'show_img'=>1,'show_target'=>1])}">PC轮播图管理</a></dd>
+
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a class="" href="javascript:;">小程序</a>
+        <dl class="layui-nav-child">
+
+          <dd class="left-nav-item" data-name="pc-nav-4"><a
+              href="{:url('Nav/index',['type'=>4,'show_img'=>1,'show_xcx'=>1])}">首页导航管理</a></dd>
+          <dd class="left-nav-item" data-name="pc-nav-5"><a
+              href="{:url('Nav/index',['type'=>5,'show_img'=>1,'show_xcx'=>1])}">轮播图管理</a></dd>
+
+        </dl>
+      </li>
+    </ul>
+  </div>
 </div>
