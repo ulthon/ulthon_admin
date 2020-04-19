@@ -98,41 +98,7 @@
       </div>
     </div>
   </div>
-  <!-- footer部分 -->
-  <div class="footer">
-    <div class="layui-container">
-      <p class="footer-web">
-        {volist name='list_nav_friend_url' id='nav'}
-          
-        <a href="{$nav.value}" target="{$nav.target}">{$nav.title}</a>
-        {/volist}
-
-      </p>
-      <div class="layui-row footer-contact">
-        <div class="layui-col-sm2 layui-col-lg1"><img src="{:get_system_config('site_qrcode')}"></div>
-        <div class="layui-col-sm10 layui-col-lg11">
-          <div class="layui-row">
-            <div class="layui-col-sm6 layui-col-md8 layui-col-lg9">
-              <p class="contact-top"><i class="layui-icon layui-icon-cellphone"></i>&nbsp;{:get_system_config('site_contact_phone')}&nbsp;&nbsp;({:get_system_config('site_worktime')})</p>
-              <p class="contact-bottom"><i class="layui-icon layui-icon-home"></i>&nbsp;{:get_system_config('stie_contact_email')}</span></p>
-            </div>
-            <div class="layui-col-sm6 layui-col-md4 layui-col-lg3">
-              <p class="contact-top"><span class="right">{:get_system_config('site_copyright')}</p>
-              <p class="contact-bottom">
-                <span class="right"><a href="http://www.beian.miit.gov.cn/">{:get_system_config('site_beian')}</a></span>
-              </p>
-              {if !empty(get_system_config('site_safe_beian')) }
-                
-              <p class="contact-bottom">
-                <span class="right"><a href="{:get_system_config('site_safe_beian_url')}"><img src="/static/images/ghs.png" alt="" style="margin-right: 10px;">{:get_system_config('site_safe_beian')}</a></span>
-              </p>
-              {/if}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {include file='common/_easy_blue_footer'/}
 
 <!--[if lt IE 9]>
   <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
