@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+  <title>{:get_system_config('site_name')}-首页</title>
+
+  {include file='common/_easy_blue_require'/}
+</head>
+
+<body>
+  {include file='common/_easy_blue_header'/}
+  <div style="margin-top: 80px;">
+
+    <!-- banner部分 -->
+    <div class="banner product" style="background-image: url('{$category.title_img}');">
+      <div class="title">
+        <p>{$category.title}</p>
+        <p class="en">{$category.desc}</p>
+      </div>
+    </div>
+    <!-- main部分 -->
+    <div class="main-news">
+      <div class="layui-container">
+        <div class="layui-row layui-col-space20">
+          {volist name='$category.posts_list' id='post'}
+          <div class="layui-col-lg6 content">
+            <div>
+              <div class="news-img"><a href="{:url('Post/read',['id'=>$post.id])}"><img src="{$post.poster}"></a></div>
+              <div class="news-panel">
+                <strong><a href="{:url('Post/read',['id'=>$post.id])}">{$post.title}</a></strong>
+                <p class="detail"><span>{$post.desc_short}</span><a
+                    href="{:url('Post/read',['id'=>$post.id])}">[详细]</a></p>
+                <p class="read-push">阅读 <span>{$post.hits}</span>&nbsp;&nbsp;&nbsp;&nbsp;发布时间：<span>{$post.publish_time}</span></p>
+              </div>
+            </div>
+          </div>
+          {/volist}
+        </div>
+
+      </div>
+    </div>
+  </div>
+  {include file='common/_easy_blue_footer'/}
+
+
+</body>
+
+</html>

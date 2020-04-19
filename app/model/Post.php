@@ -33,6 +33,18 @@ class Post extends Model
     return $this->hasMany(PostTag::class,'post_id');
   }
 
+  public function setPublishTimeAttr($value)
+  {
+    return strtotime($value);
+  }
+  public function getPublishTimeTextAttr()
+  {
+
+    $value = $this->getData('publish_time');
+    return date('Y-m-d',$value);
+  }
+
+
   public function getCategorysListAttr()
   {
     $list_post_categorys = $this->getAttr('categorys');
@@ -50,8 +62,6 @@ class Post extends Model
 
     $list = array_column($list_post_tags->append(['tag'])->toArray(),'tag');
 
-    $list = array2level($list);
-
     return $list;
   }
 
@@ -64,6 +74,29 @@ class Post extends Model
     }
 
     return $desc;
+  }
+
+  public function getDescListAttr()
+  {
+    $desc = $this->getData('desc');
+
+    if(empty($desc)){
+      return '';
+    }
+    $list = explode("\n", $desc);
+
+    return $list;
+  }
+
+  public function getDescHtmlAttr()
+  {
+    $desc = $this->getData('desc');
+
+    if(empty($desc)){
+      return '';
+    }
+
+    return str_replace("\n",'<br>',$desc);
   }
 
   public function getStatusNameAttr()

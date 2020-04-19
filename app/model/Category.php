@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace app\model;
 
+use think\facade\Config;
 use think\Model;
 
 /**
@@ -62,6 +63,42 @@ class Category extends Model
     $list_post = array_column($list_post_category->append(['post'])->toArray(),'post');
 
     return $list_post;
+  }
+
+  public function getTplNameAttr($value)
+  {
+    return Config::get('view_type.category.'.$value);
+  }
+
+  public function getModelParentAttr()
+  {
+    $pid = $this->getData('pid');
+
+    if($pid == 0){
+      return $this;
+    }
+    return Category::where('id',$pid)->find();
+  }
+
+  // 返回除自身以外的其他的同级同类的分类
+  public function getModelSiblingsAttr()
+  {
+    return Category::where('pid',$this->getData('pid'))
+    ->where('level',$this->getData('level'))
+    ->where('id','<>',$this->getData('id'))
+    ->select();
+  }
+
+  /**
+   * 获取同一个父元素的分类,包含自身
+   *
+   * @return void
+   */
+  public function getModelSameParentAttr()
+  {
+    return Category::where('pid',$this->getData('pid'))
+    ->where('level',$this->getData('level'))
+    ->select();
   }
 
 }

@@ -93,7 +93,7 @@ body{background: #fff;}
 .banner .title p{color: #606060; font-size: 36px; text-align: center; line-height: 50px; letter-spacing: 5px;}
 .banner .title p.en{font-size: 20px; letter-spacing: 3px;}
 .main-news{padding: 70px 0 80px 0;}
-.main-news .content > div{padding-bottom: 40px; border-bottom: 1px dashed #eaeaea; position: relative;}
+.main-news .content > div{padding-bottom: 40px; border-bottom: 1px dashed #eaeaea; position: relative;display: flex;}
 .main-news .content .news-img{display: inline-block; width: 30%; vertical-align: top;}
 .main-news .content .news-img img{max-width: 90%;}
 .main-news .content .news-panel{display: inline-block; width: 70%; vertical-align: top; padding-left: 5px; box-sizing: border-box;}

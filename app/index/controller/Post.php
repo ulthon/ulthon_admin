@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace app\index\controller;
 
-use app\model\Category as ModelCategory;
+use app\model\Post as ModelPost;
 use think\Request;
 
-class Category extends Common
+class Post extends Common
 {
   /**
    * 显示资源列表
@@ -50,11 +50,11 @@ class Category extends Common
   {
     //
 
-    $model_category = ModelCategory::with('posts.post')->find($id);
+    $model_post = ModelPost::find($id);
 
-    $this->assign('category',$model_category);
-    
-    return $this->fetch('read'.$model_category->getData('tpl_name'));
+    $this->assign('post', $model_post);
+
+    return $this->fetch();
   }
 
   /**
