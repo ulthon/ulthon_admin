@@ -17,7 +17,8 @@
     </ul>
 
 
-
+    {if get_system_config('index_tpl_name') == 'easy_blue_' }
+      
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">
         <a class="" href="javascript:;">简约蓝主题管理</a>
@@ -35,6 +36,7 @@
         </dl>
       </li>
     </ul>
+    {/if}
 
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">
