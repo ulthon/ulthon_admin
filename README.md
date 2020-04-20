@@ -23,6 +23,12 @@
   - 案例图文列表
   - 关于特别板式模板
 
+- 前台资讯主题
+  - ![前台资讯主题](https://s1.ax1x.com/2020/04/20/J1WwoF.md.png)
+  - 首页列表
+  - 搜索
+  - 详情
+
 - 后台清新风格layui
   - ![后台清新风格layui](https://s1.ax1x.com/2020/04/19/JKYz5j.md.png)
   - 实现主色调清新蓝
@@ -89,6 +95,8 @@ php think reset_password
 
 #### 多主题用法
 
+##### 视图文件
+
 在index应用下,使用`$this->fetch($template,$vars)`,而不要用`View::fetch($template,$vars)`.
 
 多主题用法仅当`$template`为空字符串或者字符串有效,使用`跨应用`,`跨控制器`,`木板路径`,`数据内容`的写法无效.
@@ -116,6 +124,30 @@ index应用下控制器有个`BaseController.php`,里面有个属性`$isUseTpls 
 ```
 
 > 配置文件下的模板命名规则和模板位置仍然按有效,默认在`/view`将方法名转下划线的写法.这些配置仍然有效;
+
+##### 皮肤特有方法
+
+一般的,我们在控制器有一段逻辑只为这个皮肤调用,那么我们可以定义`__indexTplNameActionName`来调用,
+
+例如,访问`Index`控制器`index`方法,系统设置的`index_tpl_name`值为`article_`,可以定义这样一个方法:
+
+- 方法前置调用
+  - 该方法会在访问index方法时调用不支持传参,
+  - 建议内部逻辑都通过`Request`类获取参数,
+  - 该方法也不支持返回值
+  - 该方法相当于在执行`index`方法之前调用的前置方法
+```
+public function __articlesIndex(){}
+```
+- 基类公共调用
+  - 如果想给整个皮肤定义公共方法,可以如下定义:
+  - 将`__`拼接下划线转小驼峰的`index_tpl_name`
+
+```
+public function __articles(){}
+```
+
+> 具体规则可以参考`index`应用下的`BaseController.php`控制器.
 
 ### 完整安装
 
