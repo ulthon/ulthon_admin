@@ -1,32 +1,4 @@
-@media screen and (max-width: 768px){
-    .layui-body{
-        left: 0;
-    }
 
-    .layui-layout-admin .layui-footer{
-        left: 0;
-    }
-
-    .layui-layout-admin .layui-logo{
-        width: 115px;
-    }
-
-    .layui-layout-admin .layui-side{
-        width: 100%;
-        overflow-x: hidden;
-        height: 100%;
-        position: unset;
-    }
-
-    .layui-layer-content .layui-hide-xs{
-        display: unset !important;
-    }
-
-    .layui-nav-tree{
-        width: 100%;
-        height: 100%;
-    }
-}
 
 .left-bottom-options{
     position: fixed;
@@ -105,4 +77,35 @@
 
 .ul-flex{
   display: flex;
+}
+
+
+@media screen and (max-width: 768px){
+  .layui-body{
+      left: 0;
+  }
+
+  .layui-layout-admin .layui-footer{
+      left: 0;
+  }
+
+  .layui-layout-admin .layui-logo{
+      width: 115px;
+  }
+
+  .layui-layout-admin .layui-side{
+      width: 100%;
+      overflow-x: hidden;
+      height: 100%;
+      position: unset;
+  }
+
+  .layui-layer-content .layui-hide-xs{
+      display: unset !important;
+  }
+
+  .layui-nav-tree{
+      width: 100%;
+      height: 100%;
+  }
 }

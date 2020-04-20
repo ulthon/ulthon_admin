@@ -1,3 +1,4 @@
+
 .main-container{
   margin-top: 15px;
 }
@@ -14,7 +15,7 @@
   display: block;
   padding: 10px 15px;
   border-radius: 5px;
-  margin: 5px 40px;
+  margin: 5px 20px;
 }
 
 .nav-left-list a:hover,.nav-left-list a.current{
@@ -127,4 +128,17 @@
 .content-container .title{
   font-size: 22px;
   font-weight: 600;
+  
+}
+
+
+
+@media screen and (max-width: 768px){
+  .nav-left-list{
+    text-align: left;
+  }
+  .nav-left-list a{
+    display: inline-block;
+    margin: 5px;
+  }
 }
