@@ -113,6 +113,10 @@ class Post extends Model
   {
     return json_encode($value);
   }
+  public function setContentHtmlAttr($value)
+  {
+    return trim($value);
+  }
 
   public function getContentAttr($value)
   {

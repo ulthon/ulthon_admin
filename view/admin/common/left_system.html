@@ -37,6 +37,23 @@
       </li>
     </ul>
     {/if}
+    {if get_system_config('index_tpl_name') == 'articles_' }
+      
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a class="" href="javascript:;">资讯头条</a>
+        <dl class="layui-nav-child">
+
+          <dd class="left-nav-item" data-name="easy_blue"><a href="{:url('System/easyBlue')}">一般参数</a></dd>
+
+          <dd class="left-nav-item" data-name="pc-nav-6">
+            <a href="{:url('Nav/index',['type'=>8,'show_img'=>0,'show_target'=>1])}">更多导航</a>
+          </dd>
+
+        </dl>
+      </li>
+    </ul>
+    {/if}
 
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">

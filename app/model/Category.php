@@ -14,13 +14,40 @@ class Category extends Model
 {
   //
 
-  public static function getListLevel()
-  {
-    $model_list = Category::select();
+  public static $allCategory = [];
 
-    // return $model_list;
-    return array2level($model_list,0,0);
+
+  /**
+   * 获取指定id下的所有分类
+   *
+   * @param string $id
+   * @return void
+   */
+  public static function getListLevel($id = '')
+  {
+
+    if(empty(self::$allCategory)){
+
+      $model_list = Category::select();
+      self::$allCategory = array2level($model_list,0,0);
+    }
+
+    if(!empty($id)){
+      $list = [];
+      $in_category = [$id];
+      foreach (self::$allCategory as $category) {
+        if(in_array($category->pid,$in_category)){
+          $list[] = $category;
+          $in_category[] = $category->id;
+        }
+      }
+
+      return $list;
+    }
+
+    return self::$allCategory;
   }
+
 
   public function getTitleImgAttr($value)
   {

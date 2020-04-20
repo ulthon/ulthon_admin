@@ -1,0 +1,52 @@
+<div class="layui-col-md3">
+  <div class="session">
+    <form action="{:url('Index/index')}" class="layui-form">
+      <div class="search-container">
+        {volist name='$Request.param' id='request'}
+          {neq name='$key' value='keywords'}
+          <input type="hidden" name="{$key}" value="{$request}">
+          {/neq}
+        {/volist}
+        <input type="text" name="keywords" value="{$Request.param.keywords}" placeholder="搜索文章" class="layui-input">
+        <button class="layui-btn">搜索</button>
+      </div>
+    </form>
+  </div>
+  <div class="session border">
+    <div class="header">
+      更多
+    </div>
+    <div class="body">
+      <div class="nav-more-list">
+        {volist name='list_nav_more' id='nav'}
+          
+        <a href="{$nav.value}" target="{$nav.target}">{$nav.title}</a>
+        {/volist}
+      </div>
+    </div>
+  </div>
+  <div class="session border">
+    <div class="header">
+      友情链接
+    </div>
+    <div class="body">
+      <div class="nav-more-list">
+        {volist name='list_nav_friend_url' id='nav'}
+          
+        <a href="{$nav.value}" target="{$nav.target}">{$nav.title}</a>
+        {/volist}
+      </div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="info">
+
+      <p>{:get_system_config('site_copyright')}</p>
+  
+      <p>举报邮箱:{:get_system_config('stie_contact_email')}</p>
+      
+      <p> <a href="http://www.beian.miit.gov.cn/">{:get_system_config('site_beian')}</a> </p>
+      <p> <a href="{:get_system_config('site_safe_beian_url')}"><img src="/static/images/ghs.png" alt="" style="margin-right: 10px;">{:get_system_config('site_safe_beian')}</a> </p>
+    </div>
+  </div>
+</div>

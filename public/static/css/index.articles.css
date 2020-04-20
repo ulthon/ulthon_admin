@@ -1,0 +1,130 @@
+.main-container{
+  margin-top: 15px;
+}
+
+.nav-left-container{
+  margin-top: 15px;
+}
+
+.nav-left-list{
+  text-align: center;
+}
+
+.nav-left-list a{
+  display: block;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 5px 40px;
+}
+
+.nav-left-list a:hover,.nav-left-list a.current{
+  background-color: #6699CC;
+  color: #fff;
+}
+
+.logo{
+  text-align: center;
+}
+
+.logo img{
+  max-width: 60%;
+}
+
+.session{
+  margin-top: 15px;
+  background-color: #99CCFF;
+  padding: 15px;
+}
+
+.session.border{
+  border-top: 2px solid #6699CC;
+}
+
+.session .header{
+  font-size: 18px;
+  font-weight: 600;
+  color: #036;
+}
+
+.search-container{
+  display: flex;
+}
+
+
+.layui-btn{
+  background-color: #6699CC;
+}
+
+.nav-more-list a{
+  display: inline-block;
+  white-space: nowrap;
+  color: #036;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+
+.session .info p{
+  margin: 5px 0;
+}
+
+#banner img{
+  width: 100%;
+}
+
+.tab-list{
+  border-bottom: 1px solid #ddd;
+  margin-top: 15px;
+  font-size: 16px;
+  
+}
+
+.tab-list a{
+  margin-right: 15px;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.tab-list a.current{
+  border-color: #6699CC;
+}
+
+
+.post-item{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-item .poster{
+  width: 160px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-right: 15px;
+}
+
+.post-item .info .title{
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.post-item .info .plus-info{
+  margin-top: 5px;
+}
+
+.nodata{
+  
+  margin: 60px auto;
+  display: block;
+  width: 40%;
+}
+
+.content-container .title{
+  font-size: 22px;
+  font-weight: 600;
+}

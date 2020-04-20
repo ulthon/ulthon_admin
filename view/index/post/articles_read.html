@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{:get_system_config('site_name')}</title>
+  {include file='common/_articles_require'/}
+  <link rel="stylesheet" href="/static/lib/quill/quill.snow.css">
+</head>
+<body>
+  <div class="layui-container main-container">
+    <div class="layui-row layui-col-space4">
+      {include file='common/_articles_left'/}
+      <div class="layui-col-md7">
+        <div class="content-container">
+
+          <div class="title"> 
+            {$post.title}
+          </div>
+          <div class="info">
+            <span>{$post->publish_time_text}</span>
+          </div>
+          <div class="ql-snow">
+            <div class="ql-editor">{$post->content_html|raw}</div>
+          </div>
+        </div>
+      </div>
+      {include file='common/_articles_right'/}
+      
+    </div>
+  </div>
+</body>
+</html>

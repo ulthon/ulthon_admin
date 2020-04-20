@@ -9,100 +9,102 @@ use think\Request;
 
 class File extends Common
 {
-    /**
-     * 显示资源列表
-     *
-     * @return \think\Response
-     */
-    public function index()
-    {
-        //
+  /**
+   * 显示资源列表
+   *
+   * @return \think\Response
+   */
+  public function index()
+  {
+    //
 
-        $type = $this->request->param('type',1);
-        $status = $this->request->param('status','');
+    $type = $this->request->param('type', 1);
+    $status = $this->request->param('status', '');
 
-        $model_list = UploadFiles::withTrashed()->where('type',$type)->order('id desc');
+    $model_list = UploadFiles::withTrashed()->where('type', $type)->order('id desc');
 
-        if($status != ''){
-            $model_list->where('status',$status);
-        }
-
-        $list = $model_list->paginate();
-        View::assign('list',$list);
-
-        return View::fetch();
+    if ($status != '') {
+      $model_list->where('status', $status);
     }
 
-    /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
-     */
-    public function create()
-    {
-        //
-    }
+    $list = $model_list->paginate();
+    View::assign('list', $list);
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
+    return View::fetch();
+  }
 
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
+  /**
+   * 显示创建资源表单页.
+   *
+   * @return \think\Response
+   */
+  public function create()
+  {
+    //
+  }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  /**
+   * 保存新建的资源
+   *
+   * @param  \think\Request  $request
+   * @return \think\Response
+   */
+  public function save(Request $request)
+  {
+    //
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    return AppUploadFiles::save($request);
+  }
 
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
+  /**
+   * 显示指定的资源
+   *
+   * @param  int  $id
+   * @return \think\Response
+   */
+  public function read($id)
+  {
+    //
+  }
 
-    public function clear($id)
-    {
-        AppUploadFiles::clear($id);
+  /**
+   * 显示编辑资源表单页.
+   *
+   * @param  int  $id
+   * @return \think\Response
+   */
+  public function edit($id)
+  {
+    //
+  }
 
-        return json_message();
-    }
+  /**
+   * 保存更新的资源
+   *
+   * @param  \think\Request  $request
+   * @param  int  $id
+   * @return \think\Response
+   */
+  public function update(Request $request, $id)
+  {
+    //
+  }
+
+  /**
+   * 删除指定资源
+   *
+   * @param  int  $id
+   * @return \think\Response
+   */
+  public function delete($id)
+  {
+    //
+  }
+
+  public function clear($id)
+  {
+    AppUploadFiles::clear($id);
+
+    return json_message();
+  }
 }
