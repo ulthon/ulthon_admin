@@ -91,7 +91,7 @@
 }
 
 
-.post-item{
+.post-item,.plus-post-item{
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -100,13 +100,22 @@
   border-bottom: 1px solid #ddd;
 }
 
-.post-item .poster{
+.post-item .poster,.plus-post-item .poster{
   width: 160px;
   height: 100px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   margin-right: 15px;
+}
+
+.plus-post-item .poster{
+  width: 60px;
+  height: 60px;
+}
+
+.plus-post-item .title{
+  font-size: 14px;
 }
 
 .post-item .info .title{

@@ -14,6 +14,35 @@
   </div>
   <div class="session border">
     <div class="header">
+      推荐阅读
+    </div>
+    <div class="body">
+      <div class="plus-post-list">
+        {volist name='top_posts' id='post'}
+        <a href="{:url('Post/read',['id'=>$post.id])}" class="plus-post-item"
+          onmouseover="$(this).find('.poster').addClass('layui-anim-scale')"
+          onmouseout="$(this).find('.poster').removeClass('layui-anim-scale')">
+          {notempty name='$post->getData("poster")'}
+
+          <div class="poster layui-anim" style="background-image: url('{$post.poster}');"></div>
+          {/notempty}
+
+          <div class="info">
+            <div class="title">{$post.title}</div>
+            
+
+
+          </div>
+
+        </a>
+        {/volist}
+       
+      </div>
+
+    </div>
+  </div>
+  <div class="session border">
+    <div class="header">
       更多
     </div>
     <div class="body">

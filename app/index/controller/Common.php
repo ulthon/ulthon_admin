@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\model\Category;
 use app\model\Nav;
+use app\model\Post;
 use think\facade\View;
 use think\helper\Str;
 
@@ -50,5 +51,9 @@ class Common extends BaseController
     $this->assign('list_category_first_level', $list_category_first_level);
     $list_nav_more = Nav::where('type', 8)->order('sort asc')->where('status', 1)->select();
     View::assign('list_nav_more', $list_nav_more);
+
+    $top_posts = Post::where('is_top',1)->limit(8)->select();
+    $this->assign('top_posts',$top_posts);
+
   }
 }
