@@ -44,7 +44,6 @@ class Post extends Model
     return date('Y-m-d',$value);
   }
 
-
   public function getCategorysListAttr()
   {
     $list_post_categorys = $this->getAttr('categorys');

@@ -57,6 +57,19 @@ class Post extends Common
     return $this->fetch();
   }
 
+  public function __documentsRead()
+  {
+    $category_id = $this->request->param('category_id',0);
+
+    $list_post = [];
+    if(!empty($category_id)){
+      $list_post = ModelPost::hasWhere('categorys',['category_id'=>$category_id])->order('sort desc')->select();
+    }
+
+    $this->assign('list_post',$list_post);
+
+  }
+
   /**
    * 显示编辑资源表单页.
    *

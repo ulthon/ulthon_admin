@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{:get_system_config('site_name')}</title>
-    {include file='common/_documents_require'/}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{:get_system_config('site_name')}</title>
+  {include file='common/_documents_require'/}
 </head>
+
 <body>
-    <div class="layui-container">
-        <div class="layui-row" style="margin-top: 15px;">
-            <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1">
+  <div class="layui-container">
+    <div class="layui-row" style="margin-top: 15px;">
+      <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1">
 
-                <h1>{:get_system_config('site_name')}</h1>
-                <p style="margin-top: 15px;">{:get_system_config('site_desc')}</p>
-            </div>
-        </div>
-        <div class="layui-row">
-            <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1">
-            {include file='common/_documents_nav'/}
-            </div>
-        </div>
-        <div class="layui-row" style="margin-top: 15px;">
-            <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1 ">
-                {volist name='list_index_documents_nav' id='nav'}
-                <a href="{:url('Post/read',['id'=>$nav.id])}">
-
-                    <div class="layui-col-md4 layui-col-lg4 ">
-                        <div class="layui-card program-item">
-                            <div class="layui-card-header"> <img style="width: 30px;height: 30px;" src="{$nav.img}" alt=""> {$nav.title}</div>
-                            <div class="layui-card-body">
-                                <div class="desc">
-                                    {$nav.desc|raw}
-                                </div>
-                                <div class="options">
-                                    详情 <i class="layui-icon layui-icon-right"></i>
-                                </div>
-    
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                {/volist}
-            </div>
-        </div>
-        <div class="layui-row" style="text-align: center;margin-top: 15px;">
-            <a href="http://www.beian.miit.gov.cn/" target="_blank">{:get_system_config('site_beian')}</a>
-        </div>
+        <h1>{:get_system_config('site_name')}</h1>
+        <p style="margin-top: 15px;">{:get_system_config('site_desc')}</p>
+      </div>
     </div>
+    <div class="layui-row">
+      <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1">
+        {include file='common/_documents_nav'/}
+      </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px;">
+      <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1 ">
+        {volist name='list_index_documents_nav' id='nav'}
+        <a href="{$nav.value}">
+
+          <div class="layui-col-md4 layui-col-lg4 ">
+            <div class="layui-card program-item">
+              <div class="layui-card-header"> <img style="width: 30px;height: 30px;" src="{$nav.img}" alt="">
+                {$nav.title}</div>
+              <div class="layui-card-body">
+                <div class="desc">
+                  {$nav.desc|raw}
+                </div>
+                <div class="options">
+                  详情 <i class="layui-icon layui-icon-right"></i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </a>
+        {/volist}
+      </div>
+    </div>
+    <div class="layui-row">
+      <div class="layui-col-md10 layui-col-lg10 layui-col-md-offset1 layui-col-lg-offset1" style="text-align: center;">
+        <span class="layui-breadcrumb" lay-separator="|">
+          {volist name='list_nav_friend_url' id='nav'}
+
+          <a href="{$nav.value}" target="{$nav.target}">{$nav.title}</a>
+          {/volist}
+
+        </span>
+      </div>
+    </div>
+    <div class="layui-row" style="text-align: center;margin-top: 15px;">
+      <a href="http://www.beian.miit.gov.cn/" target="_blank">{:get_system_config('site_beian')}</a>
+    </div>
+  </div>
 </body>
+
 </html>
