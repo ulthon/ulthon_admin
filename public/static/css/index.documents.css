@@ -1,0 +1,29 @@
+html,
+body {
+    background-color: #f5f5f5;
+}
+
+.program-item {
+    margin: 10px 5px;
+    padding-bottom: 5px;
+    
+}
+
+.program-item .desc {
+
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    height: 96px;
+
+}
+
+.program-item .options {
+    text-align: right; color: #999;font-size: 14px;margin-top: 10px;
+
+}
+
+.program-item .layui-icon{
+    font-size: 14px;
+}

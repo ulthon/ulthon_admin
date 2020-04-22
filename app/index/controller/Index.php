@@ -3,6 +3,7 @@
 namespace app\index\controller;
 
 use app\model\Category;
+use app\model\Nav;
 use app\model\Post;
 use app\model\PostCategory;
 use think\Request;
@@ -19,6 +20,13 @@ class Index extends Common
     //
 
     return $this->fetch();
+  }
+
+  public function __documentsIndex()
+  {
+    $list_index_documents_nav = Nav::where('type',9)->select();
+
+    $this->assign('list_index_documents_nav',$list_index_documents_nav);
   }
 
   public function __articlesIndex()
