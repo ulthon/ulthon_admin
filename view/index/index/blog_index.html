@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Document</title>
+  {include file='common/_blog_require'/}
+  
+<!--加载meta IE兼容文件-->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+  <style>
+
+    .item .img{
+      display: flex;justify-content: center;align-items: center;height: 200px;
+    }
+
+  </style>
+<style>
+  .index-bg-img{
+    background-image: url('{:get_source_link(get_system_config("blog_index_bg_img"))}');
+  }
+
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="menu-btn">
+      <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+      <a href="index.html">
+        <span>{:get_system_config('site_name')}</span>
+        <img src="{:get_source_link(get_system_config('site_logo'))}">
+      </a>
+    </h1>
+    <div class="nav">
+      {volist name='list_header_nav' id='nav'}
+      <a href="{$nav.value}" target="{$nav.target}">{$nav.title}</a>
+      {/volist}
+    </div>
+
+    <p class="welcome-text">
+      {:get_system_config('blog_welcome_tips','欢迎来到'.get_system_config('site_name').'的博客')}
+    </p>
+  </div>
+
+  <div class="banner index-bg-img">
+    <div class="cont w1000">
+      <div class="title">
+        <h3>{:app\\common\\TextFormat::br(get_system_config('blog_index_bg_title'))}</h3>
+        <h4>{:app\\common\\TextFormat::br(get_system_config('blog_index_bg_title_plus'))}</h4>
+      </div>
+      <div class="amount">
+        <p><span class="text">访问量</span><span class="access">1000</span></p>
+        <p><span class="text">日志</span><span class="daily-record">1000</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="cont w1000">
+      <div class="title">
+        <span class="layui-breadcrumb" lay-separator="|">
+          <a href="{:url('index',['category_id'=>0])}" {eq name='$Request.param.category_id|default=0' value='0'} class="active" {/eq}>全部</a>
+          {volist name='list_category' id='category'}
+            
+          <a href="{:url('index',['category_id'=>$category.id])}" {eq name='$Request.param.category_id' value='$category.id'} class="active" {/eq}>{$category.title}</a>
+          {/volist}
+        </span>
+      </div>
+      <div class="list-item">
+        {volist name='list_post' id='post'}
+          
+        <div class="item">
+          <div class="layui-fluid">
+            <div class="layui-row">
+              <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
+                <div class="img"><img src="{$post.poster}" alt=""></div>
+              </div>
+              <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
+                <div class="item-cont">
+                  <h3>{$post.title}<button class="layui-btn layui-btn-danger new-icon">new</button></h3>
+                  <h5> 
+                    {volist name='post.categorys' id='post_category'}
+                      <span>{$post_category.category.title}</span>
+                    {/volist}  
+                  </h5>
+                  
+                  <p>{$post.desc}</p>
+                  <a href="details.html" class="go-icon"></a>
+                </div>
+            </div>
+            </div>
+           </div>
+        </div>
+        {/volist}
+        
+      </div>
+      <div id="demo" style="text-align: center;"></div>
+    </div>
+  </div>
+
+  <div class="footer-wrap">
+    <div class="footer w1000">
+      <div class="qrcode">
+        <img src="../res/img/erweima.jpg">
+      </div>
+      <div class="practice-mode">
+        <img src="../res/img/down_img.jpg">
+        <div class="text">
+          <h4 class="title">我的联系方式</h4>
+          <p>微信<span class="WeChat">1234567890</span></p>
+          <p>手机<span class="iphone">1234567890</span></p>
+          <p>邮箱<span class="email">1234567890@qq.com</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="../res/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.config({
+      base: '../res/js/util/'
+    }).use(['element','laypage','jquery','menu'],function(){
+      element = layui.element,laypage = layui.laypage,$ = layui.$,menu = layui.menu;
+      laypage.render({
+        elem: 'demo'
+        ,count: 70 //数据总数，从服务端得到
+      });
+      menu.init();
+    })
+  </script>
+</body>
+</html>

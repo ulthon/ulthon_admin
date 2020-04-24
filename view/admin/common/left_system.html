@@ -67,6 +67,21 @@
       </li>
     </ul>
     {/if}
+    {if get_system_config('index_tpl_name') == 'blog_' }
+      
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a class="" href="javascript:;">博客主题</a>
+        <dl class="layui-nav-child">
+
+          <dd class="left-nav-item" data-name="pc-nav-6">
+            <dd class="left-nav-item" data-name="blog"><a href="{:url('System/blog')}">一般参数</a></dd>
+          </dd>
+
+        </dl>
+      </li>
+    </ul>
+    {/if}
 
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">

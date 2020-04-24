@@ -22,6 +22,29 @@ class Index extends Common
     return $this->fetch();
   }
 
+  public function __blogIndex()
+  {
+    $list_category = Category::select();
+
+    $this->assign('list_category',$list_category);
+
+    $category_id = $this->request->param('category_id');
+
+    if(!empty($category_id)){
+
+      $model_list_post = Post::hasWhere('categorys',['category_id'=>$category_id])->order('sort desc');
+    }else{
+      
+      $model_list_post = Post::order('sort desc');
+    }
+
+    $list_post = $model_list_post->paginate();
+
+    $this->assign('list_post',$list_post);
+    
+
+  }
+
   public function __documentsIndex()
   {
     $list_index_documents_nav = Nav::where('type',9)->select();
