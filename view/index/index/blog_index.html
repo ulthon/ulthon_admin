@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>Document</title>
+  <title>{:get_system_config('site_name')}</title>
   {include file='common/_blog_require'/}
   
 <!--加载meta IE兼容文件-->
@@ -13,7 +13,6 @@
 <![endif]-->
 
   <style>
-
     .item .img{
       display: flex;justify-content: center;align-items: center;height: 200px;
     }
@@ -83,15 +82,16 @@
               </div>
               <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
                 <div class="item-cont">
-                  <h3>{$post.title}<button class="layui-btn layui-btn-danger new-icon">new</button></h3>
-                  <h5> 
-                    {volist name='post.categorys' id='post_category'}
-                      <span>{$post_category.category.title}</span>
-                    {/volist}  
-                  </h5>
-                  
-                  <p>{$post.desc}</p>
-                  <a href="details.html" class="go-icon"></a>
+                  <a  href="{:url('Post/read',['id'=>$post.id])}">
+                    <h3>{$post.title}<button class="layui-btn layui-btn-danger new-icon">new</button></h3>
+                    <h5> 
+                      {volist name='post.categorys' id='post_category'}
+                        <span>{$post_category.category.title}</span>
+                      {/volist}  
+                    </h5>
+                    <p>{$post.desc}</p>
+                    <a href="{:url('Post/read',['id'=>$post.id])}" class="go-icon"></a>
+                  </a>
                 </div>
             </div>
             </div>
