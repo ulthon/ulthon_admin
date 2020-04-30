@@ -43,6 +43,9 @@
                   <th>ID</th>
                   <th>名称</th>
                   <th>链接</th>
+                  {eq name='$Request.param.show_img' value='1'}
+                  <th>图片</th>
+                  {/eq}
                   <th>排序</th>
                   <th>状态</th>
 
@@ -57,6 +60,9 @@
                   <td>{$vo.title}</td>
 
                   <td>{$vo.value}</td>
+                  {eq name='$Request.param.show_img' value='1'}
+                  <th><img src="{$vo.img}" alt=""></th>
+                  {/eq}
                   <td>{$vo.sort}</td>
                   <td>{$vo.status_name}</td>
                   <td>
