@@ -19,7 +19,7 @@ class Category extends Common
   {
     //
 
-    $list = ModelCategory::getListLevel();
+    $list = ModelCategory::getListLevel('',$this->request->param('type',1));
 
     if($this->request->isAjax()){
       return json_message($list);
@@ -39,7 +39,7 @@ class Category extends Common
   {
     //
 
-    $list = ModelCategory::getListLevel();
+    $list = ModelCategory::getListLevel('',$this->request->param('type',1));
 
     View::assign('list_category',$list);
 
@@ -107,7 +107,7 @@ class Category extends Common
 
     $model_category = ModelCategory::find($id);
     
-    $list = ModelCategory::getListLevel();
+    $list = ModelCategory::getListLevel('',$this->request->param('type',1));
 
     View::assign('list_category',$list);
     View::assign('category',$model_category);

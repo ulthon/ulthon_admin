@@ -366,7 +366,8 @@
       }
       function loadTags() {
         $.get('{:url("Tag/index")}', {
-          page: tagPage
+          page: tagPage,
+          type:'{$Request.param.type}'
         }, function (result) {
           tagPage++;
           result.data.data.forEach(tag => {

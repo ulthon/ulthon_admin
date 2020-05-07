@@ -46,12 +46,12 @@ class ColumnFormat
         ->setDefault('');
     }
 
-    public static function integerTypeStatus($name)
+    public static function integerTypeStatus($name,$default = 0)
     {
         return Column::make($name,'integer')
         ->setLimit(10)
         ->setSigned(false)
-        ->setDefault(0);
+        ->setDefault($default);
     }
 
     public static function integer($name)

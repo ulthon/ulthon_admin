@@ -19,7 +19,9 @@ class Tag extends Common
   {
     //
 
-    $list_tag = ModelTag::order('id desc')->paginate();
+    $list_tag = ModelTag::order('id desc')
+    ->where('type',$this->request->param('type',1))
+    ->paginate();
 
     if($this->request->isAjax()){
       return json_message($list_tag);

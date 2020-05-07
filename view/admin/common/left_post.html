@@ -3,13 +3,13 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree" lay-filter="test">
           <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="post">
-              <a class="" href="{:url('Post/index')}">文章管理</a>
+              <a class="" href="{:url('Post/index',['type'=>1])}">文章管理</a>
           </li>
           <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="category">
-              <a class="" href="{:url('Category/index')}">分类管理</a>
+              <a class="" href="{:url('Category/index',['type'=>1])}">分类管理</a>
           </li>
           <li class="layui-nav-item layui-nav-itemed left-nav-item" data-name="tag">
-              <a class="" href="{:url('Tag/index')}">标签管理</a>
+              <a class="" href="{:url('Tag/index',['type'=>1])}">标签管理</a>
           </li>
       </ul>
     </div>

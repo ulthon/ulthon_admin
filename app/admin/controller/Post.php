@@ -23,7 +23,10 @@ class Post extends Common
   {
     //
 
-    $list = ModelPost::with(['categorys.category','tags.tag'])->order('id desc')->paginate();
+    $list = ModelPost::with(['categorys.category','tags.tag'])
+    ->where('type',$this->request->param('type',1))
+    ->order('id desc')
+    ->paginate();
 
     View::assign('list', $list);
 

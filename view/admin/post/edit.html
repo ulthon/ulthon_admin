@@ -380,7 +380,8 @@
       }
       function loadTags() {
         $.get('{:url("Tag/index")}', {
-          page: tagPage
+          page: tagPage,
+          type:'{$Request.param.type}'
         }, function (result) {
           tagPage++;
           result.data.data.forEach(tag => {
@@ -426,7 +427,9 @@
       }
 
       function loadCategory() {
-        $.get('{:url("Category/index")}', function (result) {
+        $.get('{:url("Category/index")}', {
+          type:'{$Request.param.type}'
+        },function (result) {
 
           result.data.forEach(category => {
             var prefix = '';

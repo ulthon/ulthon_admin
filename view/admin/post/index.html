@@ -32,7 +32,7 @@
         </div>
         <div class="main-container">
           <div>
-            <a href="{:url('create')}" class="layui-btn">添加</a>
+            <a href="{:url('create',['type'=>$Request.param.type])}" class="layui-btn">添加</a>
           </div>
         </div>
         <div>
@@ -74,7 +74,7 @@
                 <td>
                   <div class="layui-btn-container">
                     <a class="layui-btn layui-btn-sm" href="{:url('index/Post/read',['id'=>$vo.id])}">查看</a>
-                    <a class="layui-btn layui-btn-sm" href="{:url('edit',['id'=>$vo.id])}">编辑</a>
+                    <a class="layui-btn layui-btn-sm" href="{:url('edit',['id'=>$vo.id,'type'=>$Request.param.type])}">编辑</a>
                     <div class="layui-btn layui-btn-sm delete">删除</div>
                   </div>
                 </td>

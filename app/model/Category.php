@@ -23,7 +23,7 @@ class Category extends Model
    * @param string $id
    * @return void
    */
-  public static function getListLevel($id = '')
+  public static function getListLevel($id = '',$type = 1)
   {
 
     if(empty(self::$allCategory)){
