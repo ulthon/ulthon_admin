@@ -5,7 +5,19 @@
         <li class="layui-nav-item header-nav-item" data-name="Index" ><a href="{:url('admin/Index/index')}">首页</a></li>
         <li class="layui-nav-item header-nav-item" data-name="User" ><a href="{:url('admin/User/index')}">用户管理</a></li>
         <li class="layui-nav-item header-nav-item" data-name="File" ><a href="{:url('admin/File/index')}">文件管理</a></li>
-        <li class="layui-nav-item header-nav-item" data-name="Post" ><a href="{:url('admin/Post/index')}">内容管理</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="Post-1" ><a href="{:url('admin/Post/index')}">内容管理</a></li>
+        {if get_system_config('index_tpl_name') == 'easy_blue_' }
+        <li class="layui-nav-item header-nav-item" data-name="Post-2" ><a href="{:url('admin/Post/index',['type'=>2])}">简约蓝官网</a></li>
+        {/if}
+        {if get_system_config('index_tpl_name') == 'articles_' }
+        <li class="layui-nav-item header-nav-item" data-name="Post-3" ><a href="{:url('admin/Post/index',['type'=>3])}">头条资讯</a></li>
+        {/if}
+        {if get_system_config('index_tpl_name') == 'documents_' }
+        <li class="layui-nav-item header-nav-item" data-name="Post-4" ><a href="{:url('admin/Post/index',['type'=>4])}">文档</a></li>
+        {/if}
+        {if get_system_config('index_tpl_name') == 'blog_' }
+        <li class="layui-nav-item header-nav-item" data-name="Post-5" ><a href="{:url('admin/Post/index',['type'=>5])}">博客</a></li>
+        {/if}
         <li class="layui-nav-item header-nav-item" data-name="Admin" ><a href="{:url('admin/Admin/index')}">管理员管理</a></li>
         <li class="layui-nav-item header-nav-item" data-name="System" ><a href="{:url('admin/System/index')}">系统设置</a></li>
     </ul>

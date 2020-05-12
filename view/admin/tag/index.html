@@ -9,7 +9,7 @@
   {include file="common/_require"}
 
   <script>
-    var currentHeaderNavItem = 'Post';
+    var currentHeaderNavItem = 'Post-{$Request.param.type|default="1"}';
     var currentLeftNavItem = 'tag';
   </script>
 </head>
