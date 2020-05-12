@@ -16,7 +16,7 @@
         <li class="layui-nav-item header-nav-item" data-name="Post-4" ><a href="{:url('admin/Post/index',['type'=>4])}">文档</a></li>
         {/if}
         {if get_system_config('index_tpl_name') == 'blog_' }
-        <li class="layui-nav-item header-nav-item" data-name="Post-5" ><a href="{:url('admin/Post/index',['type'=>5])}">博客</a></li>
+        <li class="layui-nav-item header-nav-item" data-name="Post-blog_post" ><a href="{:url('admin/Post/index',['type'=>'blog_post'])}">博客</a></li>
         {/if}
         <li class="layui-nav-item header-nav-item" data-name="Admin" ><a href="{:url('admin/Admin/index')}">管理员管理</a></li>
         <li class="layui-nav-item header-nav-item" data-name="System" ><a href="{:url('admin/System/index')}">系统设置</a></li>

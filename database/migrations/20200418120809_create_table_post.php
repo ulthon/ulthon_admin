@@ -45,7 +45,7 @@ class CreateTablePost extends Migrator
         $table->addColumn(ColumnFormat::stringUrl('jump_to_url')->setComment('跳转链接'));
         $table->addColumn(ColumnFormat::integerTypeStatus('jump_to_url_status')->setComment('0:不显示,1:显示连接,2:自动跳转'));
         $table->addColumn(ColumnFormat::integer('sort')->setComment('排序,越大越靠前'));
-        $table->addColumn(ColumnFormat::integerTypeStatus('type',1)->setComment('类型,1:文章,有分类有标签,2:页面,无分类无标签,N:其他形式用,用于区分不同的用途'));
+        $table->addColumn(ColumnFormat::stringShort('type')->setComment('类型,1:文章,有分类有标签,2:页面,无分类无标签,N:其他形式用,用于区分不同的用途'));
         $table->addColumn(Column::make('files','text')->setComment('附件'));
         $table->addColumn(Column::make('pictures','text')->setComment('相册'));
         $table->addColumn(ColumnFormat::stringShort('tpl_name')->setComment('模板名称'));

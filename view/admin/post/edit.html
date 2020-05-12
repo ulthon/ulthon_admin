@@ -11,7 +11,7 @@
   <script src="/static/lib/quill/quill.min.js"></script>
   <script>
     var currentHeaderNavItem = 'Post-{$Request.param.type|default="1"}';
-    var currentLeftNavItem = 'post';
+    var currentLeftNavItem = 'post-{$Request.param.type|default="1"}';
   </script>
 
   <style>

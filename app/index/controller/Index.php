@@ -24,7 +24,7 @@ class Index extends Common
 
   public function __blogIndex()
   {
-    $list_category = Category::select();
+    $list_category = Category::where('type','blog_post')->select();
 
     $this->assign('list_category',$list_category);
 
@@ -37,6 +37,8 @@ class Index extends Common
       
       $model_list_post = Post::order('sort desc');
     }
+
+    $model_list_post->where('type','blog_post');
 
     $list_post = $model_list_post->paginate();
 
@@ -58,12 +60,12 @@ class Index extends Common
     $sub_category = [];
 
     if(!empty($this->request->param('category_id'))){
-      $sub_category = Category::where('pid',$this->request->param('category_id'))->select();
+      $sub_category = Category::where('pid',$this->request->param('category_id'))->where('type',3)->select();
 
       if(empty($this->request->param('sub_category_id'))){
         $categorys = [$this->request->param('category_id')];
 
-        $categorys = array_merge($categorys,array_column((array)Category::getListLevel($this->request->param('category_id')),'id'));
+        $categorys = array_merge($categorys,array_column((array)Category::getListLevel($this->request->param('category_id')),3));
 
         $categorys_where = PostCategory::whereIn('category_id',$categorys);
 
@@ -77,6 +79,8 @@ class Index extends Common
       $model_post = Post::where('status',1)->order('id desc');
     }
     
+    $model_post->where('type',3);
+
     $keywords = $this->request->param('keywords');
 
     if(!empty($keywords)){

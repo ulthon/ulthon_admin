@@ -80,7 +80,7 @@ class Category extends Common
 
     ModelCategory::create($post_data);
 
-    return $this->success('添加成功','index');
+    return $this->success('添加成功',url('index',['type'=>$this->request->param('type')]));
 
   }
 
@@ -152,7 +152,7 @@ class Category extends Common
 
     $model_category->save($post_data);
 
-    return $this->success('保存成功','index');
+    return $this->success('保存成功',url('index',['type'=>$model_category->getData('type')]));
 
 
   }

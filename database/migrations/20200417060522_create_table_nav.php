@@ -37,7 +37,7 @@ class CreateTableNav extends Migrator
         $table->addColumn(Column::make('create_time','integer')->setSigned(false)->setLimit(10)->setComment('添加时间'));
         $table->addColumn(ColumnFormat::timestamp('update_time'));
         $table->addColumn(ColumnFormat::timestamp('delete_time'));
-        $table->addColumn(Column::make('type','integer')->setLimit(10)->setSigned(false)->setComment('类型,用于区分业务场景:1:PC导航,2:PC轮播图,3:PC友情链接'));
+        $table->addColumn(ColumnFormat::stringShort('type')->setComment('类型,用于区分业务场景:1:PC导航,2:PC轮播图,3:PC友情链接'));
         $table->addColumn(Column::make('img','string')->setLimit(100)->setComment('图片'));
         $table->addColumn(ColumnFormat::stringLong('desc')->setComment('副标题描述'));
         $table->addColumn(Column::make('target','string')->setLimit(10)->setSigned(false)->setComment('网页链接打开对象,_BLANK,_SELF,iframe_name'));

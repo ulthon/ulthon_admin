@@ -82,7 +82,7 @@ class Post extends Common
       ]);
     }
 
-    return $this->success('添加成功', 'index');
+    return $this->success('添加成功',url('index',['type'=>$this->request->param('type')]));
   }
 
   /**
@@ -180,7 +180,7 @@ class Post extends Common
       }
     }
 
-    return $this->success('保存成功', 'index');
+    return $this->success('保存成功', url('index',['type'=>$model_post->getData('type')]));
   }
 
   /**

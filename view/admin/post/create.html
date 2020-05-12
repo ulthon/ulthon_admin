@@ -11,7 +11,7 @@
   <script src="/static/lib/quill/quill.min.js"></script>
   <script>
     var currentHeaderNavItem = 'Post-{$Request.param.type|default="1"}';
-    var currentLeftNavItem = 'post';
+    var currentLeftNavItem = 'post-{$Request.param.type|default="1"}';
   </script>
 
   <style>
@@ -42,6 +42,7 @@
         <div class="main-container">
           <div class="layui-row">
             <form action="{:url('save')}" method="POST" class="layui-form" lay-filter="*">
+              <input type="hidden" name="type" value="{$Request.param.type}">
               <div class="layui-col-md9 layui-col-lg10">
                 <fieldset class="layui-elem-field">
                   <legend>添加</legend>
@@ -410,7 +411,9 @@
       }
 
       function loadCategory() {
-        $.get('{:url("Category/index")}',function(result){
+        $.get('{:url("Category/index")}',{
+          type:'{$Request.param.type}'
+        },function(result){
           console.log(result);
           result.data.forEach(category => {
             var prefix = '';

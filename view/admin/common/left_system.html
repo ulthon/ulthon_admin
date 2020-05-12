@@ -18,12 +18,14 @@
 
 
     {if get_system_config('index_tpl_name') == 'easy_blue_' }
-      
+
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">
         <a class="" href="javascript:;">简约蓝官网</a>
         <dl class="layui-nav-child">
-
+          <dd class="left-nav-item" data-name="pc-nav-10">
+            <a href="{:url('Nav/index',['type'=>10,'show_img'=>1,'show_target'=>1])}">头部导航</a>
+          </dd>
           <dd class="left-nav-item" data-name="easy_blue"><a href="{:url('System/easyBlue')}">一般参数</a></dd>
 
           <dd class="left-nav-item" data-name="pc-nav-6">
@@ -32,6 +34,7 @@
           <dd class="left-nav-item" data-name="pc-nav-7">
             <a href="{:url('Nav/index',['type'=>7,'show_img'=>1,'show_target'=>1])}">首页布局块2</a>
           </dd>
+          
 
 
         </dl>
@@ -39,12 +42,14 @@
     </ul>
     {/if}
     {if get_system_config('index_tpl_name') == 'articles_' }
-      
+
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">
         <a class="" href="javascript:;">资讯头条</a>
         <dl class="layui-nav-child">
-
+          <dd class="left-nav-item" data-name="pc-nav-10">
+            <a href="{:url('Nav/index',['type'=>11,'show_target'=>1])}">头部导航</a>
+          </dd>
           <dd class="left-nav-item" data-name="pc-nav-6">
             <a href="{:url('Nav/index',['type'=>8,'show_img'=>0,'show_target'=>1])}">更多导航</a>
           </dd>
@@ -54,29 +59,34 @@
     </ul>
     {/if}
     {if get_system_config('index_tpl_name') == 'documents_' }
-      
+
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">
         <a class="" href="javascript:;">文档中心</a>
         <dl class="layui-nav-child">
-
+          <dd class="left-nav-item" data-name="pc-nav-document_header_nav">
+            <a href="{:url('Nav/index',['type'=>'document_header_nav','show_target'=>1])}">头部导航</a>
+          </dd>
           <dd class="left-nav-item" data-name="pc-nav-6">
             <a href="{:url('Nav/index',['type'=>9,'show_img'=>0,'show_target'=>1])}">首页目录</a>
           </dd>
-
+          
         </dl>
       </li>
     </ul>
     {/if}
     {if get_system_config('index_tpl_name') == 'blog_' }
-      
+    
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
       <li class="layui-nav-item layui-nav-itemed">
         <a class="" href="javascript:;">博客主题</a>
         <dl class="layui-nav-child">
-
+          
+          <dd class="left-nav-item" data-name="pc-nav-blog_header_nav">
+            <a href="{:url('Nav/index',['type'=>'blog_header_nav','show_target'=>1])}">头部导航</a>
+          </dd>
           <dd class="left-nav-item" data-name="pc-nav-6">
-            <dd class="left-nav-item" data-name="blog"><a href="{:url('System/blog')}">一般参数</a></dd>
+          <dd class="left-nav-item" data-name="blog"><a href="{:url('System/blog')}">一般参数</a></dd>
           </dd>
 
         </dl>
@@ -88,9 +98,10 @@
       <li class="layui-nav-item layui-nav-itemed">
         <a class="" href="javascript:;">PC管理</a>
         <dl class="layui-nav-child">
-
-          <dd class="left-nav-item" data-name="pc-nav-1"><a
-              href="{:url('Nav/index',['type'=>1,'show_target'=>1])}">PC导航管理</a></dd>
+          <dd class="left-nav-item" data-name="pc-nav-1" title="默认皮肤没有使用">
+            <a href="{:url('Nav/index',['type'=>1,'show_target'=>1])}">头部导航 <i class="layui-icon layui-icon-help"></i>
+            </a>
+          </dd>
           <dd class="left-nav-item" data-name="pc-nav-2"><a
               href="{:url('Nav/index',['type'=>2,'show_target'=>1])}">友情链接管理</a></dd>
           <dd class="left-nav-item" data-name="pc-nav-3"><a

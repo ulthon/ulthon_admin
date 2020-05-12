@@ -8,7 +8,7 @@
     <div class="nav-left-list">
       <a href="{:url('Index/index')}" {eq name='$Request.param.category_id|default=0' value='0'} class="current" {/eq}>全部</a>
       {volist name='list_header_nav' id='nav'}
-      <a href="{$nav.value}" >{$nav.title}</a>
+      <a href="{$nav.value}" target="{$nav.target}">{$nav.title}</a>
       {/volist}
       {volist name='list_category_first_level' id='category'}
       <a href="{:url('Index/index',['category_id'=>$category.id])}" {eq name='$Request.param.category_id|default=0' value='$category.id'} class="current"{/eq} >{$category.title}</a>

@@ -42,7 +42,7 @@ class ColumnFormat
     public static function stringShort($name)
     {
         return Column::make($name,'string')
-        ->setLimit(20)
+        ->setLimit(30)
         ->setDefault('');
     }
 
