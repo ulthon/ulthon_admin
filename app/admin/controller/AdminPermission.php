@@ -18,7 +18,7 @@ class AdminPermission extends Common
     {
         //
 
-        $list = AppAdminPermission::order('app,controller,action')->paginate();
+        $list = AppAdminPermission::order('key')->paginate();
 
         View::assign('list',$list);
 
@@ -39,14 +39,6 @@ class AdminPermission extends Common
         $post_data = $request->post();
 
         $model_permission = AppAdminPermission::find($id);
-
-        if(isset($post_data['url'])){
-            $url_info = \explode('/',$post_data['url']);
-
-            $post_data['app'] = $url_info[0];
-            $post_data['controller'] = $url_info[1];
-            $post_data['action'] = $url_info[2];
-        }
 
         $model_permission->data($post_data);
 

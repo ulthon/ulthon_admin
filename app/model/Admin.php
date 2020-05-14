@@ -27,7 +27,7 @@ class Admin extends Model
             return [];
         }
 
-        return AdminGroup::where('id',$this->getData('group_id'))->cache(1)->find();
+        return AdminGroup::where('id',$this->getData('group_id'))->cache(60)->find();
     }
     
 }

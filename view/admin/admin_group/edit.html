@@ -50,13 +50,13 @@
                                                         
                                                         <input type="checkbox" name="permissions[]" title="{$vo.name}" value="{$vo.id}" lay-skin="primary" {if condition="in_array($vo.id,$admin_group.permissions)"}checked{/if}>
                                                         {else /}
-                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}({$vo->getData('app')}/{$vo->getData('controller')}/{$vo->getData('action')})" value="{$vo.id}" lay-skin="primary" {if condition="in_array($vo.id,$admin_group.permissions)"}checked{/if}>
+                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}({$vo->getData('key')})" value="{$vo.id}" lay-skin="primary" {if condition="in_array($vo.id,$admin_group.permissions)"}checked{/if}>
                                                     {/if}
                                                     {/volist}
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <button class="layui-btn layui-btn-fluid" type="submit">创建分组</button>
+                                                <button class="layui-btn layui-btn-fluid" type="submit">保存分组</button>
                                             </div>
                                         </form>
                                     </div>

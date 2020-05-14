@@ -45,7 +45,7 @@
                                                 <div class="layui-form-label">分组权限</div>
                                                 <div class="layui-input-block">
                                                     {volist name='permission_list' id='vo'}
-                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}" value="{$vo.id}" lay-skin="primary" checked>
+                                                        <input type="checkbox" name="permissions[]" title="{$vo.name}({$vo->getData('key')})" value="{$vo.id}" lay-skin="primary" checked>
                                                     {/volist}
                                                 </div>
                                             </div>

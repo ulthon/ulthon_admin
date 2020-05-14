@@ -46,7 +46,6 @@
                                     <th>ID</th>
                                     <th>访问地址</th>
                                     <th>访问信息</th>
-                                    <th>携带参数</th>
                                     <th>操作管理员</th>
                                     <!-- <th>操作</th> -->
                                 </tr>
@@ -58,17 +57,13 @@
                                     <td>{$vo.id}</td>
                                     <td>
                                         <p>{$vo.url.name}</p>
-                                        <p>{$vo.app}/{$vo.controller}/{$vo.action}</p>
+                                        <p>{$vo.key}</p>
                                     </td>
                                     <td>
                                         <p>访问时间:{$vo.create_time}</p>
                                         <p>访问IP:{$vo.ip}</p>
                                     </td>
-                                    <td>
-                                        <div class="layui-btn layui-btn-sm" onclick="layer.open({type:1,area:['400px','600px'],content:JSON.stringify($(this).parents('tr').data('param'))})">查看详情</div>
-                                        <br>
-                                        {$vo.param}
-                                    </td>
+                                    
                                     <td>
                                         <img src="{$vo.admin.avatar}" alt="" style="width: 50px;">
                                         {$vo.admin_id}/{$vo.admin.nickname}

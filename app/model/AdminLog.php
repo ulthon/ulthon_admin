@@ -19,22 +19,5 @@ class AdminLog extends Model
         return $this->belongsTo('Admin','admin_id');
     }
 
-    public function getUrlAttr()
-    {
-        return AdminPermission::where([
-            'app'=>$this->getData('app'),
-            'controller'=>$this->getData('controller'),
-            'action'=>$this->getData('action'),
-        ])->find();
-    }
 
-    public function setParamAttr($value)
-    {
-        return json_encode($value,JSON_UNESCAPED_UNICODE);
-    }
-
-    public function getParamAttr($value)
-    {
-        return \mb_substr($value,0,30);
-    }
 }

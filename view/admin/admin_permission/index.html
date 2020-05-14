@@ -39,7 +39,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>权限名称</th>
-                                    <th>权限URL</th>
+                                    <th>权限标识</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -53,9 +53,9 @@
                                         <div class="layui-btn layui-btn-sm set-name" data-name="{$vo.name}">设置</div>
                                     </td>
                                     <td>
-                                        <span>{$vo.app}/{$vo.controller}/{$vo.action}</span>
+                                        <span>{$vo.key}</span>
                                         <div class="layui-btn layui-btn-sm set-url"
-                                            data-url="{$vo.app}/{$vo.controller}/{$vo.action}">设置</div>
+                                            data-url="{$vo.key}">设置</div>
                                     </td>
                                     <td>
                                         <div class="layui-btn-container">

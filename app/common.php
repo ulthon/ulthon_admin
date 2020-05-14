@@ -10,12 +10,16 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+use app\model\Admin;
+use app\model\AdminPermission;
 use app\model\SystemConfig;
 use think\facade\Cache;
 use League\Flysystem\Util\MimeType;
 use think\File;
 use think\facade\Filesystem;
 use app\model\UploadFiles;
+use think\facade\Session;
 
 function json_message($data = [], $code = 0, $msg = '')
 {
@@ -192,4 +196,47 @@ function array2level($array, $pid = 0, $level = 1)
   // halt($list);
 
   return $list;
+}
+
+
+function check_permission($key,$admin_id = null)
+{
+  if(is_null($admin_id)){
+    $admin_id = Session::get('admin_id');
+  }
+
+  if(empty($admin_id)){
+    return true;
+  }
+
+  if($admin_id == 1){
+    return true; 
+  }
+
+  $model_admin = Admin::cache(60)->find($admin_id);
+
+  if(empty($model_admin->getData('group_id'))){
+    return true;
+  }
+
+
+  $cache_key = 'permission_'.$key;
+
+  $model_permission = Cache::get($cache_key);
+  if (empty($model_permission)) {
+    $model_permission = AdminPermission::where('key',$key)->find();
+  }
+
+  if (empty($model_permission)) {
+    $model_permission = AdminPermission::create([
+      'key'=>$key
+    ]);
+    Cache::set($cache_key,$model_permission,60);
+  }
+
+  if(in_array($model_permission->id,$model_admin->group->permissions)){
+    return true;
+  }
+
+  return false;
 }

@@ -35,13 +35,13 @@ class BaseController extends AppBaseController
 
     $this->indexTplMethodCurrentAction = $this->indexTplMethod.Str::studly($this->request->action());
     
-    
+     
   }
 
   public function assign($template, $value)
   {
     return View::assign($template, $value);
-  }
+  } 
 
   public function fetch($template = '', $vars = [])
   {

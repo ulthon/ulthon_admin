@@ -31,7 +31,7 @@ class AdminGroup extends Common
     public function create()
     {
         //
-        $premission_list = AdminPermission::order('app,controller,action')->select();
+        $premission_list = AdminPermission::order('key')->select();
 
         View::assign('permission_list',$premission_list);
         return View::fetch();
@@ -87,7 +87,8 @@ class AdminGroup extends Common
 
         $model_admin_group = AppAdminGroup::find($id);
 
-        $premission_list = AdminPermission::order('app,controller,action')->select();
+        $premission_list = AdminPermission::order('key')->select();
+        
         View::assign('permission_list',$premission_list);
         View::assign('admin_group',$model_admin_group);
 

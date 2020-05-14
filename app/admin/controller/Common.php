@@ -31,26 +31,6 @@ class Common extends BaseController{
                     throw new HttpResponseException(redirect('admin/Login/index'));
                 }
             }
-
-            if(!empty($this->adminInfo['group'])){
-
-                $current_access_info = [
-                    'app'=>app('http')->getName(),
-                    'controller'=>request()->controller(),
-                    'action'=>request()->action()
-                ];
-
-                $model_permission = AdminPermission::where($current_access_info)->find();
-
-                if(!empty($model_permission)){
-                    if(!in_array($model_permission->id,$this->adminInfo->group->permissions)){
-                        return $this->error('您没有访问权限');
-                    }
-                }
-            }
-
-
-
         }
 
         View::assign('admin',$this->adminInfo);

@@ -34,13 +34,9 @@ class CreateTableAdminPermission extends Migrator
         ]);
 
         $table->addColumn('name','string',['limit'=>20,'default'=>'0','comment'=>'权限名称']);
-        $table->addColumn('app','string',['limit'=>50,'comment'=>'应用名']);
-        $table->addColumn('controller','string',['limit'=>50,'comment'=>'控制器名']);
-        $table->addColumn('action','string',['limit'=>50,'comment'=>'方法名']);
+        $table->addColumn('key','string',['limit'=>100,'comment'=>'权限标识']);
         $table->addColumn('is_log','integer',['limit'=>1,'default'=>0,'comment'=>'是否把这个访问记录下来']);
-        $table->addIndex('app');
-        $table->addIndex('controller');
-        $table->addIndex('action');
+        $table->addIndex('key');
         $table->addIndex('is_log');
         $table->create();
     }
