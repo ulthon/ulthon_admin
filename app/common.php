@@ -225,6 +225,7 @@ function check_permission($key,$admin_id = null)
   $model_permission = Cache::get($cache_key);
   if (empty($model_permission)) {
     $model_permission = AdminPermission::where('key',$key)->find();
+    Cache::set($cache_key,$model_permission);
   }
 
   if (empty($model_permission)) {

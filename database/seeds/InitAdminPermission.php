@@ -15,7 +15,7 @@ class InitAdminPermission extends Seeder
      */
     public function run()
     {
-        $permission_content = '';
+        $permission_content = '{}';
 
         $permissions = json_decode($permission_content,true);
 
