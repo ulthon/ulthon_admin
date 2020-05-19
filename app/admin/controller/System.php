@@ -89,4 +89,11 @@ class System extends Common
 
         return $this->success();
     }
+
+    public function clearCache()
+    {
+      Cache::clear();
+
+      return $this->success('清楚成功');
+    }
 }

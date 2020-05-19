@@ -42,7 +42,12 @@ function get_system_config($name = '', $default = '')
   $list = Cache::get('system_config');
 
   if (empty($list)) {
-    $list = SystemConfig::column('value', 'name');
+    try {
+      
+      $list = SystemConfig::column('value', 'name');
+    } catch (\Throwable $th) {
+      return $default;
+    }
   }
 
   if ($name === '') {
@@ -71,15 +76,15 @@ function get_source_link($url)
     $resource_domain = get_system_config('resource_domain');
 
     if (empty($resource_domain)) {
-      $resource_domain = request()->host();
+      $resource_domain = request()->domain();
     }
-    return 'http://' . $resource_domain . '/' . $url;
+    return $resource_domain . '/' . $url;
   }
 }
 
 function de_source_link($url)
 {
-  $domain = 'http://' . get_system_config('resource_domain') . '/';
+  $domain = get_system_config('resource_domain') . '/';
   if (strpos($url, $domain) === 0) {
     return str_replace($domain, '', $url);
   }
