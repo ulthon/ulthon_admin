@@ -25,9 +25,21 @@ function json_message($data = [], $code = 0, $msg = '')
 {
   if (is_string($data)) {
 
-    $code = $code === 0 ? 500 : $code;
-    $msg = $data;
-    $data = [];
+    if(strpos($data,'http') === 0 || strpos($data,'/') === 0){
+      $data = [
+        'jump_to_url'=>$data
+      ];
+    }else{
+
+      $code = $code === 0 ? 500 : $code;
+      $msg = $data;
+      $data = [];
+    }
+
+  }else if($data instanceof Url){
+    $data = [
+      'jump_to_url'=>(string)$data
+    ];
   }
 
   return json([
@@ -36,7 +48,6 @@ function json_message($data = [], $code = 0, $msg = '')
     'data' => $data
   ]);
 }
-
 function get_system_config($name = '', $default = '')
 {
   $list = Cache::get('system_config');
