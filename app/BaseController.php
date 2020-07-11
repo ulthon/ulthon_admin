@@ -158,7 +158,7 @@ abstract class BaseController
         if(\request()->isAjax()){
             $data['jump_to_url'] = (string)$jump_to_url;
             if($code == 200){
-              $code = 0;
+              $code = 500;
             }
             throw new HttpResponseException(json_message($data,$code,$msg));
         }
