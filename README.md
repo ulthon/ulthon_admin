@@ -14,9 +14,12 @@
 
 已实现很好用的`上传文件管理`,`内容管理`,`导航轮播管理(支持小程序)`的后台功能.
 
-已实现`前台简约蓝官网`,`后台清新风格layui`皮肤.
+已实现`后台清新风格layui`皮肤.
+
+> 以去除现有的多皮肤设计,项目单独成立
 
 - 前台简约蓝皮肤
+  - [开源地址](https://gitee.com/ulthon/ulthon_site)
   - ![前台简约蓝皮肤](https://s1.ax1x.com/2020/04/19/JKY84s.md.png)
   - 实现首页轮播,功能块
   - 文章咨询列表详情
@@ -24,6 +27,7 @@
   - 关于特别板式模板
 
 - 前台资讯主题
+  - [开源地址](https://gitee.com/ulthon/ulthon_information)
   - ![前台资讯主题](https://s1.ax1x.com/2020/04/20/J1WwoF.md.png)
   - 首页列表
   - 搜索
@@ -92,62 +96,6 @@ php think reset_password
 - 实现CMS后台
 - 支持前台多主题
 - 适配手机端,实现table转卡片样式
-
-#### 多主题用法
-
-##### 视图文件
-
-在index应用下,使用`$this->fetch($template,$vars)`,而不要用`View::fetch($template,$vars)`.
-
-多主题用法仅当`$template`为空字符串或者字符串有效,使用`跨应用`,`跨控制器`,`木板路径`,`数据内容`的写法无效.
-
-index应用下控制器有个`BaseController.php`,里面有个属性`$isUseTpls = true`,当关闭时不使用多主题.
-
-多主题规则,系统设置的`index_tpl_name`拼接`$template`;
-
-例如下:
-假设是`Index`控制器,`index`方法,系统设置的`index_tpl_name`值为`easy_blue_`,模板命名规则和模板目录均为默认情况下.
-
-```
-  $this->fetch();   
-  // 定位模板为:/view/index/index/easy_blue_index.html
-
-  $this->fetch('index');   
-   // 定位模板为:/view/index/index/easy_blue_index.html
-
-  $this->fetch('index_1');    
-  // 定位模板为:/view/index/index/easy_blue_index_1.html
-
-  $this->fetch('index_product');    
-  // 定位模板为:/view/index/index/easy_blue_index_product.html
-
-```
-
-> 配置文件下的模板命名规则和模板位置仍然按有效,默认在`/view`将方法名转下划线的写法.这些配置仍然有效;
-
-##### 皮肤特有方法
-
-一般的,我们在控制器有一段逻辑只为这个皮肤调用,那么我们可以定义`__indexTplNameActionName`来调用,
-
-例如,访问`Index`控制器`index`方法,系统设置的`index_tpl_name`值为`article_`,可以定义这样一个方法:
-
-- 方法前置调用
-  - 该方法会在访问index方法时调用不支持传参,
-  - 建议内部逻辑都通过`Request`类获取参数,
-  - 该方法也不支持返回值
-  - 该方法相当于在执行`index`方法之前调用的前置方法
-```
-public function __articlesIndex(){}
-```
-- 基类公共调用
-  - 如果想给整个皮肤定义公共方法,可以如下定义:
-  - 将`__`拼接下划线转小驼峰的`index_tpl_name`
-
-```
-public function __articles(){}
-```
-
-> 具体规则可以参考`index`应用下的`BaseController.php`控制器.
 
 ### 完整安装
 
