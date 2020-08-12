@@ -43,6 +43,12 @@ class Post extends Model
     $value = $this->getData('publish_time');
     return date('Y-m-d',$value);
   }
+  public function getPublishTimeDatetimeAttr()
+  {
+
+    $value = $this->getData('publish_time');
+    return date('Y-m-d H:i:s',$value);
+  }
 
   public function getCategorysListAttr()
   {
