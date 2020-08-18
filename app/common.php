@@ -19,6 +19,7 @@ use League\Flysystem\Util\MimeType;
 use think\File;
 use think\facade\Filesystem;
 use app\model\UploadFiles;
+use think\app\Url;
 use think\facade\Session;
 
 function json_message($data = [], $code = 0, $msg = '')
