@@ -76,6 +76,16 @@ class UploadFiles
     }
 
     $dir_name = $request->param('dir', 'data');
+    try {
+      $model_file = self::saveFile($file, $type, $dir_name);
+      return json_message($model_file->append(['src'])->toArray());
+    } catch (\Throwable $th) {
+      return json_message($th->getMessage());
+    }
+  }
+
+  public static function saveFile($file, $type, $dir_name)
+  {
     $model_file = UploadFiles::add();
     $model_file->file_name = $file->getOriginalName();
     $model_file->mime_type = $file->getOriginalMime();
@@ -85,12 +95,9 @@ class UploadFiles
     $model_file->file_sha1 = $file->sha1();
     $model_file->create_time = time();
     $model_file->type = $type;
-    try {
-      $model_file->save_name = Filesystem::putFile('upload/' . $dir_name, $file, 'uniqid');
-      $model_file->save();
-      return json_message($model_file->append(['src'])->toArray());
-    } catch (\Throwable $th) {
-      return json_message($th->getMessage());
-    }
+
+    $model_file->save_name = Filesystem::putFile('upload/' . $dir_name, $file, 'uniqid');
+    $model_file->save();
+    return $model_file;
   }
 }
