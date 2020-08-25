@@ -250,6 +250,12 @@
   </div>
 
   <script>
+    var lastUpdateSecond = 0;
+    var currentSecond = 0;
+
+    setInterval(() => {
+      currentSecond++
+    }, 1000);
     var categoryList = JSON.parse('{:json_encode($post->categorys->column("category_id"))}')
     var tagList = JSON.parse('{:json_encode($post->tags->column("tag_id"))}')
     layui.use(['form', 'upload', 'laydate'], function () {
@@ -295,11 +301,29 @@
       });
 
       quill.on('text-change', function (delta, oldDelta, source) {
-
+        currentRange.index = delta.ops[0].retain
         if (source == 'api') {
           console.log("An API call triggered this change.");
         } else if (source == 'user') {
           console.log("A user action triggered this change.");
+        }
+
+        if (currentSecond - lastUpdateSecond > 30) {
+
+          var formData = {
+            'id': '{$post.id}'
+          };
+
+          formData.content = quill.getContents().ops
+          formData.content_html = $('#editor .ql-editor').html()
+
+          $.post('{:url("update")}', formData, function (result) {
+            lastUpdateSecond = currentSecond
+            layer.msg('自动保存成功', {
+              offset: 't'
+            })
+
+          })
         }
       });
 
@@ -381,7 +405,7 @@
       function loadTags() {
         $.get('{:url("Tag/index")}', {
           page: tagPage,
-          type:'{$Request.param.type}'
+          type: '{$Request.param.type}'
         }, function (result) {
           tagPage++;
           result.data.data.forEach(tag => {
@@ -428,8 +452,8 @@
 
       function loadCategory() {
         $.get('{:url("Category/index")}', {
-          type:'{$Request.param.type}'
-        },function (result) {
+          type: '{$Request.param.type}'
+        }, function (result) {
 
           result.data.forEach(category => {
             var prefix = '';

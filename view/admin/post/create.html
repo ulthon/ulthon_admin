@@ -15,11 +15,9 @@
   </script>
 
   <style>
-
-    #toolbar select{
+    #toolbar select {
       display: none !important;
     }
-
   </style>
 </head>
 
@@ -177,7 +175,8 @@
                         </div>
                         <div class="quick-input-item sm-quick-input-item" title="输入新标签,使用空格分隔可一次添加多个标签">
                           <div class="">
-                            <input type="text" name="" placeholder="输入新标签" autocomplete="off" id="new-tags" class="layui-input">
+                            <input type="text" name="" placeholder="输入新标签" autocomplete="off" id="new-tags"
+                              class="layui-input">
                             <div class="layui-btn create-tags">新增</div>
                           </div>
                         </div>
@@ -249,14 +248,14 @@
 
   <script>
 
-    layui.use(['form', 'upload','laydate'], function () {
+    layui.use(['form', 'upload', 'laydate'], function () {
       var upload = layui.upload;
       var form = layui.form;
       var laydate = layui.laydate;
 
       laydate.render({
-        elem:'.publish-time',
-        type:'datetime'
+        elem: '.publish-time',
+        type: 'datetime'
       })
 
       var currentRange = {
@@ -289,7 +288,7 @@
       });
 
       quill.on('text-change', function (delta, oldDelta, source) {
-
+        currentRange.index = delta.ops[0].retain
         if (source == 'api') {
           console.log("An API call triggered this change.");
         } else if (source == 'user') {
@@ -346,7 +345,7 @@
 
         console.log(formData);
 
-        $.post('{:url("save")}',formData,function(result){
+        $.post('{:url("save")}', formData, function (result) {
           console.log(result);
           layer.msg('添加成功')
           setTimeout(() => {
@@ -368,7 +367,7 @@
       function loadTags() {
         $.get('{:url("Tag/index")}', {
           page: tagPage,
-          type:'{$Request.param.type}'
+          type: '{$Request.param.type}'
         }, function (result) {
           tagPage++;
           result.data.data.forEach(tag => {
@@ -387,7 +386,7 @@
       $('.create-tags').click(function () {
         var value = $.trim($('#new-tags').val());
 
-        if(value.length == 0){
+        if (value.length == 0) {
           return false;
         }
 
@@ -401,7 +400,7 @@
 
       var categoryPage = 1;
       initCategory();
-      function initCategory(){
+      function initCategory() {
         $('.category-list').children().remove();
         $('.new-category-option-list').find('.new-category-item').remove();
         $('.new-category-option-list').find('.layui-form-select').remove();
@@ -411,28 +410,28 @@
       }
 
       function loadCategory() {
-        $.get('{:url("Category/index")}',{
-          type:'{$Request.param.type}'
-        },function(result){
+        $.get('{:url("Category/index")}', {
+          type: '{$Request.param.type}'
+        }, function (result) {
           console.log(result);
           result.data.forEach(category => {
             var prefix = '';
             for (let prefixLevelIndex = 0; prefixLevelIndex < category.level; prefixLevelIndex++) {
               prefix += '|--'
-              
+
             }
             var domCategory = $('.tpl .category-item').clone();
 
             domCategory.find('input').val(category.id)
-            domCategory.find('input').attr('title', prefix+category.title)
+            domCategory.find('input').attr('title', prefix + category.title)
 
             domCategory.appendTo('.category-list')
 
             var domNewCategory = $('.tpl .new-category-item').clone();
-            
-            domNewCategory.text(prefix+category.title)
+
+            domNewCategory.text(prefix + category.title)
             domNewCategory.val(category.id)
-            domNewCategory.attr('title',category.title)
+            domNewCategory.attr('title', category.title)
 
             domNewCategory.appendTo('.new-category-option-list select')
 
@@ -440,22 +439,22 @@
           form.render()
         })
       }
-      $('.create-category').click(function(){
+      $('.create-category').click(function () {
         var pid = $('.new-category-option-list').find('select').val();
         var title = $('#new-category').val()
 
-        $.post('{:url("Category/save")}',{
-          title:title,
-          pid:pid
-        },function(result){
-          if(result.code == 0){
+        $.post('{:url("Category/save")}', {
+          title: title,
+          pid: pid
+        }, function (result) {
+          if (result.code == 0) {
             layer.msg('添加成功')
             initCategory();
-          }else{
+          } else {
             layer.msg(result.msg)
           }
         })
-        
+
       })
 
     })
