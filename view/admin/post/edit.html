@@ -119,7 +119,7 @@
                         <div id="editor" style="height: 600px;">
 
                         </div>
-                        <div id="content" style="display: none;">{:json_encode($post->content)}</div>
+                        <div id="content" style="display: none;">{:base64_encode(json_encode($post->content))}</div>
                       </div>
                     </div>
 
@@ -281,7 +281,7 @@
 
       });
 
-      quill.setContents(JSON.parse($('#content').text()))
+      quill.setContents(JSON.parse(window.atob($('#content').text())))
 
 
       quill.on('selection-change', function (range, oldRange, source) {
