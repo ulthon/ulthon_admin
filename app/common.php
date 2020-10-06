@@ -26,20 +26,19 @@ function json_message($data = [], $code = 0, $msg = '')
 {
   if (is_string($data)) {
 
-    if(strpos($data,'http') === 0 || strpos($data,'/') === 0){
+    if (strpos($data, 'http') === 0 || strpos($data, '/') === 0) {
       $data = [
-        'jump_to_url'=>$data
+        'jump_to_url' => $data
       ];
-    }else{
+    } else {
 
       $code = $code === 0 ? 500 : $code;
       $msg = $data;
       $data = [];
     }
-
-  }else if($data instanceof Url){
+  } else if ($data instanceof Url) {
     $data = [
-      'jump_to_url'=>(string)$data
+      'jump_to_url' => (string)$data
     ];
   }
 
@@ -55,7 +54,7 @@ function get_system_config($name = '', $default = '')
 
   if (empty($list)) {
     try {
-      
+
       $list = SystemConfig::column('value', 'name');
     } catch (\Throwable $th) {
       return $default;
@@ -76,7 +75,7 @@ function get_system_config($name = '', $default = '')
 function get_source_link($url)
 {
 
-  if(empty($url)){
+  if (empty($url)) {
     $url = '/static/images/avatar.jpeg';
   }
   if (strpos($url, '/') === 0) {
@@ -216,45 +215,51 @@ function array2level($array, $pid = 0, $level = 1)
 }
 
 
-function check_permission($key,$admin_id = null)
+function check_permission($key, $admin_id = null)
 {
-  if(is_null($admin_id)){
+  if (is_null($admin_id)) {
     $admin_id = Session::get('admin_id');
   }
 
-  if(empty($admin_id)){
+  if (empty($admin_id)) {
     return true;
   }
 
-  if($admin_id == 1){
-    return true; 
+  if ($admin_id == 1) {
+    return true;
   }
 
   $model_admin = Admin::cache(60)->find($admin_id);
 
-  if(empty($model_admin->getData('group_id'))){
+  if (empty($model_admin->getData('group_id'))) {
     return true;
   }
 
 
-  $cache_key = 'permission_'.$key;
+  $cache_key = 'permission_' . $key;
 
   $model_permission = Cache::get($cache_key);
   if (empty($model_permission)) {
-    $model_permission = AdminPermission::where('key',$key)->find();
-    Cache::set($cache_key,$model_permission);
+    $model_permission = AdminPermission::where('key', $key)->find();
+    Cache::set($cache_key, $model_permission);
   }
 
   if (empty($model_permission)) {
     $model_permission = AdminPermission::create([
-      'key'=>$key
+      'key' => $key
     ]);
-    Cache::set($cache_key,$model_permission,60);
+    Cache::set($cache_key, $model_permission, 60);
   }
 
-  if(in_array($model_permission->id,$model_admin->group->permissions)){
+  if (in_array($model_permission->id, $model_admin->group->permissions)) {
     return true;
   }
 
   return false;
+}
+
+
+function get_order_sn($start = '', $end = '')
+{
+  return $start . date('YmdHis') . mt_rand(1000, 9999) . $end;
 }
