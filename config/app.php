@@ -23,6 +23,8 @@ return [
     'app_map'          => [],
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [],
+    // 应用默认域名（自动多应用模式有效,为空时采用domain_bind的设置键值对换,适合跨应用生成url）
+    'app_default_doamin'      => [],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => [],
 

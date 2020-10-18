@@ -263,3 +263,36 @@ function get_order_sn($start = '', $end = '')
 {
   return $start . date('YmdHis') . mt_rand(1000, 9999) . $end;
 }
+
+/**
+ * 多应用下的url生成器
+ * 在这里的@后面跟随的首先被认为成应用名而不是源文档的域名(或子域名)
+ * 程序会尝试找到应用对应的域名来生成地址,如果没找到,则按照源文档的逻辑执行
+ * @param string $url 
+ * @param array $vars
+ * @param boolean $suffix
+ * @param boolean $domain
+ * @return void
+ */
+function app_url(string $url = '', array $vars = [], $suffix = true, $domain = false)
+{
+
+  $url_result = explode('@', $url);
+  // 在这里,@首先认为是应用名,而不是域名(或子域名)
+  if (isset($url_result[1])) {
+    $app_default_doamin = config('app.app_default_doamin');
+    if (empty($app_default_doamin)) {
+      $app_domain_bind = config('app.domain_bind');
+
+      if (!empty($app_domain_bind)) {
+        $app_default_doamin = array_flip($app_domain_bind);
+      }
+    }
+
+    if (isset($app_default_doamin[$url_result[1]])) {
+      $url = $url_result[0] . "@" . $app_default_doamin[$url_result[1]];
+    }
+  }
+
+  return url($url, $vars, $suffix, $domain);
+}
