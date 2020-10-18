@@ -289,7 +289,7 @@ function app_url(string $url = '', array $vars = [], $suffix = true, $domain = f
       }
     }
 
-    if (isset($app_default_doamin[$url_result[1]])) {
+    if (isset($app_default_doamin[$url_result[1]]) && $app_default_doamin[$url_result[1]] != '*') {
       $url = $url_result[0] . "@" . $app_default_doamin[$url_result[1]];
     }
   }
