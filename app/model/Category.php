@@ -28,7 +28,7 @@ class Category extends Model
 
     if(empty(self::$allCategory)){
 
-      $model_list = Category::where('type',$type)->select();
+      $model_list = Category::where('type',$type)->order('sort asc')->select();
       self::$allCategory = array2level($model_list,0,0);
     }
 

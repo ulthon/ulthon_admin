@@ -42,6 +42,7 @@
                   <th>ID</th>
                   <th>名称</th>
                   <th>模板</th>
+                  <th>排序</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -52,6 +53,7 @@
                   <td>{$vo.id}</td>
                   <td> {:str_repeat('|--',$vo.level)} {$vo.title}</td>
                   <td>{$vo.tpl_name}</td>
+                  <td>{$vo.sort}</td>
                   <td>
                     <div class="layui-btn-container">
                       <a class="layui-btn layui-btn-sm" href="{:url('index/Category/read',['id'=>$vo.id,'type'=>$Request.param.type])}">查看</a>

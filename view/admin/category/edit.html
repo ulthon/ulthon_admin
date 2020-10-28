@@ -93,6 +93,15 @@
                     </div>
                   </div>
                   <div class="layui-form-item">
+                    <div class="layui-form-label">
+                      排序
+                      <p class="layui-word-aux">越小越靠前</p>
+                    </div>
+                    <div class="layui-input-block">
+                      <input type="text" name="sort" value="{$category.sort}" required lay-verify="required" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" submit lay-submit lay-filter="site-info">提交</button>
                   </div>
                 </form>
