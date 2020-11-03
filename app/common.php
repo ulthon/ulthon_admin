@@ -76,7 +76,7 @@ function get_source_link($url)
 {
 
   if (empty($url)) {
-    $url = '/static/images/avatar.jpeg';
+    $url = '/static/images/avatar.png';
   }
   if (strpos($url, '/') === 0) {
     return $url;

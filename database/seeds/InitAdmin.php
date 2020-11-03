@@ -19,7 +19,7 @@ class InitAdmin extends Seeder
         $account['account'] = 'admin';
         $account['salt'] = Str::random(6);
         $account['password'] = md5('123456'.$account['salt']);
-        $account['avatar'] = '/static/images/avatar.jpeg';
+        $account['avatar'] = '/static/images/avatar.png';
 
         $model_admin = Admin::where('account',$account['account'])->find();
 

@@ -15,7 +15,7 @@ class Admin extends Model
     {
 
         if(empty($value)){
-            return '/static/images/avatar.jpeg';
+            return '/static/images/avatar.png';
         }
 
         return \get_source_link($value);

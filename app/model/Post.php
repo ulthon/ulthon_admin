@@ -131,7 +131,7 @@ class Post extends Model
   public function getPosterAttr($value)
   {
     if(empty($value)){
-      $value = '/static/images/avatar.jpeg';
+      $value = '/static/images/avatar.png';
     }
 
     return get_source_link($value);
