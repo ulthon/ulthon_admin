@@ -10,68 +10,65 @@ use think\model\concern\SoftDelete;
  */
 class UploadFiles extends Model
 {
-    //
-    use SoftDelete;
+  //
+  use SoftDelete;
 
-    protected $defaultSoftDelete = 0;
+  protected $defaultSoftDelete = 0;
 
-    public function getSrcAttr()
-    {
-        return \get_source_link($this->getData('save_name'));
+  public function getSrcAttr()
+  {
+    return \get_source_link($this->getData('save_name'));
+  }
+
+  public function getTypeTitleAttr()
+  {
+    return \config('upload_type.' . $this->getData('type'));
+  }
+
+  public function getUsedTimeAttr($value)
+  {
+    if ($value == 0) {
+      return '未使用';
     }
 
-    public function getTypeAttr($value)
-    {
-        return \config('upload_type.'.$value);
+    return date('Y-m-d H:i:s', $value);
+  }
+  public function getDeleteTimeAttr($value)
+  {
+    if ($value == 0) {
+      return '未删除';
     }
 
-    public function getUsedTimeAttr($value)
-    {
-        if($value == 0){
-            return '未使用';
-        }
-
-        return date('Y-m-d H:i:s',$value);
-    }
-    public function getDeleteTimeAttr($value)
-    {
-        if($value == 0){
-            return '未删除';
-        }
-
-        return date('Y-m-d H:i:s',$value);
-    }
-    public function getClearTimeAttr($value)
-    {
-        if($value == 0){
-            return '未清除';
-        }
-
-        return date('Y-m-d H:i:s',$value);
+    return date('Y-m-d H:i:s', $value);
+  }
+  public function getClearTimeAttr($value)
+  {
+    if ($value == 0) {
+      return '未清除';
     }
 
-    public function getStatusAttr($value,$data)
-    {
-        if($data['used_time'] == 0){
-            return '未使用(仅供预览)';
-        }
+    return date('Y-m-d H:i:s', $value);
+  }
 
-        if($data['delete_time'] > 0){
-            return '已删除';
-        }
-
-        if($data['clear_time'] > 0){
-            return '已清除';
-        }
-
-        return '使用中';
-
+  public function getStatusAttr($value, $data)
+  {
+    if ($data['used_time'] == 0) {
+      return '未使用(仅供预览)';
     }
 
-    public function getFileSizeAttr($value)
-    {
-        return format_size($value);
+    if ($data['delete_time'] > 0) {
+      return '已删除';
     }
 
-    
+    if ($data['clear_time'] > 0) {
+      return '已清除';
+    }
+
+    return '使用中';
+  }
+
+  public function getFileSizeAttr($value)
+  {
+    return format_size($value);
+  }
 }
