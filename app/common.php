@@ -79,7 +79,7 @@ function get_source_link($url)
     $url = '/static/images/avatar.png';
   }
   if (strpos($url, '/') === 0) {
-    return $url;
+    return request()->domain() . $url;
   }
   if (strpos($url, 'http') === 0) {
     return $url;
