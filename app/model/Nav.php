@@ -19,7 +19,7 @@ class Nav extends Model
   //
   public function getImgAttr($value)
   {
-    return get_source_link($value);
+    return get_source_link($value,'/static/images/noimg.png');
   }
 
   public function getStatusNameAttr()

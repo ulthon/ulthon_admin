@@ -72,11 +72,15 @@ function get_system_config($name = '', $default = '')
   return $default;
 }
 
-function get_source_link($url)
+function get_source_link($url,$default = '')
 {
-
   if (empty($url)) {
-    $url = '/static/images/avatar.png';
+
+    if(!empty($default)){
+      $url = $default;
+    }else{
+      $url = '/static/images/avatar.png';
+    }
   }
   if (strpos($url, '/') === 0) {
     return request()->domain() . $url;
