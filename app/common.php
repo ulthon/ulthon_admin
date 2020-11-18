@@ -15,12 +15,8 @@ use app\model\Admin;
 use app\model\AdminPermission;
 use app\model\SystemConfig;
 use think\facade\Cache;
-use League\Flysystem\Util\MimeType;
-use think\File;
-use think\facade\Filesystem;
-use app\model\UploadFiles;
-use think\app\Url;
 use think\facade\Session;
+use think\route\Url as RouteUrl;
 
 function json_message($data = [], $code = 0, $msg = '')
 {
@@ -36,7 +32,7 @@ function json_message($data = [], $code = 0, $msg = '')
       $msg = $data;
       $data = [];
     }
-  } else if ($data instanceof Url) {
+  } else if ($data instanceof RouteUrl) {
     $data = [
       'jump_to_url' => (string)$data
     ];
@@ -248,7 +244,7 @@ function get_order_sn($start = '', $end = '')
  * @param boolean $domain
  * @return void
  */
-function app_url(string $url = '', array $vars = [], $suffix = true, $domain = false)
+function app_url(string $url = '', array $vars = [], $suffix = true, $domain = false): RouteUrl
 {
 
   $url_result = explode('@', $url);
