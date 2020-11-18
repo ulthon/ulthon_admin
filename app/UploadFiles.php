@@ -3,8 +3,10 @@
 namespace app;
 
 use app\model\UploadFiles as AppUploadFiles;
+use League\Flysystem\Util\MimeType;
 use think\facade\Filesystem;
 use think\facade\Config;
+use think\File;
 
 class UploadFiles
 {
@@ -75,7 +77,7 @@ class UploadFiles
       return json_message('上传失败');
     }
 
-    $dir_name = $request->param('dir', 'data');
+    $dir_name = $request->param('dir', $type);
     try {
       $model_file = self::saveFile($file, $type, $dir_name);
       return json_message($model_file->append(['src'])->toArray());
@@ -84,11 +86,14 @@ class UploadFiles
     }
   }
 
-  public static function saveFile($file, $type, $dir_name)
+  public static function saveFile(File $file, $type, $dir_name = null)
   {
+    if (is_null($dir_name)) {
+      $dir_name = $type;
+    }
     $model_file = UploadFiles::add();
-    $model_file->file_name = $file->getOriginalName();
-    $model_file->mime_type = $file->getOriginalMime();
+    $model_file->file_name = $file->getFilename();
+    $model_file->mime_type = $file->getMime();
     $model_file->ext_name = $file->extension();
     $model_file->file_size = $file->getSize();
     $model_file->file_md5 = $file->md5();
@@ -98,6 +103,20 @@ class UploadFiles
 
     $model_file->save_name = Filesystem::putFile('upload/' . $dir_name, $file, 'uniqid');
     $model_file->save();
+    return $model_file;
+  }
+
+  public static function saveUrlFile($url, $type)
+  {
+    $file_data = geturl($url);
+
+    $mime_type = MimeType::detectByContent($file_data);
+    $ext_name = array_search($mime_type, MimeType::getExtensionToMimeTypeMap());
+    $temp_file = tempnam(app()->getRuntimePath(), 'url_save_') . '.' . $ext_name;
+    file_put_contents($temp_file, $file_data);
+    $file = new File($temp_file);
+    $model_file = self::saveFile($file, $type);
+    unlink($temp_file);
     return $model_file;
   }
 }
