@@ -106,36 +106,6 @@ function de_source_link($url)
   return false;
 }
 
-function save_url_file($url, $type)
-{
-
-  $file_data = geturl($url);
-
-  $mime_type = MimeType::detectByContent($file_data);
-
-  $ext_name = array_search($mime_type, MimeType::getExtensionToMimeTypeMap());
-  $temp_file = tempnam(app()->getRuntimePath(), 'url_save_') . '.' . $ext_name;
-  file_put_contents($temp_file, $file_data);
-  $file = new File($temp_file);
-
-  $save_name = Filesystem::putFile('wx_public_account/qrcode_url', $file, 'unique');
-
-  $model_file = new UploadFiles();
-  $model_file->file_name = $file->getFilename();
-  $model_file->mime_type = $mime_type;
-  $model_file->ext_name = $file->extension();
-  $model_file->file_size = $file->getSize();
-  $model_file->file_md5 = $file->md5();
-  $model_file->file_sha1 = $file->sha1();
-  $model_file->create_time = time();
-  $model_file->type = $type;
-
-  $model_file->save_name = $save_name;
-  $model_file->save();
-
-  return $save_name;
-}
-
 function geturl($url)
 {
   $headerArray = array();
