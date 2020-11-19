@@ -33,21 +33,7 @@ class System extends Common
 
         return View::fetch();
     }
-    public function theme()
-    {
-
-        return View::fetch();
-    }
-    public function easyBlue()
-    {
-
-        return View::fetch();
-    }
-    public function blog()
-    {
-
-        return View::fetch();
-    }
+   
 
     public function update()
     {
