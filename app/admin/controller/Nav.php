@@ -20,7 +20,7 @@ class Nav extends Common
     //
     $type = $request->param('type',1);
 
-    $list = ModelNav::order('sort asc')->order('id asc')->where('type',$type)->paginate();
+    $list = ModelNav::order('sort asc')->order('id asc')->where('type',$type)->select();
 
     View::assign('type', $type);
     View::assign('list', $list);
