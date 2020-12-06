@@ -106,20 +106,7 @@ abstract class BaseController
 
   public function success($msg = '操作成功', $jump_to_url = null, $code = 200, $params = [])
   {
-
-    if (is_null($jump_to_url)) {
-      $jump_to_url = \request()->server('HTTP_REFERER');
-    } else {
-      if ($jump_to_url instanceof Url) {
-
-        $jump_to_url = (string)$jump_to_url;
-      } else {
-        if (strpos($jump_to_url, 'http') !== 0) {
-          $jump_to_url = url($jump_to_url);
-        }
-      }
-    }
-
+    $jump_to_url = $this->parseJumpUrl($jump_to_url);
     $data = [
       'msg' => $msg,
       'jump_to_url' => $jump_to_url,
@@ -140,18 +127,7 @@ abstract class BaseController
   public function error($msg = '操作失败', $jump_to_url = null, $code = 200, $params = [])
   {
 
-    if (is_null($jump_to_url)) {
-      $jump_to_url = \request()->server('HTTP_REFERER');
-    } else {
-      if ($jump_to_url instanceof Url) {
-
-        $jump_to_url = (string)$jump_to_url;
-      } else {
-        if (strpos($jump_to_url, 'http') !== 0) {
-          $jump_to_url = url($jump_to_url);
-        }
-      }
-    }
+    $jump_to_url = $this->parseJumpUrl($jump_to_url);
 
     $data = [
       'msg' => $msg,
@@ -169,5 +145,28 @@ abstract class BaseController
 
     View::assign($data);
     throw new HttpResponseException(response(View::fetch('common@tpl/error'), $code));
+  }
+
+  public function redirect($jump_to_url, $code = 302)
+  {
+    $jump_to_url = $this->parseJumpUrl($jump_to_url);
+
+    throw new HttpResponseException(redirect($jump_to_url), $code);
+  }
+
+  public function parseJumpUrl($jump_to_url)
+  {
+    if (is_null($jump_to_url)) {
+      $jump_to_url = \request()->server('HTTP_REFERER');
+    } else {
+      if ($jump_to_url instanceof Url) {
+
+        $jump_to_url = $jump_to_url;
+      } else {
+        $jump_to_url = url($jump_to_url);
+      }
+    }
+
+    return (string)$jump_to_url;
   }
 }
