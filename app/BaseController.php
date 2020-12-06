@@ -161,9 +161,11 @@ abstract class BaseController
     } else {
       if ($jump_to_url instanceof Url) {
 
-        $jump_to_url = $jump_to_url;
+        $jump_to_url = (string)$jump_to_url;
       } else {
-        $jump_to_url = url($jump_to_url);
+        if (strpos($jump_to_url, 'http') !== 0) {
+          $jump_to_url = url($jump_to_url);
+        }
       }
     }
 
