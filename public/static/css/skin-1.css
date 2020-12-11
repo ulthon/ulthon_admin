@@ -144,3 +144,7 @@
 .layui-nav-tree .layui-nav-bar{
     background-color: #66CCFF;
 }
+
+.layui-form-label .layui-word-aux{
+  font-size: 12px;
+}
