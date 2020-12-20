@@ -44,7 +44,7 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">标题</div>
                       <div class="layui-input-block">
-                        <input type="text" name="title" required lay-verify="required" value="{$nav.title}"
+                        <input type="text" name="title" value="{$nav.title}"
                           class="layui-input">
                       </div>
                     </div>
@@ -110,7 +110,13 @@
                     </div>
                     {/if}
                     <div class="layui-form-item">
-                      <div class="layui-form-label">排序<span class="layui-word-aux">排序越小越靠前</span></div>
+                      <div class="layui-form-label">key</div>
+                      <div class="layui-input-block">
+                        <input type="text" name="key" value="{$nav.key}" class="layui-input">
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-form-label">排序</div>
                       <div class="layui-input-block">
                         <input type="number" name="sort" value="{$nav.sort}" class="layui-input">
                       </div>

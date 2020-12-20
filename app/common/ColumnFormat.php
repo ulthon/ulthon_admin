@@ -45,8 +45,14 @@ class ColumnFormat
         ->setLimit(30)
         ->setDefault('');
     }
+    public static function stringTypeStatus($name = 'type')
+    {
+        return Column::make($name,'string')
+        ->setLimit(80)
+        ->setDefault('');
+    }
 
-    public static function integerTypeStatus($name,$default = 0)
+    public static function integerTypeStatus($name = 'type',$default = 0)
     {
         return Column::make($name,'integer')
         ->setLimit(10)
@@ -60,5 +66,16 @@ class ColumnFormat
         ->setDefault(0)
         ->setLimit(20)
         ->setSigned(false);
+    }
+
+    public static function text($name)
+    {
+      return Column::make($name,'text')
+      ->setDefault(''); 
+    }
+    public static function textLong($name)
+    {
+      return Column::longText($name)
+      ->setDefault(''); 
     }
 }
