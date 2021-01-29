@@ -120,7 +120,7 @@ php think reset_password
 
 #### 更多用法
 
-更多用法欢迎访问 https://bbs.ulthon.com/index/Post/index.html?topic=ulthon_admin%E5%BC%80%E5%8F%91%E5%92%8C%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97
+更多用法欢迎访问 https://bbs.ulthon.com/index/Post/index.html?topic=ulthon_admin开发和使用指南
 
 #### 后台页面仅仅使用了`TP`的模板包含特性
 
