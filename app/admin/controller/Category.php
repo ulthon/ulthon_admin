@@ -126,13 +126,10 @@ class Category extends Common
   public function update(Request $request, $id)
   {
     //
-
-    
     $post_data = $request->post();
 
     $model_category = ModelCategory::where('title',$post_data['title'])
     ->where('pid',$post_data['pid'])
-    ->where('type',$post_data['type'])
     ->where('id','<>',$id)
     ->find();
 
