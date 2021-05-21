@@ -48,18 +48,17 @@
                       <input type="text" name="site_desc" value="{:get_system_config('site_desc')}" class="layui-input">
                     </div>
                   </div>
+
                   <div class="layui-form-item">
-                    <div class="layui-form-label">网站logo</div>
+                    <label class="layui-form-label">网站LOGO</label>
                     <div class="layui-input-block">
-                      <div>
-                        <div class="layui-btn upload-site-logo">上传logo</div>
+                      <div class="layui-btn upload-site-logo">
+                        上传
                       </div>
+                      <input type="hidden" name="site_logo" value="{:get_system_config('site_logo')}" class="input-site-logo">
                       <div>
-                        <img class="site-logo" style="max-width: 200px;"
-                          src="{:get_source_link(get_system_config('site_logo'))}" alt="">
+                        <img src="{:get_source_link(get_system_config('site_logo'))}" class="upload-img preview-site-logo" alt="">
                       </div>
-                      <input type="hidden" name="site_logo" value="{:get_system_config('site_logo')}"
-                        class="layui-input">
                     </div>
                   </div>
                   <div class="layui-form-item">
@@ -112,19 +111,18 @@
                     </div>
                   </div>
                   <div class="layui-form-item">
-                    <div class="layui-form-label">二维码</div>
+                    <label class="layui-form-label">二维码</label>
                     <div class="layui-input-block">
-                      <div>
-                        <div class="layui-btn upload-site-qrcode">上传二维码</div>
+                      <div class="layui-btn upload-site-qrcode">
+                        上传
                       </div>
+                      <input type="hidden" name="site_qrcode" value="{:get_system_config('site_qrcode')}" class="input-site-qrcode">
                       <div>
-                        <img class="site-qrcode" style="max-width: 200px;"
-                          src="{:get_source_link(get_system_config('site_qrcode'))}" alt="">
+                        <img src="{:get_source_link(get_system_config('site_qrcode'))}" class="upload-img preview-site-qrcode" alt="">
                       </div>
-                      <input type="hidden" name="site_qrcode" value="{:get_system_config('site_qrcode')}"
-                        class="layui-input">
                     </div>
                   </div>
+                  
                   <div class="layui-form-item">
                     <div class="layui-form-label">站点fovicon</div>
                     <div class="layui-input-block">
@@ -179,42 +177,9 @@
         var upload = layui.upload;
 
 
-        var uploadSiteLogo = upload.render({
-          elem: '.upload-site-logo',
-          url: '{:url("File/save")}',
-          data: {
-            type: 1,
-            dir: 'site_logo'
-          },
-          accept: 'images',
-          done: function (result) {
-            if (result.code == 0) {
-              layer.msg('上传成功');
-              $('input[name="site_logo"]').val(result.data.save_name);
-              $('.site-logo').attr('src', result.data.src);
-            } else {
-              layer.msg(result.msg)
-            }
-          }
-        })
-        var uploadSiteLogo = upload.render({
-          elem: '.upload-site-qrcode',
-          url: '{:url("File/save")}',
-          data: {
-            type: 1,
-            dir: 'site_logo'
-          },
-          accept: 'images',
-          done: function (result) {
-            if (result.code == 0) {
-              layer.msg('上传成功');
-              $('input[name="site_qrcode"]').val(result.data.save_name);
-              $('.site-qrcode').attr('src', result.data.src);
-            } else {
-              layer.msg(result.msg)
-            }
-          }
-        })
+
+        renderUpload('site-logo')
+        renderUpload('site-qrcode')
         var uploadSiteLogo = upload.render({
           elem: '.upload-site-fovicon',
           url: '{:url("File/save")}',

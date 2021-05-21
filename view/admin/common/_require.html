@@ -10,111 +10,111 @@
 <script src="/static/js/common.js"></script>
 
 <script>
+  window.uploadAddressPrefix = '/admin/'
+  //JavaScript代码区域
+  layui.use(['element', 'layer', 'util'], function () {
+    var element = layui.element;
+    var util = layui.util;
+    var defaultCookieSetting = {
+      path: '/',
+      expires: 7,
+    }
+    //执行
+    util.fixbar({
+      bar1: '&#xe656;'
+      , click: function (type) {
+        console.log(type);
+        if (type === 'bar1') {
+          var skinName = $.cookie('skin_name')
+          $('body').removeClass()
+          if (skinName == 'skin-1') {
+            $.cookie('skin_name', 'skin-0', defaultCookieSetting)
+            $('body').addClass('skin-0')
+          } else {
+            $.cookie('skin_name', 'skin-1', defaultCookieSetting)
+            $('body').addClass('skin-1')
 
-    //JavaScript代码区域
-    layui.use(['element', 'layer', 'util'], function () {
-        var element = layui.element;
-        var util = layui.util;
-        var defaultCookieSetting = {
-            path: '/',
-            expires: 7,
+          }
+
+          location.reload()
         }
-        //执行
-        util.fixbar({
-            bar1: '&#xe656;'
-            , click: function (type) {
-                console.log(type);
-                if (type === 'bar1') {
-                    var skinName = $.cookie('skin_name')
-                    $('body').removeClass()
-                    if (skinName == 'skin-1') {
-                        $.cookie('skin_name', 'skin-0', defaultCookieSetting)
-                        $('body').addClass('skin-0')
-                    } else {
-                        $.cookie('skin_name', 'skin-1', defaultCookieSetting)
-                        $('body').addClass('skin-1')
-
-                    }
-
-                    location.reload()
-                }
-            }
-        });
-        $('.layui-side').addClass('layui-hide-xs')
-
+      }
     });
+    $('.layui-side').addClass('layui-hide-xs')
 
-    $(function () {
-        var skinName = $.cookie('skin-name')
+  });
 
-        $('body').addClass(skinName)
-        setTimeout(() => {
-            if (typeof currentHeaderNavItem != "undefined") {
-                $('.header-nav-item').each(function (i, e) {
-                    if ($(e).data('name') == currentHeaderNavItem) {
-                        $(e).addClass('layui-this')
-                    }
-                })
-            }
-            if (typeof currentLeftNavItem != "undefined") {
-                $('.left-nav-item').each(function (i, e) {
-                    if ($(e).data('name') == currentLeftNavItem) {
-                        $(e).addClass('layui-this')
-                    }
-                })
-            }
+  $(function () {
+    var skinName = $.cookie('skin-name')
 
-
-            // 表格转卡片
-
-
-
-            var tableContainer = $('.layui-table').parent()
-
-            $('.layui-table').addClass('layui-hide-xs')
-
-            var cardList = $('<div class="table-card layui-show-xs-block layui-hide-md"></div>').prependTo(tableContainer)
-
-            $('.layui-table tbody tr').each(function () {
-                var trItem = this;
-
-                var boxItem = $('.tpl .table-card-box').clone()
-
-                $.each($(trItem).data(),function(index,value){
-                    
-                    $(boxItem).data(index,value)
-                })
-
-                $(trItem).find('td').each(function (index, ele) {
-                    var itemItem = $('.tpl .table-card-item').clone()
-                    $(itemItem).find('.item-title').text($('.layui-table thead th').eq(index).text())
-
-                    if($(ele).children().length == 0){
-                        $(itemItem).find('.item-value').html($(ele).html())
-                    }else{
-
-                        $(ele).children().clone().appendTo($(itemItem).find('.item-value'))
-                    }
-
-                    $(itemItem).appendTo(boxItem)
-                })
-
-                $(boxItem).appendTo(cardList)
-            })
-
-        }, 1);
+    $('body').addClass(skinName)
+    setTimeout(() => {
+      if (typeof currentHeaderNavItem != "undefined") {
+        $('.header-nav-item').each(function (i, e) {
+          if ($(e).data('name') == currentHeaderNavItem) {
+            $(e).addClass('layui-this')
+          }
+        })
+      }
+      if (typeof currentLeftNavItem != "undefined") {
+        $('.left-nav-item').each(function (i, e) {
+          if ($(e).data('name') == currentLeftNavItem) {
+            $(e).addClass('layui-this')
+          }
+        })
+      }
 
 
-    })
+      // 表格转卡片
+
+
+
+      var tableContainer = $('.layui-table').parent()
+
+      $('.layui-table').addClass('layui-hide-xs')
+
+      var cardList = $('<div class="table-card layui-show-xs-block layui-hide-md"></div>').prependTo(tableContainer)
+
+      $('.layui-table tbody tr').each(function () {
+        var trItem = this;
+
+        var boxItem = $('.tpl .table-card-box').clone()
+
+        $.each($(trItem).data(), function (index, value) {
+
+          $(boxItem).data(index, value)
+        })
+
+        $(trItem).find('td').each(function (index, ele) {
+          var itemItem = $('.tpl .table-card-item').clone()
+          $(itemItem).find('.item-title').text($('.layui-table thead th').eq(index).text())
+
+          if ($(ele).children().length == 0) {
+            $(itemItem).find('.item-value').html($(ele).html())
+          } else {
+
+            $(ele).children().clone().appendTo($(itemItem).find('.item-value'))
+          }
+
+          $(itemItem).appendTo(boxItem)
+        })
+
+        $(boxItem).appendTo(cardList)
+      })
+
+    }, 1);
+
+
+  })
 </script>
 {:get_system_config('site_tongji')}
 
 <div class="tpl" style="display: none;">
-    <div class="table-card-box item">
+  <div class="table-card-box item">
 
-    </div>
-    <div class="table-card-item">
-        <div class="item-title"></div>
-        <div class="item-value"></div>
-    </div>
+  </div>
+  <div class="table-card-item">
+    <div class="item-title"></div>
+    <div class="item-value"></div>
+  </div>
 </div>
