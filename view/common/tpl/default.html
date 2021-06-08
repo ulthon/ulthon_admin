@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{$msg}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{$msg}</title>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .status-page {
+      text-align: center;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .status-page img {
+      max-width: 80%;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>{$msg}</h1>
-    <h2> <span id="counting">3</span>秒后跳转 <a href="{$jump_to_url|raw}">立即跳转</a></h2>
-    <script>
-        var counting = 3;
-        setInterval(() => {
-            if(counting == 1){
-                location.href = '{$jump_to_url|raw}';
-            }
-            counting--
-            document.getElementById('counting').innerHTML = counting
-        }, 1000);
-        
-        
-    </script>
+  <div class="status-page">
+    <div class="status-main">
+      <img src="/static/images/status-jump.png" alt="">
+      <h1>{$msg}</h1>
+      <h2> <span id="counting">3</span>秒后跳转 <a href="{$jump_to_url|raw}">立即跳转</a></h2>
+    </div>
+  </div>
+  <script>
+    var counting = 3;
+    var timer = setInterval(function () {
+      if (counting == 1) {
+        location.href = '{$jump_to_url|raw}';
+        clearInterval(timer)
+        return false;
+      }
+      counting--
+      document.getElementById('counting').innerHTML = counting
+    }, 1000);
+
+  </script>
 </body>
+
 </html>
