@@ -122,7 +122,7 @@ abstract class BaseController
     }
 
     View::assign($data);
-    throw new HttpResponseException(response(View::fetch('common@tpl/success'), $code));
+    throw new HttpResponseException(response(View::fetch(config('view.jump_tpl_success_path')), $code));
   }
   public function error($msg = '操作失败', $jump_to_url = null, $code = 200, $params = [])
   {
@@ -144,7 +144,7 @@ abstract class BaseController
     }
 
     View::assign($data);
-    throw new HttpResponseException(response(View::fetch('common@tpl/error'), $code));
+    throw new HttpResponseException(response(View::fetch(config('view.jump_tpl_error_path')), $code));
   }
 
   public function redirect($jump_to_url, $code = 302)
