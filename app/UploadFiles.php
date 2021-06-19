@@ -7,6 +7,7 @@ use League\Flysystem\Util\MimeType;
 use think\facade\Filesystem;
 use think\facade\Config;
 use think\File;
+use think\file\UploadedFile;
 
 class UploadFiles
 {
@@ -92,7 +93,12 @@ class UploadFiles
       $dir_name = $type;
     }
     $model_file = UploadFiles::add();
-    $model_file->file_name = $file->getFilename();
+    if ($file instanceof UploadedFile) {
+
+      $model_file->file_name = $file->getOriginalName();
+    } else {
+      $model_file->file_name = $file->getFilename();
+    }
     $model_file->mime_type = $file->getMime();
     $model_file->ext_name = $file->extension();
     $model_file->file_size = $file->getSize();
