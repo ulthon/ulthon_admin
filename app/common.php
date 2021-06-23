@@ -175,6 +175,7 @@ function array2level($array, $pid = 0, $level = 1)
   foreach ($array as $v) {
     if ($v['pid'] == $pid) {
       $v['level'] = $level;
+      $v['prefix'] = str_repeat('|--', $level);
       $list[]     = $v;
       array2level($array, $v['id'], $level + 1);
     }
