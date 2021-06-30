@@ -50,8 +50,7 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">标题</div>
                       <div class="layui-input-block">
-                        <input type="text" name="title" required lay-verify="required" value="{$post->title}"
-                          class="layui-input">
+                        <input type="text" name="title" required lay-verify="required" value="{$post->title}" class="layui-input">
                       </div>
                     </div>
 
@@ -144,8 +143,7 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">发表时间</div>
                       <div class="layui-input-block">
-                        <input type="text" name="publish_time" value="{$post->publish_time_datetime}"
-                          class="layui-input publish-time">
+                        <input type="text" name="publish_time" value="{$post->publish_time_datetime}" class="layui-input publish-time">
                       </div>
                     </div>
                     <div class="layui-form-item">
@@ -178,8 +176,7 @@
                         </div>
                         <div class="quick-input-item sm-quick-input-item" title="输入新标签,使用空格分隔可一次添加多个标签">
                           <div class="">
-                            <input type="text" name="" placeholder="输入新标签" autocomplete="off" id="new-tags"
-                              class="layui-input">
+                            <input type="text" name="" placeholder="输入新标签" autocomplete="off" id="new-tags" class="layui-input">
                             <div class="layui-btn create-tags">新增</div>
                           </div>
                         </div>
@@ -196,8 +193,7 @@
                     <div class="layui-form-item">
                       <div class="layui-form-label">跳转链接</div>
                       <div class="layui-input-block">
-                        <input type="text" name="jump_to_url" value="{$post->getData('jump_to_url')}"
-                          class="layui-input">
+                        <input type="text" name="jump_to_url" value="{$post->getData('jump_to_url')}" class="layui-input">
                       </div>
                     </div>
 
@@ -432,7 +428,8 @@
         }
 
         $.post('{:url("Tag/save")}', {
-          tags: value
+          tags: value,
+          type: '{$Request.param.type}'
         }, function (result) {
           layer.msg('添加成功')
           initTags()
@@ -492,7 +489,8 @@
 
         $.post('{:url("Category/save")}', {
           title: title,
-          pid: pid
+          pid: pid,
+          type: '{$Request.param.type}'
         }, function (result) {
           if (result.code == 0) {
             layer.msg('添加成功')

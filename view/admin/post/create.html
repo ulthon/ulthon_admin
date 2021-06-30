@@ -391,7 +391,8 @@
         }
 
         $.post('{:url("Tag/save")}', {
-          tags: value
+          tags: value,
+          type:'{$Request.param.type}'
         }, function (result) {
           layer.msg('添加成功')
           initTags()
@@ -445,7 +446,8 @@
 
         $.post('{:url("Category/save")}', {
           title: title,
-          pid: pid
+          pid: pid,
+          type:'{$Request.param.type}'
         }, function (result) {
           if (result.code == 0) {
             layer.msg('添加成功')

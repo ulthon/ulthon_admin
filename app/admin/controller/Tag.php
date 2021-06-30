@@ -54,15 +54,17 @@ class Tag extends Common
 
     $post_data = $request->post();
 
+    $type = $post_data['type'];
+
     $arr = explode(' ',$post_data['tags']);
 
     $arr = array_unique(array_filter($arr));
 
     foreach ($arr as $tag) {
-      $model_tag = ModelTag::where('title',$tag)->find();
+      $model_tag = ModelTag::where('title',$tag)->where('type',$type)->find();
 
       if(empty($model_tag)){
-        ModelTag::create(['title'=>$tag]);
+        ModelTag::create(['title'=>$tag,'type'=>$type]);
       }
     }
 
