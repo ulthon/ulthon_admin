@@ -6,6 +6,7 @@ use app\model\Category;
 use app\model\Nav;
 use app\model\Post;
 use app\model\PostCategory;
+use think\facade\Log;
 use think\facade\View;
 use think\Request;
 
@@ -20,6 +21,7 @@ class Index extends Common
   {
     //
 
+    Log::record('测试日志');
     return View::fetch();
   }
 

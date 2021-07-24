@@ -96,6 +96,38 @@ php think reset_password
 - 实现CMS后台
 - 支持前台多主题
 - 适配手机端,实现table转卡片样式
+- 数据库日志驱动
+
+#### 默认开启数据库日志驱动
+
+为了方便开发查看日志,系统中增加了数据库日志功能,此功能默认开启.
+
+显然使用mysql记录日志会有性能问题,项目上线后建议关闭,使用官方`File`或者其他.
+
+关闭数据库日志驱动:复制`.example.env`为`.env`,
+将:
+```
+[LOG]
+channel = debug_mysql
+```
+修改为:
+```
+[LOG]
+channel = file
+```
+
+或者修改`config/log.php`,
+```
+// 默认日志记录通道
+  'default'      => Env::get('log.channel', 'debug_mysql'),
+```
+修改为:
+```
+// 默认日志记录通道
+  'default'      => Env::get('log.channel', 'file'),
+```
+
+> 虽然配置名称为`debug_mysql`,但实际上使用的是官方`think-orm`,仍然支持其它数据库,比如`sqlite`
 
 ### 完整安装
 
