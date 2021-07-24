@@ -31,7 +31,6 @@ class CreateTableDebugMysql extends Migrator
   {
     $table = $this->table('debug_log')
       ->setComment('日志表')
-      ->addColumn(ColumnFormat::stringNormal('title'))
       ->addColumn(ColumnFormat::timestamp('create_time'))
       ->addColumn(ColumnFormat::stringShort('create_time_title'))
       ->addColumn(ColumnFormat::stringShort('level'))
