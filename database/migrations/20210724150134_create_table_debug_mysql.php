@@ -31,10 +31,14 @@ class CreateTableDebugMysql extends Migrator
   {
     $table = $this->table('debug_log')
       ->setComment('日志表')
-      ->addColumn(ColumnFormat::timestamp('create_time'))
-      ->addColumn(ColumnFormat::stringShort('create_time_title'))
+      ->addColumn(ColumnFormat::stringShort('uid'))
       ->addColumn(ColumnFormat::stringShort('level'))
       ->addColumn(ColumnFormat::stringLong('content'))
+      ->addColumn(ColumnFormat::stringShort('app_name'))
+      ->addColumn(ColumnFormat::stringShort('controller_name'))
+      ->addColumn(ColumnFormat::stringShort('action_name'))
+      ->addColumn(ColumnFormat::timestamp('create_time'))
+      ->addColumn(ColumnFormat::stringShort('create_time_title'))
       ->create();
   }
 }

@@ -42,7 +42,23 @@ return [
       'realtime_write' => false,
     ],
     'debug_mysql' => [
-      'type' => 'DebugMysql'
+      'type' => 'DebugMysql',
+      // 服务器地址
+      'hostname'          => Env::get('database.hostname', ''),
+      // 数据库名
+      'database'          => Env::get('database.database', ''),
+      // 用户名
+      'username'          => Env::get('database.username', ''),
+      // 密码
+      'password'          => Env::get('database.password', ''),
+      // 端口
+      'hostport'          => Env::get('database.hostport', '3306'),
+      // 数据库连接参数
+      'params'            => [],
+      // 数据库编码默认采用utf8
+      'charset'           => Env::get('database.charset', 'utf8'),
+      // 数据库表前缀
+      'prefix'            => Env::get('database.prefix', 'ul_'),
     ]
     // 其它日志通道配置
   ],
