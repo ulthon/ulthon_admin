@@ -110,3 +110,52 @@ function renderUpload(target, params) {
     }
   })
 }
+
+
+const loading = {};
+loading.index = 0;
+loading.show = function () {
+  if (loading.index != 0) {
+    layer.close(loading.index)
+  }
+
+  loading.index = layer.load()
+}
+
+loading.hide = function () {
+  layer.close(loading.index);
+  loading.index = 0;
+}
+
+$(function () {
+  $('[data-href]').click(function () {
+    var item = this;
+
+    loading.show()
+
+    var href = $(item).data('href')
+
+    location.href = href
+  })
+})
+
+function isPC() {
+  var userAgentInfo = navigator.userAgent;
+  var Agents = ["Android", "iPhone",
+    "SymbianOS", "Windows Phone",
+    "iPad", "iPod"];
+  var flag = true;
+  for (var v = 0; v < Agents.length; v++) {
+    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag;
+}
+
+top.onbeforeunload = function (e) {
+  setTimeout(() => {
+    loading.show()
+  }, 2000);
+}
