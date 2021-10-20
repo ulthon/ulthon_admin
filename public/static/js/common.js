@@ -154,8 +154,27 @@ function isPC() {
   return flag;
 }
 
-top.onbeforeunload = function (e) {
-  setTimeout(() => {
-    loading.show()
-  }, 2000);
+$.upost = function (url, data, callback) {
+
+    if (typeof data == 'function') {
+        callback = data;
+        data = {};
+    }
+    loading.show();
+    $.post(url, data, function (result) {
+
+        if (result.code == 500) {
+
+            loading.hide();
+
+            layer.msg(result.msg)
+
+            return false;
+        }
+
+        callback(result)
+
+
+    })
+
 }

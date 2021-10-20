@@ -16,9 +16,10 @@ class User extends Model
 
     protected $defaultSoftDelete = 0;
 
-    public function getAvatarAttr($value)
+    public function getAvatarSrcAttr()
     {
-        if(empty($value)){
+        $value = $this->getAttr('avatar');
+        if (empty($value)) {
             return '/static/images/avatar.png';
         }
 
