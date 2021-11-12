@@ -1,193 +1,128 @@
 
-# ulthon_admin
-
-## 奥宏TP6后台管理模板
+![EasyAdmin-logo](public/static/common/images/logo-2.png)
 
 
-### 使用ThinkPHP6快速开始一个有管理后台的项目
+[![Php Version](https://img.shields.io/badge/php-%3E=7.1.0-brightgreen.svg?maxAge=2592000&color=yellow)](https://github.com/php/php-src)
+[![Mysql Version](https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&color=orange)](https://www.mysql.com/)
+[![Thinkphp Version](https://img.shields.io/badge/thinkphp-%3E=6.0.2-brightgreen.svg?maxAge=2592000)](https://github.com/top-think/framework)
+[![Layui Version](https://img.shields.io/badge/layui-=2.5.5-brightgreen.svg?maxAge=2592000&color=critical)](https://github.com/sentsin/layui)
+[![Layuimini Version](https://img.shields.io/badge/layuimini-%3E=2.0.4.2-brightgreen.svg?maxAge=2592000&color=ff69b4)](https://github.com/zhongshaofa/layuimini)
+[![EasyAdmin Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](http://easyadmin.99php.cn/docs)
+[![EasyAdmin License](https://img.shields.io/badge/license-mulan-green?maxAge=2592000&color=blue)](https://github.com/zhongshaofa/easyadmin/blob/v2/LICENSE)
 
-#### 介绍
+## 项目介绍
 
-基于thinkphp6的系统后台管理模板.
+基于ThinkPHP6.0和layui的快速开发的后台管理系统。
 
-基于ThinkPHP6,Layui,Jquery,支持各类数据库.
+技术交流QQ群：[763822524](https://jq.qq.com/?_wv=1027&k=5IHJawE) `加群请备注来源：如gitee、github、官网等`。
 
-已实现很好用的`上传文件管理`,`内容管理`,`导航轮播管理(支持小程序)`的后台功能.
+## 安装教程
+>EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin 之前，请确保你的机器已经安装了 Composer。
 
-已实现`后台清新风格layui`皮肤.
+#### 通过 Composer 创建项目`建议`
+`composer create-project --prefer-dist zhongshaofa/easyadmin blog`  
 
-> 以去除现有的多皮肤设计,项目单独成立
+#### 通过git下载安装包，composer安装依赖包
 
-- 前台简约蓝皮肤
-  - [开源地址](https://gitee.com/ulthon/ulthon_site)
-  - ![前台简约蓝皮肤](https://s1.ax1x.com/2020/04/19/JKY84s.md.png)
-  - 实现首页轮播,功能块
-  - 文章咨询列表详情
-  - 案例图文列表
-  - 关于特别板式模板
+```bash
+第一步，下载安装包
 
-- 前台资讯主题
-  - [开源地址](https://gitee.com/ulthon/ulthon_information)
-  - ![前台资讯主题](https://s1.ax1x.com/2020/04/20/J1WwoF.md.png)
-  - 首页列表
-  - 搜索
-  - 详情
-
-- 后台清新风格layui
-  - ![后台清新风格layui](https://s1.ax1x.com/2020/04/19/JKYz5j.md.png)
-  - 实现主色调清新蓝
-  - 修改layui-form样式为上下名称/值显示
-  - 实现列表表格转卡片,便于移动端访问
-
-#### 最新演示
-
-[在线演示](http://ulthon-admin.ulthon.com/admin)
-
-账号: admin 密码: 123456
+git clone https://github.com/zhongshaofa/easyadmin
+或者
+git clone https://gitee.com/zhongshaofa/easyadmin
 
 
-#### 快速试用
-
-
-    1.安装
-    git clone https://gitee.com/ulthon/ulthon_admin.git
-    或者
-    composer create-project ulthon/ulthon_admin:dev-master
-    2.进入目录
-    cd ulthon_admin/
-    3.安装依赖
-    composer install
-    4.初始化数据库
-    php think migrate:run
-    php think seed:run
-    5.使用内置服务器
-    php think run -p 8010
-    6.访问前台
-    127.0.0.1:8010/index.php/index
-    7.访问后台
-    127.0.0.1:8010/index.php/admin
-
-后台帐号密码：admin/123456
-
-[本地测试后台链接](/index.php/admin)
-
-如果希望去掉index.php，可以参考tp文档，在nginx或apache环境配置，内置服务器必须带index.php
-
-
-#### 重置密码
-
-重置密码为123456.
+第二步，安装依赖包
+composer install
 
 ```
-php think reset_password
-```
-
-#### 功能
-
-- 服务器信息
-- 系统配置
-- 管理员管理
-- 账户管理
-- 用户管理
-- 权限管理
-- 文件管理
-- 后台日志
-- 支持轮播图,导航,小程序导航(打开方式)等设置
-- 实现CMS后台
-- 支持前台多主题
-- 适配手机端,实现table转卡片样式
-- 数据库日志驱动
-
-#### 默认开启数据库日志驱动
-
-为了方便开发查看日志,系统中增加了数据库日志功能,此功能默认开启.
-
-显然使用mysql记录日志会有性能问题,项目上线后建议关闭,使用官方`File`或者其他.
-
-关闭数据库日志驱动:复制`.example.env`为`.env`,
-将:
-```
-[LOG]
-channel = debug_mysql
-```
-修改为:
-```
-[LOG]
-channel = file
-```
-
-或者修改`config/log.php`,
-```
-// 默认日志记录通道
-  'default'      => Env::get('log.channel', 'debug_mysql'),
-```
-修改为:
-```
-// 默认日志记录通道
-  'default'      => Env::get('log.channel', 'file'),
-```
-
-> 虽然配置名称为`debug_mysql`,但实际上使用的是官方`think-orm`,仍然支持其它数据库,比如`sqlite`
-
-### 完整安装
-
-先执行快速使用的步骤,此时项目已经安装到本地,数据库也安装到本地的sqlite.
-
-部署到服务器,要做的只是把代码上传,连接正式数据库,并安装即可.
-
-- 上传代码
-    - 把代码上传到服务器上,很简单的事情,使用ftp,sftp都可以
-    - 也可以在服务器上执行`快速试用`的几部,然后安装到正式数据库
-- 安装数据库
-    - 修改配置文件`config/database.php`,连接到正确的数据库
-        - 一般是第七行的`sqlite`改成`mysql`
-        - 给23行的mysql数组的配置改成正确的配置
-    - 重新执行`初始化数据库`的两行命令
-        - 执行之前可能需要清理下缓存`php think clear --cache`
-
-> 理论上,数据库可以安装到sqlite,mysql,sqlserver,pgsql,如果出现问题,可能是`空和非空`,`默认值`等问题.欢迎大家测试反馈.
 
 
-### 开发注意
 
-#### 更多用法
+## 站点地址
 
-更多用法欢迎访问 https://bbs.ulthon.com/index/Post/index.html?topic=ulthon_admin开发和使用指南
+* 官方网站：[http://easyadmin.99php.cn](http://easyadmin.99php.cn)
 
-#### 后台页面仅仅使用了`TP`的模板包含特性
+* 文档地址：[http://easyadmin.99php.cn/docs](http://easyadmin.99php.cn/docs)
 
+* 演示地址：[http://easyadmin.99php.cn/admindemo](http://easyadmin.99php.cn/admindemo)（账号：admin，密码：123456。备注：只有查看信息的权限）
+ 
+## 代码仓库
 
-#### 支持所有(`TP6`支持的)类型数据库
+* GitHub地址：[https://github.com/zhongshaofa/easyadmin](https://github.com/zhongshaofa/easyadmin)
 
-填写正确的数据库连接配置,
-
-执行`php think migrate:run`安装数据库
-
-执行`php think seed:run`初始化数据
-
-#### 使用了配置全局中间件
+* Gitee地址：[https://gitee.com/zhongshaofa/easyadmin](https://gitee.com/zhongshaofa/easyadmin)
 
 
-在这个中间件里把数据库的配置信息设置到项目中.
+## 项目特性
+* 快速CURD命令行
+    * 一键生成控制器、模型、视图、JS文件
+    * 支持关联查询、字段设置等等
+* 基于`auth`的权限管理系统
+    * 通过`注解方式`来实现`auth`权限节点管理
+    * 具备一键更新`auth`权限节点，无需手动输入管理
+    * 完善的后端权限验证以及前面页面按钮显示、隐藏控制
+* 完善的菜单管理
+    * 分模块管理
+    * 无限极菜单
+    * 菜单编辑会提示`权限节点`
+* 完善的上传组件功能
+    * 本地存储
+    * 阿里云OSS`建议使用`
+    * 腾讯云COS
+    * 七牛云OSS
+* 完善的前端组件功能
+   * 对layui的form表单重新封装，无需手动拼接数据请求
+   * 简单好用的`图片、文件`上传组件
+   * 简单好用的富文本编辑器`ckeditor`
+   * 对弹出层进行再次封装，以极简的方式使用
+   * 对table表格再次封装，在使用上更加舒服
+   * 根据table的`cols`参数再次进行封装，提供接口实现`image`、`switch`、`list`等功能，再次基础上可以自己再次扩展
+   * 根据table参数一键生成`搜索表单`，无需自己编写
+* 完善的后台操作日志
+   * 记录用户的详细操作信息
+   * 按月份进行`分表记录`
+* 一键部署静态资源到OSS上
+   * 所有在`public\static`目录下的文件都可以一键部署
+   * 一个配置项切换静态资源（oss/本地）
+* 上传文件记录管理
+* 后台路径自定义，防止别人找到对应的后台地址
 
-中间件: `\app\\middleware\ConfigInit`
+## 特别感谢
 
-#### 文件上传
+以下项目排名不分先后
 
-经过这个类上传的文件会保存到`public`下,
+* ThinkPHP：[https://github.com/top-think/framework](https://github.com/top-think/framework)
 
-`TP`原本配置会保存到`public/storage`下,本项目修改了配置,直接保存到`public`下.
+* Layuimini：[https://github.com/zhongshaofa/layuimini](https://github.com/zhongshaofa/layuimini)
 
-类:`\app\api\controller\Files::save()`
+* Annotations：[https://github.com/doctrine/annotations](https://github.com/doctrine/annotations)
 
-## 版权协议
+* Layui：[https://github.com/sentsin/layui](https://github.com/sentsin/layui)
 
-`木兰协议`
+* Jquery：[https://github.com/jquery/jquery](https://github.com/jquery/jquery)
 
-## 源码托管
+* RequireJs：[https://github.com/requirejs/requirejs](https://github.com/requirejs/requirejs)
 
-[码云开源存储](https://gitee.com/ulthon/ulthon_admin)
+* CKEditor：[https://github.com/ckeditor/ckeditor4](https://github.com/ckeditor/ckeditor4)
 
-## 开发维护
+* Echarts：[https://github.com/apache/incubator-echarts](https://github.com/apache/incubator-echarts)
+ 
+ ## 免责声明
 
-[临沂奥宏网络科技有限公司](http://ulthon.com)
+>任何用户在使用`EasyAdmin`后台框架前，请您仔细阅读并透彻理解本声明。您可以选择不使用`EasyAdmin`后台框架，若您一旦使用`EasyAdmin`后台框架，您的使用行为即被视为对本声明全部内容的认可和接受。
+
+* `EasyAdmin`后台框架是一款开源免费的后台快速开发框架 ，主要用于更便捷地开发后台管理；其尊重并保护所有用户的个人隐私权，不窃取任何用户计算机中的信息。更不具备用户数据存储等网络传输功能。
+* 您承诺秉着合法、合理的原则使用`EasyAdmin`后台框架，不利用`EasyAdmin`后台框架进行任何违法、侵害他人合法利益等恶意的行为，亦不将`EasyAdmin`后台框架运用于任何违反我国法律法规的 Web 平台。
+* 任何单位或个人因下载使用`EasyAdmin`后台框架而产生的任何意外、疏忽、合约毁坏、诽谤、版权或知识产权侵犯及其造成的损失 (包括但不限于直接、间接、附带或衍生的损失等)，本开源项目不承担任何法律责任。
+* 用户明确并同意本声明条款列举的全部内容，对使用`EasyAdmin`后台框架可能存在的风险和相关后果将完全由用户自行承担，本开源项目不承担任何法律责任。
+* 任何单位或个人在阅读本免责声明后，应在《MIT 开源许可证》所允许的范围内进行合法的发布、传播和使用`EasyAdmin`后台框架等行为，若违反本免责声明条款或违反法律法规所造成的法律责任(包括但不限于民事赔偿和刑事责任），由违约者自行承担。
+* 如果本声明的任何部分被认为无效或不可执行，其余部分仍具有完全效力。不可执行的部分声明，并不构成我们放弃执行该声明的权利。
+* 本开源项目有权随时对本声明条款及附件内容进行单方面的变更，并以消息推送、网页公告等方式予以公布，公布后立即自动生效，无需另行单独通知；若您在本声明内容公告变更后继续使用的，表示您已充分阅读、理解并接受修改后的声明内容。
+  
+  
+ ## 捐赠支持
+ 
+开源项目不易，若此项目能得到你的青睐，可以捐赠支持作者持续开发与维护，感谢所有支持开源的朋友。
+
+ ![Image text](https://chung-common.oss-cn-beijing.aliyuncs.com/donate_qrcode.png)

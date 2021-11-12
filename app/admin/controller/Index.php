@@ -2,93 +2,119 @@
 
 namespace app\admin\controller;
 
-use think\Request;
-use think\facade\Session;
-use think\facade\View;
 
-class Index extends Common
+use app\admin\model\SystemAdmin;
+use app\admin\model\SystemQuick;
+use app\common\controller\AdminController;
+use think\App;
+use think\facade\Env;
+
+class Index extends AdminController
 {
 
-
-    public function initialize()
-    {
-        parent::initialize();
-    }
-
     /**
-     * 显示资源列表
-     *
-     * @return \think\Response
+     * 后台主页
+     * @return string
+     * @throws \Exception
      */
     public function index()
     {
-        //
-        return View::fetch();
+        return $this->fetch('', [
+            'admin' => session('admin'),
+        ]);
     }
 
     /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
+     * 后台欢迎页
+     * @return string
+     * @throws \Exception
      */
-    public function create()
+    public function welcome()
     {
-        //
+        $quicks = SystemQuick::field('id,title,icon,href')
+            ->where(['status' => 1])
+            ->order('sort', 'desc')
+            ->limit(8)
+            ->select();
+        $this->assign('quicks', $quicks);
+        return $this->fetch();
     }
 
     /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
+     * 修改管理员信息
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function save(Request $request)
+    public function editAdmin()
     {
-        //
+        $id = session('admin.id');
+        $row = (new SystemAdmin())
+            ->withoutField('password')
+            ->find($id);
+        empty($row) && $this->error('用户信息不存在');
+        if ($this->request->isPost()) {
+            $post = $this->request->post();
+            $this->isDemo && $this->error('演示环境下不允许修改');
+            $rule = [];
+            $this->validate($post, $rule);
+            try {
+                $save = $row
+                    ->allowField(['head_img', 'phone', 'remark', 'update_time'])
+                    ->save($post);
+            } catch (\Exception $e) {
+                $this->error('保存失败');
+            }
+            $save ? $this->success('保存成功') : $this->error('保存失败');
+        }
+        $this->assign('row', $row);
+        return $this->fetch();
     }
 
     /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
+     * 修改密码
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function read($id)
+    public function editPassword()
     {
-        //
+        $id = session('admin.id');
+        $row = (new SystemAdmin())
+            ->withoutField('password')
+            ->find($id);
+        if (!$row) {
+            $this->error('用户信息不存在');
+        }
+        if ($this->request->isPost()) {
+            $post = $this->request->post();
+            $this->isDemo && $this->error('演示环境下不允许修改');
+            $rule = [
+                'password|登录密码'       => 'require',
+                'password_again|确认密码' => 'require',
+            ];
+            $this->validate($post, $rule);
+            if ($post['password'] != $post['password_again']) {
+                $this->error('两次密码输入不一致');
+            }
+
+            try {
+                $save = $row->save([
+                    'password' => password($post['password']),
+                ]);
+            } catch (\Exception $e) {
+                $this->error('保存失败');
+            }
+            if ($save) {
+                $this->success('保存成功');
+            } else {
+                $this->error('保存失败');
+            }
+        }
+        $this->assign('row', $row);
+        return $this->fetch();
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }

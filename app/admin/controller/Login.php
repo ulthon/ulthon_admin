@@ -1,69 +1,99 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | EasyAdmin
+// +----------------------------------------------------------------------
+// | PHP交流群: 763822524
+// +----------------------------------------------------------------------
+// | 开源协议  https://mit-license.org 
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zhongshaofa/EasyAdmin
+// +----------------------------------------------------------------------
+
 namespace app\admin\controller;
 
-use think\Request;
-use think\facade\View;
-use think\facade\Validate;
-use think\validate\ValidateRule as Rule;
-use app\model\Admin;
-use think\facade\Session;
 
-class Login extends Common
+use app\admin\model\SystemAdmin;
+use app\common\controller\AdminController;
+use think\captcha\facade\Captcha;
+use think\facade\Env;
+
+/**
+ * Class Login
+ * @package app\admin\controller
+ */
+class Login extends AdminController
 {
+
     /**
-     * 显示资源列表
-     *
-     * @return \think\Response
+     * 初始化方法
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $action = $this->request->action();
+        if (!empty(session('admin')) && !in_array($action, ['out'])) {
+            $adminModuleName = config('app.admin_alias_name');
+            $this->success('已登录，无需再次登录', [], __url("@{$adminModuleName}"));
+        }
+    }
+
+    /**
+     * 用户登录
+     * @return string
+     * @throws \Exception
      */
     public function index()
     {
-        //
-        return View::fetch();
+        $captcha = Env::get('easyadmin.captcha', 1);
+        if ($this->request->isPost()) {
+            $post = $this->request->post();
+            $rule = [
+                'username|用户名'      => 'require',
+                'password|密码'       => 'require',
+                'keep_login|是否保持登录' => 'require',
+            ];
+            $captcha == 1 && $rule['captcha|验证码'] = 'require|captcha';
+            $this->validate($post, $rule);
+            $admin = SystemAdmin::where(['username' => $post['username']])->find();
+            if (empty($admin)) {
+                $this->error('用户不存在');
+            }
+            if (password($post['password']) != $admin->password) {
+                $this->error('密码输入有误');
+            }
+            if ($admin->status == 0) {
+                $this->error('账号已被禁用');
+            }
+            $admin->login_num += 1;
+            $admin->save();
+            $admin = $admin->toArray();
+            unset($admin['password']);
+            $admin['expire_time'] = $post['keep_login'] == 1 ? true : time() + 7200;
+            session('admin', $admin);
+            $this->success('登录成功');
+        }
+        $this->assign('captcha', $captcha);
+        $this->assign('demo', $this->isDemo);
+        return $this->fetch();
     }
 
-
-    public function auth()
+    /**
+     * 用户退出
+     * @return mixed
+     */
+    public function out()
     {
-        $post_data = $this->request->post();
-
-       
-
-        $validate = Validate::rule('account',Rule::isRequire())
-        ->rule('password',Rule::isRequire())
-        ->rule('captcha',function($value){
-            return \captcha_check($value)?true:'验证码错误';
-        });
-
-        if(!$validate->check($post_data)){
-            Session::set('admin_id',1);
-            return json_message();
-            return json_message($validate->getError());
-        }
-
-        $model_admin = Admin::where('account',$post_data['account'])->find();
-
-        if(empty($model_admin)){
-            Session::set('admin_id',1);
-            return json_message();
-            return json_message('帐号不存在');
-        }
-
-        if($model_admin->getData('password') !== md5($post_data['password'].$model_admin->getData('salt'))){
-            Session::set('admin_id',1);
-            return json_message();
-            return json_message('密码错误');
-        }
-
-        Session::set('admin_id',$model_admin->id);
-
-        return json_message();
+        session('admin', null);
+        $this->success('退出登录成功');
     }
 
-    public function logout()
+    /**
+     * 验证码
+     * @return \think\Response
+     */
+    public function captcha()
     {
-        Session::clear();
-
-        $this->success('已经安全退出','Login/Index');
+        return Captcha::create();
     }
 }
