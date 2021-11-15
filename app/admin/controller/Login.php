@@ -27,35 +27,32 @@ class Login extends Common
     {
         $post_data = $this->request->post();
 
-       
+        // 想要关闭测试账号,注释掉下面两行代码
+        Session::set('admin_id', 1);
+        return json_message();
 
-        $validate = Validate::rule('account',Rule::isRequire())
-        ->rule('password',Rule::isRequire())
-        ->rule('captcha',function($value){
-            return \captcha_check($value)?true:'验证码错误';
-        });
 
-        if(!$validate->check($post_data)){
-            Session::set('admin_id',1);
-            return json_message();
+        $validate = Validate::rule('account', Rule::isRequire())
+            ->rule('password', Rule::isRequire())
+            ->rule('captcha', function ($value) {
+                return \captcha_check($value) ? true : '验证码错误';
+            });
+
+        if (!$validate->check($post_data)) {
             return json_message($validate->getError());
         }
 
-        $model_admin = Admin::where('account',$post_data['account'])->find();
+        $model_admin = Admin::where('account', $post_data['account'])->find();
 
-        if(empty($model_admin)){
-            Session::set('admin_id',1);
-            return json_message();
+        if (empty($model_admin)) {
             return json_message('帐号不存在');
         }
 
-        if($model_admin->getData('password') !== md5($post_data['password'].$model_admin->getData('salt'))){
-            Session::set('admin_id',1);
-            return json_message();
+        if ($model_admin->getData('password') !== md5($post_data['password'] . $model_admin->getData('salt'))) {
             return json_message('密码错误');
         }
 
-        Session::set('admin_id',$model_admin->id);
+        Session::set('admin_id', $model_admin->id);
 
         return json_message();
     }
@@ -64,6 +61,6 @@ class Login extends Common
     {
         Session::clear();
 
-        $this->success('已经安全退出','Login/Index');
+        $this->success('已经安全退出', 'Login/Index');
     }
 }
