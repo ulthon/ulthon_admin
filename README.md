@@ -10,8 +10,8 @@
 [![Thinkphp Version](https://img.shields.io/badge/thinkphp-%3E=6.0.2-brightgreen.svg?maxAge=2592000)](https://github.com/top-think/framework)
 [![Layui Version](https://img.shields.io/badge/layui-=2.5.5-brightgreen.svg?maxAge=2592000&color=critical)](https://github.com/sentsin/layui)
 [![Layuimini Version](https://img.shields.io/badge/layuimini-%3E=2.0.4.2-brightgreen.svg?maxAge=2592000&color=ff69b4)](https://github.com/zhongshaofa/layuimini)
-[![ulthon_admin Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](http://ulthon_admin.99php.cn/docs)
-[![ulthon_admin License](https://img.shields.io/badge/license-mulan-green?maxAge=2592000&color=blue)](https://github.com/zhongshaofa/ulthon_admin/blob/v2/LICENSE)
+[![ulthon_admin Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](http://doc.ulthon.com/home/read/ulthon_admin/home.html)
+[![ulthon_admin License](https://img.shields.io/badge/license-mulan-green?maxAge=2592000&color=blue)](https://gitee.com/ulthon/ulthon_admin/blob/master/LICENSE)
 
 ## 项目介绍
 
