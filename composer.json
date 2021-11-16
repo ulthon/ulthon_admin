@@ -1,18 +1,19 @@
 {
-    "name": "zhongshaofa/easyadmin",
+    "name": "ulthon/ulthon_admin",
     "description": "基于ThinkPHP6.0和layui的快速开发的后台管理系统。",
     "type": "project",
     "keywords": [
-        "easyadmin",
+        "ulthon_admin",
+        "ulthon",
         "thinkphp",
         "admin"
     ],
-    "homepage": "http://easyadmin.99php.cn/",
+    "homepage": "http://admin.demo.ulthon.com//",
     "license": "MIT",
     "authors": [
         {
-            "name": "zhongshaofa",
-            "email": "2286732552@qq.com"
+            "name": "augushong",
+            "email": "augushong@ulthon.com"
         }
     ],
     "require": {

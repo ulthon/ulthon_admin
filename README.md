@@ -9,7 +9,7 @@
 [![Mysql Version](https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&color=orange)](https://www.mysql.com/)
 [![Thinkphp Version](https://img.shields.io/badge/thinkphp-%3E=6.0.2-brightgreen.svg?maxAge=2592000)](https://github.com/top-think/framework)
 [![Layui Version](https://img.shields.io/badge/layui-=2.5.5-brightgreen.svg?maxAge=2592000&color=critical)](https://github.com/sentsin/layui)
-[![Layuimini Version](https://img.shields.io/badge/layuimini-%3E=2.0.4.2-brightgreen.svg?maxAge=2592000&color=ff69b4)](https://github.com/zhongshaofa/layuimini)
+[![Layuimini Version](https://img.shields.io/badge/layuimini-%3E=2.0.4.2-brightgreen.svg?maxAge=2592000&color=ff69b4)](https://github.com/ulthon/layuimini)
 [![ulthon_admin Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](http://doc.ulthon.com/home/read/ulthon_admin/home.html)
 [![ulthon_admin License](https://img.shields.io/badge/license-mulan-green?maxAge=2592000&color=blue)](https://gitee.com/ulthon/ulthon_admin/blob/master/LICENSE)
 
@@ -23,16 +23,16 @@
 >ulthon_admin 使用 Composer 来管理项目依赖。因此，在使用 ulthon_admin 之前，请确保你的机器已经安装了 Composer。
 
 #### 通过 Composer 创建项目`建议`
-`composer create-project --prefer-dist zhongshaofa/ulthon_admin blog`  
+`composer create-project --prefer-dist ulthon/ulthon_admin blog`  
 
 #### 通过git下载安装包，composer安装依赖包
 
 ```bash
 第一步，下载安装包
 
-git clone https://github.com/zhongshaofa/ulthon_admin
+git clone https://github.com/ulthon/ulthon_admin
 或者
-git clone https://gitee.com/zhongshaofa/ulthon_admin
+git clone https://gitee.com/ulthon/ulthon_admin
 
 
 第二步，安装依赖包
