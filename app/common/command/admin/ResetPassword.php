@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\common\command\admin;
 
 use app\admin\model\SystemAdmin;
+use app\common\constants\AdminConstant;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -17,7 +18,7 @@ class ResetPassword extends Command
     {
         // 指令配置
         $this->setName('admin:resetPassword')
-            ->setDescription('the admin:resetPassword command');
+            ->setDescription('重置超管密码');
     }
 
     protected function execute(Input $input, Output $output)
@@ -26,16 +27,18 @@ class ResetPassword extends Command
         $output->writeln('admin:resetPassword');
 
 
-        $model_admin = SystemAdmin::where('username', 'admin')->find();
+        $model_admin = SystemAdmin::find(AdminConstant::SUPER_ADMIN_ID);
         if (empty($model_admin)) {
             $output->writeln('管理员不存在');
             return false;
         }
 
+        $password = uniqid();
+
         $model_admin->save([
-            'password' => password(123456)
+            'password' => password($password)
         ]);
 
-        $output->writeln('修改成功');
+        $output->writeln('密码修改为:' . $password);
     }
 }
