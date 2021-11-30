@@ -25,7 +25,7 @@ class CsrfMiddleware
 
     public function handle(Request $request, \Closure $next)
     {
-        if (env('EASYADMIN.IS_CSRF', true)) {
+        if (env('adminsystem.IS_CSRF', true)) {
             if (!in_array($request->method(), ['GET', 'HEAD', 'OPTIONS'])) {
 
                 // 跨域校验

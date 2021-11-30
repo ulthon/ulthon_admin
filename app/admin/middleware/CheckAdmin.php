@@ -55,7 +55,7 @@ class CheckAdmin
             !$check && $this->error('无权限访问');
 
             // 判断是否为演示环境
-            if(env('easyadmin.is_demo', false) && $request->isPost()){
+            if(env('adminsystem.is_demo', false) && $request->isPost()){
                 $this->error('演示环境下不允许修改');
             }
 

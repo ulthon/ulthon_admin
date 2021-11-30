@@ -28,7 +28,7 @@ return [
     'display_cache' => true,
     // 字符替换
     'tpl_replace_string' => [
-        '__STATIC__' => Env::get('easyadmin.static_path', '/static'),
+        '__STATIC__' => Env::get('adminsystem.static_path', '/static'),
         '__JS__'     => '/static/javascript',
     ]
 ];

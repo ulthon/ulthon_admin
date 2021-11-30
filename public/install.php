@@ -306,10 +306,10 @@ return [
     'default_timezone' => 'Asia/Shanghai',
     // 应用映射（自动多应用模式有效）
     'app_map'          => [
-        Env::get('easyadmin.admin', '{$admin}') => 'admin',
+        Env::get('adminsystem.admin', '{$admin}') => 'admin',
     ],
     // 后台别名
-    'admin_alias_name' => Env::get('easyadmin.admin', '{$admin}'),
+    'admin_alias_name' => Env::get('adminsystem.admin', '{$admin}'),
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [],
     // 禁止URL访问的应用列表（自动多应用模式有效）
@@ -325,7 +325,7 @@ return [
     // 显示错误信息
     'show_error_msg'   => false,
     // 静态资源上传到OSS前缀
-    'oss_static_prefix'   => Env::get('easyadmin.oss_static_prefix', 'static_easyadmin'),
+    'oss_static_prefix'   => Env::get('adminsystem.oss_static_prefix', 'static_ulthon_admin'),
 ];
 
 EOT;

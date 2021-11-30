@@ -98,7 +98,7 @@ class AdminController extends BaseController
     {
         parent::initialize();
         $this->layout && $this->app->view->engine()->layout($this->layout);
-        $this->isDemo = Env::get('easyadmin.is_demo', false);
+        $this->isDemo = Env::get('adminsystem.is_demo', false);
         $this->viewInit();
         $this->checkAuth();
     }
@@ -274,7 +274,7 @@ class AdminController extends BaseController
             !$check && $this->error('无权限访问');
 
             // 判断是否为演示环境
-            if(env('easyadmin.is_demo', false) && app()->request->isPost()){
+            if(env('adminsystem.is_demo', false) && app()->request->isPost()){
                 $this->error('演示环境下不允许修改');
             }
 
