@@ -1441,6 +1441,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             select: function () {
+                
                 var selectList = document.querySelectorAll("[data-select]");
                 $.each(selectList, function (i, v) {
                     var url = $(this).attr('data-select'),
@@ -1448,8 +1449,17 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         value = $(this).attr('data-value'),
                         that = this,
                         html = '<option value=""></option>';
+
+                    var template = $(that).data('template');
+
+                    if(typeof template != 'function'){
+                        template = function(data,fields){
+                            return data[fields[1]];
+                        }
+                    }
+
                     var fields = selectFields.replace(/\s/g, "").split(',');
-                    if (fields.length !== 2) {
+                    if (fields.length < 2) {
                         return admin.msg.error('下拉选择字段有误');
                     }
                     admin.request.get(
@@ -1460,12 +1470,18 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             },
                         }, function (res) {
                             var list = res.data;
+
+
+
                             list.forEach(val => {
                                 var key = val[fields[0]];
+
+                                var valueTitle = template(val, fields);
+
                                 if (value !== undefined && key.toString() === value) {
-                                    html += '<option value="' + key + '" selected="">' + val[fields[1]] + '</option>';
+                                    html += '<option value="' + key + '" selected="">' + valueTitle + '</option>';
                                 } else {
-                                    html += '<option value="' + key + '">' + val[fields[1]] + '</option>';
+                                    html += '<option value="' + key + '">' + valueTitle + '</option>';
                                 }
                             });
                             $(that).html(html);
