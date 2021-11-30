@@ -543,7 +543,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 return cols;
             },
             tool: function (data, option) {
-                option.operat = option.operat || ['edit', 'delete'];
+            option.operat = option.operat || ['edit', 'delete'];
                 var elem = option.init.table_elem || init.table_elem;
                 var html = '';
                 $.each(option.operat, function (i, item) {
@@ -603,7 +603,12 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 operat.title = data[operat.extra] + ' - ' + operat.title;
                             }
 
-                            operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
+                            if (typeof operat.field != 'function') {
+                                operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
+                            } else {
+                                operat.url = operat.field(operat.url, data, operat)
+                            }
+
                             if (admin.checkAuth(operat.auth, elem)) {
                                 html += admin.table.buildOperatHtml(operat);
                             }
