@@ -519,3 +519,91 @@ table样式
     background: goldenrod;
     white-space: nowrap;
 }
+
+.data-item{
+    display: none;
+    line-height: 28px;
+}
+
+@media screen and (max-width: 450px) {
+    .data-item{
+        display: block;
+    }
+    
+    .layui-form-item .layui-form-label {
+        float     : unset;
+        text-align: left;
+
+    }
+
+    .layuimini-form>.layui-form-item .required:after {
+        right      : unset;
+        left       : 0;
+        margin-left: 0;
+    }
+
+    .layui-input-block {
+        margin-left: 0;
+    }
+
+    .layui-anim-upbit {
+        min-width: unset !important;
+        width    : calc(100% - 20px);
+        overflow : auto
+    }
+
+    .layui-table-page {
+        overflow: auto;
+    }
+
+    .layui-form-pane .layui-form-item .layui-form-label {
+        float: left;
+    }
+
+    .layui-table-page {
+        height: 45px
+    }
+
+
+    .layui-table-main .layui-table tr {
+        background-color: #eee;
+        border-radius   : 15px;
+        padding         : 15px;
+        margin-bottom   : 15px;
+        display         : block;
+    }
+
+
+    .layui-table-main .layui-table {
+        display: block;
+    }
+
+    .layui-table-main tbody {
+        display: block;
+    }
+
+    .layui-table-main td {
+        display        : flex;
+        align-items    : flex-start;
+        justify-content: space-between;
+        margin-right   : 0;
+        border-bottom  : 1px solid #fff;
+        min-height     : 30px;
+    }
+
+
+    .layui-table-main .layui-table-cell {
+        width     : auto;
+        padding   : 0;
+        text-align: right;
+    }
+
+    .layuimini-container .layui-table-box {
+        border: none;
+    }
+
+    .layui-table-header{
+        display: none;
+    }
+
+}

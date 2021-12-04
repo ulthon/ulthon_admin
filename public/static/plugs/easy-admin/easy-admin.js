@@ -29,7 +29,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             return '/' + CONFIG.ADMIN + '/' + url;
         },
         headers: function () {
-            return {'X-CSRF-TOKEN': window.CONFIG.CSRF_TOKEN};
+            return { 'X-CSRF-TOKEN': window.CONFIG.CSRF_TOKEN };
         },
         //js版empty，判断变量是否为空
         empty: function (r) {
@@ -90,7 +90,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     type: type,
                     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                     dataType: "json",
-                    headers:admin.headers(),
+                    headers: admin.headers(),
                     data: option.data,
                     timeout: 60000,
                     success: function (res) {
@@ -107,7 +107,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         });
                         return false;
                     },
-                    complete: function(){
+                    complete: function () {
                         // @todo 刷新csrf-token
                     }
                 });
@@ -145,7 +145,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     callback = function () {
                     }
                 }
-                var index = layer.msg(msg, {icon: 1, shade: admin.config.shade, scrollbar: false, time: 2000, shadeClose: true}, callback);
+                var index = layer.msg(msg, { icon: 1, shade: admin.config.shade, scrollbar: false, time: 2000, shadeClose: true }, callback);
                 return index;
             },
             // 失败消息
@@ -154,17 +154,17 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     callback = function () {
                     }
                 }
-                var index = layer.msg(msg, {icon: 2, shade: admin.config.shade, scrollbar: false, time: 3000, shadeClose: true}, callback);
+                var index = layer.msg(msg, { icon: 2, shade: admin.config.shade, scrollbar: false, time: 3000, shadeClose: true }, callback);
                 return index;
             },
             // 警告消息框
             alert: function (msg, callback) {
-                var index = layer.alert(msg, {end: callback, scrollbar: false});
+                var index = layer.alert(msg, { end: callback, scrollbar: false });
                 return index;
             },
             // 对话框
             confirm: function (msg, ok, no) {
-                var index = layer.confirm(msg, {title: '操作确认', btn: ['确认', '取消']}, function () {
+                var index = layer.confirm(msg, { title: '操作确认', btn: ['确认', '取消'] }, function () {
                     typeof ok === 'function' && ok.call(this);
                 }, function () {
                     typeof no === 'function' && no.call(this);
@@ -174,12 +174,12 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             },
             // 消息提示
             tips: function (msg, time, callback) {
-                var index = layer.msg(msg, {time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true});
+                var index = layer.msg(msg, { time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true });
                 return index;
             },
             // 加载中提示
             loading: function (msg, callback) {
-                var index = msg ? layer.msg(msg, {icon: 16, scrollbar: false, shade: this.shade, time: 0, end: callback}) : layer.load(2, {time: 0, scrollbar: false, shade: this.shade, end: callback});
+                var index = msg ? layer.msg(msg, { icon: 16, scrollbar: false, shade: this.shade, time: 0, end: callback }) : layer.load(2, { time: 0, scrollbar: false, shade: this.shade, end: callback });
                 return index;
             },
             // 关闭消息框
@@ -209,6 +209,33 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     extend: 'data-table-id="' + options.id + '"'
                 }];
 
+                options.done = function () {
+
+                    if (admin.checkMobile()) {
+                        var domTable = $('[lay-id="' + options.id + '"]');
+
+                        var colsHeader = [];
+                        domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
+
+                            if ($(cell).hasClass('laytable-cell-checkbox')) {
+                                colsHeader.push('选择');
+                            } else {
+                                colsHeader.push($(cell).find('span').first().text())
+                            }
+                        })
+
+                        domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
+
+                            $(domTr).find('td').each(function (indexTd, domTd) {
+
+                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
+                            })
+                        })
+
+
+                    }
+                }
+
                 // 判断是否为移动端
                 if (admin.checkMobile()) {
                     options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
@@ -217,6 +244,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         icon: 'layui-icon-search',
                         extend: 'data-table-id="' + options.id + '"'
                     }];
+
+                    
+                    options.page = {
+                        layout: ['first','prev', 'page', 'next','last','count']
+                    }
                 }
 
                 // 判断元素对象是否有嵌套的
@@ -313,7 +345,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                     '</div>\n' +
                                     '</div>';
                                 break;
-                            case  'select':
+                            case 'select':
                                 d.searchOp = '=';
                                 var selectHtml = '';
                                 $.each(d.selectList, function (sI, sV) {
@@ -374,10 +406,10 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     form.render();
                     $.each(newCols, function (ncI, ncV) {
                         if (ncV.search === 'range') {
-                            laydate.render({range: true, type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
+                            laydate.render({ range: true, type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
                         }
                         if (ncV.search === 'time') {
-                            laydate.render({type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
+                            laydate.render({ type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
                         }
                     });
                 }
@@ -390,7 +422,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     $.each(cols, function (i, v) {
                         v.filter = v.filter || false;
                         if (v.filter !== false && tableInit.modify_url !== false) {
-                            admin.table.listenSwitch({filter: v.filter, url: tableInit.modify_url, tableId: tableId, modifyReload: modifyReload});
+                            admin.table.listenSwitch({ filter: v.filter, url: tableInit.modify_url, tableId: tableId, modifyReload: modifyReload });
                         }
                     });
                 }
@@ -443,14 +475,14 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 formatToolbar.class = formatToolbar.class !== '' ? 'class="' + formatToolbar.class + '" ' : '';
                 if (toolbar.method === 'open') {
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-                } else if (toolbar.method === 'none'){ // 常用于与extend配合，自定义监听按钮
+                } else if (toolbar.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatToolbar.method = '';
                 } else {
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 }
                 formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
                 formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
-                html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox +  formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
+                html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
 
                 return html;
             },
@@ -471,7 +503,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
                 if (operat.method === 'open') {
                     formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
-                } else if (operat.method === 'none'){ // 常用于与extend配合，自定义监听按钮
+                } else if (operat.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatOperat.method = '';
                 } else {
                     formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
@@ -538,12 +570,18 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             cols[i][index]['templet'] = admin.table.list;
                         }
 
+                        if (admin.checkMobile()) {
+                            if (val.fixed !== undefined) {
+                                val.fixed = false;
+                            }
+                        }
+
                     }
                 }
                 return cols;
             },
             tool: function (data, option) {
-            option.operat = option.operat || ['edit', 'delete'];
+                option.operat = option.operat || ['edit', 'delete'];
                 var elem = option.init.table_elem || init.table_elem;
                 var html = '';
                 $.each(option.operat, function (i, item) {
@@ -644,7 +682,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 } catch (e) {
                     var value = undefined;
                 }
-                if (value === undefined || value===null) {
+                if (value === undefined || value === null) {
                     return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
                 } else {
                     var values = value.split(option.imageSplit),
@@ -727,8 +765,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 var field = option.field, value = '';
                 try {
                     value = eval("data." + field);
-                } catch (e) {}
-                if (!admin.empty(value)){
+                } catch (e) { }
+                if (!admin.empty(value)) {
                     value = util.toDateString(value * 1000, option.format || 'yyyy-MM-dd HH:mm:ss');
                 }
                 return '<span>' + value + '</span>';
@@ -926,7 +964,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
             // 表格修改
             $("body").on("mouseenter", ".table-edit-tips", function () {
-                var openTips = layer.tips('点击行内容可以进行修改', $(this), {tips: [2, '#e74c3c'], time: 4000});
+                var openTips = layer.tips('点击行内容可以进行修改', $(this), { tips: [2, '#e74c3c'], time: 4000 });
             });
 
             // 监听弹出层的打开
@@ -940,7 +978,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     external = $(this).attr('data-external') || false,
                     tableId = $(this).attr('data-table');
 
-                if(checkbox === 'true'){
+                if (checkbox === 'true') {
                     tableId = tableId || init.table_render_id;
                     var checkStatus = table.checkStatus(tableId),
                         data = checkStatus.data;
@@ -1016,9 +1054,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     now_src = $(this).attr('src'),
                     alt = $(this).attr('alt'),
                     data = [];
-                $.each(doms, function(key, value){
+                $.each(doms, function (key, value) {
                     var src = $(value).find('img').attr('src');
-                    if(src != now_src){
+                    if (src != now_src) {
                         // 压入其他图片地址
                         data.push({
                             "alt": alt,
@@ -1026,7 +1064,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             "src": src,
                             "thumb": src
                         });
-                    }else{
+                    } else {
                         // 把当前图片插入到头部
                         data.unshift({
                             "alt": alt,
@@ -1095,7 +1133,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
 
                 var postData = {};
-                if(checkbox === 'true'){
+                if (checkbox === 'true') {
                     tableId = tableId || init.table_render_id;
                     var checkStatus = table.checkStatus(tableId),
                         data = checkStatus.data;
@@ -1313,7 +1351,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             accept: uploadAccept,//指定允许上传时校验的文件类型
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型
                             multiple: uploadNumber !== 'one',//是否多文件上传
-                            headers:admin.headers(),
+                            headers: admin.headers(),
                             done: function (res) {
                                 if (res.code === 1) {
                                     var url = res.data.url;
@@ -1395,17 +1433,17 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             checkedKey: 'id',
                             searchType: 'more',
                             searchList: [
-                                {searchKey: 'title', searchPlaceholder: '请输入文件名'},
+                                { searchKey: 'title', searchPlaceholder: '请输入文件名' },
                             ],
                             table: {
                                 url: admin.url('ajax/getUploadFiles'),
                                 cols: [[
-                                    {type: selectCheck},
-                                    {field: 'id', title: 'ID'},
-                                    {field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.image},
-                                    {field: 'original_name', width: 150, title: '文件原名', align: "center"},
-                                    {field: 'mime_type', width: 120, title: 'mime类型', align: "center"},
-                                    {field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range'},
+                                    { type: selectCheck },
+                                    { field: 'id', title: 'ID' },
+                                    { field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.image },
+                                    { field: 'original_name', width: 150, title: '文件原名', align: "center" },
+                                    { field: 'mime_type', width: 120, title: 'mime类型', align: "center" },
+                                    { field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range' },
                                 ]]
                             },
                             done: function (e, data) {
@@ -1441,7 +1479,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             select: function () {
-                
+
                 var selectList = document.querySelectorAll("[data-select]");
                 $.each(selectList, function (i, v) {
                     var url = $(this).attr('data-select'),
@@ -1452,8 +1490,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                     var template = $(that).data('template');
 
-                    if(typeof template != 'function'){
-                        template = function(data,fields){
+                    if (typeof template != 'function') {
+                        template = function (data, fields) {
                             return data[fields[1]];
                         }
                     }
@@ -1497,7 +1535,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         var format = $(this).attr('data-date'),
                             type = $(this).attr('data-date-type'),
                             range = $(this).attr('data-date-range');
-                        if(type === undefined || type === '' || type ===null){
+                        if (type === undefined || type === '' || type === null) {
                             type = 'datetime';
                         }
                         var options = {
@@ -1508,7 +1546,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             options['format'] = format;
                         }
                         if (range !== undefined) {
-                            if(range === null || range === ''){
+                            if (range === null || range === '') {
                                 range = '-';
                             }
                             options['range'] = range;
