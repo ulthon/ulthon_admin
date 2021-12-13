@@ -477,7 +477,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 } else if (toolbar.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatToolbar.method = '';
-                } else if (operat.method === 'blank') {
+                } else if (toolbar.method === 'blank') {
                     formatOperat.method = ' href="' + formatOperat.url + '" target="_blank" ';
 
                 } else {
