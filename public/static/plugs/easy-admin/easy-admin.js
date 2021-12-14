@@ -259,7 +259,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                 // 初始化表格搜索
                 if (options.search === true) {
-                    admin.table.renderSearch(options.cols, options.elem, options.id);
+                    options = admin.table.renderSearch(options.cols, options.elem, options.id, options);
                 }
 
                 // 初始化表格左上方工具栏
@@ -320,11 +320,13 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 });
                 return '<div>' + toolbarHtml + '</div>';
             },
-            renderSearch: function (cols, elem, tableId) {
+            renderSearch: function (cols, elem, tableId, options) {
                 // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
                 cols = cols[0] || {};
                 var newCols = [];
                 var formHtml = '';
+                var formatFilter = {},
+                    formatOp = {};
                 $.each(cols, function (i, d) {
                     d.field = d.field || false;
                     d.fieldAlias = admin.parame(d.fieldAlias, d.field);
@@ -333,8 +335,19 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     d.search = admin.parame(d.search, true);
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
                     d.searchValue = d.searchValue || '';
+                    d.defaultSearchValue = d.defaultSearchValue || '';
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
+
+                    if (d.defaultSearchValue.length > 0) {
+                        if (d.searchValue.length == 0) {
+                            d.searchValue = d.defaultSearchValue;
+                        }
+
+                        formatFilter[d.field] = d.defaultSearchValue;
+                        formatOp[d.field] = d.searchOp;
+                    }
+
                     if (d.field !== false && d.search !== false) {
                         switch (d.search) {
                             case true:
@@ -348,6 +361,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             case 'select':
                                 d.searchOp = '=';
                                 var selectHtml = '';
+
                                 $.each(d.selectList, function (sI, sV) {
                                     var selected = '';
                                     if (sI === d.searchValue) {
@@ -413,6 +427,13 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         }
                     });
                 }
+
+                options.where = {
+                    filter: JSON.stringify(formatFilter),
+                    op: JSON.stringify(formatOp)
+                }
+
+                return options;
             },
             renderSwitch: function (cols, tableInit, tableId, modifyReload) {
                 tableInit.modify_url = tableInit.modify_url || false;
@@ -1559,6 +1580,20 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
         },
+        getQueryVariable(variable, defaultValue) {
+            if (typeof defaultValue == 'undefined') {
+                defaultValue = undefined;
+            }
+        
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) { return decodeURIComponent(pair[1]); }
+            }
+            return defaultValue;
+        }
+        
     };
     return admin;
 });
