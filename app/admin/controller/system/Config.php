@@ -48,14 +48,38 @@ class Config extends AdminController
     public function save()
     {
         $this->checkPostRequest();
-        $post = $this->request->post();
+
+        $post = $this->request->except(['group_name'], 'post');
+
+        $group_name = $this->request->post('group_name');
+
         try {
             foreach ($post as $key => $val) {
-                $this->model
-                    ->where('name', $key)
-                    ->update([
-                        'value' => $val,
+
+                if (empty($group_name)) {
+
+                    $this->model
+                        ->where('name', $key)
+                        ->update([
+                            'value' => $val,
+                        ]);
+                } else {
+                    $model_config = SystemConfig::where('group', $group_name)
+                        ->where('name', $key)
+                        ->find();
+
+                    if (empty($model_config)) {
+                        $model_config = SystemConfig::create([
+                            'group' => $group_name,
+                            'name' => $key,
+                            'value' => $val
+                        ]);
+                    }
+
+                    $model_config->save([
+                        'value' => $val
                     ]);
+                }
             }
             TriggerService::updateMenu();
             TriggerService::updateSysconfig();
@@ -64,5 +88,4 @@ class Config extends AdminController
         }
         $this->success('保存成功');
     }
-
 }
