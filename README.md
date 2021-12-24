@@ -15,6 +15,8 @@
 
 ## 项目介绍
 
+只为`开发人员`服务,只为`需求定制`服务.
+
 基于ThinkPHP6.0和layui的快速开发的后台管理系统。
 
 技术交流QQ群：[207160418](https://jq.qq.com/?_wv=1027&k=TULvsosz) 
@@ -23,13 +25,13 @@
 >ulthon_admin 使用 Composer 来管理项目依赖。因此，在使用 ulthon_admin 之前，请确保你的机器已经安装了 Composer。
 
 #### 通过 Composer 创建项目`建议`
+
 `composer create-project --prefer-dist ulthon/ulthon_admin blog`  
 
 #### 通过git下载安装包，composer安装依赖包
 
 ```bash
 第一步，下载安装包
-
 git clone https://github.com/ulthon/ulthon_admin
 或者
 git clone https://gitee.com/ulthon/ulthon_admin
@@ -38,8 +40,28 @@ git clone https://gitee.com/ulthon/ulthon_admin
 第二步，安装依赖包
 composer install
 
+第三步, 配置`.env`
+复制`.example.env`为`.env`
+修改`env`文件
+
+[DATABASE]
+TYPE=mysql
+HOSTNAME=host.docker.internal
+DATABASE=ulthon
+USERNAME=root
+PASSWORD=root
+HOSTPORT=3306
+CHARSET=utf8
+DEBUG=true
+PREFIX=ul_
+
+
+第四步, 执行数据库导入
+php think install
+
 ```
 
+> 这个安装方式对开发体验非常友好
 
 
 ## 站点地址
