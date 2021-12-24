@@ -25,6 +25,7 @@ class Install extends Command
         $this->setName('install')
             ->addOption('adminname', 'u', Option::VALUE_OPTIONAL, '管理员账号')
             ->addOption('password', 'p', Option::VALUE_OPTIONAL, '管理员密码')
+            ->addOption('force', 'f', Option::VALUE_OPTIONAL, '强制安装')
             ->setDescription('安装数据库');
 
         $this->installLockPath = App::getRootPath() . '/config/install/lock/install.lock';
@@ -36,14 +37,17 @@ class Install extends Command
     {
         // 指令输出
 
-        $install_lock_path = $this->installLockPath;
+        $force = $input->getOption('force');
 
-        if (is_file($install_lock_path)) {
-            $errorInfo = '已安装系统，如需重新安装请删除文件：/config/install/lock/install.lock';
-            $output->writeln($errorInfo);
-            return false;
+        if (is_null($force)) {
+            $install_lock_path = $this->installLockPath;
+
+            if (is_file($install_lock_path)) {
+                $errorInfo = '已安装系统，如需重新安装,可以添加 -f 1 参数或删除文件：/config/install/lock/install.lock';
+                $output->writeln($errorInfo);
+                return false;
+            }
         }
-
 
         if (!$this->checkConnect()) {
             $output->writeln('数据库连接失败,请检查数据库配置');
