@@ -464,7 +464,10 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             } else {
                                 for (k in item) {
                                     var v = item[k];
-                                    if (v.auth !== undefined && admin.checkAuth(v.auth, elem)) {
+                                    if(v.auth == undefined){
+                                        v.auth = 'add'
+                                    }
+                                    if (admin.checkAuth(v.auth, elem)) {
                                         check = true;
                                         break;
                                     }
