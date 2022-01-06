@@ -585,16 +585,16 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             cols[i][index]['imageHeight'] = 40;
                         }
 
+                        // 判断是否列表数据转换
+                        if (val.selectList !== undefined && val.templet === undefined) {
+                            cols[i][index]['templet'] = admin.table.list;
+                        }
+
                         // 判断是否多层对象
                         if (val.field !== undefined && val.field.split(".").length > 1) {
                             if (val.templet === undefined) {
                                 cols[i][index]['templet'] = admin.table.value;
                             }
-                        }
-
-                        // 判断是否列表数据转换
-                        if (val.selectList !== undefined && val.templet === undefined) {
-                            cols[i][index]['templet'] = admin.table.list;
                         }
 
                         if (admin.checkMobile()) {
