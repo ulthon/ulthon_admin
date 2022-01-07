@@ -90,6 +90,13 @@ class AdminController extends BaseController
      */
     protected $isDemo = false;
 
+    /**
+     * 多元传参
+     *
+     * @var array
+     */
+    protected $dataBrage = [];
+
 
     /**
      * 初始化方法
@@ -109,8 +116,13 @@ class AdminController extends BaseController
      * @param mixed $value 变量值
      * @return mixed
      */
-    public function assign($name, $value = null)
+    public function assign($name, $value = null, $isAppendToDataBrage = false)
     {
+
+        if ($isAppendToDataBrage) {
+            $this->dataBrage[$name] = $value;
+        }
+
         return $this->app->view->assign($name, $value);
     }
 
@@ -122,6 +134,9 @@ class AdminController extends BaseController
      */
     public function fetch($template = '', $vars = [])
     {
+
+        $this->assign('data_brage', json_encode($this->dataBrage));
+
         return $this->app->view->fetch($template, $vars);
     }
 
@@ -215,7 +230,8 @@ class AdminController extends BaseController
     /**
      * 初始化视图参数
      */
-    private function viewInit(){
+    private function viewInit()
+    {
         $request = app()->request;
         list($thisModule, $thisController, $thisAction) = [app('http')->getName(), app()->request->controller(), $request->action()];
         list($thisControllerArr, $jsPath) = [explode('.', $thisController), null];
@@ -246,7 +262,8 @@ class AdminController extends BaseController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    private function checkAuth(){
+    private function checkAuth()
+    {
         $adminConfig = config('admin');
         $adminId = session('admin.id');
         $expireTime = session('admin.expire_time');
@@ -256,8 +273,10 @@ class AdminController extends BaseController
         $currentController = parse_name(app()->request->controller());
 
         // 验证登录
-        if (!in_array($currentController, $adminConfig['no_login_controller']) &&
-            !in_array($currentNode, $adminConfig['no_login_node'])) {
+        if (
+            !in_array($currentController, $adminConfig['no_login_controller']) &&
+            !in_array($currentNode, $adminConfig['no_login_node'])
+        ) {
             empty($adminId) && $this->error('请先登录后台', [], __url('admin/login/index'));
 
             // 判断是否登录过期
@@ -268,26 +287,27 @@ class AdminController extends BaseController
         }
 
         // 验证权限
-        if (!in_array($currentController, $adminConfig['no_auth_controller']) &&
-            !in_array($currentNode, $adminConfig['no_auth_node'])) {
+        if (
+            !in_array($currentController, $adminConfig['no_auth_controller']) &&
+            !in_array($currentNode, $adminConfig['no_auth_node'])
+        ) {
             $check = $authService->checkNode($currentNode);
             !$check && $this->error('无权限访问');
 
             // 判断是否为演示环境
-            if(env('adminsystem.is_demo', false) && app()->request->isPost()){
+            if (env('adminsystem.is_demo', false) && app()->request->isPost()) {
                 $this->error('演示环境下不允许修改');
             }
-
         }
     }
 
     /**
      * 严格校验接口是否为POST请求
      */
-    protected function checkPostRequest(){
+    protected function checkPostRequest()
+    {
         if (!$this->request->isPost()) {
             $this->error("当前请求不合法！");
         }
     }
-
 }

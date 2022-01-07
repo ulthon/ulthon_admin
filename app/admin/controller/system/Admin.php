@@ -40,7 +40,11 @@ class Admin extends AdminController
     {
         parent::__construct($app);
         $this->model = new SystemAdmin();
-        $this->assign('auth_list', $this->model->getAuthList());
+        $this->assign('auth_list', $this->model->getAuthList(),true);
+        
+        $this->dataBrage['count'] = 10;
+        $this->dataBrage['tips'] = '请谨慎操作';
+
     }
 
     /**

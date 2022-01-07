@@ -12,6 +12,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
         password_url: 'system.admin/password',
     };
 
+    var authList = ea.getDataBrage('auth_list',[]);
+    var count = ea.getDataBrage('count',0);
+    var tips = ea.getDataBrage('tips','');
+
+    console.log(authList);
+    console.log(count);
+    console.log(tips);
+
     var Controller = {
 
         index: function () {

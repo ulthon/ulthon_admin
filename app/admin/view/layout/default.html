@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>{:sysconfig('site','site_name')}</title>
@@ -26,7 +27,10 @@
     <script src="__STATIC__/plugs/require-2.3.6/require.js?v={$version}" charset="utf-8"></script>
     <script src="__STATIC__/config-admin.js?v={$version}" charset="utf-8"></script>
 </head>
+
 <body>
-{__CONTENT__}
+    {__CONTENT__}
+    <script style="display: none;" id="data-brage" type="text/plain">{$data_brage|raw|default='[]'}</script>
 </body>
+
 </html>

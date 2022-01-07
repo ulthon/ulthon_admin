@@ -464,7 +464,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             } else {
                                 for (k in item) {
                                     var v = item[k];
-                                    if(v.auth == undefined){
+                                    if (v.auth == undefined) {
                                         v.auth = 'add'
                                     }
                                     if (admin.checkAuth(v.auth, elem)) {
@@ -1587,7 +1587,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             if (typeof defaultValue == 'undefined') {
                 defaultValue = undefined;
             }
-        
+
             var query = window.location.search.substring(1);
             var vars = query.split("&");
             for (var i = 0; i < vars.length; i++) {
@@ -1595,8 +1595,25 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 if (pair[0] == variable) { return decodeURIComponent(pair[1]); }
             }
             return defaultValue;
+        },
+        dataBrage: null,
+        getDataBrage(name, defaultValue) {
+            if (this.dataBrage == null) {
+                this.dataBrage = JSON.parse($('#data-brage').text());
+            }
+
+            if (typeof defaultValue == 'undefined') {
+                defaultValue = undefined;
+            }
+
+            if (typeof this.dataBrage[name] == 'undefined') {
+                return defaultValue;
+            }
+
+            return this.dataBrage[name];
+
         }
-        
+
     };
     return admin;
 });
