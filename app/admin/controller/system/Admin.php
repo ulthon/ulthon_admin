@@ -40,11 +40,10 @@ class Admin extends AdminController
     {
         parent::__construct($app);
         $this->model = new SystemAdmin();
-        $this->assign('auth_list', $this->model->getAuthList(),true);
-        
-        $this->dataBrage['count'] = 10;
-        $this->dataBrage['tips'] = '请谨慎操作';
+        $this->assign('auth_list', $this->model->getAuthList(), true);
 
+        $this->setDataBrage('count', 10);
+        $this->setDataBrage('tips', '请谨慎操作');
     }
 
     /**
@@ -168,8 +167,8 @@ class Admin extends AdminController
         $row = $this->model->whereIn('id', $id)->select();
         $row->isEmpty() && $this->error('数据不存在');
         $id == AdminConstant::SUPER_ADMIN_ID && $this->error('超级管理员不允许修改');
-        if (is_array($id)){
-            if (in_array(AdminConstant::SUPER_ADMIN_ID, $id)){
+        if (is_array($id)) {
+            if (in_array(AdminConstant::SUPER_ADMIN_ID, $id)) {
                 $this->error('超级管理员不允许修改');
             }
         }
@@ -211,6 +210,4 @@ class Admin extends AdminController
         }
         $this->success('保存成功');
     }
-
-
 }

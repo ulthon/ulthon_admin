@@ -95,7 +95,7 @@ class AdminController extends BaseController
      *
      * @var array
      */
-    protected $dataBrage = [];
+    private $dataBrage = [];
 
 
     /**
@@ -138,6 +138,20 @@ class AdminController extends BaseController
         $this->assign('data_brage', json_encode($this->dataBrage));
 
         return $this->app->view->fetch($template, $vars);
+    }
+
+    /**
+     * 设置dataBrage数据
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    public function setDataBrage($name, $value)
+    {
+        $this->dataBrage[$name] = $value;
+
+        return $this;
     }
 
     /**
