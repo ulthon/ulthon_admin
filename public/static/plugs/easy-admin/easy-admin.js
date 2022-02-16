@@ -305,7 +305,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         $.each(v, function (ii, vv) {
                             vv.class = vv.class || '';
                             vv.icon = vv.icon || '';
-                            vv.auth = vv.auth || '';
+                            vv.auth = vv.auth || 'add';
                             vv.url = vv.url || '';
                             vv.method = vv.method || 'open';
                             vv.title = vv.title || vv.text;
@@ -517,7 +517,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 var html = '';
                 operat.class = operat.class || '';
                 operat.icon = operat.icon || '';
-                operat.auth = operat.auth || '';
+                operat.auth = operat.auth || 'add';
                 operat.url = operat.url || '';
                 operat.extend = operat.extend || '';
                 operat.method = operat.method || 'open';
@@ -656,7 +656,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         $.each(item, function (i, operat) {
                             operat.class = operat.class || '';
                             operat.icon = operat.icon || '';
-                            operat.auth = operat.auth || '';
+                            operat.auth = operat.auth || 'add';
                             operat.url = operat.url || '';
                             operat.method = operat.method || 'open';
                             operat.field = operat.field || 'id';
