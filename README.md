@@ -22,18 +22,15 @@
 技术交流QQ群：[207160418](https://jq.qq.com/?_wv=1027&k=TULvsosz) 
 
 ## 安装教程
+
 >ulthon_admin 使用 Composer 来管理项目依赖。因此，在使用 ulthon_admin 之前，请确保你的机器已经安装了 Composer。
 
-#### 通过 Composer 创建项目`建议`
-
-`composer create-project --prefer-dist ulthon/ulthon_admin blog`  
+> 建议设置composer的镜像为阿里镜像源
 
 #### 通过git下载安装包，composer安装依赖包
 
 ```bash
 第一步，下载安装包
-git clone https://github.com/ulthon/ulthon_admin
-或者
 git clone https://gitee.com/ulthon/ulthon_admin
 
 
