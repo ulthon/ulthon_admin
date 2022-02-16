@@ -84,6 +84,18 @@ if (!function_exists('sysconfig')) {
      */
     function sysconfig($group, $name = null)
     {
+
+        if ($name === true) {
+            $value = Cache::get('sysconfig_' . $group);
+
+            if (empty($value)) {
+                $value = \app\admin\model\SystemConfig::where('name', $group)->value('value');
+                Cache::tag('sysconfig')->set('sysconfig_' . $group, $value);
+            }
+
+            return $value;
+        }
+
         $where = ['group' => $group];
         $value = empty($name) ? Cache::get("sysconfig_{$group}") : Cache::get("sysconfig_{$group}_{$name}");
         if (empty($value)) {
