@@ -335,6 +335,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     d.search = admin.parame(d.search, true);
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
                     d.searchValue = d.searchValue || '';
+                    d.searchHide = d.searchHide || '';
                     d.defaultSearchValue = d.defaultSearchValue || '';
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
@@ -348,10 +349,17 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         formatOp[d.field] = d.searchOp;
                     }
 
+
+                    var formSearchHideClass = '';
+
+                    if (d.searchHide) {
+                        formSearchHideClass = ' search-hide-item'
+                    }
+
                     if (d.field !== false && d.search !== false) {
                         switch (d.search) {
                             case true:
-                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
                                     '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
@@ -369,7 +377,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                     }
                                     selectHtml += '<option value="' + sI + '" ' + selected + '>' + sV + '</option>/n';
                                 });
-                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
                                     '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
@@ -381,7 +389,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 break;
                             case 'range':
                                 d.searchOp = 'range';
-                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
                                     '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
@@ -390,7 +398,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 break;
                             case 'time':
                                 d.searchOp = '=';
-                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
                                     '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
