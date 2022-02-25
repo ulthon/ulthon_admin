@@ -22,6 +22,7 @@ use EasyAdmin\tool\CommonTool;
 use think\facade\Env;
 use think\facade\View;
 use think\Model;
+use think\Validate;
 
 /**
  * Class AdminController
@@ -97,6 +98,11 @@ class AdminController extends BaseController
      */
     private $dataBrage = [];
 
+    protected $validateRule = null;
+
+    protected $validateMessage = [];
+
+    protected $batchValidate = false;
 
     /**
      * 初始化方法
@@ -159,13 +165,34 @@ class AdminController extends BaseController
      * @param array $data
      * @param array|string $validate
      * @param array $message
-     * @param bool $batch
+     * @param bool|null $batch
      * @return array|bool|string|true
      */
-    public function validate(array $data, $validate, array $message = [], bool $batch = false)
+    public function validate(array $data, $validate, array $message = [], bool $batch = null)
     {
         try {
-            parent::validate($data, $validate, $message, $batch);
+
+            $message = array_merge($this->validateMessage, $message);
+
+            if(is_null($batch)){
+                $batch = $this->batchValidate;
+            }
+
+            if ($this->validateRule instanceof Validate) {
+                $this->validateRule->message($message);
+
+                 // 是否批量验证
+                if ($batch) {
+                    $this->validateRule->batch(true);
+                }
+
+                $this->validateRule->failException(true)->check($data);
+                
+            } else if (is_array($this->validateRule)) {
+                parent::validate($data, $this->validateRule, $message, $batch);
+            } else {
+                parent::validate($data, $validate, $message, $batch);
+            }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
