@@ -5,6 +5,7 @@
 
 use app\common\command\admin\ResetPassword;
 use app\common\command\Install;
+use app\common\command\Timer;
 
 return [
     // 指令定义
@@ -13,6 +14,7 @@ return [
         'node'      => 'app\common\command\Node',
         'OssStatic' => 'app\common\command\OssStatic',
         ResetPassword::class,
-        Install::class
+        Install::class,
+        Timer::class,
     ],
 ];

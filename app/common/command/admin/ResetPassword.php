@@ -18,6 +18,7 @@ class ResetPassword extends Command
     {
         // 指令配置
         $this->setName('admin:resetPassword')
+            ->addOption('password','p', Option::VALUE_OPTIONAL)
             ->setDescription('重置超管密码');
     }
 
@@ -33,7 +34,12 @@ class ResetPassword extends Command
             return false;
         }
 
-        $password = uniqid();
+        $password = $input->getOption('password');
+
+        if(is_null($password)){
+            $password = uniqid();
+        }
+
 
         $model_admin->save([
             'password' => password($password)

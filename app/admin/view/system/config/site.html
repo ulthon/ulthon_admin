@@ -42,6 +42,13 @@
             <tip>填写版权信息。</tip>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点域名</label>
+        <div class="layui-input-block">
+            <input type="text" name="site_domain" class="layui-input" lay-verify="required" placeholder="请输入站点名称" value="{:sysconfig('site','site_domain')}">
+            <tip>填写站点域名。以http://或https://开头,内置的定时任务用到了这个配置项，修改之后需要重启定时任务</tip>
+        </div>
+    </div>
 
     <div class="hr-line"></div>
     <div class="layui-form-item text-center">
