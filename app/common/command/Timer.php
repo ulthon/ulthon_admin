@@ -28,11 +28,19 @@ class Timer extends Command
         // 指令输出
         $output->writeln('start timer');
 
+
+        $site_domain = sysconfig('site', 'site_domain');
+
+        if (empty($site_domain)) {
+            $output->writeln('请前往后台设置站点域名（site_domain）配置项');
+            return;
+        }
+
         $client = new Client([
-            'base_uri' => sysconfig('site', 'site_domain'),
+            'base_uri' => $site_domain,
             'verify' => false,
         ]);
-        
+
         while (true) {
 
             try {
@@ -47,6 +55,10 @@ class Timer extends Command
 
 
                     $name = $config_item['name'];
+
+                    if ($name == 'http_demo' && !env('adminsystem.is_demo', false)) {
+                        continue;
+                    }
 
                     $cache_key = 'timer_' . $name;
                     $cache_tag = 'system_timer';
@@ -74,10 +86,10 @@ class Timer extends Command
                     }
                 }
 
-                if (empty($list_promises)){
-                    
+                if (empty($list_promises)) {
+
                     $output->writeln(date('Y-m-d H:i:s') . ' no request');
-                }else{
+                } else {
                     $results = Utils::unwrap($list_promises);
                     $output->writeln(date('Y-m-d H:i:s') . ': request all finished');
                 }
@@ -106,8 +118,8 @@ class Timer extends Command
 
         $data = array_merge($default, $config);
 
-        if ($data['frequency'] < 1) {
-            $data['frequency'] = 1;
+        if ($data['frequency'] < 0) {
+            $data['frequency'] = 0;
         }
 
         return $data;
