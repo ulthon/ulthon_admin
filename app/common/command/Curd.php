@@ -99,7 +99,6 @@ class Curd extends Command
             $fileList = $build->getFileList();
 
             if (!$delete) {
-                $result = $build->create();
                 if ($force) {
                     $output->info(">>>>>>>>>>>>>>>");
                     foreach ($fileList as $key => $val) {
@@ -112,6 +111,7 @@ class Curd extends Command
                         throw new Exception("取消文件CURD生成操作");
                     }
                 }
+                $result = $build->create();
                 CliEcho::success('自动生成CURD成功');
             } else {
                 $output->info(">>>>>>>>>>>>>>>");
