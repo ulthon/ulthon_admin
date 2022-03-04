@@ -24,7 +24,7 @@ define(["easy-admin"], function (ea) {
                     $(this).addClass('icon-check');
                 }
             });
-            
+
             $('.login-tip').on('click', function () {
                 $('.icon-nocheck').click();
             });
@@ -41,6 +41,11 @@ define(["easy-admin"], function (ea) {
                     $('#refreshCaptcha').trigger("click");
                 });
             });
+
+
+            $('.forget-password').click(function () {
+                layer.msg('可以使用重置密码命令设置:<br/>php think admin:resetPassword<br><a target="_blank" href="http://doc.ulthon.com/home/read/ulthon_admin/reset_password/15/16.html"> 参考文档</a>')
+            })
 
         },
     };
