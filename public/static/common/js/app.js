@@ -15,9 +15,19 @@ loading.show = function (count) {
     loading.showCount += count;
 }
 
-loading.hide = function () {
+loading.hide = function (count) {
 
-    loading.showCount--;
+
+    if (typeof count == undefined) {
+        count = 1;
+    }
+
+    if (count === true) {
+        count = 1;
+        loading.showCount = 0;
+    }
+
+    loading.showCount -= 1;
 
     if (loading.showCount < 0) {
         loading.showCount = 0;
