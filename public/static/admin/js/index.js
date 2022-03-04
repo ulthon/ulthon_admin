@@ -127,10 +127,21 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                     }
                 ]
             };
-            echartsRecords.setOption(optionRecords);
-            window.addEventListener("resize", function () {
-                echartsRecords.resize();
-            });
+
+
+            var checkChartVisibleTimer = setInterval(() => {
+                var isChartVisible = $('#echarts-records').is(':visible');
+                if (isChartVisible) {
+                    echartsRecords.setOption(optionRecords);
+                    echartsRecords.resize();
+                    window.addEventListener("resize", function () {
+                        echartsRecords.resize();
+                    });
+
+                    clearInterval(checkChartVisibleTimer)
+                }
+            }, 3000);
+
         },
         editAdmin: function () {
             ea.listen();
