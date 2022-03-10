@@ -1346,7 +1346,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             var dataField = data.field;
 
                             // 富文本数据处理
-                            var editorList = document.querySelectorAll(".editor");
+                            var editorList = $(v).closest('.layui-form').find('.editor')
                             if (editorList.length > 0) {
                                 $.each(editorList, function (i, v) {
                                     var name = $(this).attr("name");
