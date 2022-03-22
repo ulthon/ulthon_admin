@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace app\common\command;
 
-use app\common\tools\Path;
+use app\common\tools\PathTools;
 use think\console\Command;
 use think\console\Input;
-use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
@@ -92,7 +91,7 @@ class Install extends Command
                 ]);
 
             // 处理安装文件
-            Path::intiDir($install_lock_path);
+            PathTools::intiDir($install_lock_path);
             @file_put_contents($install_lock_path, date('Y-m-d H:i:s'));
             Db::commit();
         } catch (\Exception $e) {

@@ -2,10 +2,10 @@
 
 namespace app\common\tools;
 
-use EasyAdmin\curd\BuildCurd as CurdBuildCurd;
+use EasyAdmin\curd\BuildCurd;
 use EasyAdmin\tool\CommonTool;
 
-class BuildCurd extends CurdBuildCurd
+class BuildCurdTools extends BuildCurd
 {
 
     /**

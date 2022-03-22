@@ -15,7 +15,7 @@ namespace app\common\command;
 
 use app\admin\model\SystemNode;
 use EasyAdmin\console\CliEcho;
-use app\common\tools\BuildCurd;
+use app\common\tools\BuildCurdTools;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
@@ -55,7 +55,7 @@ class Curd extends Command
         }
 
         try {
-            $build = (new BuildCurd())
+            $build = (new BuildCurdTools())
                 ->setTable($table)
                 ->setForce($force);
 

@@ -4,7 +4,7 @@ namespace app\common\tools;
 
 use think\facade\App;
 
-class Path
+class PathTools
 {
   /**
    * 系统生成的文件,这些文件应当是可以任意删除的
