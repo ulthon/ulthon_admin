@@ -60,12 +60,13 @@ Route::view('/', 'welcome', [
             'description' => '完善的命令行开发模式, 一键生成控制器、模型、视图、JS等文件, 使开发速度快速提升。',
         ],
         [
-            'name'        => '公众号&小程序模块',
-            'description' => '待开发。。。',
+            'name'        => '详细的开发规范',
+            'description' => '通过文档详细约定各个文件和目录的用法',
         ],
         [
-            'name'        => '插件管理模块',
-            'description' => '待开发。。。',
+            'name'        => '',
+            'description' => '',
         ],
+
     ],
 ]);
