@@ -493,7 +493,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 var html = '';
                 toolbar.class = toolbar.class || '';
                 toolbar.icon = toolbar.icon || '';
-                toolbar.auth = toolbar.auth || '';
+                toolbar.auth = toolbar.auth || 'add';
                 toolbar.url = toolbar.url || '';
                 toolbar.extend = toolbar.extend || '';
                 toolbar.method = toolbar.method || 'open';
@@ -558,7 +558,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     var col = cols[i];
                     for (index in col) {
                         var val = col[index];
-
+                        
                         // 判断是否包含初始化数据
                         if (val.init === undefined) {
                             cols[i][index]['init'] = init;
