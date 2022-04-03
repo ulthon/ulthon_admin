@@ -1155,7 +1155,6 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 var title = $(this).attr('data-title'),
                     url = $(this).attr('data-request'),
                     tableId = $(this).attr('data-table'),
-                    addons = $(this).attr('data-addons'),
                     checkbox = $(this).attr('data-checkbox'),
                     direct = $(this).attr('data-direct'),
                     field = $(this).attr('data-field') || 'id';
@@ -1185,9 +1184,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     postData[field] = ids;
                 }
 
-                if (addons !== true && addons !== 'true') {
-                    url = admin.url(url);
-                }
+
+                url = admin.url(url);
+
                 tableId = tableId || init.table_render_id;
                 admin.msg.confirm(title, function () {
                     admin.request.post({
