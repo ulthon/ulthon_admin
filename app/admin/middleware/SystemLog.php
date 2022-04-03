@@ -12,7 +12,6 @@
 
 namespace app\admin\middleware;
 
-use app\admin\service\SystemLogService;
 use app\Request;
 use EasyAdmin\tool\CommonTool;
 use think\facade\Log;
@@ -48,14 +47,6 @@ class SystemLog
         $method = strtolower($request->method());
         $url = $request->url();
 
-        trace([
-            'url'    => $url,
-            'method' => $method,
-            'params' => $params,
-        ],
-            'requestDebugInfo'
-        );
-
         if ($request->isAjax()) {
             if (in_array($method, ['post', 'put', 'delete'])) {
                 $ip = CommonTool::getRealIp();
@@ -68,10 +59,9 @@ class SystemLog
                     'useragent'   => $_SERVER['HTTP_USER_AGENT'],
                     'create_time' => time(),
                 ];
-                SystemLogService::instance()->save($data);
+                Log::debug($data);
             }
         }
         return $next($request);
     }
-
 }

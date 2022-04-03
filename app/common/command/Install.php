@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace app\common\command;
 
 use app\common\tools\PathTools;
+use PDO;
+use think\Config as ThinkConfig;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
@@ -34,6 +36,8 @@ class Install extends Command
 
     protected function execute(Input $input, Output $output)
     {
+
+
         // 指令输出
 
         $force = $input->getOption('force');
@@ -76,6 +80,12 @@ class Install extends Command
         Db::startTrans();
         try {
             foreach ($sqlArray as $vo) {
+                if (strpos($vo, 'LOCK TABLES') === 0) {
+                    continue;
+                }
+                if (strpos($vo, 'UNLOCK') === 0) {
+                    continue;
+                }
                 Db::execute($vo);
             }
             Db::name('system_admin')

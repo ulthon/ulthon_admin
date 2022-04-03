@@ -11,6 +11,9 @@ class TimerController extends ToolsController
 
     public function initialize()
     {
+
+        parent::initialize();
+        
         if (is_integer($this->frequency)) {
             $this->protectVisit($this->frequency);
         }
@@ -21,7 +24,7 @@ class TimerController extends ToolsController
 
         $cache_tag = 'timer_protect';
 
-        $cache_key = 'timer_protect_' . $this->request->url();
+        $cache_key = 'timer_protect_' . md5($this->request->url());
 
         $last_exec_time = Cache::get($cache_key, 0);
 

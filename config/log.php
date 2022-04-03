@@ -1,14 +1,24 @@
 <?php
+
 use think\facade\Env;
 
 // +----------------------------------------------------------------------
 // | 日志设置
 // +----------------------------------------------------------------------
+
+
+$level = [];
+
+
+if (!Env::get('APP_DEBUG')) {
+    $level = ['error'];
+}
+
 return [
     // 默认日志记录通道
     'default'      => Env::get('log.channel', 'file'),
     // 日志记录级别
-    'level'        => [],
+    'level'        => $level,
     // 日志类型记录的通道 ['error'=>'email',...]
     'type_channel' => [],
     // 关闭全局日志写入
@@ -43,6 +53,26 @@ return [
             'realtime_write' => false,
         ],
         // 其它日志通道配置
+        // 其它日志通道配置
+        'debug_mysql' => [
+            'type' => 'DebugMysql',
+            // 服务器地址
+            'hostname'          => Env::get('database.hostname', '127.0.0.1'),
+            // 数据库名
+            'database'          => Env::get('database.database', 'pro_hairdressing_com'),
+            // 用户名
+            'username'          => Env::get('database.username', 'pro_hairdressing_com'),
+            // 密码
+            'password'          => Env::get('database.password', 'pro_hairdressing_com'),
+            // 端口
+            'hostport'          => Env::get('database.hostport', '3306'),
+            // 数据库连接参数
+            'params'            => [],
+            // 数据库编码默认采用utf8
+            'charset'           => Env::get('database.charset', 'utf8'),
+            // 数据库表前缀
+            'prefix'            => Env::get('database.prefix', 'ul_'),
+        ]
     ],
 
 ];
