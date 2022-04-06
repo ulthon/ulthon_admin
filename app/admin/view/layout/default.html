@@ -12,6 +12,9 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="__STATIC__/admin/css/public.css?v={$version}" media="all">
+
+    <link rel="stylesheet" href="__STATIC__/common/css/theme/{:env('COVER_THEME','index')}.css?v={$version}">
+
     <script>
         window.CONFIG = {
             ADMIN: "{$adminModuleName|default='admin'}",

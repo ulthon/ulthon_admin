@@ -256,7 +256,27 @@ define(["jquery"], function ($) {
                     leftMenuColor: 'rgb(191, 187, 187)', //左侧菜单字体颜色,
                     leftMenuColorThis: '#ffffff', //左侧菜单选中字体颜色,
                     tabActiveColor: '#963885', //tab选项卡选中颜色,
-                }
+                },
+                {
+                    headerRightBg: '#ffffff', //头部右侧背景色
+                    headerRightBgThis: '#e4e4e4', //头部右侧选中背景色,
+                    headerRightColor: 'rgba(0,0,0, 0.7)', //头部右侧字体颜色,
+                    headerRightChildColor: 'rgba(0,0,0, 0.7)', //头部右侧下拉字体颜色,
+                    headerRightColorThis: '#000', //头部右侧鼠标选中,
+                    headerRightNavMore: 'rgba(160, 160, 160, 0.7)', //头部右侧更多下拉颜色,
+                    headerRightNavMoreBg: '#1E9FFF', //头部右侧更多下拉列表选中背景色,
+                    headerRightNavMoreColor: '#ffffff', //头部右侧更多下拉列表字体色,
+                    headerRightToolColor: '#000', //头部缩放按钮样式,
+                    headerLogoBg: '#f3f3f3', //logo背景颜色,
+                    headerLogoColor: '#000', //logo字体颜色,
+                    leftMenuNavMore: 'rgb(191, 187, 187)', //左侧菜单更多下拉样式,
+                    leftMenuBg: '#ffffff', //左侧菜单背景,
+                    leftMenuBgThis: '#bbb', //左侧菜单选中背景,
+                    leftMenuChildBg: '#f3f3f3', //左侧菜单子菜单背景,
+                    leftMenuColor: '#000', //左侧菜单字体颜色,
+                    leftMenuColorThis: '#000', //左侧菜单选中字体颜色,
+                    tabActiveColor: '#1e9fff', //tab选项卡选中颜色,
+                },
             ];
             if (bgcolorId === undefined) {
                 return bgColorConfig;
@@ -430,9 +450,9 @@ define(["jquery"], function ($) {
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
-                    '<a class="more-menu-item" href="http://easyadmin.99php.cn/docs/index.html" target="_blank"><i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> 开发文档</a>\n' +
-                    '<a class="more-menu-item" href="https://github.com/zhongshaofa/easyadmin" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 开源地址</a>\n' +
-                    '<a class="more-menu-item" href="http://easyadmin.99php.cn" target="_blank"><i class="layui-icon layui-icon-theme"></i> 官方网站</a>\n' +
+                    '<a class="more-menu-item" href="http://doc.ulthon.com/home/read/ulthon_admin/home.html" target="_blank"><i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> 开发文档</a>\n' +
+                    '<a class="more-menu-item" href="https://gitee.com/ulthon/ulthon_admin" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 开源地址</a>\n' +
+                    '<a class="more-menu-item" href="http://admin.demo.ulthon.com/" target="_blank"><i class="layui-icon layui-icon-theme"></i> 官方网站</a>\n' +
                     '</div>' +
                     '</div>';
                 layer.open({
