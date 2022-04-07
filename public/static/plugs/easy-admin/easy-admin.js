@@ -145,7 +145,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     callback = function () {
                     }
                 }
-                var index = layer.msg(msg, { icon: 1, shade: admin.config.shade, scrollbar: false, time: 2000, shadeClose: true }, callback);
+                var index = layer.msg(msg, { icon: 1, shade: admin.config.shade, scrollbar: false, time: 800, shadeClose: true }, callback);
                 return index;
             },
             // 失败消息
@@ -174,7 +174,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             },
             // 消息提示
             tips: function (msg, time, callback) {
-                var index = layer.msg(msg, { time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true });
+                var index = layer.msg(msg, { time: (time || 0.8) * 1000, shade: this.shade, end: callback, shadeClose: true });
                 return index;
             },
             // 加载中提示
@@ -558,7 +558,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     var col = cols[i];
                     for (index in col) {
                         var val = col[index];
-                        
+
                         // 判断是否包含初始化数据
                         if (val.init === undefined) {
                             cols[i][index]['init'] = init;
