@@ -30,7 +30,7 @@ return [
     'channels'     => [
         'file' => [
             // 日志记录方式
-            'type'           => \LogTrace\FileLog::class,
+            'type'           => 'file',
             // 日志保存目录
             'path'           => '',
             // 单文件日志写入
@@ -59,11 +59,11 @@ return [
             // 服务器地址
             'hostname'          => Env::get('database.hostname', '127.0.0.1'),
             // 数据库名
-            'database'          => Env::get('database.database', 'pro_hairdressing_com'),
+            'database'          => Env::get('database.database', ''),
             // 用户名
-            'username'          => Env::get('database.username', 'pro_hairdressing_com'),
+            'username'          => Env::get('database.username', ''),
             // 密码
-            'password'          => Env::get('database.password', 'pro_hairdressing_com'),
+            'password'          => Env::get('database.password', ''),
             // 端口
             'hostport'          => Env::get('database.hostport', '3306'),
             // 数据库连接参数
