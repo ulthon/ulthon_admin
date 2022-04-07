@@ -243,6 +243,15 @@ function install($username, $password, $config, $adminUrl)
     Db::startTrans();
     try {
         foreach ($sqlArray as $vo) {
+            foreach ($sqlArray as $vo) {
+                if (strpos($vo, 'LOCK TABLES') === 0) {
+                    continue;
+                }
+                if (strpos($vo, 'UNLOCK') === 0) {
+                    continue;
+                }
+                Db::execute($vo);
+            }
             Db::connect('install')->execute($vo);
         }
         Db::connect('install')
