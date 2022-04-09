@@ -1379,6 +1379,10 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             elem = "input[name='" + uploadName + "']",
                             uploadElem = this;
 
+                        if (uploadExts == '*') {
+                            uploadExts = init.upload_exts;
+                        }
+
                         // 监听上传事件
                         upload.render({
                             elem: this,
