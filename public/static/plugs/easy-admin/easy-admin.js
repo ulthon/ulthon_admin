@@ -510,7 +510,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 } else if (toolbar.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatToolbar.method = '';
                 } else if (toolbar.method === 'blank') {
-                    formatOperat.method = ' href="' + formatOperat.url + '" target="_blank" ';
+                    formatToolbar.method = ' href="' + formatToolbar.url + '" target="_blank" ';
 
                 } else {
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
