@@ -209,7 +209,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     extend: 'data-table-id="' + options.id + '"'
                 }];
 
-                options.done = function () {
+                var table2card = function () {
+
 
                     if (admin.checkMobile()) {
                         var domTable = $('[lay-id="' + options.id + '"]');
@@ -231,9 +232,17 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
                             })
                         })
-
-
                     }
+
+                }
+
+                var optionDone = function (){}
+                if (options.done != undefined) {
+                    optionDone = options.done;
+                }
+                options.done = function(){
+                    optionDone()
+                    table2card()
                 }
 
                 // 判断是否为移动端
