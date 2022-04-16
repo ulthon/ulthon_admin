@@ -1285,7 +1285,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 return false;
             },
             refreshTable: function (tableName) {
-                tableName = tableName || 'currentTable';
+                tableName = tableName || 'currentTableRenderId';
                 table.reload(tableName);
             },
             formRequired: function () {
