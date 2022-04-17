@@ -202,7 +202,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
+                options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print'] : ['filter', 'print', {
                     title: '搜索',
                     layEvent: 'TABLE_SEARCH',
                     icon: 'layui-icon-search',
@@ -432,7 +432,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                     $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="table-search-fieldset layui-hide">\n' +
                         '<legend>条件搜索</legend>\n' +
-                        '<form class="layui-form layui-form-pane form-search">\n' +
+                        '<form class="layui-form layui-form-pane form-search" lay-filter="' + tableId + '">\n' +
                         formHtml +
                         '<div class="layui-form-item layui-inline" style="margin-left: 115px">\n' +
                         '<button type="submit" class="layui-btn layui-btn-normal" data-type="tableSearch" data-table="' + tableId + '" lay-submit lay-filter="' + tableId + '_filter"> 搜 索</button>\n' +
@@ -728,7 +728,6 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             filePreview: function (data) {
-                console.log(data);
 
                 if (!data.mime_type) {
                     return admin.table.url(data);
@@ -1251,10 +1250,20 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
             // excel导出
             $('body').on('click', '[data-table-export]', function () {
-                var tableId = $(this).attr('data-table-export'),
-                    url = $(this).attr('data-url');
+                var tableId = $(this).attr('data-table-export') || init.table_render_id,
+                    url = admin.url($(this).attr('data-url')),
+                    formatFilter = {},
+                    formatOp = {};
+                $.each(form.val(tableId), function (key, val) {
+                    if (val !== '') {
+                        formatFilter[key] = val;
+                        var op = $('[id=\'c-' + key + '\']').attr('data-search-op');
+                        op = op || '%*%';
+                        formatOp[key] = op;
+                    }
+                });
                 var index = admin.msg.confirm('根据查询进行导出，确定导出？', function () {
-                    window.location = admin.url(url);
+                    window.location = url + (url.indexOf('?') !== -1 ? '&' : '?') + 'filter=' + JSON.stringify(formatFilter) + '&op=' + JSON.stringify(formatOp);
                     layer.close(index);
                 });
             });
