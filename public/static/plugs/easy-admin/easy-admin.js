@@ -968,12 +968,20 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             listenExport: function (options) {
-                
+
                 var exportFields = {};
+
+                var imageFields = [];
 
                 options.cols[0].forEach(col => {
                     if (col.field) {
+
                         exportFields[col.field] = col.title;
+
+                        if(col.templet == admin.table.image){
+                            imageFields.push(col.field) 
+                        }
+
                     }
                 });
 
@@ -981,7 +989,6 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 $('body').on('click', '[data-table-export]', function () {
                     var tableId = $(this).attr('data-table-export'),
                         url = $(this).attr('data-url');
-
 
                     var searchVals = form.val(tableId + '_filter_form');
 
@@ -1001,7 +1008,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     var searchQuery = {
                         filter: JSON.stringify(formatFilter),
                         op: JSON.stringify(formatOp),
-                        fields: JSON.stringify(exportFields)
+                        fields: JSON.stringify(exportFields),
+                        image_fields: JSON.stringify(imageFields),
                     }
 
                     var query = $.param(searchQuery);

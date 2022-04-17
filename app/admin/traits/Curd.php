@@ -121,8 +121,11 @@ trait Curd
         $sheet = $spreadsheet->getActiveSheet();
 
         $fields = $this->request->param('fields', '{}', null);
+        $image_fields = $this->request->param('image_fields', '{}', null);
 
         $fields = json_decode($fields, true);
+        $image_fields = json_decode($image_fields, true);
+
 
         $write_col = 1;
         $write_line = 1;
@@ -134,7 +137,7 @@ trait Curd
         }
 
         $this->model
-            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields) {
+            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields) {
                 foreach ($list as $list_index => $item) {
                     $write_line++;
                     $write_col = 1;
@@ -142,9 +145,36 @@ trait Curd
                     foreach ($fields as $field_key => $field_name) {
                         $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
 
-                        $value =  \think\helper\Arr::get($item, $field_key);
+                        $cel =  '';
 
-                        $sheet->setCellValue($col_key . $write_line, $value);
+                        $value  = \think\helper\Arr::get($item, $field_key);
+
+                        if (in_array($field_key, $image_fields)) {
+                            // 是图片
+                            $cel = $value;
+
+                            try {
+
+                                // $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                                // $drawing->setName($field_name);
+                                // $drawing->setDescription($field_key);
+                                // $drawing->setPath($value);
+                                // $drawing->setHeight(36);
+
+                                // $drawing->setCoordinates($col_key . $write_line);
+                                // $drawing->setWorksheet($sheet);
+
+                            } catch (\Throwable $th) {
+                                $message = $th->getMessage();
+
+                                $cel .= "\n" . $message;
+
+                            }
+                        } else {
+                            $cel  = $value;
+                        }
+
+                        $sheet->setCellValue($col_key . $write_line, $cel);
                         $write_col++;
                     }
                 }
