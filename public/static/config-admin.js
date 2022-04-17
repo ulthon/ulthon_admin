@@ -9,7 +9,6 @@ require.config({
         "echarts": ["plugs/echarts/echarts.min"],
         "echarts-theme": ["plugs/echarts/echarts-theme"],
         "easy-admin": ["plugs/easy-admin/easy-admin"],
-        "layuiall": ["plugs/layui-v2.6.8/layui.all"],
         "layui": ["plugs/layui-v2.6.8/layui"],
         "miniAdmin": ["plugs/lay-module/layuimini/miniAdmin"],
         "miniMenu": ["plugs/lay-module/layuimini/miniMenu"],

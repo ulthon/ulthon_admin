@@ -300,6 +300,10 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 // 监听表格开关切换
                 admin.table.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
 
+                admin.table.listenExport(options);
+
+
+
                 return newTable;
             },
             renderToolbar: function (data, elem, tableId, init) {
@@ -432,7 +436,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                     $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="table-search-fieldset layui-hide">\n' +
                         '<legend>条件搜索</legend>\n' +
-                        '<form class="layui-form layui-form-pane form-search" lay-filter="' + tableId + '">\n' +
+                        '<form class="layui-form layui-form-pane form-search" lay-filter="' + tableId + '_filter_form">\n' +
                         formHtml +
                         '<div class="layui-form-item layui-inline" style="margin-left: 115px">\n' +
                         '<button type="submit" class="layui-btn layui-btn-normal" data-type="tableSearch" data-table="' + tableId + '" lay-submit lay-filter="' + tableId + '_filter"> 搜 索</button>\n' +
@@ -756,12 +760,12 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     var value = undefined;
                 }
                 if (value === undefined || value === null) {
-                    return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
+                    return '<img style="max-width: ' + option.imageWidth + 'px; height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
                 } else {
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
                     });
                     return valuesHtml.join(option.imageJoin);
                 }
@@ -963,6 +967,59 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     });
                 }
             },
+            listenExport: function (options) {
+                
+                var exportFields = {};
+
+                options.cols[0].forEach(col => {
+                    if (col.field) {
+                        exportFields[col.field] = col.title;
+                    }
+                });
+
+                // excel导出
+                $('body').on('click', '[data-table-export]', function () {
+                    var tableId = $(this).attr('data-table-export'),
+                        url = $(this).attr('data-url');
+
+
+                    var searchVals = form.val(tableId + '_filter_form');
+
+                    var dataField = searchVals;
+
+                    var formatFilter = {},
+                        formatOp = {};
+                    $.each(dataField, function (key, val) {
+                        if (val !== '') {
+                            formatFilter[key] = val;
+                            var op = $('#c-' + key).attr('data-search-op');
+                            op = op || '%*%';
+                            formatOp[key] = op;
+                        }
+                    });
+
+                    var searchQuery = {
+                        filter: JSON.stringify(formatFilter),
+                        op: JSON.stringify(formatOp),
+                        fields: JSON.stringify(exportFields)
+                    }
+
+                    var query = $.param(searchQuery);
+
+                    var index = admin.msg.confirm('根据查询进行导出，确定导出？', function () {
+
+                        toUrl = admin.url(url);
+                        if (toUrl.indexOf('?') < 0) {
+                            toUrl += '?';
+                        }
+                        toUrl += query;
+
+                        window.open(toUrl)
+
+                        layer.close(index);
+                    });
+                });
+            }
         },
         checkMobile: function () {
             var userAgentInfo = navigator.userAgent;
@@ -1248,25 +1305,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 return false;
             });
 
-            // excel导出
-            $('body').on('click', '[data-table-export]', function () {
-                var tableId = $(this).attr('data-table-export') || init.table_render_id,
-                    url = admin.url($(this).attr('data-url')),
-                    formatFilter = {},
-                    formatOp = {};
-                $.each(form.val(tableId), function (key, val) {
-                    if (val !== '') {
-                        formatFilter[key] = val;
-                        var op = $('[id=\'c-' + key + '\']').attr('data-search-op');
-                        op = op || '%*%';
-                        formatOp[key] = op;
-                    }
-                });
-                var index = admin.msg.confirm('根据查询进行导出，确定导出？', function () {
-                    window.location = url + (url.indexOf('?') !== -1 ? '&' : '?') + 'filter=' + JSON.stringify(formatFilter) + '&op=' + JSON.stringify(formatOp);
-                    layer.close(index);
-                });
-            });
+
 
             // 数据表格多删除
             $('body').on('click', '[data-table-delete]', function () {

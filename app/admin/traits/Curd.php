@@ -13,9 +13,7 @@
 namespace app\admin\traits;
 
 use EasyAdmin\annotation\NodeAnotation;
-use EasyAdmin\tool\CommonTool;
-use jianyan\excel\Excel;
-use think\facade\Db;
+
 
 /**
  * 后台CURD复用
@@ -67,7 +65,7 @@ trait Curd
             try {
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败:'.$e->getMessage());
+                $this->error('保存失败:' . $e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
@@ -118,26 +116,48 @@ trait Curd
     public function export()
     {
         list($page, $limit, $where) = $this->buildTableParames();
-        $tableName = $this->model->getName();
-        $tableName = CommonTool::humpToLine(lcfirst($tableName));
-        $prefix = config('database.connections.mysql.prefix');
-        $dbList = Db::query("show full columns from {$prefix}{$tableName}");
-        $header = [];
-        foreach ($dbList as $vo) {
-            $comment = !empty($vo['Comment']) ? $vo['Comment'] : $vo['Field'];
-            if (!in_array($vo['Field'], $this->noExportFields)) {
-                $header[] = [$comment, $vo['Field']];
-            }
-        }
-        $list = $this->model
-            ->where($where)
-            ->limit(100000)
-            ->order('id', 'desc')
-            ->select()
-            ->toArray();
-        $fileName = time();
 
-        return Excel::exportData($list, $header, $fileName, 'xlsx',);
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $fields = $this->request->param('fields', '{}', null);
+
+        $fields = json_decode($fields, true);
+
+        $write_col = 1;
+        $write_line = 1;
+        foreach ($fields as $field_key => $field_name) {
+            $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
+            $sheet->setCellValue($col_key . $write_line, $field_name);
+
+            $write_col++;
+        }
+
+        $this->model
+            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields) {
+                foreach ($list as $list_index => $item) {
+                    $write_line++;
+                    $write_col = 1;
+
+                    foreach ($fields as $field_key => $field_name) {
+                        $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
+
+                        $value =  \think\helper\Arr::get($item, $field_key);
+
+                        $sheet->setCellValue($col_key . $write_line, $value);
+                        $write_col++;
+                    }
+                }
+            });
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        ob_start();
+        $writer->save('php://output');
+        $content = ob_get_contents();
+        ob_clean();
+
+        return download($content, $this->model->getName() . time() . '.xlsx', true);
     }
 
     /**
@@ -169,5 +189,4 @@ trait Curd
         }
         $this->success('保存成功');
     }
-
 }
