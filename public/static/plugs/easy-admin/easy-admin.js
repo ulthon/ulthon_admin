@@ -240,7 +240,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         $(".layui-table-fixed").each(function () {
                             $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
                         });
-                    });
+                });
                 }
 
                 var optionDone = function () { }
@@ -1015,6 +1015,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             // 监听表单提交事件
             admin.api.formSubmit(preposeCallback, ok, no, ex);
 
+            // 监听按钮操作
+            admin.api.button();
+
             // 初始化图片显示以及监听上传事件
             admin.api.upload();
 
@@ -1275,6 +1278,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
         },
         api: {
+            button: function () {
+                $('button[target="_blank"]').click(function () {
+                    window.open(admin.url($(this).attr('href')))
+                })
+            },
             form: function (url, data, ok, no, ex, refreshTable) {
                 if (refreshTable === undefined) {
                     refreshTable = true;
