@@ -973,13 +973,22 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                 var imageFields = [];
 
+                var selectFields = {};
+
                 options.cols[0].forEach(col => {
                     if (col.field) {
 
                         exportFields[col.field] = col.title;
 
-                        if(col.templet == admin.table.image){
-                            imageFields.push(col.field) 
+                        if (col.templet == admin.table.image) {
+                            imageFields.push(col.field)
+                        }
+                        
+                        if (col.selectList instanceof Object) {
+                            if(Object.keys(col.selectList).length > 0){
+                                selectFields[col.field] = col.selectList;
+                            }
+
                         }
 
                     }
@@ -1010,6 +1019,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         op: JSON.stringify(formatOp),
                         fields: JSON.stringify(exportFields),
                         image_fields: JSON.stringify(imageFields),
+                        select_fields: JSON.stringify(selectFields),
                     }
 
                     var query = $.param(searchQuery);

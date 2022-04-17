@@ -123,10 +123,11 @@ trait Curd
 
         $fields = $this->request->param('fields', '{}', null);
         $image_fields = $this->request->param('image_fields', '{}', null);
+        $select_fields = $this->request->param('select_fields', '{}', null);
 
         $fields = json_decode($fields, true);
         $image_fields = json_decode($image_fields, true);
-
+        $select_fields = json_decode($select_fields, true);
 
         $write_col = 1;
         $write_line = 1;
@@ -140,7 +141,7 @@ trait Curd
         $runtime_file_list = [];
 
         $this->model
-            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields, &$runtime_file_list) {
+            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields, &$runtime_file_list, $select_fields) {
                 foreach ($list as $list_index => $item) {
                     $write_line++;
                     $write_col = 1;
@@ -180,6 +181,10 @@ trait Curd
 
                                 $cel .= "\n" . $message;
                             }
+                        } else if (array_key_exists($field_key, $select_fields)) {
+                            // 需要设置选项
+
+                            $cel = $select_fields[$field_key][$value];
                         } else {
                             $cel  = $value;
                         }
@@ -201,7 +206,7 @@ trait Curd
             unlink($runtime_file);
         }
 
-        return download($content, $this->model->getName() . time() . '.xlsx', true);
+        return download($content, $this->model->getName() . date('Ymd') . '.xlsx', true);
     }
 
     /**
