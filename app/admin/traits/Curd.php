@@ -136,7 +136,8 @@ trait Curd
             ->select()
             ->toArray();
         $fileName = time();
-        return Excel::exportData($list, $header, $fileName, 'xlsx');
+
+        return Excel::exportData($list, $header, $fileName, 'xlsx',);
     }
 
     /**
