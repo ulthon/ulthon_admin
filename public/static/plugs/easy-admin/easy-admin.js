@@ -240,7 +240,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         $(".layui-table-fixed").each(function () {
                             $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
                         });
-                });
+                    });
                 }
 
                 var optionDone = function () { }
@@ -727,8 +727,22 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     return option.selectList[value];
                 }
             },
-            image: function (data) {
+            filePreview: function (data) {
+                console.log(data);
 
+                if (!data.mime_type) {
+                    return admin.table.url(data);
+                }
+
+                var mimeName = data.mime_type.split('/')[0];
+
+                if (mimeName == 'image') {
+                    return admin.table.image(data);
+                }
+
+                return admin.table.url(data);
+            },
+            image: function (data) {
                 var option = data.LAY_COL;
                 option.imageWidth = option.imageWidth || 200;
                 option.imageHeight = option.imageHeight || 40;
@@ -1519,7 +1533,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 cols: [[
                                     { type: selectCheck },
                                     { field: 'id', title: 'ID' },
-                                    { field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.image },
+                                    { field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.filePreview },
                                     { field: 'original_name', width: 150, title: '文件原名', align: "center" },
                                     { field: 'mime_type', width: 120, title: 'mime类型', align: "center" },
                                     { field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range' },
