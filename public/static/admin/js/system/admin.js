@@ -40,6 +40,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {
                         width: 250,
                         title: '操作',
+                        fixed:'right',
                         templet: ea.table.tool,
                         operat: [
                             'edit',

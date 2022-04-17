@@ -211,7 +211,6 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                 var table2card = function () {
 
-
                     if (admin.checkMobile()) {
                         var domTable = $('[lay-id="' + options.id + '"]');
 
@@ -236,6 +235,14 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                 }
 
+                var tableFixedAutoHeight = function () {
+                    $(".layui-table-main tr").each(function (index, val) {
+                        $(".layui-table-fixed").each(function () {
+                            $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
+                        });
+                    });
+                }
+
                 var optionDone = function () { }
                 if (options.done != undefined) {
                     optionDone = options.done;
@@ -243,6 +250,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 options.done = function () {
                     optionDone()
                     table2card()
+                    tableFixedAutoHeight()
+
+
                 }
 
                 // 判断是否为移动端

@@ -59,6 +59,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                         {
                             width: 200,
                             title: '操作',
+                            fixed: 'right',
                             templet: ea.table.tool,
                             operat: [
                                 [{
@@ -82,6 +83,12 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     ]], init),
                     done: function () {
                         layer.closeAll('loading');
+
+                        $(".layui-table-main tr").each(function (index, val) {
+                            $(".layui-table-fixed").each(function () {
+                                $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
+                            });
+                        });
                     }
                 });
             };

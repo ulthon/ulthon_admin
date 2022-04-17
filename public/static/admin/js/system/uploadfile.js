@@ -26,7 +26,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'mime_type', minWidth: 80, title: 'mime类型'},
                     {field: 'file_ext', minWidth: 80, title: '文件后缀'},
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
-                    {width: 250, title: '操作', templet: ea.table.tool, operat: ['delete']}
+                    {width: 250, title: '操作', templet: ea.table.tool, operat: ['delete'],fixed:'right'}
                 ]],
             });
 
