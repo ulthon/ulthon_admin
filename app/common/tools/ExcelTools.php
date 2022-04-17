@@ -2,6 +2,8 @@
 
 namespace app\common\tools;
 
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+
 class ExcelTools
 {
     public static function exportModel($model, $where = [], $fields = [], $image_fields = [], $select_fields = [])
@@ -70,7 +72,7 @@ class ExcelTools
                             $cel  = $value;
                         }
 
-                        $sheet->setCellValue($col_key . $write_line, $cel);
+                        $sheet->setCellValueExplicit($col_key . $write_line, $cel,DataType::TYPE_STRING);
                         $write_col++;
                     }
                 }
