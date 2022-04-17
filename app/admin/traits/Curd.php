@@ -12,6 +12,7 @@
 
 namespace app\admin\traits;
 
+use app\common\tools\PathTools;
 use EasyAdmin\annotation\NodeAnotation;
 
 
@@ -136,8 +137,10 @@ trait Curd
             $write_col++;
         }
 
+        $runtime_file_list = [];
+
         $this->model
-            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields) {
+            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields, &$runtime_file_list) {
                 foreach ($list as $list_index => $item) {
                     $write_line++;
                     $write_col = 1;
@@ -145,7 +148,7 @@ trait Curd
                     foreach ($fields as $field_key => $field_name) {
                         $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
 
-                        $cel =  '';
+                        $cel =  null;
 
                         $value  = \think\helper\Arr::get($item, $field_key);
 
@@ -155,20 +158,27 @@ trait Curd
 
                             try {
 
-                                // $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-                                // $drawing->setName($field_name);
-                                // $drawing->setDescription($field_key);
-                                // $drawing->setPath($value);
-                                // $drawing->setHeight(36);
+                                if (filter_var($value, FILTER_VALIDATE_URL)) {
 
-                                // $drawing->setCoordinates($col_key . $write_line);
-                                // $drawing->setWorksheet($sheet);
+                                    $runtime_file = PathTools::tempBuildPath(uniqid());
 
+                                    $runtime_file_list[] = $runtime_file;
+
+                                    file_put_contents($runtime_file, file_get_contents($value));
+
+                                    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                                    $drawing->setName($field_name);
+                                    $drawing->setDescription($field_key);
+                                    $drawing->setPath($runtime_file);
+                                    $drawing->setHeight(36);
+
+                                    $drawing->setCoordinates($col_key . $write_line);
+                                    $drawing->setWorksheet($sheet);
+                                }
                             } catch (\Throwable $th) {
                                 $message = $th->getMessage();
 
                                 $cel .= "\n" . $message;
-
                             }
                         } else {
                             $cel  = $value;
@@ -186,6 +196,10 @@ trait Curd
         $writer->save('php://output');
         $content = ob_get_contents();
         ob_clean();
+
+        foreach ($runtime_file_list as  $runtime_file) {
+            unlink($runtime_file);
+        }
 
         return download($content, $this->model->getName() . time() . '.xlsx', true);
     }
