@@ -30,7 +30,8 @@
         "zhongshaofa/easy-admin": "^1.0.2",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.4",
-        "phpoffice/phpspreadsheet": "^1.22"
+        "phpoffice/phpspreadsheet": "^1.22",
+        "topthink/think-migration": "^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
