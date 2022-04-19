@@ -34,7 +34,6 @@ if (!function_exists('password')) {
         $value = sha1('blog_') . md5($value) . md5('_encrypt') . sha1($value);
         return sha1($value);
     }
-
 }
 
 if (!function_exists('xdebug')) {
@@ -58,12 +57,12 @@ if (!function_exists('xdebug')) {
 
         $str = '';
 
-        if(is_string($data)){
+        if (is_string($data)) {
             $str = $data;
-        }else{
-            if(is_array($data) || is_object($data)){
+        } else {
+            if (is_array($data) || is_object($data)) {
                 $str = print_r($data, true);
-            }else{
+            } else {
                 $str = var_export($data, true);
             }
         }
@@ -79,20 +78,22 @@ if (!function_exists('sysconfig')) {
     /**
      * 获取系统配置信息
      * @param $group
-     * @param null $name
+     * @param null|bool|string $name
      * @return array|mixed
      */
-    function sysconfig($group, $name = null)
+    function sysconfig($group, $name = null, $default = null)
     {
 
         if ($name === true) {
             $value = Cache::get('sysconfig_' . $group);
 
             if (empty($value)) {
-                $value = \app\admin\model\SystemConfig::where('name', $group)->value('value');
+                $value = \app\admin\model\SystemConfig::where('name', $group)->column('value', 'name');
                 Cache::tag('sysconfig')->set('sysconfig_' . $group, $value);
             }
-
+            if (is_null($value)) {
+                return $default;
+            }
             return $value;
         }
 
@@ -107,6 +108,9 @@ if (!function_exists('sysconfig')) {
                 $value = \app\admin\model\SystemConfig::where($where)->column('value', 'name');
                 Cache::tag('sysconfig')->set("sysconfig_{$group}", $value, 3600);
             }
+        }
+        if (is_null($value)) {
+            return $default;
         }
         return $value;
     }
@@ -128,7 +132,6 @@ if (!function_exists('array_format_key')) {
         }
         return $newArray;
     }
-
 }
 
 if (!function_exists('auth')) {
@@ -147,7 +150,6 @@ if (!function_exists('auth')) {
         $check = $authService->checkNode($node);
         return $check;
     }
-
 }
 
 
