@@ -88,7 +88,7 @@ if (!function_exists('sysconfig')) {
             $value = Cache::get('sysconfig_' . $group);
 
             if (empty($value)) {
-                $value = \app\admin\model\SystemConfig::where('name', $group)->column('value', 'name');
+                $value = \app\admin\model\SystemConfig::where('name', $group)->value('value');
                 Cache::tag('sysconfig')->set('sysconfig_' . $group, $value);
             }
             if (is_null($value)) {
