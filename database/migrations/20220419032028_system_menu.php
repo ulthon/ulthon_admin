@@ -39,9 +39,9 @@ class SystemMenu extends Migrator
             ->addColumn(Column::integer('sort')->setDefault(0)->setComment('排序'))
             ->addColumn(Column::tinyInteger('status')->setLimit(1)->setComment('状态 {radio} (1:禁用,2:启用)'))
             ->addColumn(Column::char('remark')->setDefault('')->setComment('备注说明'))
-            ->addColumn(Column::integer('create_time')->setLimit(11)->setDefault(0))
-            ->addColumn(Column::integer('update_time')->setLimit(11)->setDefault(0))
-            ->addColumn(Column::integer('delete_time')->setLimit(11)->setDefault(0))
+            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('title')
             ->addIndex('href')
             ->create();

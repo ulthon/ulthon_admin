@@ -39,9 +39,9 @@ class SystemAdmin extends Migrator
             ->addColumn(Column::bigInteger('login_num')->setUnsigned()->setDefault(0)->setComment('登录次数'))
             ->addColumn(Column::integer('sort')->setDefault(0)->setComment('排序'))
             ->addColumn(Column::tinyInteger('status')->setLimit(1)->setUnsigned()->setDefault(0)->setComment('状态 {radio} (0:禁用,1:启用,)'))
-            ->addColumn(Column::integer('create_time')->setLimit(11)->setDefault(0))
-            ->addColumn(Column::integer('update_time')->setLimit(11)->setDefault(0))
-            ->addColumn(Column::integer('delete_time')->setLimit(11)->setDefault(0))
+            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('username')
             ->addIndex('phone')
             ->create();
