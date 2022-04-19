@@ -4,7 +4,6 @@
 // +----------------------------------------------------------------------
 
 use app\common\command\admin\ResetPassword;
-use app\common\command\Install;
 use app\common\command\Timer;
 
 return [
@@ -14,7 +13,6 @@ return [
         'node'      => 'app\common\command\Node',
         'OssStatic' => 'app\common\command\OssStatic',
         ResetPassword::class,
-        Install::class,
         Timer::class,
     ],
 ];

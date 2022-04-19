@@ -53,8 +53,14 @@ DEBUG=true
 PREFIX=ul_
 
 
-第四步, 执行数据库导入
-php think install
+第四步, 安装数据库
+php think migrate:run
+
+第五步，初始化数据库数据
+php think seed:run
+
+最后，本地临时运行
+php think run
 
 ```
 
