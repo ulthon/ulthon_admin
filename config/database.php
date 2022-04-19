@@ -5,7 +5,7 @@ use think\facade\Env;
 
 return [
     // 默认使用的数据库连接配置
-    'default'         => Env::get('database.driver', 'sqlite'),
+    'default'         => Env::get('database.type', 'sqlite'),
 
     // 自定义时间查询规则
     'time_query_rule' => [],
