@@ -32,7 +32,7 @@ Route::view('/', 'welcome', [
         [
             'name'   => '演示',
             'active' => false,
-            'href'   => 'http://admin.demo.ulthon.com/',
+            'href'   => 'http://admin.demo.ulthon.com/admin/',
             'target' => '_blank',
         ],
         [

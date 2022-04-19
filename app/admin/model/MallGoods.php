@@ -17,9 +17,6 @@ use app\common\model\TimeModel;
 
 class MallGoods extends TimeModel
 {
-
-    protected $table = "";
-
     protected $deleteTime = 'delete_time';
 
     public function cate()

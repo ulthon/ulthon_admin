@@ -18,6 +18,8 @@ use app\common\model\TimeModel;
 class SystemNode extends TimeModel
 {
 
+    protected $deleteTime = false;
+
     public function getNodeTreeList()
     {
         $list = $this->select()->toArray();
