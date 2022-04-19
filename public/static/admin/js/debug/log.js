@@ -14,6 +14,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var Controller = {
 
         index: function () {
+            var uidList = [];
             ea.table.render({
                 init: init,
                 size: 'sm',
@@ -21,9 +22,24 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 cols: [[
                     { type: 'checkbox' },
                     { field: 'id', title: 'id' },
-                    { field: 'uid', title: 'uid', minWidth: 140 },
-                    { field: 'level', title: 'level' },
-                    { field: 'content', title: '日志内容', minWidth: 400, align: 'left', style: 'background-color:#eee' },
+                    {
+                        field: 'uid', title: 'uid', minWidth: 120,
+                    },
+                    { field: 'level', title: 'level', minWidth: 70 },
+                    {
+                        field: 'content', title: '日志内容', minWidth: 450, align: 'left', templet: function (data) {
+
+                            if (uidList.indexOf(data.uid) < 0) {
+                                uidList.push(data.uid);
+                            }
+                            var currentUidIndex = uidList.indexOf(data.uid);
+
+                            var className = 'log-group log-group-' + (currentUidIndex % 2)
+                            return '<div class="' + className + '">' + data.content + '</div>'
+
+
+                        }
+                    },
                     { field: 'create_time', title: 'create_time', minWidth: 160 },
                     { field: 'app_name', title: 'app_name' },
                     { field: 'controller_name', title: 'controller_name', },
