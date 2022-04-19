@@ -35,7 +35,7 @@ class SystemNode extends Migrator
             ->addColumn(Column::tinyInteger('type')->setUnsigned()->setLimit(1)->setComment('节点类型（1：控制器，2：节点）'))
             ->addColumn(Column::tinyInteger('is_auth')->setUnsigned()->setLimit(1)->setDefault(1)->setComment('是否启动RBAC权限控制'))
             ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
-            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('node')
             ->create();
     }
