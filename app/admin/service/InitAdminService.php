@@ -1,6 +1,6 @@
 <?php
 
-namespace app\common\service;
+namespace app\admin\service;
 
 use app\admin\model\MallCate;
 use app\admin\model\MallGoods;

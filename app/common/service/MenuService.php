@@ -41,7 +41,7 @@ class MenuService
     {
         $data = Db::name('system_menu')
             ->field('title,icon,href')
-            ->where("delete_time is null")
+            ->where("delete_time", 0)
             ->where('pid', MenuConstant::HOME_PID)
             ->find();
         !empty($data) && $data['href'] = __url($data['href']);
@@ -59,7 +59,7 @@ class MenuService
     {
         /** @var AuthService $authService */
         $authServer = app(AuthService::class, ['adminId' => $this->adminId]);
-        return $this->buildMenuChild(0, $this->getMenuData(),$authServer);
+        return $this->buildMenuChild(0, $this->getMenuData(), $authServer);
     }
 
     private function buildMenuChild($pid, $menuList, AuthService $authServer)
@@ -93,7 +93,7 @@ class MenuService
     {
         $menuData = Db::name('system_menu')
             ->field('id,pid,title,icon,href,target')
-            ->where("delete_time is null")
+            ->where("delete_time", 0)
             ->where([
                 ['status', '=', '1'],
                 ['pid', '<>', MenuConstant::HOME_PID],
@@ -105,5 +105,4 @@ class MenuService
             ->select();
         return $menuData;
     }
-
 }

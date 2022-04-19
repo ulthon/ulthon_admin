@@ -463,18 +463,54 @@ $ul_system_node = array(
         "is_auth" => 1,
     ),
     array(
-        "id" => 67,
-        "node" => "system.log",
-        "title" => "操作日志管理",
+        "id" => 69,
+        "node" => "debug.log",
+        "title" => "debug_log",
         "type" => 1,
         "is_auth" => 1,
     ),
     array(
-        "id" => 68,
-        "node" => "system.log/index",
+        "id" => 70,
+        "node" => "debug.log/index",
         "title" => "列表",
+        "type" => 2,
+        "is_auth" => 1,
+    ),
+    array(
+        "id" => 71,
+        "node" => "debug.log/add",
+        "title" => "添加",
+        "type" => 2,
+        "is_auth" => 1,
+    ),
+    array(
+        "id" => 72,
+        "node" => "debug.log/edit",
+        "title" => "编辑",
+        "type" => 2,
+        "is_auth" => 1,
+    ),
+    array(
+        "id" => 73,
+        "node" => "debug.log/delete",
+        "title" => "删除",
+        "type" => 2,
+        "is_auth" => 1,
+    ),
+    array(
+        "id" => 74,
+        "node" => "debug.log/export",
+        "title" => "导出",
+        "type" => 2,
+        "is_auth" => 1,
+    ),
+    array(
+        "id" => 75,
+        "node" => "debug.log/modify",
+        "title" => "属性修改",
         "type" => 2,
         "is_auth" => 1,
     )
 );
+
 return $ul_system_node;

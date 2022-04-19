@@ -3,7 +3,7 @@
 
 use app\admin\model\SystemConfig;
 use app\admin\service\TriggerService;
-use app\common\service\InitAdminService;
+use app\admin\service\InitAdminService;
 use think\migration\Seeder;
 
 class InitBaseAdminData extends Seeder

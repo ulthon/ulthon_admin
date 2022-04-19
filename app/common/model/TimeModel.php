@@ -48,7 +48,7 @@ class TimeModel extends Model
      */
     use SoftDelete;
     
-    protected $deleteTime = true;
+    protected $deleteTime = 'delete_time';
 
     protected $defaultSoftDelete = 0;
 

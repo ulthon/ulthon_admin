@@ -1,0 +1,15 @@
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <table id="currentTable" class="layui-table layui-hide" data-auth-add="{:auth('debug.log/add')}" data-auth-edit="{:auth('debug.log/edit')}" data-auth-delete="{:auth('debug.log/delete')}" lay-filter="currentTable">
+        </table>
+    </div>
+</div>
+<style>
+    [data-field="content"] .layui-table-cell {
+        white-space: normal;
+    }
+
+    .layui-table-view .layui-table[lay-size="sm"] [data-field="content"] .layui-table-cell {
+        height: auto;
+    }
+</style>
