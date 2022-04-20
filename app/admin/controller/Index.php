@@ -34,6 +34,7 @@ class Index extends AdminController
         $quicks = SystemQuick::field('id,title,icon,href')
             ->where(['status' => 1])
             ->order('sort', 'desc')
+            ->autoCache('welcome_list')
             ->limit(8)
             ->select();
         $this->assign('quicks', $quicks);

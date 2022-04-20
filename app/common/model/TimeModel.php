@@ -14,7 +14,6 @@
 namespace app\common\model;
 
 
-use think\Model;
 use think\model\concern\SoftDelete;
 
 /**
@@ -22,7 +21,7 @@ use think\model\concern\SoftDelete;
  * Class TimeModel
  * @package app\common\model
  */
-class TimeModel extends Model
+class TimeModel extends BaseModel
 {
 
     /**
@@ -47,9 +46,8 @@ class TimeModel extends Model
      * 软删除
      */
     use SoftDelete;
-    
+
     protected $deleteTime = 'delete_time';
 
     protected $defaultSoftDelete = 0;
-
 }

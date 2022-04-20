@@ -20,6 +20,13 @@ class SystemAdmin extends TimeModel
 
     protected $deleteTime = 'delete_time';
 
+    public static $autoCache = [
+        [
+            'name' => 'info',
+            'field' => 'id'
+        ]
+    ];
+
     public function getAuthList()
     {
         $list = (new SystemAuth())
@@ -27,5 +34,4 @@ class SystemAdmin extends TimeModel
             ->column('title', 'id');
         return $list;
     }
-
 }

@@ -44,6 +44,4 @@ class SystemNode extends TimeModel
         }
         return $newList;
     }
-
-
 }

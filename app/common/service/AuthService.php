@@ -39,7 +39,7 @@ class AuthService
         'system_admin'     => 'system_admin',    // 用户表
         'system_auth'      => 'system_auth',     // 权限表
         'system_node'      => 'system_node',     // 节点表
-        'system_auth_node' => 'system_auth_node',// 权限-节点表
+        'system_auth_node' => 'system_auth_node', // 权限-节点表
     ];
 
     /**
@@ -140,11 +140,12 @@ class AuthService
     public function getAdminNode()
     {
         $nodeList = [];
-        $adminInfo = Db::name($this->config['system_admin'])
-            ->where([
-                'id'     => $this->adminId,
-                'status' => 1,
-            ])->find();
+        $adminInfo = $this->getAdminInfo();
+
+        if ($adminInfo['status'] != 1) {
+            return $nodeList;
+        }
+
         if (!empty($adminInfo) && !empty($adminInfo['auth_ids'])) {
             $buildAuthSql = Db::name($this->config['system_auth'])
                 ->distinct(true)
@@ -170,9 +171,11 @@ class AuthService
      * @return array
      * @author zhongshaofa <shaofa.zhong@happy-seed.com>
      */
-    public function getNodeList(){
+    public function getNodeList()
+    {
         return  Db::name($this->config['system_node'])
-            ->column('id,node,title,type,is_auth','node');
+            ->autoCache(null, null, 'table')
+            ->column('id,node,title,type,is_auth', 'node');
     }
 
     /**
@@ -184,9 +187,11 @@ class AuthService
      * @throws \think\db\exception\ModelNotFoundException
      * @author zhongshaofa <shaofa.zhong@happy-seed.com>
      */
-    public function getAdminInfo(){
+    public function getAdminInfo()
+    {
         return  Db::name($this->config['system_admin'])
             ->where('id', $this->adminId)
+            ->autoCache('info', $this->adminId)
             ->find();
     }
 
@@ -211,5 +216,4 @@ class AuthService
         $node = implode('/', $array);
         return $node;
     }
-
 }
