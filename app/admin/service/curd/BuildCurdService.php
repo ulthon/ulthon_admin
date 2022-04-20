@@ -301,7 +301,7 @@ class BuildCurdService
         }
 
         // 初始化默认模型名
-        $this->modelFilename = ucfirst(CommonTool::lineToHump($this->table));
+        $this->modelFilename = Str::studly($this->table);
 
         $this->buildViewJsUrl();
 
@@ -358,7 +358,7 @@ class BuildCurdService
                 }
             }
 
-            $modelFilename = empty($modelFilename) ? ucfirst(CommonTool::lineToHump($relationTable)) : $modelFilename;
+            $modelFilename = empty($modelFilename) ? Str::studly($relationTable) : $modelFilename;
             $modelArray = explode($this->DS, $modelFilename);
             $modelName = array_pop($modelArray);
 
@@ -580,7 +580,7 @@ class BuildCurdService
         $nodeArray = explode($this->DS, $this->controllerFilename);
         $formatArray = [];
         foreach ($nodeArray as $vo) {
-            $formatArray[] = CommonTool::humpToLine(lcfirst($vo));
+            $formatArray[] = Str::snake($vo);
         }
         $this->controllerUrl = implode('.', $formatArray);
         $this->viewFilename = implode($this->DS, $formatArray);
@@ -1009,7 +1009,7 @@ class BuildCurdService
         } else {
             $relationCode = '';
             foreach ($this->relationArray as $key => $val) {
-                $relation = CommonTool::lineToHump($key);
+                $relation = Str::camel($key);
                 $relationCode = "->withJoin('{$relation}', 'LEFT')\r";
             }
             $controllerIndexMethod = CommonTool::replaceTemplate(
@@ -1062,7 +1062,7 @@ class BuildCurdService
         } else {
             $relationList = '';
             foreach ($this->relationArray as $key => $val) {
-                $relation = CommonTool::lineToHump($key);
+                $relation = Str::camel($key);
                 $relationCode = CommonTool::replaceTemplate(
                     $this->getTemplate("model{$this->DS}relation"),
                     [
@@ -1116,7 +1116,7 @@ class BuildCurdService
             $relationModelClass = "\\app\\admin\\model\\{$val['modelFilename']}";
             if (class_exists($relationModelClass) && method_exists(new $relationModelClass, 'getName')) {
                 $tableName = (new $relationModelClass)->getName();
-                if (CommonTool::humpToLine(lcfirst($tableName)) == CommonTool::humpToLine(lcfirst($key))) {
+                if (Str::snake($tableName) == Str::snake($key)) {
                     continue;
                 }
             }
@@ -1375,7 +1375,7 @@ class BuildCurdService
 
         // 关联表
         foreach ($this->relationArray as $table => $tableVal) {
-            $table = CommonTool::lineToHump($table);
+            $table = Str::camel($table);
             foreach ($tableVal['tableColumns'] as $field => $val) {
                 if ($val['formType'] == 'image') {
                     $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ea.table.image}";
