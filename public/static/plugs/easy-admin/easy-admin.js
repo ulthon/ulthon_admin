@@ -983,9 +983,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         if (col.templet == admin.table.image) {
                             imageFields.push(col.field)
                         }
-                        
+
                         if (col.selectList instanceof Object) {
-                            if(Object.keys(col.selectList).length > 0){
+                            if (Object.keys(col.selectList).length > 0) {
                                 selectFields[col.field] = col.selectList;
                             }
 
@@ -1495,6 +1495,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             uploadSign = $(this).attr('data-upload-sign') || '|',
                             uploadAccept = $(this).attr('data-upload-accept') || 'file',
                             uploadAcceptMime = $(this).attr('data-upload-mimetype') || '',
+                            disablePreview = $(this).attr('data-disable-preview') || '',
                             elem = "input[name='" + uploadName + "']",
                             uploadElem = this;
 
@@ -1530,28 +1531,31 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             }
                         });
 
-                        // 监听上传input值变化
-                        $(elem).bind("input propertychange", function (event) {
-                            var urlString = $(this).val(),
-                                urlArray = urlString.split(uploadSign),
-                                uploadIcon = $(uploadElem).attr('data-upload-icon') || "file";
+                        if (disablePreview == 0) {
+                            // 监听上传input值变化
+                            $(elem).bind("input propertychange", function (event) {
+                                var urlString = $(this).val(),
+                                    urlArray = urlString.split(uploadSign),
+                                    uploadIcon = $(uploadElem).attr('data-upload-icon') || "file";
 
-                            $('#bing-' + uploadName).remove();
-                            if (urlString.length > 0) {
-                                var parant = $(this).parent('div');
-                                var liHtml = '';
-                                $.each(urlArray, function (i, v) {
-                                    liHtml += '<li><a><img src="' + v + '" data-image  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
-                                });
-                                parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
+                                $('#bing-' + uploadName).remove();
+                                if (urlString.length > 0) {
+                                    var parant = $(this).parent('div');
+                                    var liHtml = '';
+                                    $.each(urlArray, function (i, v) {
+                                        liHtml += '<li><a><img src="' + v + '" data-image  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                    });
+                                    parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
+                                }
+
+                            });
+
+                            // 非空初始化图片显示
+                            if ($(elem).val() !== '') {
+                                $(elem).trigger("input");
                             }
-
-                        });
-
-                        // 非空初始化图片显示
-                        if ($(elem).val() !== '') {
-                            $(elem).trigger("input");
                         }
+
                     });
 
                     // 监听上传文件的删除事件
