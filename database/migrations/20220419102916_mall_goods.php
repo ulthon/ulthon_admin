@@ -34,7 +34,7 @@ class MallGoods extends Migrator
             ->addColumn(Column::char('title', 20)->setDefault('')->setComment('商品名称'))
             ->addColumn(Column::char('logo')->setComment('商品logo {image}'))
             ->addColumn(Column::text('images')->setComment('商品图片 {images}'))
-            ->addColumn(Column::text('describe')->setComment('商品描述'))
+            ->addColumn(Column::text('describe')->setComment('商品描述 {editor}'))
             ->addColumn(Column::decimal('market_price')->setDefault(0)->setComment('市场价'))
             ->addColumn(Column::decimal('discount_price')->setDefault(0)->setComment('折扣价'))
             ->addColumn(Column::integer('sales')->setUnsigned()->setDefault(0)->setComment('销量'))
