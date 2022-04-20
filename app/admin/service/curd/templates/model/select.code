@@ -1,5 +1,2 @@
 
-    public function {{name}}()
-    {
-        return {{values}};
-    }
+    public const {{name}} = {{values}};

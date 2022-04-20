@@ -11,7 +11,8 @@ class {{modelName}} extends TimeModel
 
     protected $deleteTime = {{deleteTime}};
 
-    {{relationList}}
     {{selectList}}
+    
+    {{relationList}}
 
 }

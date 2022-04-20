@@ -1,5 +1,5 @@
 
-    public function {{name}}()
+    public static function {{name}}()
     {
         return \app\admin\model\{{relation}}::column('{{values}}', 'id');
     }

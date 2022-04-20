@@ -1,2 +1,2 @@
 
-        $this->assign('{{name}}', $this->model->{{name}}());
+        $this->assign('{{var_name}}', $this->model::{{name}}, true);

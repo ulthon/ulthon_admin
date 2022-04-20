@@ -40,7 +40,7 @@ class SystemUploadfile extends Migrator
             ->addColumn(Column::integer('file_size')->setUnsigned()->setDefault(0)->setComment('文件大小'))
             ->addColumn(Column::char('file_ext', 100)->setDefault('')->setComment('扩展名'))
             ->addColumn(Column::char('sha1', 40)->setDefault('')->setComment('文件 sha1编码'))
-            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('upload_type')

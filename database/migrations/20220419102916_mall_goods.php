@@ -44,7 +44,7 @@ class MallGoods extends Migrator
             ->addColumn(Column::integer('sort')->setUnsigned()->setDefault(0)->setComment('排序'))
             ->addColumn(Column::tinyInteger('status')->setUnsigned()->setLimit(1)->setDefault(0)->setComment('状态 {radio} (0:正常,1:禁用)'))
             ->addColumn(Column::char('remark')->setDefault('')->setComment('备注说明'))
-            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('cate_id')

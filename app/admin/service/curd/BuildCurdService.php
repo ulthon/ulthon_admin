@@ -7,6 +7,7 @@ use EasyAdmin\curd\exceptions\TableException;
 use EasyAdmin\tool\CommonTool;
 use think\exception\FileException;
 use think\facade\Db;
+use think\helper\Str;
 
 /**
  * 快速构建系统CURD
@@ -276,7 +277,6 @@ class BuildCurdService
                 if ($vo['Field'] == 'delete_time') {
                     $this->delete = true;
                 }
-
             }
 
             // 获取表名注释
@@ -617,7 +617,6 @@ class BuildCurdService
             if (in_array($key, ['describe', 'content', 'details'])) {
                 $this->editorFields[] = $key;
             }
-
         }
         return $this;
     }
@@ -656,9 +655,9 @@ class BuildCurdService
         preg_match('/\([\s\S]*?\)/i', $string, $defineMatch);
         if (!empty($formTypeMatch) && isset($defineMatch[0])) {
             $colum['comment'] = str_replace($defineMatch[0], '', $colum['comment']);
-            if (isset($colum['formType']) && in_array($colum['formType'], ['images', 'files', 'select', 'switch', 'radio', 'checkbox', 'date','relation'])) {
+            if (isset($colum['formType']) && in_array($colum['formType'], ['images', 'files', 'select', 'switch', 'radio', 'checkbox', 'date', 'relation'])) {
                 $define = str_replace(')', '', str_replace('(', '', $defineMatch[0]));
-                if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox','relation'])) {
+                if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox', 'relation'])) {
                     $formatDefine = [];
                     $explodeArray = explode(',', $define);
                     foreach ($explodeArray as $vo) {
@@ -686,13 +685,37 @@ class BuildCurdService
      */
     protected function buildSelectController($field)
     {
-        $field = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$field}List";
+
+        $name = $this->getFieldConstentName($field);
+        $var_name = $this->getFieldVarName($field);
+
         $selectCode = CommonTool::replaceTemplate(
             $this->getTemplate("controller{$this->DS}select"),
             [
                 'name' => $name,
-            ]);
+                'var_name' => $var_name,
+            ]
+        );
+        return $selectCode;
+    }
+    /**
+     * 构建关联下拉控制器
+     * @param $field
+     * @return mixed
+     */
+    protected function buildRelationSelectController($field)
+    {
+
+        $name = $this->getFieldMethodName($field);
+        $var_name = $this->getFieldVarName($field);
+
+        $selectCode = CommonTool::replaceTemplate(
+            $this->getTemplate("controller{$this->DS}relationSelect"),
+            [
+                'name' => $name,
+                'var_name' => $var_name,
+            ]
+        );
         return $selectCode;
     }
 
@@ -704,8 +727,9 @@ class BuildCurdService
      */
     protected function buildSelectModel($field, $array)
     {
-        $field = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$field}List";
+
+        $name = $this->getFieldConstentName($field);
+
         $values = '[';
         foreach ($array as $k => $v) {
             $values .= "'{$k}'=>'{$v}',";
@@ -716,7 +740,8 @@ class BuildCurdService
             [
                 'name'   => $name,
                 'values' => $values,
-            ]);
+            ]
+        );
         return $selectCode;
     }
 
@@ -737,7 +762,8 @@ class BuildCurdService
                 'name'     => $name,
                 'relation' => $relation,
                 'values'   => $filed,
-            ]);
+            ]
+        );
         return $selectCode;
     }
 
@@ -749,14 +775,14 @@ class BuildCurdService
      */
     protected function buildOptionView($field, $select = '')
     {
-        $field = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$field}List";
+        $name = $this->getFieldVarName($field);
         $optionCode = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}option"),
             [
                 'name'   => $name,
                 'select' => $select,
-            ]);
+            ]
+        );
         return $optionCode;
     }
 
@@ -768,15 +794,15 @@ class BuildCurdService
      */
     protected function buildRadioView($field, $select = '')
     {
-        $formatField = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$formatField}List";
+        $name = $this->getFieldVarName($field);
         $optionCode = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}radioInput"),
             [
                 'field'  => $field,
                 'name'   => $name,
                 'select' => $select,
-            ]);
+            ]
+        );
         return $optionCode;
     }
 
@@ -788,15 +814,15 @@ class BuildCurdService
      */
     protected function buildCheckboxView($field, $select = '')
     {
-        $formatField = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$formatField}List";
+        $name = $this->getFieldVarName($field);
         $optionCode = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}checkboxInput"),
             [
                 'field'  => $field,
                 'name'   => $name,
                 'select' => $select,
-            ]);
+            ]
+        );
         return $optionCode;
     }
 
@@ -969,7 +995,6 @@ class BuildCurdService
         }
 
         return $this;
-
     }
 
     /**
@@ -991,13 +1016,14 @@ class BuildCurdService
                 $this->getTemplate("controller{$this->DS}indexMethod"),
                 [
                     'relationIndexMethod' => $relationCode,
-                ]);
+                ]
+            );
         }
         $selectList = '';
         foreach ($this->relationArray as $relation) {
             if (!empty($relation['bindSelectField'])) {
                 $relationArray = explode('\\', $relation['modelFilename']);
-                $selectList .= $this->buildSelectController(end($relationArray));
+                $selectList .= $this->buildRelationSelectController(end($relationArray));
             }
         }
         foreach ($this->tableColumns as $field => $val) {
@@ -1006,7 +1032,7 @@ class BuildCurdService
             }
         }
 
-        $modelFilenameExtend = str_replace($this->DS,'\\',$this->modelFilename);
+        $modelFilenameExtend = str_replace($this->DS, '\\', $this->modelFilename);
 
         $controllerValue = CommonTool::replaceTemplate(
             $this->getTemplate("controller{$this->DS}controller"),
@@ -1017,7 +1043,8 @@ class BuildCurdService
                 'modelFilename'        => "\app\admin\model\\{$modelFilenameExtend}",
                 'indexMethod'          => $controllerIndexMethod,
                 'selectList'           => $selectList,
-            ]);
+            ]
+        );
         $this->fileList[$controllerFile] = $controllerValue;
         return $this;
     }
@@ -1043,7 +1070,8 @@ class BuildCurdService
                         'relationModel'  => "\app\admin\model\\{$val['modelFilename']}",
                         'foreignKey'     => $val['foreignKey'],
                         'primaryKey'     => $val['primaryKey'],
-                    ]);
+                    ]
+                );
                 $relationList .= $relationCode;
             }
         }
@@ -1076,7 +1104,8 @@ class BuildCurdService
                 'deleteTime'     => $this->delete ? '"delete_time"' : 'false',
                 'relationList'   => $relationList,
                 'selectList'     => $selectList,
-            ]);
+            ]
+        );
         $this->fileList[$modelFile] = $modelValue;
 
         // 关联模型
@@ -1108,7 +1137,8 @@ class BuildCurdService
                     'deleteTime'     => $val['delete'] ? '"delete_time"' : 'false',
                     'relationList'   => '',
                     'selectList'     => '',
-                ]);
+                ]
+            );
             $this->fileList[$relationModelFile] = $relationModelValue;
         }
         return $this;
@@ -1126,7 +1156,8 @@ class BuildCurdService
             $this->getTemplate("view{$this->DS}index"),
             [
                 'controllerUrl' => $this->controllerUrl,
-            ]);
+            ]
+        );
         $this->fileList[$viewIndexFile] = $viewIndexValue;
 
         // 添加页面
@@ -1183,7 +1214,16 @@ class BuildCurdService
                 }
             } elseif (in_array($field, ['remark']) || $val['formType'] == 'textarea') {
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
+            } elseif ($val['formType'] == 'relation') {
+                // 使用select生成
+                $templateFile = "view{$this->DS}module{$this->DS}select";
+                if (isset($val['bindRelation'])) {
+                    $define = $this->buildOptionView($val['bindRelation']);
+                } elseif (isset($val['define']) && !empty($val['define'])) {
+                    $define = $this->buildOptionView($field);
+                }
             }
+
 
             $addFormList .= CommonTool::replaceTemplate(
                 $this->getTemplate($templateFile),
@@ -1193,13 +1233,15 @@ class BuildCurdService
                     'required' => $this->buildRequiredHtml($val['required']),
                     'value'    => $val['default'],
                     'define'   => $define,
-                ]);
+                ]
+            );
         }
         $viewAddValue = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}form"),
             [
                 'formList' => $addFormList,
-            ]);
+            ]
+        );
         $this->fileList[$viewAddFile] = $viewAddValue;
 
 
@@ -1269,13 +1311,15 @@ class BuildCurdService
                     'required' => $this->buildRequiredHtml($val['required']),
                     'value'    => $value,
                     'define'   => $define,
-                ]);
+                ]
+            );
         }
         $viewEditValue = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}form"),
             [
                 'formList' => $editFormList,
-            ]);
+            ]
+        );
         $this->fileList[$viewEditFile] = $viewEditValue;
 
         return $this;
@@ -1294,6 +1338,8 @@ class BuildCurdService
         // 主表字段
         foreach ($this->tableColumns as $field => $val) {
 
+            $var_name = $this->getFieldVarName($field);
+
             if ($val['formType'] == 'image') {
                 $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.image}";
             } elseif ($val['formType'] == 'images') {
@@ -1306,15 +1352,13 @@ class BuildCurdService
                 continue;
             } elseif (in_array($field, $this->switchFields)) {
                 if (isset($val['define']) && !empty($val['define'])) {
-                    $values = json_encode($val['define'], JSON_UNESCAPED_UNICODE);
-                    $templateValue = "{field: '{$field}', search: 'select', selectList: {$values}, title: '{$val['comment']}', templet: ea.table.switch}";
+                    $templateValue = "{field: '{$field}', search: 'select', selectList: ea.getDataBrage('{$var_name}'), title: '{$val['comment']}', templet: ea.table.switch}";
                 } else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.switch}";
                 }
             } elseif (in_array($val['formType'], ['select', 'checkbox', 'radio', 'switch'])) {
                 if (isset($val['define']) && !empty($val['define'])) {
-                    $values = json_encode($val['define'], JSON_UNESCAPED_UNICODE);
-                    $templateValue = "{field: '{$field}', search: 'select', selectList: {$values}, title: '{$val['comment']}'}";
+                    $templateValue = "{field: '{$field}', search: 'select', selectList: ea.getDataBrage('{$var_name}'), title: '{$val['comment']}'}";
                 } else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}'}";
                 }
@@ -1366,7 +1410,8 @@ class BuildCurdService
             [
                 'controllerUrl' => $this->controllerUrl,
                 'indexCols'     => $indexCols,
-            ]);
+            ]
+        );
         $this->fileList[$jsFile] = $jsValue;
         return $this;
     }
@@ -1464,4 +1509,30 @@ class BuildCurdService
         return file_get_contents("{$this->dir}{$this->DS}templates{$this->DS}{$name}.code");
     }
 
+    public function getFieldConstentName($field)
+    {
+        $field = Str::studly($field);
+
+        $name = "TitleList{$field}";
+
+        $name = Str::snake($name);
+
+        $name = Str::upper($name);
+
+        return $name;
+    }
+
+    public function getFieldVarName($field)
+    {
+        $field = Str::studly($field);
+        $name = "TitleList{$field}";
+        $name = Str::snake($name);
+        return $name;
+    }
+    public function getFieldMethodName($field)
+    {
+        $field = Str::studly($field);
+        $name = "get{$field}List";
+        return $name;
+    }
 }
