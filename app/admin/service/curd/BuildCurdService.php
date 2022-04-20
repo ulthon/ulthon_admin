@@ -4,7 +4,6 @@
 namespace app\admin\service\curd;
 
 use EasyAdmin\curd\exceptions\TableException;
-use EasyAdmin\tool\CommonTool;
 use think\exception\FileException;
 use think\facade\Db;
 use think\helper\Str;
@@ -689,7 +688,7 @@ class BuildCurdService
         $name = $this->getFieldConstentName($field);
         $var_name = $this->getFieldVarName($field);
 
-        $selectCode = CommonTool::replaceTemplate(
+        $selectCode = $this->replaceTemplate(
             $this->getTemplate("controller{$this->DS}select"),
             [
                 'name' => $name,
@@ -709,7 +708,7 @@ class BuildCurdService
         $name = $this->getFieldMethodName($field);
         $var_name = $this->getFieldVarName($field);
 
-        $selectCode = CommonTool::replaceTemplate(
+        $selectCode = $this->replaceTemplate(
             $this->getTemplate("controller{$this->DS}relationSelect"),
             [
                 'name' => $name,
@@ -735,7 +734,7 @@ class BuildCurdService
             $values .= "'{$k}'=>'{$v}',";
         }
         $values .= ']';
-        $selectCode = CommonTool::replaceTemplate(
+        $selectCode = $this->replaceTemplate(
             $this->getTemplate("model{$this->DS}select"),
             [
                 'name'   => $name,
@@ -756,7 +755,7 @@ class BuildCurdService
         $relationArray = explode('\\', $relation);
         $name = end($relationArray);
         $name = "get{$name}List";
-        $selectCode = CommonTool::replaceTemplate(
+        $selectCode = $this->replaceTemplate(
             $this->getTemplate("model{$this->DS}relationSelect"),
             [
                 'name'     => $name,
@@ -776,7 +775,7 @@ class BuildCurdService
     protected function buildOptionView($field, $select = '')
     {
         $name = $this->getFieldVarName($field);
-        $optionCode = CommonTool::replaceTemplate(
+        $optionCode = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}option"),
             [
                 'name'   => $name,
@@ -795,7 +794,7 @@ class BuildCurdService
     protected function buildRadioView($field, $select = '')
     {
         $name = $this->getFieldVarName($field);
-        $optionCode = CommonTool::replaceTemplate(
+        $optionCode = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}radioInput"),
             [
                 'field'  => $field,
@@ -815,7 +814,7 @@ class BuildCurdService
     protected function buildCheckboxView($field, $select = '')
     {
         $name = $this->getFieldVarName($field);
-        $optionCode = CommonTool::replaceTemplate(
+        $optionCode = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}checkboxInput"),
             [
                 'field'  => $field,
@@ -1012,7 +1011,7 @@ class BuildCurdService
                 $relation = Str::camel($key);
                 $relationCode = "->withJoin('{$relation}', 'LEFT')\r";
             }
-            $controllerIndexMethod = CommonTool::replaceTemplate(
+            $controllerIndexMethod = $this->replaceTemplate(
                 $this->getTemplate("controller{$this->DS}indexMethod"),
                 [
                     'relationIndexMethod' => $relationCode,
@@ -1034,7 +1033,7 @@ class BuildCurdService
 
         $modelFilenameExtend = str_replace($this->DS, '\\', $this->modelFilename);
 
-        $controllerValue = CommonTool::replaceTemplate(
+        $controllerValue = $this->replaceTemplate(
             $this->getTemplate("controller{$this->DS}controller"),
             [
                 'controllerName'       => $this->controllerName,
@@ -1063,7 +1062,7 @@ class BuildCurdService
             $relationList = '';
             foreach ($this->relationArray as $key => $val) {
                 $relation = Str::camel($key);
-                $relationCode = CommonTool::replaceTemplate(
+                $relationCode = $this->replaceTemplate(
                     $this->getTemplate("model{$this->DS}relation"),
                     [
                         'relationMethod' => $relation,
@@ -1095,7 +1094,7 @@ class BuildCurdService
             $extendNamespace = '\\' . implode('\\', $extendNamespaceArray);
         }
 
-        $modelValue = CommonTool::replaceTemplate(
+        $modelValue = $this->replaceTemplate(
             $this->getTemplate("model{$this->DS}model"),
             [
                 'modelName'      => $this->modelName,
@@ -1128,7 +1127,7 @@ class BuildCurdService
                 $extendNamespace = '\\' . implode('\\', $extendNamespaceArray);
             }
 
-            $relationModelValue = CommonTool::replaceTemplate(
+            $relationModelValue = $this->replaceTemplate(
                 $this->getTemplate("model{$this->DS}model"),
                 [
                     'modelName'      => $val['modelName'],
@@ -1152,7 +1151,7 @@ class BuildCurdService
     {
         // 列表页面
         $viewIndexFile = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}index.html";
-        $viewIndexValue = CommonTool::replaceTemplate(
+        $viewIndexValue = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}index"),
             [
                 'controllerUrl' => $this->controllerUrl,
@@ -1225,7 +1224,7 @@ class BuildCurdService
             }
 
 
-            $addFormList .= CommonTool::replaceTemplate(
+            $addFormList .= $this->replaceTemplate(
                 $this->getTemplate($templateFile),
                 [
                     'comment'  => $val['comment'],
@@ -1236,7 +1235,7 @@ class BuildCurdService
                 ]
             );
         }
-        $viewAddValue = CommonTool::replaceTemplate(
+        $viewAddValue = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}form"),
             [
                 'formList' => $addFormList,
@@ -1303,7 +1302,7 @@ class BuildCurdService
                 $value = '{$row.' . $field . '|raw|default=\'\'}';
             }
 
-            $editFormList .= CommonTool::replaceTemplate(
+            $editFormList .= $this->replaceTemplate(
                 $this->getTemplate($templateFile),
                 [
                     'comment'  => $val['comment'],
@@ -1314,7 +1313,7 @@ class BuildCurdService
                 ]
             );
         }
-        $viewEditValue = CommonTool::replaceTemplate(
+        $viewEditValue = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}form"),
             [
                 'formList' => $editFormList,
@@ -1405,7 +1404,7 @@ class BuildCurdService
 
         $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool},\r");
 
-        $jsValue = CommonTool::replaceTemplate(
+        $jsValue = $this->replaceTemplate(
             $this->getTemplate("static{$this->DS}js"),
             [
                 'controllerUrl' => $this->controllerUrl,
@@ -1534,5 +1533,19 @@ class BuildCurdService
         $field = Str::studly($field);
         $name = "get{$field}List";
         return $name;
+    }
+
+        /**
+     * 模板值替换
+     * @param $string
+     * @param $array
+     * @return mixed
+     */
+    public function replaceTemplate($string, $array)
+    {
+        foreach ($array as $key => $val) {
+            $string = str_replace("{{" . $key . "}}", $val, $string);
+        }
+        return $string;
     }
 }
