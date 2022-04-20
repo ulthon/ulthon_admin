@@ -142,7 +142,7 @@ class AuthService
         $nodeList = [];
         $adminInfo = $this->getAdminInfo();
 
-        if ($adminInfo['status'] != 1) {
+        if (!empty($adminInfo) && $adminInfo['status'] != 1) {
             return $nodeList;
         }
 
