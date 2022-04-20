@@ -3,7 +3,7 @@
 
 namespace app\admin\service\curd;
 
-use EasyAdmin\curd\exceptions\TableException;
+use app\admin\service\curd\exceptions\TableException;
 use think\exception\FileException;
 use think\facade\Db;
 use think\helper\Str;
@@ -44,7 +44,7 @@ class BuildCurdService
      *  表前缀
      * @var string
      */
-    protected $tablePrefix = 'ea';
+    protected $tablePrefix = 'ul';
 
     /**
      * 主表
@@ -1535,7 +1535,7 @@ class BuildCurdService
         return $name;
     }
 
-        /**
+    /**
      * 模板值替换
      * @param $string
      * @param $array
