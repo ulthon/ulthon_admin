@@ -14,6 +14,7 @@ namespace app\common\service;
 
 use app\common\constants\AdminConstant;
 use EasyAdmin\tool\CommonTool;
+use think\facade\Config;
 use think\facade\Db;
 
 /**
@@ -103,7 +104,8 @@ class AuthService
         }
         // 判断是否加入节点控制，优先获取缓存信息
         if (!isset($this->nodeList[$node])) {
-            return false;
+            
+            return Config::get('admin.default_auth_check');
         }
         $nodeInfo = $this->nodeList[$node];
         if ($nodeInfo['is_auth'] == 0) {

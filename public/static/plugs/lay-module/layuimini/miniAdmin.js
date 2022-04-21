@@ -85,7 +85,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
          */
         renderLogo: function (data) {
             var logoHtml = '';
-            if (data.image.length != 0) {
+            if (data.image) {
                 logoHtml = '<img src="' + data.image + '" alt="logo">';
             }
             var html = '<a href="' + data.href + '">' + logoHtml + '<h1>' + data.title + '</h1></a>';

@@ -10,6 +10,8 @@
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
 
+use think\facade\Env;
+
 return [
 
     // 不需要验证登录的控制器
@@ -35,4 +37,6 @@ return [
         'login/index',
         'login/out',
     ],
+
+    'default_auth_check' => Env::get('adminsystem.default_auth_check', false)
 ];
