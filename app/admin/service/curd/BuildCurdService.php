@@ -754,7 +754,7 @@ class BuildCurdService
     {
         $relationArray = explode('\\', $relation);
         $name = end($relationArray);
-        $name = "get{$name}List";
+        $name = "getList{$name}";
         $selectCode = $this->replaceTemplate(
             $this->getTemplate("model{$this->DS}relationSelect"),
             [
@@ -1512,7 +1512,7 @@ class BuildCurdService
     {
         $field = Str::studly($field);
 
-        $name = "TitleList{$field}";
+        $name = "SelectList{$field}";
 
         $name = Str::snake($name);
 
@@ -1524,14 +1524,14 @@ class BuildCurdService
     public function getFieldVarName($field)
     {
         $field = Str::studly($field);
-        $name = "TitleList{$field}";
+        $name = "SelectList{$field}";
         $name = Str::snake($name);
         return $name;
     }
     public function getFieldMethodName($field)
     {
         $field = Str::studly($field);
-        $name = "get{$field}List";
+        $name = "getList{$field}";
         return $name;
     }
 
