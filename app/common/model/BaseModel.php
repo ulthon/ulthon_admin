@@ -37,15 +37,22 @@ class BaseModel extends Model
     }
     public static function autoRemoveCache($model)
     {
-        static::$autoCache[] = [
-            'name' =>  'table',
-            'type' => 'tag'
-        ];
+        
+        
+        if(!isset(static::$autoCache['table'])){
+            static::$autoCache['table'] = [
+                'name' =>  'table',
+                'type' => 'tag'
+            ];
+        }
 
-        static::$autoCache[] = [
-            'name' =>  'read',
-            'field' => 'id'
-        ];
+        if(!isset(static::$autoCache['read'])){
+            static::$autoCache['read'] = [
+                'name' =>  'read',
+                'field' => 'id'
+            ];
+        }
+
 
         foreach (static::$autoCache as  $cache_item) {
             $type = $cache_item['type'] ?? 'key';
