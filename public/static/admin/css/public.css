@@ -607,3 +607,7 @@ table样式
     }
 
 }
+
+.search-hide-item{
+    display: none;
+}
