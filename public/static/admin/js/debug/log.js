@@ -21,7 +21,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 limit: 50,
                 cols: [[
                     { type: 'checkbox' },
-                    { field: 'id', title: 'id' },
+                    { field: 'id', title: 'id', search: 'number_limit' },
+                    { field: 'id', title: 'id模糊匹配', trueHide: true, fieldAlias: '[id]like' },
+                    { field: 'id', title: '最大id', trueHide: true, fieldAlias: '[id]max', searchOp: 'max' },
                     {
                         field: 'uid', title: 'uid', minWidth: 120,
                     },
@@ -36,11 +38,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
 
                             var className = 'log-group log-group-' + (currentUidIndex % 2)
                             return '<div class="' + className + '">' + data.content + '</div>'
-
-
                         }
                     },
-                    { field: 'create_time', title: 'create_time', minWidth: 160 },
+                    { field: 'create_time', title: '记录时间', minWidth: 160, search: 'time_limit' },
                     { field: 'app_name', title: 'app_name' },
                     { field: 'controller_name', title: 'controller_name', },
                     { field: 'action_name', title: 'action_name' },

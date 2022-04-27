@@ -288,6 +288,14 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 // 判断是否有操作列表权限
                 options.cols = admin.table.renderOperat(options.cols, options.elem);
 
+
+
+                // 判断是否有操作列表权限
+                options.cols = admin.table.renderTrueHide(options.cols, options.elem);
+
+
+
+
                 // 初始化表格
                 var newTable = table.render(options);
 
@@ -363,6 +371,15 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
 
+                    d.elemIdName = d.fieldAlias;
+
+                    if (typeof d.fieldAlias == 'string' && d.fieldAlias.indexOf('[') == 0) {
+
+                        var fieldPlusArr = d.fieldAlias.replace('[').split(']');
+
+                        d.elemIdName = fieldPlusArr.join('-')
+                    }
+
                     if (d.defaultSearchValue.length > 0) {
                         if (d.searchValue.length == 0) {
                             d.searchValue = d.defaultSearchValue;
@@ -385,7 +402,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -403,7 +420,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
+                                    '<select class="layui-select" id="c-' + d.elemIdName + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
                                     '<option value="">- 全部 -</option> \n' +
                                     selectHtml +
                                     '</select>\n' +
@@ -415,7 +432,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -424,7 +441,27 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 formHtml += '\t<div class="layui-form-item layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                    '</div>\n' +
+                                    '</div>';
+                                break;
+                            case 'time_limit':
+                                d.searchOp = '=';
+                                formHtml += '\t<div class="layui-form-item form-item-time-limit layui-inline ' + formSearchHideClass + ' ">\n' +
+                                    '<label class="layui-form-label">' + d.title + '</label>\n' +
+                                    '<div class="layui-input-inline">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '最大值" class="layui-input">\n' +
+                                    '</div>\n' +
+                                    '</div>';
+                                break;
+                            case 'number_limit':
+                                d.searchOp = '=';
+                                formHtml += '\t<div class="layui-form-item form-item-number-limit layui-inline ' + formSearchHideClass + ' ">\n' +
+                                    '<label class="layui-form-label">' + d.title + '</label>\n' +
+                                    '<div class="layui-input-inline">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + d.searchValue + '" placeholder="' + d.searchTip + '最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + d.searchValue + '" placeholder="' + d.searchTip + '最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -455,6 +492,10 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         }
                         if (ncV.search === 'time') {
                             laydate.render({ type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
+                        }
+                        if (ncV.search === 'time_limit') {
+                            laydate.render({ type: ncV.timeType, elem: '[name="[' + ncV.fieldAlias + ']min_date"]' });
+                            laydate.render({ type: ncV.timeType, elem: '[name="[' + ncV.fieldAlias + ']max_date"]' });
                         }
                     });
                 }
@@ -509,8 +550,26 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             data[dk].pop()
                         }
                     }
+
                 }
                 return data;
+            },
+            renderTrueHide(data, elem) {
+                var newData = [];
+                for (dk in data) {
+                    var newCol = [];
+                    var col = data[dk];
+
+                    col.forEach(colItem => {
+                        if (!colItem.trueHide) {
+                            newCol.push(colItem)
+                        }
+                    });
+
+                    newData.push(newCol)
+                }
+
+                return newData;
             },
             buildToolbarHtml: function (toolbar, tableId) {
                 var html = '';
@@ -864,7 +923,16 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     $.each(dataField, function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
-                            var op = $('#c-' + key).attr('data-search-op');
+
+                            var elemId = key;
+
+                            if (key.indexOf('[') == 0) {
+                                var keyArr = key.replace('[', '').split(']');
+
+                                elemId = keyArr[0] + '-' + keyArr[1];
+                            }
+
+                            var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
                         }

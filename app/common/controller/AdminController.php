@@ -174,20 +174,19 @@ class AdminController extends BaseController
 
             $message = array_merge($this->validateMessage, $message);
 
-            if(is_null($batch)){
+            if (is_null($batch)) {
                 $batch = $this->batchValidate;
             }
 
             if ($this->validateRule instanceof Validate) {
                 $this->validateRule->message($message);
 
-                 // 是否批量验证
+                // 是否批量验证
                 if ($batch) {
                     $this->validateRule->batch(true);
                 }
 
                 $this->validateRule->failException(true)->check($data);
-                
             } else if (is_array($this->validateRule)) {
                 parent::validate($data, $this->validateRule, $message, $batch);
             } else {
@@ -226,6 +225,13 @@ class AdminController extends BaseController
                 continue;
             }
             $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
+
+            if (strpos($key, '[') === 0) {
+                $key = str_replace('[', '', $key);
+
+                $key = explode(']', $key)[0];
+            }
+
             if ($this->relationSearch && count(explode('.', $key)) == 1) {
                 $key = "{$tableName}.{$key}";
             }
@@ -241,6 +247,18 @@ class AdminController extends BaseController
                     break;
                 case '%*':
                     $where[] = [$key, 'LIKE', "%{$val}"];
+                    break;
+                case 'min':
+                    $where[] = [$key, '>=', $val];
+                    break;
+                case 'max':
+                    $where[] = [$key, '<=', $val];
+                    break;
+                case 'min_date':
+                    $where[] = [$key, '>=', strtotime($val)];
+                    break;
+                case 'max_date':
+                    $where[] = [$key, '<=', strtotime($val)];
                     break;
                 case 'range':
                     [$beginTime, $endTime] = explode(' - ', $val);
