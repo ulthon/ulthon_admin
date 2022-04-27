@@ -120,12 +120,14 @@ trait Curd
         $fields = $this->request->param('fields', '{}', null);
         $image_fields = $this->request->param('image_fields', '{}', null);
         $select_fields = $this->request->param('select_fields', '{}', null);
+        $date_fields = $this->request->param('date_fields', '{}', null);
 
         $fields = json_decode($fields, true);
         $image_fields = json_decode($image_fields, true);
         $select_fields = json_decode($select_fields, true);
+        $date_fields = json_decode($date_fields, true);
 
-        $content = \app\common\tools\ExcelTools::exportModel($this->model, $where, $fields, $image_fields, $select_fields);
+        $content = \app\common\tools\ExcelTools::exportModel($this->model, $where, $fields, $image_fields, $select_fields, $date_fields);
 
         return download($content, $this->model->getName() . date('YmdHis') . '.xlsx', true);
     }

@@ -689,11 +689,32 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             }
                         }
 
+                        if (val.fieldFormat == undefined) {
+
+                            switch (val.templet) {
+                                case admin.table.image:
+                                    val.fieldFormat = 'image';
+                                    break;
+                                case admin.table.date:
+                                    val.fieldFormat = 'date';
+                                    break;
+                                default:
+                                    val.fieldFormat = 'text';
+
+                                    if (val.selectList !== undefined) {
+                                        val.fieldFormat = 'select';
+                                    }
+                                    break;
+                            }
+                        }
+
                         if (admin.checkMobile()) {
                             if (val.fixed !== undefined) {
                                 val.fixed = false;
                             }
                         }
+
+                        
 
                     }
                 }
@@ -1043,21 +1064,39 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                 var selectFields = {};
 
+                var dateFields = [];
+
                 options.cols[0].forEach(col => {
                     if (col.field) {
 
                         exportFields[col.field] = col.title;
 
-                        if (col.templet == admin.table.image) {
-                            imageFields.push(col.field)
-                        }
-
-                        if (col.selectList instanceof Object) {
-                            if (Object.keys(col.selectList).length > 0) {
-                                selectFields[col.field] = col.selectList;
+                        options.cols[0].forEach(col => {
+                            if (col.field) {
+        
+                                exportFields[col.field] = col.title;
+        
+                                switch (col.fieldFormat) {
+                                    case 'image':
+                                        imageFields.push(col.field)
+                                        break;
+                                
+                                    case 'select':
+                                        if (Object.keys(col.selectList).length > 0) {
+                                            selectFields[col.field] = col.selectList;
+                                        }
+                                        break;
+                                    case 'date':
+    
+                                        dateFields.push(col.field)
+                                        break;
+                                
+                                    default:
+                                        break;
+                                }
+        
                             }
-
-                        }
+                        });
 
                     }
                 });
@@ -1088,6 +1127,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         fields: JSON.stringify(exportFields),
                         image_fields: JSON.stringify(imageFields),
                         select_fields: JSON.stringify(selectFields),
+                        date_fields: JSON.stringify(dateFields),
                     }
 
                     var query = $.param(searchQuery);

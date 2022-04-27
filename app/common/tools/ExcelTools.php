@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class ExcelTools
 {
-    public static function exportModel($model, $where = [], $fields = [], $image_fields = [], $select_fields = [])
+    public static function exportModel($model, $where = [], $fields = [], $image_fields = [], $select_fields = [], $date_fields = [])
     {
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -24,7 +24,7 @@ class ExcelTools
         $runtime_file_list = [];
 
         $model
-            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields, &$runtime_file_list, $select_fields) {
+            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields, &$runtime_file_list, $select_fields, $date_fields) {
                 foreach ($list as $list_index => $item) {
                     $write_line++;
                     $write_col = 1;
@@ -68,11 +68,17 @@ class ExcelTools
                             // 需要设置选项
 
                             $cel = $select_fields[$field_key][$value];
+                        } else if (in_array($field_key, $date_fields)) {
+                            if (empty($value)) {
+                                $cel = '';
+                            } else {
+                                $cel = date('Y-m-d H:i:s', $value);
+                            }
                         } else {
                             $cel  = $value;
                         }
 
-                        $sheet->setCellValueExplicit($col_key . $write_line, $cel,DataType::TYPE_STRING);
+                        $sheet->setCellValueExplicit($col_key . $write_line, $cel, DataType::TYPE_STRING);
                         $write_col++;
                     }
                 }
