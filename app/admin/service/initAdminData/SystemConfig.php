@@ -94,7 +94,7 @@ $ul_system_config = array(
     array(
         "name" => "logo_image",
         "group" => "site",
-        "value" => "/favicon.ico",
+        "value" => "/static/common/images/logo-2.png",
         "remark" => "logo图片",
         "sort" => 0,
     ),
@@ -108,7 +108,7 @@ $ul_system_config = array(
     array(
         "name" => "site_ico",
         "group" => "site",
-        "value" => "填你的",
+        "value" => "/favicon.ico",
         "remark" => "浏览器图标",
         "sort" => 0,
     ),
