@@ -29,9 +29,9 @@ if (!function_exists('password')) {
      * @param $type  加密类型，默认为md5 （md5, hash）
      * @return mixed
      */
-    function password($value)
+    function password($value, $salt = '_encrypt')
     {
-        $value = sha1('blog_') . md5($value) . md5('_encrypt') . sha1($value);
+        $value = sha1('ul_' . $salt) . md5($value) . md5($salt) . sha1($value);
         return sha1($value);
     }
 }
