@@ -373,12 +373,18 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                     d.elemIdName = d.fieldAlias;
 
-                    if (typeof d.fieldAlias == 'string' && d.fieldAlias.indexOf('[') == 0) {
+                    if (typeof d.fieldAlias == 'string' ) {
 
-                        var fieldPlusArr = d.fieldAlias.replace('[').split(']');
+                        if(d.fieldAlias.indexOf('[') == 0){
 
-                        d.elemIdName = fieldPlusArr.join('-')
+                            var fieldPlusArr = d.fieldAlias.replace('[').split(']');
+    
+                            d.elemIdName = fieldPlusArr.join('-')
+                        }
+
+                        d.elemIdName = d.elemIdName.replace('.', '-');
                     }
+                    
 
                     if (d.defaultSearchValue.length > 0) {
                         if (d.searchValue.length == 0) {
@@ -714,7 +720,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             }
                         }
 
-                        
+
 
                     }
                 }
@@ -1073,28 +1079,28 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                         options.cols[0].forEach(col => {
                             if (col.field) {
-        
+
                                 exportFields[col.field] = col.title;
-        
+
                                 switch (col.fieldFormat) {
                                     case 'image':
                                         imageFields.push(col.field)
                                         break;
-                                
+
                                     case 'select':
                                         if (Object.keys(col.selectList).length > 0) {
                                             selectFields[col.field] = col.selectList;
                                         }
                                         break;
                                     case 'date':
-    
+
                                         dateFields.push(col.field)
                                         break;
-                                
+
                                     default:
                                         break;
                                 }
-        
+
                             }
                         });
 
