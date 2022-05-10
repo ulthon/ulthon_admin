@@ -959,6 +959,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 elemId = keyArr[0] + '-' + keyArr[1];
                             }
 
+                            elemId = elemId.replace('.', '-');
+
                             var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
