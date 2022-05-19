@@ -75,35 +75,55 @@ class DebugMysql  implements LogHandlerInterface
 
         $app_name = app('http')->getName() ?: '';
 
-        $controller_name = request()->controller();
-        $action_name = request()->action();
+        $controller_name = '';
+        $action_name = '';
 
         if (App::runningInConsole()) {
             $app_name = 'cli';
+        } else {
+
+            $controller_name = request()->controller();
+            $action_name = request()->action();
         }
 
         $create_time = time();
 
-
         $create_time_title = date('Y-m-d H:i:s', $create_time);
 
-        $log_key = uniqid();
+        $log_key = '';
+
+        if (defined('REUQEST_UID')) {
+            $log_key = REUQEST_UID;
+        } else {
+            $log_key = uniqid();
+        }
 
         foreach ($log as $log_level => $log_list) {
             foreach ($log_list as $key => $log_item) {
 
-                if (!is_string($log_item)) {
-                    $log_item = json_encode($log_item, JSON_UNESCAPED_UNICODE);
+                $log_content = $log_item;
+
+                if ($log_item instanceof \Throwable) {
+
+                    $log_content = [];
+
+                    $log_content['message'] = $log_item->getMessage();
+                    $log_content['line'] = $log_item->getLine();
+                    $log_content['file'] = $log_item->getFile();
+                }
+
+                if (!is_string($log_content)) {
+                    $log_content = json_encode($log_content, JSON_UNESCAPED_UNICODE);
                 }
                 $log_data = [
                     'level' => $log_level,
-                    'content' => $log_item,
+                    'content' => $log_content,
                     'create_time' => $create_time,
                     'create_time_title' => $create_time_title,
                     'uid' => $log_key,
                     'app_name' => $app_name,
                     'controller_name' => $controller_name,
-                    'action_name' => $action_name,
+                    'action_name' => $action_name
                 ];
 
                 if (!is_null($this->pdo)) {
