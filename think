@@ -6,5 +6,7 @@ namespace think;
 // 加载基础文件
 require __DIR__ . '/vendor/autoload.php';
 
+define('REUQEST_UID', uniqid());
+
 // 应用初始化
 (new App())->console->run();
