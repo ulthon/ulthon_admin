@@ -128,19 +128,22 @@ class DebugMysql  implements LogHandlerInterface
 
                 if (!is_null($this->pdo)) {
 
-                    foreach ($log_data as $key => &$value) {
-                        $value = str_replace('\'', '\\\'', $value);
+                    $prepare_name = [];
+                    foreach ($log_data as $key => $value) {
+                        $prepare_name[] = ':' . $key;
                     }
 
                     $data_keys = array_keys($log_data);
 
                     $data_keys_in_sql = join(',', $data_keys);
 
-                    $data_values_in_sql = join('\',\'', $log_data);
+                    $prepare_name_in_sql = join(',', $prepare_name);
 
-                    $sql = "INSERT INTO {$this->tableName} ($data_keys_in_sql)  VALUES ('$data_values_in_sql');";
+                    $sql = "INSERT INTO {$this->tableName} ($data_keys_in_sql)  VALUES ($prepare_name_in_sql);";
 
-                    $this->pdo->exec($sql);
+                    $stmt = $this->pdo->prepare($sql);
+
+                    $stmt->execute($log_data);
                 } else {
 
                     fputcsv($this->fileRescource, $log_data);
