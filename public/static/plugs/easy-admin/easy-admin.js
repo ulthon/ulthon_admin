@@ -18,8 +18,42 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         upload_url: 'ajax/upload',
-        upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar',
+        upload_exts: '',
     };
+
+
+    var extGroup = {
+        // 图片扩展名数组
+        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp'],
+        // word扩展名数组
+        'word': ['doc', 'docx'],
+        // excel扩展名数组
+        'excel': ['xls', 'xlsx'],
+        // ppt扩展名数组
+        'ppt': ['ppt', 'pptx'],
+        // pdf扩展名数组
+        'pdf': ['pdf'],
+        // 压缩文件扩展名数组
+        'zip': ['zip', 'rar', '7z'],
+        // 文本文件扩展名数组
+        'txt': ['txt'],
+        // 音乐文件扩展名数组
+        'music': ['mp3', 'wma', 'wav', 'mid', 'm4a'],
+        // 视频文件扩展名数组
+        'video': ['mp4', 'avi', 'wmv', '3gp', 'flv'],
+        // visio扩展名数组
+        'visio': ['vsd', 'vsdx'],
+    }
+
+    for (const extGroupName in extGroup) {
+        if (Object.hasOwnProperty.call(extGroup, extGroupName)) {
+            const extGroupList = extGroup[extGroupName];
+            if (init.upload_exts.length > 0) {
+                init.upload_exts += '|';
+            }
+            init.upload_exts += extGroupList.join('|')
+        }
+    }
 
     var admin = {
         config: {
@@ -373,18 +407,18 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                     d.elemIdName = d.fieldAlias;
 
-                    if (typeof d.fieldAlias == 'string' ) {
+                    if (typeof d.fieldAlias == 'string') {
 
-                        if(d.fieldAlias.indexOf('[') == 0){
+                        if (d.fieldAlias.indexOf('[') == 0) {
 
                             var fieldPlusArr = d.fieldAlias.replace('[').split(']');
-    
+
                             d.elemIdName = fieldPlusArr.join('-')
                         }
 
                         d.elemIdName = d.elemIdName.replace('.', '-');
                     }
-                    
+
 
                     if (d.defaultSearchValue.length > 0) {
                         if (d.searchValue.length == 0) {
@@ -1659,7 +1693,32 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                     var parant = $(this).parent('div');
                                     var liHtml = '';
                                     $.each(urlArray, function (i, v) {
-                                        liHtml += '<li><a><img src="' + v + '" data-image  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+
+                                        // 获取链接扩展名
+                                        var ext = v.substr(v.lastIndexOf('.') + 1);
+
+                                        if (extGroup.image.indexOf(ext) != -1) {
+                                            // 是图片
+                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-image  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+
+                                        } else {
+                                            // 不是图片
+                                            // 遍历extGroup数组找到扩展名所在的索引
+
+                                            for (const extGroupName in extGroup) {
+                                                if (Object.hasOwnProperty.call(extGroup, extGroupName)) {
+                                                    const extGroupList = extGroup[extGroupName];
+                                                    if (extGroupList.indexOf(ext) != -1) {
+                                                        uploadIcon = extGroupName;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            liHtml += '<li><a title="点击打开文件" target="_blank" href="' + v + '" ><img src="/static/admin/images/upload-icons/' + uploadIcon + '.png"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+
+                                        }
+
                                     });
                                     parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
                                 }
