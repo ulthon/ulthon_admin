@@ -43,6 +43,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
         'video': ['mp4', 'avi', 'wmv', '3gp', 'flv'],
         // visio扩展名数组
         'visio': ['vsd', 'vsdx'],
+        'file': []
     }
 
     for (const extGroupName in extGroup) {
@@ -852,18 +853,25 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             filePreview: function (data) {
-
-                if (!data.mime_type) {
-                    return admin.table.url(data);
-                }
-
+                var option = data.LAY_COL;
                 var mimeName = data.mime_type.split('/')[0];
+                var field = option.field;
 
                 if (mimeName == 'image') {
                     return admin.table.image(data);
+                } else {
+
+                    try {
+                        var value = eval("data." + field);
+                    } catch (e) {
+                        var value = undefined;
+                    }
+
+                    var groupName = admin.getExtGroupName(data.file_ext);
+
+                    return '<a href="' + value + '"><img style="height:40px;width:40px" src="/static/admin/images/upload-icons/' + groupName + '.png" /></a>'
                 }
 
-                return admin.table.url(data);
             },
             image: function (data) {
                 var option = data.LAY_COL;
@@ -893,12 +901,32 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             url: function (data) {
                 var option = data.LAY_COL;
                 var field = option.field;
+                var urlNameField = option.urlNameField || '';
+
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
                     var value = undefined;
                 }
-                return '<a class="layuimini-table-url" href="' + value + '" target="_blank" class="label bg-green">' + value + '</a>';
+
+                var urlName = value;
+
+                if (urlNameField != '') {
+                    try {
+                        var urlNameFieldType = typeof urlNameField;
+
+                        if (urlNameFieldType == 'string') {
+                            urlName = data[urlNameField]
+                        } else if (urlNameFieldType == 'function') {
+                            urlName = urlNameField(data)
+                        }
+
+                    } catch (e) {
+
+                    }
+                }
+
+                return '<a class="layuimini-table-url" href="' + value + '" target="_blank" class="label bg-green">' + urlName + '</a>';
             },
             switch: function (data) {
                 var option = data.LAY_COL;
@@ -1705,15 +1733,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                             // 不是图片
                                             // 遍历extGroup数组找到扩展名所在的索引
 
-                                            for (const extGroupName in extGroup) {
-                                                if (Object.hasOwnProperty.call(extGroup, extGroupName)) {
-                                                    const extGroupList = extGroup[extGroupName];
-                                                    if (extGroupList.indexOf(ext) != -1) {
-                                                        uploadIcon = extGroupName;
-                                                        break;
-                                                    }
-                                                }
-                                            }
+                                            uploadIcon = admin.getExtGroupName(ext);
 
                                             liHtml += '<li><a title="点击打开文件" target="_blank" href="' + v + '" ><img src="/static/admin/images/upload-icons/' + uploadIcon + '.png"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
 
@@ -1923,6 +1943,20 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
             return this.dataBrage[name];
 
+        },
+        getExtGroupName(ext) {
+            var groupName = 'file';
+            for (const extGroupName in extGroup) {
+                if (Object.hasOwnProperty.call(extGroup, extGroupName)) {
+                    const extGroupList = extGroup[extGroupName];
+                    if (extGroupList.indexOf(ext) != -1) {
+                        groupName = extGroupName;
+                        break;
+                    }
+                }
+            }
+
+            return groupName;
         }
 
     };
