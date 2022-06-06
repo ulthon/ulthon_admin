@@ -66,16 +66,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
         headers: function () {
             return { 'X-CSRF-TOKEN': window.CONFIG.CSRF_TOKEN };
         },
-        //js版empty，判断变量是否为空
-        empty: function (r) {
-            var n, t, e, f = [void 0, null, !1, 0, "", "0"];
-            for (t = 0, e = f.length; t < e; t++) if (r === f[t]) return !0;
-            if ("object" == typeof r) {
-                for (n in r) if (r.hasOwnProperty(n)) return !1;
-                return !0
-            }
-            return !1
-        },
+
         checkAuth: function (node, elem) {
             if (CONFIG.IS_SUPER_ADMIN) {
                 return true;
@@ -730,6 +721,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             }
                         }
 
+                        // 如果未定义则默认使用value
+                        if (val.templet === undefined) {
+                            cols[i][index]['templet'] = admin.table.value;
+                        }
+
                         if (val.fieldFormat == undefined) {
 
                             switch (val.templet) {
@@ -840,12 +836,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             list: function (data) {
                 var option = data.LAY_COL;
                 option.selectList = option.selectList || {};
-                var field = option.field;
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+
+                var value = admin.table.returnColumnValue(data);
                 if (option.selectList[value] === undefined || option.selectList[value] === '' || option.selectList[value] === null) {
                     return value;
                 } else {
@@ -853,19 +845,13 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             filePreview: function (data) {
-                var option = data.LAY_COL;
                 var mimeName = data.mime_type.split('/')[0];
-                var field = option.field;
 
                 if (mimeName == 'image') {
                     return admin.table.image(data);
                 } else {
 
-                    try {
-                        var value = eval("data." + field);
-                    } catch (e) {
-                        var value = undefined;
-                    }
+                    var value = admin.table.returnColumnValue(data);
 
                     var groupName = admin.getExtGroupName(data.file_ext);
 
@@ -880,13 +866,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 option.imageSplit = option.imageSplit || '|';
                 option.imageJoin = option.imageJoin || '<br>';
                 option.title = option.title || option.field;
-                var field = option.field,
-                    title = data[option.title];
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var title = data[option.title];
+                var value = admin.table.returnColumnValue(data);
                 if (value === undefined || value === null) {
                     return '<img style="max-width: ' + option.imageWidth + 'px; height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
                 } else {
@@ -900,15 +881,10 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             },
             url: function (data) {
                 var option = data.LAY_COL;
-                var field = option.field;
+
                 var urlNameField = option.urlNameField || '';
 
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
-
+                var value = admin.table.returnColumnValue(data);
                 var urlName = value;
 
                 if (urlNameField != '') {
@@ -930,79 +906,61 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             },
             switch: function (data) {
                 var option = data.LAY_COL;
-                var field = option.field;
                 option.filter = option.filter || option.field || null;
                 option.checked = option.checked || 1;
                 option.tips = option.tips || '开|关';
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var value = admin.table.returnColumnValue(data);
                 var checked = value === option.checked ? 'checked' : '';
                 return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
             },
             price: function (data) {
-                var option = data.LAY_COL;
-                var field = option.field;
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var value = admin.table.returnColumnValue(data);
                 return '<span>￥' + value + '</span>';
             },
             percent: function (data) {
-                var option = data.LAY_COL;
-                var field = option.field;
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var value = admin.table.returnColumnValue(data);
                 return '<span>' + value + '%</span>';
             },
             icon: function (data) {
-                var option = data.LAY_COL;
-                var field = option.field;
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var value = admin.table.returnColumnValue(data);
                 return '<i class="' + value + '"></i>';
             },
             text: function (data) {
-                var option = data.LAY_COL;
-                var field = option.field;
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var value = admin.table.returnColumnValue(data);
                 return '<span class="line-limit-length">' + value + '</span>';
             },
             value: function (data) {
-                var option = data.LAY_COL;
-                var field = option.field;
-                try {
-                    var value = eval("data." + field);
-                } catch (e) {
-                    var value = undefined;
-                }
+                var value = admin.table.returnColumnValue(data);
                 return '<span>' + value + '</span>';
             },
             //时间戳转日期
             date: function (data) {
                 var option = data.LAY_COL;
-                var field = option.field, value = '';
-                try {
-                    value = eval("data." + field);
-                } catch (e) { }
+
+                value = admin.table.returnColumnValue(data);
                 if (!admin.empty(value)) {
                     value = util.toDateString(value * 1000, option.format || 'yyyy-MM-dd HH:mm:ss');
                 }
                 return '<span>' + value + '</span>';
+            },
+
+            // 统一列返回数据处理
+            returnColumnValue(data) {
+                var option = data.LAY_COL;
+                var field = option.field;
+                var defaultValue = option.defaultValue;
+                var value = defaultValue;
+                try {
+                    value = eval("data." + field);
+                } catch (e) {
+                    value = undefined;
+                }
+                
+                if (defaultValue != undefined && admin.empty(value)) {
+                    value = defaultValue;
+                }
+
+                return value;
             },
             listenTableSearch: function (tableId) {
                 form.on('submit(' + tableId + '_filter)', function (data) {
@@ -1957,7 +1915,17 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             }
 
             return groupName;
-        }
+        },
+        //js版empty，判断变量是否为空
+        empty: function (r) {
+            var n, t, e, f = [void 0, null, !1, 0, "", "0"];
+            for (t = 0, e = f.length; t < e; t++) if (r === f[t]) return !0;
+            if ("object" == typeof r) {
+                for (n in r) if (r.hasOwnProperty(n)) return !1;
+                return !0
+            }
+            return !1
+        },
 
     };
     return admin;
