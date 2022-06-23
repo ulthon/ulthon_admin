@@ -101,23 +101,13 @@ class DebugMysql  implements LogHandlerInterface
         foreach ($log as $log_level => $log_list) {
             foreach ($log_list as $key => $log_item) {
 
-                $log_content = $log_item;
-
-                if ($log_item instanceof \Throwable) {
-
-                    $log_content = [];
-
-                    $log_content['message'] = $log_item->getMessage();
-                    $log_content['line'] = $log_item->getLine();
-                    $log_content['file'] = $log_item->getFile();
+                if (!is_string($log_item)) {
+                    $log_item = print_r($log_item, true);
                 }
-
-                if (!is_string($log_content)) {
-                    $log_content = json_encode($log_content, JSON_UNESCAPED_UNICODE);
-                }
+                
                 $log_data = [
                     'level' => $log_level,
-                    'content' => $log_content,
+                    'content' => $log_item,
                     'create_time' => $create_time,
                     'create_time_title' => $create_time_title,
                     'uid' => $log_key,
