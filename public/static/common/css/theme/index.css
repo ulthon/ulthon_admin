@@ -214,6 +214,9 @@
   background-color: rgba(62, 251, 251, 0.05) !important;
   border-color: rgb(6, 216, 215);
 }
+.elem-style-sicfi .layuimini-tab .layui-tab-title span {
+  color: rgba(62, 251, 251, 0.5);
+}
 .elem-style-sicfi .layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover,
 .elem-style-sicfi .layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {
   color: rgb(126, 252, 246) !important;
@@ -357,6 +360,9 @@
 .elem-style-sicfi .layuimini-menu-left-zoom > ul {
   background-color: rgb(2, 17, 20) !important;
 }
+.elem-style-sicfi .layui-side {
+  border-right: 1px solid rgb(126, 252, 246);
+}
 .elem-style-sicfi .layui-bg-blue {
   background-color: #0000ff !important;
 }
@@ -455,7 +461,7 @@
 .elem-style-sicfi .layui-tab-title,
 .elem-style-sicfi .layui-tab-title .layui-this::after,
 .elem-style-sicfi .layui-textarea {
-  border-color: rgb(126, 252, 246);
+  border-color: rgb(126, 252, 246) !important;
 }
 .elem-style-sicfi .form-search .layui-input-inline input,
 .elem-style-sicfi .form-search .layui-input-inline select {
@@ -471,5 +477,34 @@
   margin-bottom: 12px;
 }
 .elem-style-sicfi .layuimini-upload .layuimini-upload-btn {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-layer-content {
+  border: 1px solid rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-layer-easy .layui-layer-title {
+  background-color: rgb(0, 125, 124) !important;
+  color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .tableSelect {
+  background-color: rgb(2, 17, 20) !important;
+  border-color: rgb(6, 216, 215) !important;
+}
+.elem-style-sicfi .layui-table td,
+.elem-style-sicfi .layui-table th,
+.elem-style-sicfi .layui-table-col-set,
+.elem-style-sicfi .layui-table-fixed-r,
+.elem-style-sicfi .layui-table-grid-down,
+.elem-style-sicfi .layui-table-header,
+.elem-style-sicfi .layui-table-page,
+.elem-style-sicfi .layui-table-tips-main,
+.elem-style-sicfi .layui-table-tool,
+.elem-style-sicfi .layui-table-total,
+.elem-style-sicfi .layui-table-view,
+.elem-style-sicfi .layui-table[lay-skin=line],
+.elem-style-sicfi .layui-table[lay-skin=row] {
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-table tbody tr:hover, .elem-style-sicfi .layui-table thead tr, .elem-style-sicfi .layui-table-click, .elem-style-sicfi .layui-table-header, .elem-style-sicfi .layui-table-hover, .elem-style-sicfi .layui-table-mend, .elem-style-sicfi .layui-table-patch, .elem-style-sicfi .layui-table-tool, .elem-style-sicfi .layui-table-total, .elem-style-sicfi .layui-table-total tr {
   background-color: rgb(2, 17, 20);
 }

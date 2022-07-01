@@ -5,6 +5,8 @@ $main-color     :rgb(126, 252, 246);
 // 通常用于边框
 $less-main-color:rgb(6, 216, 215);
 
+$plus-main-color:rgb(0, 125, 124);
+
 // 通常用于激活状态,通常跟背景色搭配
 $cover-color  :rgba(62, 251, 251, 0.05);
 // 更强的激活状态,适合做选项操作时使用
@@ -43,7 +45,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     color           : rgb(126, 252, 246);
     text-shadow     : rgb(126, 252, 246) 0px 0px 1px;
     background-color: rgb(126, 252, 246);
-    
+
 
     &::before {
         content         : '';
@@ -104,25 +106,26 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
         color           : rgb(255, 255, 153);
         background-color: rgb(255, 255, 153);
         border          : unset;
-        
+
         &:hover::after {
             background-color: rgba(255, 255, 153, 0.2);
         }
-        
+
     }
-    
-    &.layui-btn-primary{
-        border          : unset;
+
+    &.layui-btn-primary {
+        border: unset;
     }
-    
+
     &.layui-btn-normal {
         color           : $black-color;
         background-color: $main-color;
         border          : unset;
-        
-        &::before{
+
+        &::before {
             background-color: $main-color;
         }
+
         &:hover::after {
             background-color: $main-color;
         }
@@ -222,6 +225,10 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     background-color: $cover-color !important;
     border-color    : $less-main-color;
 
+}
+
+.layuimini-tab .layui-tab-title span {
+    color: $active-color;
 }
 
 .layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover,
@@ -413,6 +420,11 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-side.layui-bg-black>.layuimini-menu-left>ul,
 .layuimini-menu-left-zoom>ul {
     background-color: $black-color !important;
+
+}
+
+.layui-side {
+    border-right: 1px solid $main-color;
 }
 
 .layui-bg-blue {
@@ -543,7 +555,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-tab-title,
 .layui-tab-title .layui-this::after,
 .layui-textarea {
-    border-color: $main-color;
+    border-color: $main-color !important;
 }
 
 .form-search .layui-input-inline input,
@@ -559,10 +571,44 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     color: $main-color;
 }
 
-.layui-form-item{
+.layui-form-item {
     margin-bottom: 12px;
 }
 
-.layuimini-upload .layuimini-upload-btn{
+.layuimini-upload .layuimini-upload-btn {
+    background-color: $black-color;
+}
+
+.layui-layer-content {
+    border: 1px solid $main-color;
+}
+
+.layui-layer-easy .layui-layer-title {
+    background-color: $plus-main-color !important;
+    color           : $main-color !important;
+}
+
+.tableSelect {
+    background-color: $black-color !important;
+    border-color    : $less-main-color !important;
+}
+
+.layui-table td,
+.layui-table th,
+.layui-table-col-set,
+.layui-table-fixed-r,
+.layui-table-grid-down,
+.layui-table-header,
+.layui-table-page,
+.layui-table-tips-main,
+.layui-table-tool,
+.layui-table-total,
+.layui-table-view,
+.layui-table[lay-skin="line"],
+.layui-table[lay-skin="row"] {
+    border-color: $less-main-color;
+}
+
+.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr{
     background-color: $black-color;
 }
