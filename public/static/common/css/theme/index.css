@@ -1,0 +1,49 @@
+.elem-style-demo .layui-btn {
+  color: #808185 !important;
+  background-color: #cde7ff !important;
+  border: 1px solid #d3dde6 !important;
+}
+.elem-style-demo .layui-layer-easy .layui-layer-title {
+  background-color: rgb(215, 215, 215) !important;
+  color: #6C6E71 !important;
+}
+.elem-style-demo .layui-layer-easy .layui-layer-setwin > a::after {
+  color: #6C6E71 !important;
+}
+.elem-style-demo .layui-layer-easy .layui-layer-btn .layui-layer-btn0 {
+  color: #808185 !important;
+  background-color: #cde7ff !important;
+  border: 1px solid #d3dde6 !important;
+}
+.elem-style-demo .layuimini-tab .layui-tab-title .layuimini-tab-active {
+  display: none !important;
+}
+.elem-style-demo .layuimini-tab .layui-tab-title li {
+  padding: 0 5px !important;
+  font-size: 12px;
+  border-width: 1px 1px 1px 0 !important;
+  border-style: solid !important;
+}
+.elem-style-demo .layuimini-tab .layui-tab-title li.layui-this {
+  color: #fff !important;
+  border-color: rgb(0, 0, 255) !important;
+  background: rgb(90, 173, 255) !important;
+}
+.elem-style-demo .layuimini-tab .layui-tab-title .layui-this span {
+  color: #fff !important;
+}
+.elem-style-demo .layuimini-tab > .layui-tab-title li,
+.elem-style-demo .layuimini-tab > .close-box li {
+  line-height: 27px !important;
+}
+.elem-style-demo .layuimini-tab > .layui-tab-title,
+.elem-style-demo .layuimini-tab > .close-box {
+  height: 28px !important;
+}
+.elem-style-demo .layuimini-tab .layui-tab-control > li {
+  height: 28px !important;
+  line-height: 28px !important;
+}
+.elem-style-demo .layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
+  background-color: #6C6E71 !important;
+}

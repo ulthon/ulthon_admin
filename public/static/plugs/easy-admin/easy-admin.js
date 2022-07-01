@@ -1,4 +1,17 @@
-define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefined) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSelect, undefined, miniTheme) {
+
+    window.onInitElemStyle = function () {
+        miniTheme.renderElemStyle()
+
+        $('iframe').each(function(index,iframe){
+            
+            if(typeof iframe.contentWindow.onInitElemStyle == "function"){
+                iframe.contentWindow.onInitElemStyle();
+            }
+        })
+
+    }
+    window.onInitElemStyle();
 
     var form = layui.form,
         layer = layui.layer,
@@ -955,7 +968,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 } catch (e) {
                     value = undefined;
                 }
-                
+
                 if (defaultValue != undefined && admin.empty(value)) {
                     value = defaultValue;
                 }
