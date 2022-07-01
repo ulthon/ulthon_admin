@@ -959,6 +959,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
 
             // 统一列返回数据处理
             returnColumnValue(data) {
+                if(!data.LAY_COL){
+                    return '';
+                }
                 var option = data.LAY_COL;
                 var field = option.field;
                 var defaultValue = option.defaultValue;

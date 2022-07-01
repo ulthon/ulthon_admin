@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 178 38" preserveAspectRatio="none">
+    <g>
+        <g>
+            <path data-type="shape" d="M0,0 L0,34 L159,34 L174,19 L174,0"></path>
+        </g>
+        <path data-type="polyline" d="M0,34 L159,34 L174,19"></path>
+    </g>
+</svg>

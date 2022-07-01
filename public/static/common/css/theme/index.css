@@ -47,3 +47,178 @@
 .elem-style-demo .layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
   background-color: #6C6E71 !important;
 }
+
+.elem-style-sicfi {
+  background-color: rgb(2, 17, 20);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-main {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layuimini-container .layui-table-tool {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-btn {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+  padding-right: 10px;
+  position: relative;
+  background-color: transparent;
+  border: unset;
+  color: rgb(126, 252, 246);
+  text-shadow: rgb(126, 252, 246) 0px 0px 1px;
+  background-color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+  width: 100%;
+  height: 100%;
+  left: -0.5px;
+  top: -0.5px;
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-btn:hover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+  width: 100%;
+  height: 100%;
+  left: -0.5px;
+  top: -0.5px;
+  background-color: rgba(126, 252, 246, 0.2);
+}
+.elem-style-sicfi .layui-btn.layui-btn-success {
+  text-shadow: rgb(0, 255, 0) 0px 0px 1px;
+  color: rgb(0, 255, 0);
+  background-color: rgb(0, 255, 0);
+}
+.elem-style-sicfi .layui-btn.layui-btn-success:hover::after {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+.elem-style-sicfi .layui-btn.layui-btn-danger {
+  text-shadow: rgb(255, 0, 0) 0px 0px 1px;
+  color: rgb(255, 0, 0);
+  background-color: rgb(255, 0, 0);
+}
+.elem-style-sicfi .layui-btn.layui-btn-danger:hover::after {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+.elem-style-sicfi .layui-btn.layuimini-btn-primary {
+  text-shadow: rgb(255, 255, 153) 0px 0px 1px;
+  color: rgb(255, 255, 153);
+  background-color: rgb(255, 255, 153);
+}
+.elem-style-sicfi .layui-btn.layuimini-btn-primary:hover::after {
+  background-color: rgba(255, 255, 153, 0.2);
+}
+.elem-style-sicfi .layui-table {
+  background: rgba(126, 252, 246, 0.05);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-table thead tr {
+  background-color: rgba(126, 252, 246, 0.15);
+}
+.elem-style-sicfi .layui-table td {
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-table-header {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layuimini-container .layui-table-box {
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layuimini-container .layui-table-box .layui-table-header th {
+  color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-table-tool .layui-inline[lay-event] {
+  color: rgb(126, 252, 246);
+  border-color: rgb(126, 252, 246);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+}
+.elem-style-sicfi .layui-table tbody tr:hover {
+  background-color: rgba(126, 252, 246, 0.1);
+}
+.elem-style-sicfi .layuimini-main {
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-table-header {
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-layer {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .color-content > ul > li > a > div > span:nth-child(2) {
+  background-color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-color .elem-content li {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+}
+.elem-style-sicfi .layuimini-color .elem-content li.layui-this {
+  background-color: rgb(126, 252, 246);
+  color: rgb(2, 17, 20) !important;
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layuimini-color .more-menu-item {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-color .more-menu-item:hover {
+  background-color: rgba(62, 251, 251, 0.05);
+}
+.elem-style-sicfi .layui-layout-admin .layui-header {
+  background-color: rgba(62, 251, 251, 0.05) !important;
+}
+.elem-style-sicfi .layuimini-tab .layui-tab-title {
+  background-color: rgba(62, 251, 251, 0.05) !important;
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover,
+.elem-style-sicfi .layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {
+  color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
+  color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-layout-admin .layui-header .layuimini-header-content > ul > .layui-nav-item.layui-this,
+.elem-style-sicfi .layuimini-tool i:hover {
+  background-color: rgba(62, 251, 251, 0.05) !important;
+}
+.elem-style-sicfi .layuimini-tab .layui-tab-control > li {
+  background-color: rgb(2, 17, 20);
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layuimini-tab .layui-tab-title li {
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-flow-more a *,
+.elem-style-sicfi .layui-laypage input,
+.elem-style-sicfi .layui-table-view select[lay-ignore] {
+  border-color: rgb(6, 216, 215);
+  background-color: rgb(2, 17, 20);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-laypage button,
+.elem-style-sicfi .layui-laypage input {
+  border-color: rgb(6, 216, 215);
+  background-color: rgb(2, 17, 20);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-container .layui-form-switch {
+  border-color: rgb(6, 216, 215) !important;
+  background-color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
+  background-color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-laypage .layui-laypage-curr em {
+  color: rgb(2, 17, 20) !important;
+}

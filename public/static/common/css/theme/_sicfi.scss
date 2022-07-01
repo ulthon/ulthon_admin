@@ -1,0 +1,234 @@
+& {
+    background-color: rgb(2, 17, 20);
+    color           : rgb(126, 252, 246);
+}
+
+// 通常用于背景色
+$black-color    :rgb(2, 17, 20);
+// 通常用于字体颜色
+$main-color     :rgb(126, 252, 246);
+// 通常用于边框
+$less-main-color:rgb(6, 216, 215);
+
+// 通常用于激活状态,通常跟背景色搭配
+$cover-color :rgba(62, 251, 251, 0.05);
+
+
+.layuimini-main {
+    background-color: $black-color;
+}
+
+.layuimini-container .layui-table-tool {
+    background-color: $black-color;
+}
+
+$box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+
+.layui-btn {
+    clip-path       : $box-shape;
+    padding-right   : 10px;
+    position        : relative;
+    background-color: transparent;
+    border          : unset;
+    color           : rgb(126, 252, 246);
+    text-shadow     : rgb(126, 252, 246) 0px 0px 1px;
+    background-color: rgb(126, 252, 246);
+
+    &::before {
+        content         : '';
+        display         : block;
+        position        : absolute;
+        z-index         : -1;
+        clip-path       : $box-shape;
+        width           : 100%;
+        height          : 100%;
+        left            : -0.5px;
+        top             : -0.5px;
+        background-color: $black-color;
+    }
+
+    &:hover::after {
+        content         : '';
+        display         : block;
+        position        : absolute;
+        z-index         : -1;
+        clip-path       : $box-shape;
+        width           : 100%;
+        height          : 100%;
+        left            : -0.5px;
+        top             : -0.5px;
+        background-color: rgba(126, 252, 246, 0.2);
+    }
+
+    &.layui-btn-disabled {
+        &::after {
+            // todo:实现按钮禁用样式
+        }
+    }
+
+    &.layui-btn-success {
+        text-shadow     : rgb(0, 255, 0) 0px 0px 1px;
+        color           : rgb(0, 255, 0);
+        background-color: rgba(0, 255, 0);
+
+        &:hover::after {
+            background-color: rgba(0, 255, 0, 0.2);
+        }
+    }
+
+    &.layui-btn-danger {
+        text-shadow     : rgb(255, 0, 0) 0px 0px 1px;
+        color           : rgb(255, 0, 0);
+        background-color: rgb(255, 0, 0);
+
+        &:hover::after {
+            background-color: rgba(255, 0, 0, 0.2);
+        }
+    }
+
+    &.layuimini-btn-primary {
+        text-shadow     : rgb(255, 255, 153) 0px 0px 1px;
+        color           : rgb(255, 255, 153);
+        background-color: rgb(255, 255, 153);
+
+        &:hover::after {
+            background-color: rgba(255, 255, 153, 0.2);
+        }
+
+    }
+}
+
+.layui-table {
+    background: rgba(126, 252, 246, 0.05);
+    color     : $main-color;
+
+
+    thead tr {
+        background-color: rgba(126, 252, 246, 0.15);
+    }
+
+    td {
+        border-color: $less-main-color;
+    }
+
+}
+
+.layui-table-header {
+    background-color: $black-color;
+}
+
+.layuimini-container .layui-table-box {
+    border-color: $less-main-color;
+}
+
+.layuimini-container .layui-table-box .layui-table-header th {
+    color: $main-color !important;
+}
+
+.layui-table-tool .layui-inline[lay-event] {
+    color       : $main-color;
+    border-color: $main-color;
+    clip-path   : $box-shape;
+}
+
+.layui-table tbody tr:hover {
+    background-color: rgba(126, 252, 246, 0.1);
+}
+
+.layuimini-main {
+    border-color: $less-main-color;
+}
+
+.layui-table-header {
+    border-color: $less-main-color;
+}
+
+.layui-layer {
+    background-color: $black-color;
+}
+
+.color-content>ul>li>a>div>span:nth-child(2) {
+    background-color: $black-color !important;
+}
+
+.layuimini-color .elem-content li {
+    clip-path: $box-shape;
+}
+
+.layuimini-color .elem-content li.layui-this {
+    background-color: $main-color;
+    color           : $black-color !important;
+    border-color    : $less-main-color;
+}
+
+.layuimini-color .more-menu-item {
+    color: $main-color;
+
+    &:hover {
+        background-color: rgba(62, 251, 251, 0.05);
+    }
+}
+
+.layui-layout-admin .layui-header {
+    background-color: $cover-color !important;
+}
+
+.layuimini-tab .layui-tab-title {
+    background-color: $cover-color !important;
+    border-color    : $less-main-color;
+
+}
+
+.layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover,
+.layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {
+    color: $main-color !important;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
+    color: $main-color !important;
+}
+
+.layui-layout-admin .layui-header .layuimini-header-content>ul>.layui-nav-item.layui-this,
+.layuimini-tool i:hover {
+    background-color: $cover-color !important;
+}
+
+.layuimini-tab .layui-tab-control>li {
+    background-color: $black-color;
+    border-color    : $less-main-color;
+}
+
+.layuimini-tab .layui-tab-title li {
+    border-color: $less-main-color;
+}
+
+.layui-flow-more a *,
+.layui-laypage input,
+.layui-table-view select[lay-ignore] {
+    border-color    : $less-main-color;
+    background-color: $black-color;
+    color           : $main-color;
+}
+
+.layui-laypage button,
+.layui-laypage input {
+    border-color    : $less-main-color;
+    background-color: $black-color;
+    color           : $main-color;
+
+}
+
+.layuimini-container .layui-form-switch {
+    border-color: $less-main-color !important;
+
+    background-color: $black-color !important;
+
+}
+
+.layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: $main-color !important;
+}
+
+.layui-laypage .layui-laypage-curr em{
+    color           : $black-color !important;
+}
