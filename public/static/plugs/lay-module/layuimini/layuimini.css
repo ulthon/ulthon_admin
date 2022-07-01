@@ -722,24 +722,8 @@
     overflow               : hidden;
     width                  : auto;
     height                 : auto;
-    line-height            : normal;
-    border                 : none;
-    display                : inline-block;
-    margin-top             : -6px !important;
-}
 
-.layuimini-menu-left .layui-nav-child .layui-nav-more {
-    margin-top: -6px !important;
-}
-
-.layuimini-menu-left .layui-nav .layui-nav-mored,
-.layuimini-menu-left .layui-nav-itemed>a .layui-nav-more {
-    margin-top: -9px !important;
-}
-
-.layuimini-menu-left-zoom.layui-nav .layui-nav-mored,
-.layuimini-menu-left-zoom.layui-nav-itemed>a .layui-nav-more {
-    margin-top: -9px !important;
+    border: none;
 }
 
 .layuimini-menu-left .layui-nav-more:before,
@@ -769,7 +753,7 @@
 
 /**修复左侧菜单字体不对齐的问题*/
 .layuimini-menu-left .layui-nav-item a .fa,
-.layuimini-menu-left .layui-nav-item a .layui-icon {
+.layuimini-menu-left .layui-nav-item a .layui-icon:first-child {
     width: 20px;
 }
 

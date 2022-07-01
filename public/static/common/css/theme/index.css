@@ -55,6 +55,9 @@
 .elem-style-sicfi .layuimini-main {
   background-color: rgb(2, 17, 20);
 }
+.elem-style-sicfi .layuimini-container {
+  background-color: rgb(2, 17, 20);
+}
 .elem-style-sicfi .layuimini-container .layui-table-tool {
   background-color: rgb(2, 17, 20);
 }
@@ -64,7 +67,7 @@
   padding-right: 10px;
   position: relative;
   background-color: transparent;
-  border: unset;
+  border: 1px solid;
   color: rgb(126, 252, 246);
   text-shadow: rgb(126, 252, 246) 0px 0px 1px;
   background-color: rgb(126, 252, 246);
@@ -99,6 +102,7 @@
   text-shadow: rgb(0, 255, 0) 0px 0px 1px;
   color: rgb(0, 255, 0);
   background-color: rgb(0, 255, 0);
+  border: unset;
 }
 .elem-style-sicfi .layui-btn.layui-btn-success:hover::after {
   background-color: rgba(0, 255, 0, 0.2);
@@ -107,6 +111,7 @@
   text-shadow: rgb(255, 0, 0) 0px 0px 1px;
   color: rgb(255, 0, 0);
   background-color: rgb(255, 0, 0);
+  border: unset;
 }
 .elem-style-sicfi .layui-btn.layui-btn-danger:hover::after {
   background-color: rgba(255, 0, 0, 0.2);
@@ -115,16 +120,31 @@
   text-shadow: rgb(255, 255, 153) 0px 0px 1px;
   color: rgb(255, 255, 153);
   background-color: rgb(255, 255, 153);
+  border: unset;
 }
 .elem-style-sicfi .layui-btn.layuimini-btn-primary:hover::after {
   background-color: rgba(255, 255, 153, 0.2);
 }
+.elem-style-sicfi .layui-btn.layui-btn-primary {
+  border: unset;
+}
+.elem-style-sicfi .layui-btn.layui-btn-normal {
+  color: rgb(2, 17, 20);
+  background-color: rgb(126, 252, 246);
+  border: unset;
+}
+.elem-style-sicfi .layui-btn.layui-btn-normal::before {
+  background-color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-btn.layui-btn-normal:hover::after {
+  background-color: rgb(126, 252, 246);
+}
 .elem-style-sicfi .layui-table {
-  background: rgba(126, 252, 246, 0.05);
+  background: rgb(2, 17, 20);
   color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layui-table thead tr {
-  background-color: rgba(126, 252, 246, 0.15);
+.elem-style-sicfi .layui-table tr {
+  background-color: rgba(62, 251, 251, 0.05);
 }
 .elem-style-sicfi .layui-table td {
   border-color: rgb(6, 216, 215);
@@ -140,9 +160,22 @@
 }
 .elem-style-sicfi .layui-table-tool .layui-inline[lay-event] {
   color: rgb(126, 252, 246);
+  border: none;
+  position: relative;
+}
+.elem-style-sicfi .layui-table-tool .layui-inline[lay-event]::after {
   border-color: rgb(126, 252, 246);
+  border-width: 1px;
+  border-style: solid;
   -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
           clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+  content: "";
+  display: block;
 }
 .elem-style-sicfi .layui-table tbody tr:hover {
   background-color: rgba(126, 252, 246, 0.1);
@@ -221,4 +254,222 @@
 }
 .elem-style-sicfi .layui-laypage .layui-laypage-curr em {
   color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-tab .layui-tab-title .layui-this .layuimini-tab-active {
+  background-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-table-view .layui-form-checkbox.layui-form-checked[lay-skin=primary] i {
+  border-color: rgb(126, 252, 246);
+  background-color: rgb(126, 252, 246);
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-table-view .layui-form-checkbox[lay-skin=primary] i {
+  background-color: rgba(62, 251, 251, 0.05);
+}
+.elem-style-sicfi .layui-table-init {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .box-border-line, .elem-style-sicfi .layui-card, .elem-style-sicfi .table-search-fieldset .layui-form-item:not(:last-child) {
+  position: relative;
+  border: 1px solid rgb(6, 216, 215);
+  border-width: 1px;
+}
+.elem-style-sicfi .box-border-line::before, .elem-style-sicfi .layui-card::before, .elem-style-sicfi .table-search-fieldset .layui-form-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  transition: all 0.2s;
+  border: 1px solid rgb(6, 216, 215);
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+  pointer-events: none;
+}
+.elem-style-sicfi .box-border-line::after, .elem-style-sicfi .layui-card::after, .elem-style-sicfi .table-search-fieldset .layui-form-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  transition: all 0.2s;
+  border: 1px solid rgb(6, 216, 215);
+  bottom: -3px;
+  right: -3px;
+  border-left: none;
+  border-top: none;
+  pointer-events: none;
+}
+.elem-style-sicfi .box-border-line:hover::after, .elem-style-sicfi .layui-card:hover::after, .elem-style-sicfi .table-search-fieldset .layui-form-item:hover:not(:last-child)::after, .elem-style-sicfi .box-border-line:hover::before, .elem-style-sicfi .layui-card:hover::before, .elem-style-sicfi .table-search-fieldset .layui-form-item:hover:not(:last-child)::before {
+  width: calc(100% + 3px);
+  height: calc(100% + 3px);
+}
+.elem-style-sicfi .table-search-fieldset .layui-input-inline {
+  margin-right: 0;
+}
+.elem-style-sicfi .table-search-fieldset .layui-form-item:not(:last-child) {
+  margin-right: 10px;
+}
+.elem-style-sicfi .table-search-fieldset .layui-form-label {
+  border: unset;
+}
+.elem-style-sicfi .layui-form-pane .layui-form-label {
+  background-color: rgba(62, 251, 251, 0.05);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-container .layui-form-select dl dd.layui-this {
+  background-color: rgb(126, 252, 246) !important;
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layuimini-container .table-search-fieldset {
+  color: rgb(126, 252, 246);
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-form-select dl {
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-nav-child {
+  background-color: rgb(2, 17, 20);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child a {
+  color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-badge,
+.elem-style-sicfi .layui-badge-dot,
+.elem-style-sicfi .layui-badge-rim {
+  background-color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-nav .layui-nav-child a:hover {
+  background-color: rgba(62, 251, 251, 0.5);
+}
+.elem-style-sicfi .layui-table-tool-panel {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-form-checkbox[lay-skin=primary] span {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-table-tool-panel li:hover {
+  background-color: rgba(62, 251, 251, 0.5);
+}
+.elem-style-sicfi .layui-side.layui-bg-black,
+.elem-style-sicfi .layui-side.layui-bg-black > .layuimini-menu-left > ul,
+.elem-style-sicfi .layuimini-menu-left-zoom > ul {
+  background-color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layui-bg-blue {
+  background-color: #0000ff !important;
+}
+.elem-style-sicfi .layui-bg-orange {
+  background-color: rgb(255, 255, 153) !important;
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layui-bg-green {
+  background-color: rgb(0, 255, 0) !important;
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layui-table-hover {
+  background-color: rgba(62, 251, 251, 0.05);
+}
+.elem-style-sicfi .layui-table-grid-down {
+  background-color: rgb(2, 17, 20);
+  color: rgb(126, 252, 246);
+  border-color: unset;
+}
+.elem-style-sicfi .layui-table-tips-main {
+  background-color: rgb(126, 252, 246);
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-layout-admin .layui-header .layuimini-tool i {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .color-red {
+  color: rgb(255, 0, 0) !important;
+}
+.elem-style-sicfi .layuimini-tab .layui-tab-title .layui-this span {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-card {
+  background-color: rgba(62, 251, 251, 0.05);
+  border-radius: 0;
+}
+.elem-style-sicfi .layui-card .layui-card-header {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-text {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-notice:hover {
+  background-color: rgba(62, 251, 251, 0.5);
+}
+.elem-style-sicfi .layuimini-qiuck-module {
+  cursor: pointer;
+}
+.elem-style-sicfi .layuimini-qiuck-module a i {
+  background-color: rgba(62, 251, 251, 0.05);
+  color: rgba(62, 251, 251, 0.5);
+}
+.elem-style-sicfi .layuimini-qiuck-module a cite {
+  color: rgba(62, 251, 251, 0.5);
+}
+.elem-style-sicfi .layuimini-qiuck-module:hover a i {
+  background-color: rgba(62, 251, 251, 0.5);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-qiuck-module:hover a cite {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-bg-number {
+  background-color: rgba(62, 251, 251, 0.05);
+}
+.elem-style-sicfi .layui-input,
+.elem-style-sicfi .layui-select,
+.elem-style-sicfi .layui-textarea {
+  background-color: rgba(62, 251, 251, 0.05);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-input:focus,
+.elem-style-sicfi .layui-textarea:focus {
+  border-color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-input:hover,
+.elem-style-sicfi .layui-textarea:hover {
+  border-color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layui-badge-rim,
+.elem-style-sicfi .layui-border,
+.elem-style-sicfi .layui-colla-content,
+.elem-style-sicfi .layui-colla-item,
+.elem-style-sicfi .layui-collapse,
+.elem-style-sicfi .layui-elem-field,
+.elem-style-sicfi .layui-form-pane .layui-form-item[pane],
+.elem-style-sicfi .layui-form-pane .layui-form-label,
+.elem-style-sicfi .layui-input,
+.elem-style-sicfi .layui-layedit,
+.elem-style-sicfi .layui-layedit-tool,
+.elem-style-sicfi .layui-panel,
+.elem-style-sicfi .layui-quote-nm,
+.elem-style-sicfi .layui-select,
+.elem-style-sicfi .layui-tab-bar,
+.elem-style-sicfi .layui-tab-card,
+.elem-style-sicfi .layui-tab-title,
+.elem-style-sicfi .layui-tab-title .layui-this::after,
+.elem-style-sicfi .layui-textarea {
+  border-color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .form-search .layui-input-inline input,
+.elem-style-sicfi .form-search .layui-input-inline select {
+  border-width: 0 0 0 1px;
+}
+.elem-style-sicfi .layuimini-tab .layui-tab-tool .layui-nav-child {
+  border-color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-nav .layui-nav-child a {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-form-item {
+  margin-bottom: 12px;
+}
+.elem-style-sicfi .layuimini-upload .layuimini-upload-btn {
+  background-color: rgb(2, 17, 20);
 }
