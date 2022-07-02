@@ -576,3 +576,6 @@
 .elem-style-sicfi .layuimini-menu-left .layui-nav-item a span {
   color: rgb(126, 252, 246) !important;
 }
+.elem-style-sicfi .layui-layout-admin .layuimini-logo {
+  background-color: rgb(2, 17, 20) !important;
+}
