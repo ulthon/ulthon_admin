@@ -150,8 +150,8 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             autocomplete.render({
                 elem: $('#href')[0],
                 url: ea.url('system.menu/getMenuTips'),
-                template_val: '{{d.node}}',
-                template_txt: '{{d.node}} <span class=\'layui-badge layui-bg-gray\'>{{d.title}}</span>',
+                template_val: '{{-d.node}}',
+                template_txt: '{{-d.node}} <span class=\'layui-badge layui-bg-gray\'>{{-d.title}}</span>',
                 onselect: function (resp) {
                 }
             });
@@ -181,8 +181,8 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             autocomplete.render({
                 elem: $('#href')[0],
                 url: ea.url('system.menu/getMenuTips'),
-                template_val: '{{d.node}}',
-                template_txt: '{{d.node}} <span class=\'layui-badge layui-bg-gray\'>{{d.title}}</span>',
+                template_val: '{{-d.node}}',
+                template_txt: '{{-d.node}} <span class=\'layui-badge layui-bg-gray\'>{{-d.title}}</span>',
                 onselect: function (resp) {
                 }
             });

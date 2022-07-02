@@ -1134,3 +1134,8 @@
 .elem-style-gtk .layui-layer-iframe {
   border-radius: 20px;
 }
+.elem-style-gtk .layuimini-tab .layui-tab-control > li {
+  background-color: #e1dedb;
+  border-style: solid;
+  border-color: #cdc7c2;
+}

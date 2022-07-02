@@ -294,13 +294,13 @@ define(["jquery"], function ($) {
             options.bgColorDefault = options.bgColorDefault || 0;
             options.elemStyleDefault = options.elemStyleDefault || 'index';
             options.listen = options.listen || false;
-            var bgcolorId = sessionStorage.getItem('layuiminiBgcolorId');
+            var bgcolorId = localStorage.getItem('layuiminiBgcolorId');
             if (bgcolorId === null || bgcolorId === undefined || bgcolorId === '') {
                 bgcolorId = options.bgColorDefault;
             }
             miniTheme.buildThemeCss(bgcolorId);
 
-            var elemStyleName = sessionStorage.getItem('layuiminiElemStyleName');
+            var elemStyleName = localStorage.getItem('layuiminiElemStyleName');
             if (!elemStyleName) elemStyleName = options.elemStyleDefault;
 
             miniTheme.buildBodyElemStyle(elemStyleName);
@@ -316,7 +316,7 @@ define(["jquery"], function ($) {
 
             elemStyleDefault = elemStyleDefault || 'index';
 
-            var elemStyleName = sessionStorage.getItem('layuiminiElemStyleName');
+            var elemStyleName = localStorage.getItem('layuiminiElemStyleName');
             if (!elemStyleName) elemStyleName = elemStyleDefault;
 
             miniTheme.buildBodyElemStyle(elemStyleName);
@@ -436,7 +436,7 @@ define(["jquery"], function ($) {
          * @returns {string}
          */
         buildBgColorHtml: function (options) {
-            var bgcolorId = parseInt(sessionStorage.getItem('layuiminiBgcolorId'));
+            var bgcolorId = parseInt(localStorage.getItem('layuiminiBgcolorId'));
             if (isNaN(bgcolorId)) bgcolorId = options.bgColorDefault;
             var bgColorConfig = miniTheme.config();
             var html = '';
@@ -489,7 +489,7 @@ define(["jquery"], function ($) {
             $('body').addClass('elem-style-' + className)
         },
         buildElemStyleHtml(options) {
-            var elemStyleName = sessionStorage.getItem('layuiminiElemStyleName');
+            var elemStyleName = localStorage.getItem('layuiminiElemStyleName');
             if (!elemStyleName) elemStyleName = options.elemStyleDefault;
             var listElemStyle = miniTheme.configElemStyle()
             var html = '';
@@ -560,7 +560,7 @@ define(["jquery"], function ($) {
                 var bgcolorId = $(this).attr('data-select-bgcolor');
 
                 $(this).attr('class', 'layui-this').siblings().removeClass('layui-this');
-                sessionStorage.setItem('layuiminiBgcolorId', bgcolorId);
+                localStorage.setItem('layuiminiBgcolorId', bgcolorId);
                 miniTheme.render({
                     listen: false,
                 });
@@ -570,7 +570,7 @@ define(["jquery"], function ($) {
 
                 $(this).attr('class', 'layui-this').siblings().removeClass('layui-this');
 
-                sessionStorage.setItem('layuiminiElemStyleName', elemStyleName);
+                localStorage.setItem('layuiminiElemStyleName', elemStyleName);
                 miniTheme.render({
                     listen: false,
                 });
