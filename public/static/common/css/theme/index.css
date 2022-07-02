@@ -1,4 +1,4 @@
-.elem-style-demo .layui-btn {
+.elem-style-demo .layui-btn, .elem-style-demo .elem-style-sicfi .layui-layer-easy .layui-layer-btn a, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-demo a {
   color: #808185 !important;
   background-color: #cde7ff !important;
   border: 1px solid #d3dde6 !important;
@@ -47,6 +47,21 @@
 .elem-style-demo .layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
   background-color: #6C6E71 !important;
 }
+.elem-style-demo .layuimini-container .layui-form-onswitch {
+  background-color: #cde7ff !important;
+  border-color: #cde7ff !important;
+}
+.elem-style-demo .layuimini-container .layui-form-switch {
+  background-color: #6C6E71;
+  border-color: #6C6E71;
+}
+.elem-style-demo .layui-table-tool .layui-inline[lay-event] {
+  border-color: transparent;
+}
+.elem-style-demo .layui-form-checked[lay-skin=primary] i {
+  border-color: #cde7ff !important;
+  background-color: #cde7ff !important;
+}
 
 .elem-style-sicfi {
   background-color: rgb(2, 17, 20);
@@ -61,7 +76,7 @@
 .elem-style-sicfi .layuimini-container .layui-table-tool {
   background-color: rgb(2, 17, 20);
 }
-.elem-style-sicfi .layui-btn {
+.elem-style-sicfi .layui-btn, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
           clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
   padding-right: 10px;
@@ -72,7 +87,7 @@
   text-shadow: rgb(126, 252, 246) 0px 0px 1px;
   background-color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layui-btn::before {
+.elem-style-sicfi .layui-btn::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a::before {
   content: "";
   display: block;
   position: absolute;
@@ -85,7 +100,7 @@
   top: -0.5px;
   background-color: rgb(2, 17, 20);
 }
-.elem-style-sicfi .layui-btn:hover::after {
+.elem-style-sicfi .layui-btn:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a:hover::after {
   content: "";
   display: block;
   position: absolute;
@@ -98,45 +113,45 @@
   top: -0.5px;
   background-color: rgba(126, 252, 246, 0.2);
 }
-.elem-style-sicfi .layui-btn.layui-btn-success {
+.elem-style-sicfi .layui-btn.layui-btn-success, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-success {
   text-shadow: rgb(0, 255, 0) 0px 0px 1px;
   color: rgb(0, 255, 0);
   background-color: rgb(0, 255, 0);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-success:hover::after {
+.elem-style-sicfi .layui-btn.layui-btn-success:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-success:hover::after {
   background-color: rgba(0, 255, 0, 0.2);
 }
-.elem-style-sicfi .layui-btn.layui-btn-danger {
+.elem-style-sicfi .layui-btn.layui-btn-danger, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger {
   text-shadow: rgb(255, 0, 0) 0px 0px 1px;
   color: rgb(255, 0, 0);
   background-color: rgb(255, 0, 0);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-danger:hover::after {
+.elem-style-sicfi .layui-btn.layui-btn-danger:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger:hover::after {
   background-color: rgba(255, 0, 0, 0.2);
 }
-.elem-style-sicfi .layui-btn.layuimini-btn-primary {
+.elem-style-sicfi .layui-btn.layuimini-btn-primary, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layuimini-btn-primary {
   text-shadow: rgb(255, 255, 153) 0px 0px 1px;
   color: rgb(255, 255, 153);
   background-color: rgb(255, 255, 153);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layuimini-btn-primary:hover::after {
+.elem-style-sicfi .layui-btn.layuimini-btn-primary:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layuimini-btn-primary:hover::after {
   background-color: rgba(255, 255, 153, 0.2);
 }
-.elem-style-sicfi .layui-btn.layui-btn-primary {
+.elem-style-sicfi .layui-btn.layui-btn-primary, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-primary {
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-normal {
+.elem-style-sicfi .layui-btn.layui-btn-normal, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal {
   color: rgb(2, 17, 20);
   background-color: rgb(126, 252, 246);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-normal::before {
+.elem-style-sicfi .layui-btn.layui-btn-normal::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal::before {
   background-color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layui-btn.layui-btn-normal:hover::after {
+.elem-style-sicfi .layui-btn.layui-btn-normal:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal:hover::after {
   background-color: rgb(126, 252, 246);
 }
 .elem-style-sicfi .layui-table {
@@ -185,9 +200,6 @@
 }
 .elem-style-sicfi .layui-table-header {
   border-color: rgb(6, 216, 215);
-}
-.elem-style-sicfi .layui-layer {
-  background-color: rgb(2, 17, 20);
 }
 .elem-style-sicfi .color-content > ul > li > a > div > span:nth-child(2) {
   background-color: rgb(2, 17, 20) !important;
@@ -479,8 +491,9 @@
 .elem-style-sicfi .layuimini-upload .layuimini-upload-btn {
   background-color: rgb(2, 17, 20);
 }
-.elem-style-sicfi .layui-layer-content {
+.elem-style-sicfi .layui-layer {
   border: 1px solid rgb(126, 252, 246);
+  background-color: rgb(2, 17, 20);
 }
 .elem-style-sicfi .layui-layer-easy .layui-layer-title {
   background-color: rgb(0, 125, 124) !important;
@@ -505,6 +518,61 @@
 .elem-style-sicfi .layui-table[lay-skin=row] {
   border-color: rgb(6, 216, 215);
 }
-.elem-style-sicfi .layui-table tbody tr:hover, .elem-style-sicfi .layui-table thead tr, .elem-style-sicfi .layui-table-click, .elem-style-sicfi .layui-table-header, .elem-style-sicfi .layui-table-hover, .elem-style-sicfi .layui-table-mend, .elem-style-sicfi .layui-table-patch, .elem-style-sicfi .layui-table-tool, .elem-style-sicfi .layui-table-total, .elem-style-sicfi .layui-table-total tr {
+.elem-style-sicfi .layui-table tbody tr:hover,
+.elem-style-sicfi .layui-table thead tr,
+.elem-style-sicfi .layui-table-click,
+.elem-style-sicfi .layui-table-header,
+.elem-style-sicfi .layui-table-hover,
+.elem-style-sicfi .layui-table-mend,
+.elem-style-sicfi .layui-table-patch,
+.elem-style-sicfi .layui-table-tool,
+.elem-style-sicfi .layui-table-total,
+.elem-style-sicfi .layui-table-total tr {
   background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .hr-line {
+  color: rgb(126, 252, 246);
+  border-color: rgb(6, 216, 215);
+  background-color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-layer-easy .layui-layer-btn {
+  background-color: rgb(2, 17, 20);
+  border-top: 1px solid rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-layer-easy .layui-layer-btn .layui-layer-btn0 {
+  background-color: rgb(126, 252, 246);
+  border-color: rgb(6, 216, 215);
+  color: rgb(126, 252, 246) !important;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+}
+.elem-style-sicfi .layui-layer-shade {
+  background-color: #fff !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+          clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item.layui-this a {
+  background-color: rgb(126, 252, 246) !important;
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item.layui-this {
+  background-color: rgb(126, 252, 246) !important;
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item.layui-this span {
+  background-color: rgb(126, 252, 246) !important;
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item a:hover {
+  background-color: rgba(62, 251, 251, 0.5) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item a,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav .layui-nav-item a {
+  color: rgb(126, 252, 246) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav-item a span {
+  color: rgb(126, 252, 246) !important;
 }

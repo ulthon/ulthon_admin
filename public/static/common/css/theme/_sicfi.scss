@@ -191,9 +191,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     border-color: $less-main-color;
 }
 
-.layui-layer {
-    background-color: $black-color;
-}
+
 
 .color-content>ul>li>a>div>span:nth-child(2) {
     background-color: $black-color !important;
@@ -579,8 +577,9 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     background-color: $black-color;
 }
 
-.layui-layer-content {
-    border: 1px solid $main-color;
+.layui-layer {
+    border          : 1px solid $main-color;
+    background-color: $black-color;
 }
 
 .layui-layer-easy .layui-layer-title {
@@ -609,6 +608,80 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     border-color: $less-main-color;
 }
 
-.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr{
+.layui-table tbody tr:hover,
+.layui-table thead tr,
+.layui-table-click,
+.layui-table-header,
+.layui-table-hover,
+.layui-table-mend,
+.layui-table-patch,
+.layui-table-tool,
+.layui-table-total,
+.layui-table-total tr {
     background-color: $black-color;
+}
+
+.hr-line {
+    color           : $main-color;
+    border-color    : $less-main-color;
+    background-color: $main-color;
+}
+
+.layui-layer-easy .layui-layer-btn {
+    background-color: $black-color;
+    border-top      : 1px solid $less-main-color;
+}
+
+.layui-layer-easy .layui-layer-btn .layui-layer-btn0 {
+    background-color: $main-color;
+    border-color    : $less-main-color;
+    color           : $main-color !important;
+    clip-path       : $box-shape;
+}
+
+.layui-layer-easy .layui-layer-btn a {
+    @extend .layui-btn
+}
+
+.layui-layer-shade {
+    background-color: #fff !important;
+}
+
+.layuimini-menu-left {
+
+    .layui-nav .layui-nav-item {
+        clip-path: $box-shape;
+        color    : $main-color;
+
+        &.layui-this a {
+            background-color: $main-color !important;
+            color           : $black-color !important;
+        }
+
+        &.layui-this {
+            background-color: $main-color !important;
+            color           : $black-color !important;
+
+            span {
+                background-color: $main-color !important;
+                color           : $black-color !important;
+
+            }
+        }
+    }
+
+    .layui-nav .layui-nav-item a:hover {
+        background-color: $active-color !important;
+    }
+
+}
+
+.layuimini-menu-left .layui-nav .layui-nav-item a,
+.layuimini-menu-left-zoom.layui-nav .layui-nav-item a {
+    color: $main-color !important;
+}
+
+.layuimini-menu-left .layui-nav-item a span {
+    color: $main-color !important;
+
 }

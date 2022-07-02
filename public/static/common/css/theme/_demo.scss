@@ -59,3 +59,23 @@
 .layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
     background-color: #6C6E71 !important;
 }
+
+.layuimini-container .layui-form-onswitch {
+    background-color: #cde7ff !important;
+    border-color    : #cde7ff !important;
+}
+
+.layuimini-container .layui-form-switch {
+
+    background-color: #6C6E71;
+    border-color    : #6C6E71;
+}
+
+.layui-table-tool .layui-inline[lay-event] {
+    border-color: transparent;
+}
+
+.layui-form-checked[lay-skin="primary"] i {
+    border-color    : #cde7ff !important;
+    background-color: #cde7ff !important;
+}
