@@ -648,10 +648,16 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .layuimini-menu-left {
+    .layui-nav-tree .layui-nav-item {
+
+        margin: 5px;
+        width : calc(100% - 10px);
+    }
 
     .layui-nav .layui-nav-item {
-        clip-path: $box-shape;
-        color    : $main-color;
+        clip-path       : $box-shape;
+        color           : $main-color;
+        background-color: $active-color;
 
         &.layui-this a {
             background-color: $main-color !important;
@@ -686,7 +692,46 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 }
 
+.layuimini-menu-left .layui-nav-item:hover a span {
+    color: $black-color !important;
+
+}
+
 .layui-layout-admin .layuimini-logo {
     background-color: $black-color !important;
 
+}
+
+.layuimini-menu-left .layui-nav-itemed>.layui-nav-child {
+    background-color: $black-color !important;
+}
+
+.layuimini-menu-left .layui-nav-tree .layui-this,
+.layuimini-menu-left .layui-nav-tree .layui-this>a,
+.layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this,
+.layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this a,
+.layuimini-menu-left-zoom.layui-nav-tree .layui-this,
+.layuimini-menu-left-zoom.layui-nav-tree .layui-this>a,
+.layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this,
+.layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this a {
+    background-color: $main-color !important;
+    color           : $black-color !important;
+
+    .layui-left-nav {
+        color: $black-color !important;
+    }
+}
+
+
+.layui-iconpicker-icon {
+    border-color    : $less-main-color !important;
+    background-color: $less-main-color !important;
+}
+
+.layui-iconpicker .layui-anim {
+    background-color: $black-color;
+}
+
+.layui-iconpicker .layui-iconpicker-list {
+    background-color: $black-color;
 }

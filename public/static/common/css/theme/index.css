@@ -549,10 +549,15 @@
 .elem-style-sicfi .layui-layer-shade {
   background-color: #fff !important;
 }
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-nav-item {
+  margin: 5px;
+  width: calc(100% - 10px);
+}
 .elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
           clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
   color: rgb(126, 252, 246);
+  background-color: rgba(62, 251, 251, 0.5);
 }
 .elem-style-sicfi .layuimini-menu-left .layui-nav .layui-nav-item.layui-this a {
   background-color: rgb(126, 252, 246) !important;
@@ -576,6 +581,43 @@
 .elem-style-sicfi .layuimini-menu-left .layui-nav-item a span {
   color: rgb(126, 252, 246) !important;
 }
+.elem-style-sicfi .layuimini-menu-left .layui-nav-item:hover a span {
+  color: rgb(2, 17, 20) !important;
+}
 .elem-style-sicfi .layui-layout-admin .layuimini-logo {
   background-color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav-itemed > .layui-nav-child {
+  background-color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-this,
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-this > a,
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this,
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this a,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-this,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-this > a,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this a {
+  background-color: rgb(126, 252, 246) !important;
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-this .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-this > a .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this a .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-this .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-this > a .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this .layui-left-nav,
+.elem-style-sicfi .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this a .layui-left-nav {
+  color: rgb(2, 17, 20) !important;
+}
+.elem-style-sicfi .layui-iconpicker-icon {
+  border-color: rgb(6, 216, 215) !important;
+  background-color: rgb(6, 216, 215) !important;
+}
+.elem-style-sicfi .layui-iconpicker .layui-anim {
+  background-color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-iconpicker .layui-iconpicker-list {
+  background-color: rgb(2, 17, 20);
 }
