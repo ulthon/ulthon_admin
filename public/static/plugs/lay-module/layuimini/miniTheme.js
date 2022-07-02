@@ -472,6 +472,10 @@ define(["jquery"], function ($) {
                     title: 'GTK',
                     className: 'gtk'
                 },
+                {
+                    title: '像素',
+                    className: 'nes'
+                },
             ]
             return listElemStyle;
         },
