@@ -1,4 +1,3 @@
-
 .elem-style-normal {
     @import 'normal';
 }
@@ -9,4 +8,8 @@
 
 .elem-style-sicfi {
     @import 'sicfi';
+}
+
+.elem-style-gtk {
+    @import 'gtk';
 }

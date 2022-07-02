@@ -1,4 +1,4 @@
-.elem-style-demo .layui-btn, .elem-style-demo .elem-style-sicfi .layui-layer-easy .layui-layer-btn a, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-demo a {
+.elem-style-demo .layui-btn, .elem-style-demo .elem-style-gtk .layuimini-header-menu > li.layui-nav-item, .elem-style-gtk .elem-style-demo .layuimini-header-menu > li.layui-nav-item, .elem-style-demo .elem-style-gtk .layui-tab-brief > .layui-tab-title li, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-demo li, .elem-style-demo .elem-style-gtk .layui-laydate-footer span, .elem-style-gtk .layui-laydate-footer .elem-style-demo span, .elem-style-demo .elem-style-gtk .laydate-footer-btns span, .elem-style-gtk .laydate-footer-btns .elem-style-demo span, .elem-style-demo .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-demo .layui-inline[lay-event], .elem-style-demo .elem-style-sicfi .layui-layer-easy .layui-layer-btn a, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-demo a {
   color: #808185 !important;
   background-color: #cde7ff !important;
   border: 1px solid #d3dde6 !important;
@@ -76,7 +76,7 @@
 .elem-style-sicfi .layuimini-container .layui-table-tool {
   background-color: rgb(2, 17, 20);
 }
-.elem-style-sicfi .layui-btn, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a {
+.elem-style-sicfi .layui-btn, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
           clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
   padding-right: 10px;
@@ -87,7 +87,7 @@
   text-shadow: rgb(126, 252, 246) 0px 0px 1px;
   background-color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layui-btn::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a::before {
+.elem-style-sicfi .layui-btn::before, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-nav-item::before, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-nav-item::before, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li::before, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li::before, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span::before, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span::before, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span::before, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span::before, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event]::before, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-inline[lay-event]::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a::before {
   content: "";
   display: block;
   position: absolute;
@@ -100,7 +100,7 @@
   top: -0.5px;
   background-color: rgb(2, 17, 20);
 }
-.elem-style-sicfi .layui-btn:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a:hover::after {
+.elem-style-sicfi .layui-btn:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-nav-item:hover::after, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-nav-item:hover::after, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li:hover::after, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li:hover::after, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span:hover::after, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span:hover::after, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span:hover::after, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event]:hover::after, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-inline[lay-event]:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a:hover::after {
   content: "";
   display: block;
   position: absolute;
@@ -113,45 +113,45 @@
   top: -0.5px;
   background-color: rgba(126, 252, 246, 0.2);
 }
-.elem-style-sicfi .layui-btn.layui-btn-success, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-success {
+.elem-style-sicfi .layui-btn.layui-btn-success, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-success.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-success.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-success, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-success, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-success, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-success, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-success, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-success, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-success.layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-success.layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-success {
   text-shadow: rgb(0, 255, 0) 0px 0px 1px;
   color: rgb(0, 255, 0);
   background-color: rgb(0, 255, 0);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-success:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-success:hover::after {
+.elem-style-sicfi .layui-btn.layui-btn-success:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-success.layui-nav-item:hover::after, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-success.layui-nav-item:hover::after, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-success:hover::after, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-success:hover::after, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-success:hover::after, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-success:hover::after, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-success:hover::after, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-success:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-success.layui-inline[lay-event]:hover::after, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-success.layui-inline[lay-event]:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-success:hover::after {
   background-color: rgba(0, 255, 0, 0.2);
 }
-.elem-style-sicfi .layui-btn.layui-btn-danger, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger {
+.elem-style-sicfi .layui-btn.layui-btn-danger, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-danger.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-danger.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-danger, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-danger, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-danger, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-danger, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-danger, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-danger, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-danger.layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-danger.layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger {
   text-shadow: rgb(255, 0, 0) 0px 0px 1px;
   color: rgb(255, 0, 0);
   background-color: rgb(255, 0, 0);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-danger:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger:hover::after {
+.elem-style-sicfi .layui-btn.layui-btn-danger:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-danger.layui-nav-item:hover::after, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-danger.layui-nav-item:hover::after, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-danger:hover::after, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-danger:hover::after, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-danger:hover::after, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-danger:hover::after, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-danger:hover::after, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-danger:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-danger.layui-inline[lay-event]:hover::after, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-danger.layui-inline[lay-event]:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger:hover::after {
   background-color: rgba(255, 0, 0, 0.2);
 }
-.elem-style-sicfi .layui-btn.layuimini-btn-primary, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layuimini-btn-primary {
+.elem-style-sicfi .layui-btn.layuimini-btn-primary, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layuimini-btn-primary.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layuimini-btn-primary.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layuimini-btn-primary, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layuimini-btn-primary, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layuimini-btn-primary, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layuimini-btn-primary, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layuimini-btn-primary, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layuimini-btn-primary, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layuimini-btn-primary.layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layuimini-btn-primary.layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layuimini-btn-primary {
   text-shadow: rgb(255, 255, 153) 0px 0px 1px;
   color: rgb(255, 255, 153);
   background-color: rgb(255, 255, 153);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layuimini-btn-primary:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layuimini-btn-primary:hover::after {
+.elem-style-sicfi .layui-btn.layuimini-btn-primary:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layuimini-btn-primary.layui-nav-item:hover::after, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layuimini-btn-primary.layui-nav-item:hover::after, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layuimini-btn-primary:hover::after, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layuimini-btn-primary:hover::after, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layuimini-btn-primary:hover::after, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layuimini-btn-primary:hover::after, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layuimini-btn-primary:hover::after, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layuimini-btn-primary:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layuimini-btn-primary.layui-inline[lay-event]:hover::after, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layuimini-btn-primary.layui-inline[lay-event]:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layuimini-btn-primary:hover::after {
   background-color: rgba(255, 255, 153, 0.2);
 }
-.elem-style-sicfi .layui-btn.layui-btn-primary, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-primary {
+.elem-style-sicfi .layui-btn.layui-btn-primary, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-primary.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-primary.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-primary, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-primary, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-primary, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-primary, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-primary, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-primary, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-primary.layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-primary.layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-primary {
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-normal, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal {
+.elem-style-sicfi .layui-btn.layui-btn-normal, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-normal.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-normal.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-normal, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-normal, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-normal, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-normal, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-normal, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-normal, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-normal.layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-normal.layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal {
   color: rgb(2, 17, 20);
   background-color: rgb(126, 252, 246);
   border: unset;
 }
-.elem-style-sicfi .layui-btn.layui-btn-normal::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal::before {
+.elem-style-sicfi .layui-btn.layui-btn-normal::before, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-normal.layui-nav-item::before, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-normal.layui-nav-item::before, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-normal::before, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-normal::before, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-normal::before, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-normal::before, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-normal::before, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-normal::before, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-normal.layui-inline[lay-event]::before, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-normal.layui-inline[lay-event]::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal::before {
   background-color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layui-btn.layui-btn-normal:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal:hover::after {
+.elem-style-sicfi .layui-btn.layui-btn-normal:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-normal.layui-nav-item:hover::after, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-normal.layui-nav-item:hover::after, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-normal:hover::after, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-normal:hover::after, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-normal:hover::after, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-normal:hover::after, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-normal:hover::after, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-normal:hover::after, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-normal.layui-inline[lay-event]:hover::after, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-normal.layui-inline[lay-event]:hover::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal:hover::after {
   background-color: rgb(126, 252, 246);
 }
 .elem-style-sicfi .layui-table {
@@ -231,14 +231,17 @@
 }
 .elem-style-sicfi .layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover,
 .elem-style-sicfi .layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {
-  color: rgb(126, 252, 246) !important;
+  color: rgb(2, 17, 20) !important;
 }
 .elem-style-sicfi .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
   color: rgb(126, 252, 246) !important;
 }
+.elem-style-sicfi .layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+  background-color: rgba(62, 251, 251, 0.5);
+}
 .elem-style-sicfi .layui-layout-admin .layui-header .layuimini-header-content > ul > .layui-nav-item.layui-this,
 .elem-style-sicfi .layuimini-tool i:hover {
-  background-color: rgba(62, 251, 251, 0.05) !important;
+  background-color: rgb(126, 252, 246) !important;
 }
 .elem-style-sicfi .layuimini-tab .layui-tab-control > li {
   background-color: rgb(2, 17, 20);
@@ -620,4 +623,514 @@
 }
 .elem-style-sicfi .layui-iconpicker .layui-iconpicker-list {
   background-color: rgb(2, 17, 20);
+}
+
+.elem-style-gtk {
+  background-color: #f6f5f4;
+  color: #2e3436;
+}
+.elem-style-gtk .layuimini-main {
+  padding: 0;
+}
+.elem-style-gtk .layuimini-container .layui-table-box .layui-table-header th {
+  color: #979a9b !important;
+  font-weight: 700 !important;
+  font-weight: bold;
+  text-shadow: none;
+  border-color: #d7d2ce;
+  border-bottom: 1px solid;
+}
+.elem-style-gtk .layuimini-container .layui-table-box .layui-table-header th:not(:last-child) {
+  border-right: 1px solid #d7d2ce;
+}
+.elem-style-gtk .layui-table-view .layui-table td {
+  border-bottom: unset;
+}
+.elem-style-gtk .layui-table-view .layui-table td:not(:last-child) {
+  border-right: 1px solid #d7d2ce;
+}
+.elem-style-gtk .layui-table {
+  color: #2e3436;
+}
+.elem-style-gtk .layui-table-view .layui-table[lay-size=sm] .layui-table-cell {
+  line-height: 30px;
+}
+.elem-style-gtk .layui-table tbody tr:hover,
+.elem-style-gtk .layui-table thead tr,
+.elem-style-gtk .layui-table-click,
+.elem-style-gtk .layui-table-header,
+.elem-style-gtk .layui-table-hover,
+.elem-style-gtk .layui-table-mend,
+.elem-style-gtk .layui-table-patch,
+.elem-style-gtk .layui-table-tool,
+.elem-style-gtk .layui-table-total,
+.elem-style-gtk .layui-table-total tr {
+  background-color: unset;
+}
+.elem-style-gtk .layui-table-cell {
+  padding: 0 4px;
+}
+.elem-style-gtk .layui-table img {
+  height: 25px !important;
+  width: auto !important;
+}
+.elem-style-gtk .layui-btn, .elem-style-gtk .layuimini-header-menu > li.layui-nav-item, .elem-style-gtk .layui-tab-brief > .layui-tab-title li, .elem-style-gtk .layui-laydate-footer span, .elem-style-gtk .laydate-footer-btns span, .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event], .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a {
+  position: relative;
+  outline: none;
+  overflow: visible;
+  line-height: 28px;
+  border-radius: 5px;
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 4px 9px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #2e3436;
+  outline-color: rgba(53, 132, 228, 0.5);
+  border: 1px solid #cdc7c2;
+  border-bottom-color: rgb(205, 199, 194);
+  border-bottom-color: #bfb8b1;
+  background-color: #f6f5f4;
+  box-shadow: inset 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+.elem-style-gtk .layui-btn::before, .elem-style-gtk .layuimini-header-menu > li.layui-nav-item::before, .elem-style-gtk .layui-tab-brief > .layui-tab-title li::before, .elem-style-gtk .layui-laydate-footer span::before, .elem-style-gtk .laydate-footer-btns span::before, .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event]::before, .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a::before {
+  content: " ";
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.03), transparent);
+  transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.elem-style-gtk .layui-btn::after, .elem-style-gtk .layuimini-header-menu > li.layui-nav-item::after, .elem-style-gtk .layui-tab-brief > .layui-tab-title li::after, .elem-style-gtk .layui-laydate-footer span::after, .elem-style-gtk .laydate-footer-btns span::after, .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event]::after, .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a::after, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  display: inline-block;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+}
+.elem-style-gtk .layui-btn.layui-btn-normal, .elem-style-gtk .layuimini-header-menu > li.layui-btn-normal.layui-nav-item, .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-normal, .elem-style-gtk .layui-laydate-footer span.layui-btn-normal, .elem-style-gtk .laydate-footer-btns span.layui-btn-normal, .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-normal.layui-inline[lay-event], .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-normal, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a.layui-btn-normal {
+  color: #fff;
+  border-color: #1b6acb #1b6acb #15539e;
+  background-color: #3c88e5;
+  box-shadow: inset 0 1px #3181e3, 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+.elem-style-gtk .layui-btn.layui-btn-danger, .elem-style-gtk .layuimini-header-menu > li.layui-btn-danger.layui-nav-item, .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-danger, .elem-style-gtk .layui-laydate-footer span.layui-btn-danger, .elem-style-gtk .laydate-footer-btns span.layui-btn-danger, .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-danger.layui-inline[lay-event], .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-danger, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a.layui-btn-danger {
+  color: #fff;
+  border-color: #b2161d #b2161d #851015;
+  background-color: #e41f28;
+  box-shadow: inset 0 1px #db1a23, 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+.elem-style-gtk .layui-btn.layui-btn-sm, .elem-style-gtk .layuimini-header-menu > li.layui-btn-sm.layui-nav-item, .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-sm, .elem-style-gtk .layui-laydate-footer span.layui-btn-sm, .elem-style-gtk .laydate-footer-btns span.layui-btn-sm, .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-sm.layui-inline[lay-event], .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-sm, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a.layui-btn-sm {
+  line-height: 20px;
+}
+.elem-style-gtk .layui-btn.layui-btn-xs, .elem-style-gtk .layuimini-header-menu > li.layui-btn-xs.layui-nav-item, .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-xs, .elem-style-gtk .layui-laydate-footer span.layui-btn-xs, .elem-style-gtk .laydate-footer-btns span.layui-btn-xs, .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-xs.layui-inline[lay-event], .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-xs, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a.layui-btn-xs {
+  line-height: 12px;
+}
+.elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event] {
+  line-height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border-radius: 9999px;
+}
+.elem-style-gtk .layui-laydate .layui-this {
+  background-color: #3584e4 !important;
+}
+.elem-style-gtk .layui-laydate-content td,
+.elem-style-gtk .layui-laydate-content th {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+}
+.elem-style-gtk .laydate-footer-btns span {
+  line-height: 16px;
+}
+.elem-style-gtk .laydate-footer-btns span:not(:last-child) {
+  border-right-style: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.elem-style-gtk .laydate-footer-btns span:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.elem-style-gtk .layui-laydate-footer span {
+  line-height: 16px;
+}
+.elem-style-gtk .layui-laydate-footer span.layui-laydate-preview {
+  line-height: 22px;
+}
+.elem-style-gtk .layui-form-checked[lay-skin=primary] i {
+  border-color: #185fb4 !important;
+  background-color: #5094e8;
+  background-image: linear-gradient(0deg, #3987e5, #5094e8);
+}
+.elem-style-gtk .layui-form-checkbox[lay-skin=primary]:hover i {
+  border-color: #185fb4;
+  background-image: linear-gradient(0deg, #5094e8, #6ba5eb);
+}
+.elem-style-gtk .layui-table-view .layui-form-checkbox[lay-skin=primary] i {
+  border-radius: 3px;
+}
+.elem-style-gtk .layui-table-view .layui-form-checkbox i {
+  font-weight: bold;
+}
+.elem-style-gtk .layui-layer-title {
+  padding: 0 6px;
+  min-height: 46px;
+  border: 1px solid #bfb8b1;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background: #f1f0ee linear-gradient(0deg, #dfdcd8, #f4f2f1) !important;
+  color: #2e3436 !important;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-weight: bold;
+}
+.elem-style-gtk .layui-layer {
+  background-color: #f6f5f4;
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-title ~ .layui-layer-setwin > a {
+  position: relative;
+  outline: none;
+  overflow: visible;
+  border-radius: 5px;
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  outline-color: rgba(53, 132, 228, 0.5);
+  border: 1px solid #cdc7c2;
+  border-bottom-color: rgb(205, 199, 194);
+  border-bottom-color: #bfb8b1;
+  background-color: #f6f5f4;
+  box-shadow: inset 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.07);
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-title ~ .layui-layer-setwin > a::after {
+  color: #2e3436 !important;
+}
+.elem-style-gtk .layui-layer-setwin {
+  display: flex;
+  align-items: center;
+}
+.elem-style-gtk .layuimini-container .layui-form-switch.layui-form-onswitch {
+  color: #ffffff;
+  border-color: #185fb4;
+  background-color: #3584e4;
+  text-shadow: 0 1px rgba(53, 132, 228, 0.5), 0 0 2px rgba(255, 255, 255, 0.6);
+}
+.elem-style-gtk .layuimini-container .layui-form-switch {
+  border: 1px solid #cdc7c2;
+  border-radius: 20px;
+  color: rgba(46, 52, 54, 0.2);
+  background-color: #e1dedb;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.elem-style-gtk .layui-form-switch {
+  height: 20px;
+  width: 40px;
+}
+.elem-style-gtk .layui-form-switch {
+  padding: 0;
+  line-height: 20px;
+}
+.elem-style-gtk .layui-form-switch.layui-form-onswitch i {
+  top: 0;
+  height: 20px;
+  width: 20px;
+  margin-left: -20px;
+}
+.elem-style-gtk .layui-form-switch i {
+  top: 0;
+  height: 20px;
+  width: 20px;
+  margin-left: -5px;
+  border-radius: 50%;
+  transition: all 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  color: #2e3436;
+  outline-color: rgba(53, 132, 228, 0.5);
+  border-color: #cdc7c2;
+  border-bottom-color: #bfb8b1;
+  background-color: #f6f5f4;
+  box-shadow: inset 0 1px white, 0 1px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+.elem-style-gtk .layuimini-main {
+  background-color: unset;
+}
+.elem-style-gtk .layui-tab-title li {
+  transition: none;
+  padding: 3px 12px;
+  min-height: 30px;
+  min-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  color: #2e3436;
+  font-weight: normal;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border: 0;
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border-left-style: none;
+}
+.elem-style-gtk .layui-tab-title li:hover {
+  box-shadow: inset 0 -3px #c8c2bc;
+  background-color: #edebe9;
+}
+.elem-style-gtk .layui-tab-title li.layui-this {
+  box-shadow: inset 0 -3px #3584e4;
+  background-color: #f1f0ee;
+}
+.elem-style-gtk .layui-tab-title {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.elem-style-gtk .layuimini-tab > .layui-tab-title li,
+.elem-style-gtk .layuimini-tab > .close-box li {
+  line-height: 20px !important;
+}
+.elem-style-gtk .layuimini-tab .layui-tab-title .layui-this .layuimini-tab-active {
+  display: none;
+}
+.elem-style-gtk .layuimini-tab .layui-tab-title .layui-this span {
+  color: #2e3436 !important;
+}
+.elem-style-gtk .layuimini-tab .layui-tab-title span {
+  color: #2e3436 !important;
+}
+.elem-style-gtk .layuimini-tab .layui-tab-title .layuimini-tab-active {
+  display: none;
+}
+.elem-style-gtk .layuimini-tab .layui-tab-title {
+  background-color: #e1dedb;
+  border-color: #cdc7c2;
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-btn {
+  background-color: #f2f2f2;
+}
+.elem-style-gtk .layui-layer-dialog .layui-layer-content {
+  background-color: #f2f2f2;
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-btn a {
+  position: relative;
+  outline: none;
+  overflow: visible;
+  line-height: 28px;
+  height: 28px;
+  border-radius: 5px;
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 4px 9px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #2e3436 !important;
+  outline-color: rgba(53, 132, 228, 0.5);
+  border: 1px solid #cdc7c2;
+  border-bottom-color: rgb(205, 199, 194);
+  border-bottom-color: #bfb8b1;
+  background-color: #f6f5f4;
+  box-shadow: inset 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-btn a::before {
+  content: " ";
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.03), transparent);
+  transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-btn a::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  display: inline-block;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+}
+.elem-style-gtk .layui-layer-easy .layui-layer-btn a.layui-layer-btn0 {
+  color: #fff !important;
+  border-color: #1b6acb #1b6acb #15539e;
+  background-color: #3c88e5;
+  box-shadow: inset 0 1px #3181e3, 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+.elem-style-gtk .layui-tab-brief > .layui-tab-title li:not(:last-child) {
+  border-right-style: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.elem-style-gtk .layui-tab-brief > .layui-tab-title li:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-this {
+  color: unset;
+  color: #2e3436;
+  border-color: #cdc7c2;
+  background-color: #d6d1cd;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0);
+}
+.elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-this::after {
+  display: none;
+}
+.elem-style-gtk .layui-tab-brief > .layui-tab-title li:hover {
+  box-shadow: unset;
+  background-color: #edebe9;
+}
+.elem-style-gtk .layui-form-radio:hover *,
+.elem-style-gtk .layui-form-radioed,
+.elem-style-gtk .layui-form-radioed > i {
+  color: #5094e8;
+}
+.elem-style-gtk .layui-card .layui-card-header {
+  padding: 0 6px;
+  min-height: 46px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfb8b1;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background: #f1f0ee linear-gradient(to top, #dfdcd8, #f4f2f1);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.8), inset 0 -2px 2px rgba(0, 0, 0, 0.02);
+}
+.elem-style-gtk .layui-card .layui-card-header .icon {
+  color: #979a9b !important;
+}
+.elem-style-gtk .layui-card .layui-card-body {
+  background-color: #f6f5f4;
+  border: 1px solid #cdc7c2;
+}
+.elem-style-gtk .layui-btn, .elem-style-gtk .layuimini-header-menu > li.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layui-layer-easy .layui-layer-btn a, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk a, .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event], .elem-style-gtk .laydate-footer-btns span, .elem-style-gtk .layui-laydate-footer span, .elem-style-gtk .layui-tab-brief > .layui-tab-title li,
+.elem-style-gtk .layui-input,
+.elem-style-gtk .layui-select,
+.elem-style-gtk .layui-textarea,
+.elem-style-gtk .layui-upload-button {
+  border-radius: 5px;
+  border: 1px solid #cdc7c2;
+}
+.elem-style-gtk .layui-side.layui-bg-black,
+.elem-style-gtk .layui-side.layui-bg-black > .layuimini-menu-left > ul,
+.elem-style-gtk .layuimini-menu-left-zoom > ul {
+  background-color: #f6f5f4 !important;
+}
+.elem-style-gtk .layuimini-menu-left {
+  background-color: #fbfafa;
+  border-right: 1px solid #cdc7c2;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav li:not(:first-child) {
+  border-top: 1px solid #cdc7c2;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav li.layui-this a {
+  background-color: #347cd3 !important;
+  color: #fff !important;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav .layui-this a,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav .layui-this a {
+  color: #2e3436 !important;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav .layui-nav-item.layui-this a:hover,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav .layui-nav-item.layui-this a:hover {
+  color: #fff !important;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav .layui-nav-item a,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav .layui-nav-item a {
+  color: #2e3436 !important;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav .layui-nav-item a:hover,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav .layui-nav-item a:hover {
+  color: #2e3436 !important;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav .layui-nav-item a {
+  height: 30px;
+  line-height: 30px;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav-itemed > .layui-nav-child {
+  background-color: rgba(46, 52, 54, 0.05) !important;
+  border-top: 1px solid #d7d2ce;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav-itemed > .layui-nav-child dd {
+  border-bottom: 1px solid #d7d2ce;
+}
+.elem-style-gtk .layuimini-menu-left .layui-nav-tree .layui-this,
+.elem-style-gtk .layuimini-menu-left .layui-nav-tree .layui-this > a,
+.elem-style-gtk .layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this,
+.elem-style-gtk .layuimini-menu-left .layui-nav-tree .layui-nav-child dd.layui-this a,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav-tree .layui-this,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav-tree .layui-this > a,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this,
+.elem-style-gtk .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this a {
+  background-color: #347cd3 !important;
+  color: #fff !important;
+}
+.elem-style-gtk .layui-layout-admin .layuimini-logo {
+  background-color: unset !important;
+}
+.elem-style-gtk .layuimini-header-menu > li.layui-nav-item {
+  margin-top: 10px;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+.elem-style-gtk .layuimini-header-menu > li.layui-nav-item::after {
+  background-color: transparent;
+}
+.elem-style-gtk .layuimini-header-menu > li.layui-nav-item:not(:last-child) {
+  border-right-style: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.elem-style-gtk .layuimini-header-menu > li.layui-nav-item:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.elem-style-gtk .layuimini-header-menu > li.layui-nav-item:nth-last-child(2) {
+  border-right-style: solid;
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.elem-style-gtk .layui-layout-admin .layui-header {
+  background-color: #f6f5f4 !important;
+}
+.elem-style-gtk .layui-layer-dialog {
+  border-radius: 20px;
+}
+.elem-style-gtk .layui-layer-iframe {
+  border-radius: 20px;
 }

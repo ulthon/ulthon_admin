@@ -231,16 +231,22 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover,
 .layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {
-    color: $main-color !important;
+    color: $black-color !important;
 }
 
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
     color: $main-color !important;
 }
 
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+    background-color: $active-color;
+
+}
+
+
 .layui-layout-admin .layui-header .layuimini-header-content>ul>.layui-nav-item.layui-this,
 .layuimini-tool i:hover {
-    background-color: $cover-color !important;
+    background-color: $main-color !important;
 }
 
 .layuimini-tab .layui-tab-control>li {

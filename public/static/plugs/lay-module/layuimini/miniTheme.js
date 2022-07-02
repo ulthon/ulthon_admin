@@ -468,6 +468,10 @@ define(["jquery"], function ($) {
                     title: '科幻',
                     className: 'sicfi'
                 },
+                {
+                    title: 'GTK',
+                    className: 'gtk'
+                },
             ]
             return listElemStyle;
         },
