@@ -943,8 +943,8 @@
   position: relative;
   outline: none;
   overflow: visible;
-  line-height: 28px;
-  height: 28px;
+  line-height: 22px;
+  height: 22px;
   border-radius: 5px;
   transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   padding: 4px 9px;
@@ -1138,4 +1138,30 @@
   background-color: #e1dedb;
   border-style: solid;
   border-color: #cdc7c2;
+}
+.elem-style-gtk .form-search .layui-btn, .elem-style-gtk .form-search .elem-style-sicfi .layui-layer-easy .layui-layer-btn a, .elem-style-sicfi .layui-layer-easy .layui-layer-btn .elem-style-gtk .form-search a, .elem-style-gtk .form-search .layuimini-container .layui-table-tool .layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .form-search .layui-inline[lay-event], .elem-style-gtk .form-search .laydate-footer-btns span, .elem-style-gtk .laydate-footer-btns .form-search span, .elem-style-gtk .form-search .layui-laydate-footer span, .elem-style-gtk .layui-laydate-footer .form-search span, .elem-style-gtk .form-search .layui-tab-brief > .layui-tab-title li, .elem-style-gtk .layui-tab-brief > .layui-tab-title .form-search li, .elem-style-gtk .form-search .layuimini-header-menu > li.layui-nav-item {
+  height: 32px;
+  line-height: 22px;
+}
+.elem-style-gtk .form-search .layui-form-select dl {
+  transition: all 80ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-radius: 9px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  box-shadow: 0 1px 3px 2px rgba(0, 0, 0, 0.08);
+  top: 28px;
+}
+.elem-style-gtk .layui-form-select dl dd,
+.elem-style-gtk .layui-form-select dl dt {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+.elem-style-gtk .layuimini-container .layui-form-select dl dd.layui-this {
+  background-color: #3c88e5 !important;
 }
