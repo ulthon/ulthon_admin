@@ -478,6 +478,10 @@ define(["jquery"], function ($) {
                     className: 'nes',
                     defaultColorConfig: '12'
                 },
+                {
+                    title: 'WIN7',
+                    className: 'win7'
+                },
             ]
             return listElemStyle;
         },

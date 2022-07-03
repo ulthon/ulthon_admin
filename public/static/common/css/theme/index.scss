@@ -19,6 +19,10 @@
 
 }
 
+.elem-style-win7 {
+    @import 'win7';
+}
+
 @font-face {
     font-family: "ark-pixel";
     src        : url('./nes/ark-pixel-font-12px/ark-pixel-12px-zh_cn.ttf') format('truetype'),
