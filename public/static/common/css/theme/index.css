@@ -1297,6 +1297,9 @@
 .elem-style-nes .layui-nav * {
   font-size: 16px;
 }
+.elem-style-nes .layui-tab-title li {
+  font-size: 18px;
+}
 .elem-style-nes .layui-nav-tree .layui-nav-item {
   border-bottom: 3px solid #212529;
 }
