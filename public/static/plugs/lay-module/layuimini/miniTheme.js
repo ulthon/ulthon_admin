@@ -305,7 +305,7 @@ define(["jquery"], function ($) {
 
             miniTheme.buildBodyElemStyle(elemStyleName);
 
-            if(typeof window.onInitElemStyle == 'function'){
+            if (typeof window.onInitElemStyle == 'function') {
                 window.onInitElemStyle()
             }
 
@@ -462,7 +462,8 @@ define(["jquery"], function ($) {
                 },
                 {
                     title: '原型',
-                    className: 'demo'
+                    className: 'demo',
+                    defaultColorConfig: '12'
                 },
                 {
                     title: '科幻',
@@ -474,7 +475,8 @@ define(["jquery"], function ($) {
                 },
                 {
                     title: '像素',
-                    className: 'nes'
+                    className: 'nes',
+                    defaultColorConfig: '12'
                 },
             ]
             return listElemStyle;
@@ -498,10 +500,15 @@ define(["jquery"], function ($) {
             var listElemStyle = miniTheme.configElemStyle()
             var html = '';
             $.each(listElemStyle, function (key, val) {
+
+                if (typeof val.defaultColorConfig == 'undefined') {
+                    val.defaultColorConfig = ''
+                }
+
                 if (val.className === elemStyleName) {
-                    html += '<li class="layui-this style-item" data-select-style="' + val.className + '">\n';
+                    html += '<li class="layui-this style-item" data-select-style="' + val.className + '" data-default-color-config="' + val.defaultColorConfig + '">\n';
                 } else {
-                    html += '<li class="style-item"  data-select-style="' + val.className + '">\n';
+                    html += '<li class="style-item"  data-select-style="' + val.className + '" data-default-color-config="' + val.defaultColorConfig + '">\n';
                 }
                 html +=
                     val.title +
@@ -573,6 +580,13 @@ define(["jquery"], function ($) {
                 var elemStyleName = $(this).attr('data-select-style');
 
                 $(this).attr('class', 'layui-this').siblings().removeClass('layui-this');
+
+                var defaultColorConfig = $(this).attr('data-default-color-config');
+
+                if (defaultColorConfig && defaultColorConfig.length > 0) {
+                    localStorage.setItem('layuiminiBgcolorId', defaultColorConfig);
+
+                }
 
                 localStorage.setItem('layuiminiElemStyleName', elemStyleName);
                 miniTheme.render({

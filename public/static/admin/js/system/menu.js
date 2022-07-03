@@ -57,7 +57,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                         {field: 'status', title: '状态', width: 85, templet: ea.table.switch},
                         {field: 'sort', width: 80, title: '排序', edit: 'text'},
                         {
-                            width: 200,
+                            width: 220,
                             title: '操作',
                             fixed: 'right',
                             templet: ea.table.tool,
