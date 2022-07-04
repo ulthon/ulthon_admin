@@ -1,5 +1,5 @@
 & {
-    color: #222;
+    color           : #222;
     background-color: #f0f0f0;
 }
 
@@ -22,7 +22,7 @@
     @extend .layui-btn;
     color: #222 !important;
 
-    height: 26px;
+    height     : 26px;
     line-height: 26px;
     font-size  : 12px;
 }
@@ -133,6 +133,14 @@
         position     : absolute;
         width        : 100%;
         z-index      : -1;
+
+    }
+
+    &.layui-layer-iframe {
+
+        &::before {
+            height: calc(100% + 20px);
+        }
     }
 }
 
@@ -144,4 +152,108 @@
     padding   : 6px;
     border-top: 0;
     text-align: right !important;
+}
+
+.layui-card {
+
+    border       : 1px solid rgba(0, 0, 0, .6);
+    border-radius: 6px;
+    box-shadow   : 0 0 5px 1px rgba(0, 0, 0, .6);
+    font         : 9pt Segoe UI, sans-serif;
+    position     : relative;
+    z-index      : 0;
+
+    &::before {
+        background   : linear-gradient(transparent 20%, hsla(0, 0%, 100%, .7) 40%, transparent 41%), linear-gradient(90deg, hsla(0, 0%, 100%, .4), rgba(0, 0, 0, .1), hsla(0, 0%, 100%, .2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, .1) 20%, rgba(0, 0, 0, .1) 50%, transparent 53%), #4580c4;
+        border-radius: 6px;
+        content      : "";
+        height       : 100%;
+        position     : absolute;
+        width        : 100%;
+        z-index      : -1;
+    }
+
+
+    .layui-card-header {
+        align-items    : center;
+        background     : linear-gradient(90deg, hsla(0, 0%, 100%, .4), rgba(0, 0, 0, .1), hsla(0, 0%, 100%, .2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, .1) 20%, rgba(0, 0, 0, .1) 50%, transparent 53%), #4580c4;
+        border-radius  : 6px 6px 0 0;
+        font           : 9pt Segoe UI, sans-serif;
+        justify-content: space-between;
+        padding        : 6px;
+        border         : 0;
+        box-shadow     : inset 0 .5px #fff;
+        height         : 15px;
+
+        color         : #000;
+        letter-spacing: 0;
+        line-height   : 15px;
+        text-shadow   : 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
+
+    }
+
+    .layui-card-body {
+        background: #f0f0f0;
+        border    : 1px solid rgba(0, 0, 0, .6);
+        box-shadow: 0 0 1px .5px #fff;
+        margin    : 0 6px 6px;
+        padding   : 6px;
+    }
+}
+
+
+.layui-tab-title {
+    height         : 24px;
+    display        : flex;
+    list-style-type: none;
+    margin         : 0 0 -2px;
+    padding-left   : 3px;
+    position       : relative;
+    text-indent    : 0;
+}
+
+.layui-tab-title li {
+    border-radius  : 0;
+    color          : #222;
+    min-width      : unset;
+    padding        : 2px 6px;
+    text-decoration: none;
+    z-index        : 1;
+    font-size      : 12px;
+    height         : 24px;
+    line-height    : 20px;
+
+    @extend .layui-btn;
+
+    &::after {
+        display: none;
+    }
+
+    &.layui-this {
+        background    : #fff;
+        border-bottom : 0;
+        box-shadow    : none;
+        margin        : -2px -1px 1px -3px;
+        padding-bottom: 4px;
+        position      : relative;
+        z-index       : 8;
+    }
+
+}
+
+.layui-tab-brief>.layui-tab-title .layui-this {
+    color: #222;
+}
+
+.layui-tab-content {
+    background-color: #fff;
+    border          : 1px solid #888;
+}
+
+
+.layuimini-tab>.layui-tab-title li,
+.layuimini-tab>.close-box li {
+    line-height: 20px !important;
+
+    margin-top: 3px;
 }
