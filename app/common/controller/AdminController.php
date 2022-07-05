@@ -247,6 +247,8 @@ class AdminController extends BaseController
                     break;
                 case '%*':
                     $where[] = [$key, 'LIKE', "%{$val}"];
+                case 'in':
+                    $where[] = [$key, 'IN', "{$val}"];
                     break;
                 case 'min':
                     $where[] = [$key, '>=', $val];

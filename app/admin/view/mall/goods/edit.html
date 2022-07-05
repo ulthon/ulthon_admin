@@ -58,7 +58,14 @@
                 <input type="text" name="virtual_sales" class="layui-input" lay-verify="required" placeholder="请输入虚拟销量" value="{$row.virtual_sales|default=''}">
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签</label>
+            <div class="layui-input-block">
+                <div data-toggle="table-data" data-index="{:__url('mall.Tag/index')}" data-select-type="checkbox" data-select-value="{$row.tag|default=''}" data-value-field="id" data-name="tag" data-field-name="title">
 
+                </div>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">商品描述</label>
             <div class="layui-input-block">

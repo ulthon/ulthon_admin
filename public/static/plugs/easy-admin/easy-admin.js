@@ -1,17 +1,19 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSelect, undefined, miniTheme) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function ($, tableSelect, undefined, miniTheme, tableData) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
 
-        $('iframe').each(function(index,iframe){
-            
-            if(typeof iframe.contentWindow.onInitElemStyle == "function"){
+        $('iframe').each(function (index, iframe) {
+
+            if (typeof iframe.contentWindow.onInitElemStyle == "function") {
                 iframe.contentWindow.onInitElemStyle();
             }
         })
 
     }
     window.onInitElemStyle();
+
+    var selectMode, selectConfirmCallback;
 
     var form = layui.form,
         layer = layui.layer,
@@ -294,6 +296,12 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
 
                 }
 
+
+                selectMode = admin.getQueryVariable("select_mode");
+
+                selectConfirmCallback = admin.getQueryVariable('select_confirm_callback', 'onTableDataConfirm');
+
+
                 // 判断是否为移动端
                 if (admin.checkMobile()) {
                     options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
@@ -306,6 +314,27 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
 
                     options.page = {
                         layout: ['first', 'prev', 'page', 'next', 'last', 'count']
+                    }
+                }
+
+
+                if (selectMode == 'checkbox') {
+                    if (options.cols[0][0].type == 'radio') {
+                        options.cols[0][0].type = 'checkbox';
+                    } else if (options.cols[0][0].type != 'checkbox') {
+                        options.cols[0].unshift({
+                            type: 'checkbox'
+                        })
+                    }
+                } else if(selectMode == 'radio') {
+                    if (options.cols[0][0].type == 'checkbox') {
+                        options.cols[0][0].type = 'radio';
+
+                    } else if (options.cols[0][0].type != 'radio') {
+                        options.cols[0].unshift({
+                            type: 'radio'
+                        })
+
                     }
                 }
 
@@ -322,6 +351,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
 
                 // 初始化表格左上方工具栏
                 options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
+
+                if (selectMode == 'checkbox' || selectMode == 'radio') {
+                    options.toolbar.unshift('selectConfirm');
+                }
+
                 options.toolbar = admin.table.renderToolbar(options.toolbar, options.elem, options.id, options.init);
 
                 // 判断是否有操作列表权限
@@ -347,9 +381,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
                 // 监听表格开关切换
                 admin.table.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
 
+                // 监听导出事件
                 admin.table.listenExport(options);
 
-
+                // 监听表格选择器
+                admin.table.listenTableSelectConfirm(options)
 
                 return newTable;
             },
@@ -371,6 +407,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
                         if (admin.checkAuth('export', elem)) {
                             toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
                         }
+                    } else if (v === 'selectConfirm') {
+                        toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn select-confirm" data-table-target="' + tableId + '"> 确定选择</button>\n';
                     } else if (typeof v === "object") {
                         $.each(v, function (ii, vv) {
                             vv.class = vv.class || '';
@@ -959,7 +997,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
 
             // 统一列返回数据处理
             returnColumnValue(data) {
-                if(!data.LAY_COL){
+                if (!data.LAY_COL) {
                     return '';
                 }
                 var option = data.LAY_COL;
@@ -1099,6 +1137,18 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
                         });
                     });
                 }
+            },
+            listenTableSelectConfirm(options) {
+                $('.select-confirm').click(function () {
+                    var checkStatus = table.checkStatus(options.id);
+
+                    if (checkStatus.data.length == 0) {
+                        layer.msg('请选择数据');
+                        return false;
+                    }
+
+                    parent.window[selectConfirmCallback](checkStatus.data);
+                })
             },
             listenExport: function (options) {
 
@@ -1269,6 +1319,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
 
             // 监听时间控件生成
             admin.api.date();
+
+            // 监听通用表格数据控件生成
+            admin.api.tableData();
 
             // 初始化layui表单
             form.render();
@@ -1887,6 +1940,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme'], function ($, tableSel
                     });
                 }
             },
+            tableData() {
+                var dateList = document.querySelectorAll('[data-toggle="table-data"]');
+                $.each(dateList, function (i, v) {
+                    var data = $(v).data()
+                    tableData.render(v, data, admin);
+                });
+
+            }
         },
         getQueryVariable(variable, defaultValue) {
             if (typeof defaultValue == 'undefined') {

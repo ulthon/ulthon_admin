@@ -1,0 +1,8 @@
+.table-data-container .layui-input {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.table-data-container .layui-input .placeholder {
+  color: #808080;
+}

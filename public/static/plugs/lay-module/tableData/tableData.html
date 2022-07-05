@@ -1,0 +1,11 @@
+<div class="table-data-container">
+    <input type="hidden" :name="setting.name" :value="value">
+    <div class="layui-input" @click="openSelectPage">
+        <div class="placeholder" v-if="listSelected.length == 0">{{setting.placeholder}}</div>
+        <div class="layui-btn layui-btn-xs layui-btn-normal" v-for="(itemSelect,indexSelect) in listSelected">
+            <span>{{itemSelect[setting.fieldName]}}</span>
+            <i class="layui-icon layui-icon-close" @click.stop="removeItem(itemSelect,indexSelect)"></i>
+        </div>
+
+    </div>
+</div>

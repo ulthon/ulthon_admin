@@ -1,0 +1,13 @@
+.table-data-container {
+    .layui-input {
+        display        : flex;
+        align-items    : center;
+        justify-content: left;
+
+        .placeholder {
+            color: #808080
+        }
+
+        .layui-btn {}
+    }
+}
