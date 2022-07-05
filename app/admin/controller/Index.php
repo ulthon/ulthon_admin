@@ -19,6 +19,13 @@ class Index extends AdminController
      */
     public function index()
     {
+
+        dump(__url('system.Admin/index'));
+        dump(__url('Ajax/Ajax/initAdmin'));
+        dump(__url('Ajax/initAdmin',[],false,true));
+        dump(__url('welcome'));
+        dump(__url('tools/timer.ClearLog/do'));
+
         return $this->fetch('', [
             'admin' => session('admin'),
         ]);
@@ -117,5 +124,4 @@ class Index extends AdminController
         $this->assign('row', $row);
         return $this->fetch();
     }
-
 }

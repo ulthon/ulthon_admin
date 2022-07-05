@@ -17,19 +17,29 @@ if (!function_exists('__url')) {
      */
     function __url(string $url = '', array $vars = [], $suffix = true, $domain = false)
     {
-        $url_arr = explode('/', $url);
+        $url = url($url, $vars, $suffix, $domain)->build();
+
+        $url_data = parse_url($url);
+
+        $url_path = $url_data['path'];
+
+        $url_arr = explode('/', $url_path);
 
         $app_map = config('app.app_map');
 
-        $app_name = array_search($url_arr[0], $app_map);
+        $app_name = array_search($url_arr[1], $app_map);
 
         if (!empty($app_name)) {
-            $url_arr[0] = $app_name;
+            $url_arr[1] = $app_name;
         }
 
-        $url = implode('/', $url_arr);
+        $url_path = implode('/', $url_arr);
 
-        return url($url, $vars, $suffix, $domain)->build();
+        $url_data['path'] = $url_path;
+
+        $url = unparse_url($url_data);
+
+        return $url;
     }
 }
 
@@ -190,4 +200,22 @@ function json_message($data = [], $code = 0, $msg = '')
         'msg' => $msg,
         'data' => $data
     ]);
+}
+
+
+if (!function_exists('unparse_url')) {
+
+    function unparse_url($parsed_url)
+    {
+        $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+        $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+        $pass     = ($user || $pass) ? "$pass@" : '';
+        $path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+        $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+        $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+        return "$scheme$user$pass$host$port$path$query$fragment";
+    }
 }
