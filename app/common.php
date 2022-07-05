@@ -17,6 +17,18 @@ if (!function_exists('__url')) {
      */
     function __url(string $url = '', array $vars = [], $suffix = true, $domain = false)
     {
+        $url_arr = explode('/', $url);
+
+        $app_map = config('app.app_map');
+
+        $app_name = array_search($url_arr[0], $app_map);
+
+        if (!empty($app_name)) {
+            $url_arr[0] = $app_name;
+        }
+
+        $url = implode('/', $url_arr);
+
         return url($url, $vars, $suffix, $domain)->build();
     }
 }
