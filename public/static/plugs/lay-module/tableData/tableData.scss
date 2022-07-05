@@ -8,6 +8,12 @@
             color: #808080
         }
 
-        .layui-btn {}
+        .layui-btn {
+            pointer-events: none;
+
+            i {
+                pointer-events: all;
+            }
+        }
     }
 }

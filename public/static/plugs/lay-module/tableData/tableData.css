@@ -6,3 +6,9 @@
 .table-data-container .layui-input .placeholder {
   color: #808080;
 }
+.table-data-container .layui-input .layui-btn {
+  pointer-events: none;
+}
+.table-data-container .layui-input .layui-btn i {
+  pointer-events: all;
+}

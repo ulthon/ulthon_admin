@@ -125,7 +125,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function
                 if (option.prefix == true) {
                     option.url = admin.url(option.url);
                 }
-                var index = admin.msg.loading('加载中');
+                loading.show()
                 $.ajax({
                     url: option.url,
                     type: type,
@@ -135,7 +135,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function
                     data: option.data,
                     timeout: 60000,
                     success: function (res) {
-                        admin.msg.close(index);
+                        loading.hide();
                         if (eval('res.' + option.statusName) == option.statusCode) {
                             return ok(res);
                         } else {
@@ -326,7 +326,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function
                             type: 'checkbox'
                         })
                     }
-                } else if(selectMode == 'radio') {
+                } else if (selectMode == 'radio') {
                     if (options.cols[0][0].type == 'checkbox') {
                         options.cols[0][0].type = 'radio';
 

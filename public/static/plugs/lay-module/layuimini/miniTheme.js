@@ -480,7 +480,8 @@ define(["jquery"], function ($) {
                 },
                 {
                     title: 'WIN7',
-                    className: 'win7'
+                    className: 'win7',
+                    defaultColorConfig: '12'
                 },
             ]
             return listElemStyle;
@@ -506,7 +507,7 @@ define(["jquery"], function ($) {
             $.each(listElemStyle, function (key, val) {
 
                 if (typeof val.defaultColorConfig == 'undefined') {
-                    val.defaultColorConfig = ''
+                    val.defaultColorConfig = '0'
                 }
 
                 if (val.className === elemStyleName) {
