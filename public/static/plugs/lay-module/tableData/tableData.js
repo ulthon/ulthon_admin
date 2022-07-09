@@ -76,7 +76,9 @@ define(['jquery', 'vue'], function ($, Vue) {
             },
             created() {
                 this.value = options.selectValue;
-
+                if(typeof this.value != 'string') {
+                    this.value = this.value.toString();
+                }
                 var valueLength = this.value.split(',').length;
                 loading.show();
                 $.get(options.index,{
@@ -89,6 +91,11 @@ define(['jquery', 'vue'], function ($, Vue) {
                     this.listSelected = result.data;
                 })
 
+            },
+            mounted() {
+                if(options.required == 1){
+                    $(this.$refs['tableData']).closest('.layui-form-item').children('.layui-form-label').addClass('required');
+                }
             },
             template: tableDataTemplate,
 

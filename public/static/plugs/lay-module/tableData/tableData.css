@@ -12,3 +12,6 @@
 .table-data-container .layui-input .layui-btn i {
   pointer-events: all;
 }
+.table-data-container .layui-form-danger + .layui-input {
+  border-color: #ff5722 !important;
+}

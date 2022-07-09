@@ -16,4 +16,9 @@
             }
         }
     }
+
+
+    .layui-form-danger+.layui-input {
+        border-color: #ff5722 !important;
+    }
 }

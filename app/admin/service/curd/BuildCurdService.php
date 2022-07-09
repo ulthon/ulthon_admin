@@ -225,7 +225,7 @@ class BuildCurdService
      * 表单类型
      * @var array
      */
-    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation'];
+    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table'];
 
     /**
      * 初始化
@@ -285,19 +285,8 @@ class BuildCurdService
             throw new TableException($e->getMessage());
         }
 
-        // 初始化默认控制器名
-        $nodeArray = explode('_', $this->table);
-        if (count($nodeArray) == 1) {
-            $this->controllerFilename = ucfirst($nodeArray[0]);
-        } else {
-            foreach ($nodeArray as $k => $v) {
-                if ($k == 0) {
-                    $this->controllerFilename = "{$v}{$this->DS}";
-                } else {
-                    $this->controllerFilename .= ucfirst($v);
-                }
-            }
-        }
+
+        $this->controllerFilename = $this->getTableControllerName($this->table);
 
         // 初始化默认模型名
         $this->modelFilename = Str::studly($this->table);
@@ -308,6 +297,26 @@ class BuildCurdService
         $this->buildStructure();
 
         return $this;
+    }
+
+    public function getTableControllerName($table)
+    {
+        $controllerFilename = '';
+        // 初始化默认控制器名
+        $nodeArray = explode('_', $table);
+        if (count($nodeArray) == 1) {
+            $controllerFilename = ucfirst($nodeArray[0]);
+        } else {
+            foreach ($nodeArray as $k => $v) {
+                if ($k == 0) {
+                    $controllerFilename = "{$v}{$this->DS}";
+                } else {
+                    $controllerFilename .= ucfirst($v);
+                }
+            }
+        }
+
+        return $controllerFilename;
     }
 
     /**
@@ -570,6 +579,8 @@ class BuildCurdService
         return $this->fileList;
     }
 
+
+
     /**
      * 构建基础视图、JS、URL
      * @return $this
@@ -654,9 +665,9 @@ class BuildCurdService
         preg_match('/\([\s\S]*?\)/i', $string, $defineMatch);
         if (!empty($formTypeMatch) && isset($defineMatch[0])) {
             $colum['comment'] = str_replace($defineMatch[0], '', $colum['comment']);
-            if (isset($colum['formType']) && in_array($colum['formType'], ['images', 'files', 'select', 'switch', 'radio', 'checkbox', 'date', 'relation'])) {
+            if (isset($colum['formType']) && in_array($colum['formType'], ['images', 'files', 'select', 'switch', 'radio', 'checkbox', 'date', 'relation', 'table'])) {
                 $define = str_replace(')', '', str_replace('(', '', $defineMatch[0]));
-                if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox', 'relation'])) {
+                if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox', 'relation', 'table'])) {
                     $formatDefine = [];
                     $explodeArray = explode(',', $define);
                     foreach ($explodeArray as $vo) {
@@ -783,6 +794,45 @@ class BuildCurdService
             ]
         );
         return $optionCode;
+    }
+    /**
+     * 构建表格选择器视图
+     * @param $field
+     * @param string $select
+     * @return mixed
+     */
+    protected function buildTableView($field, $options, $value)
+    {
+        $default_define = [
+            'type' => 'checkbox',
+            'value_filed' => 'id',
+            'comment' => $options['comment'],
+            'field' => $field,
+            'required' => $options['required'],
+            'value' => $value,
+        ];
+
+        $define = array_merge($default_define, $options['define']);
+
+        $table_controller_name = $this->getTableControllerName($define['table']);
+
+
+        $nodeArray = explode($this->DS, $table_controller_name);
+        $formatArray = [];
+        foreach ($nodeArray as $vo) {
+            $formatArray[] = Str::snake($vo);
+        }
+        $controller_url = implode('.', $formatArray);
+
+        $define['controller_url'] = $controller_url;
+
+
+        $table_main_code = $this->replaceTemplate(
+            $this->getTemplate("view{$this->DS}module{$this->DS}tableMain"),
+            $define
+        );
+
+        return $table_main_code;
     }
 
     /**
@@ -1194,7 +1244,7 @@ class BuildCurdService
                 if (!in_array($define, ['year', 'month', 'date', 'time', 'datetime'])) {
                     $define = 'datetime';
                 }
-            } elseif ($val['formType'] == 'radio') {
+            } elseif ($val['formType'] == 'radio' || $val['formType'] == 'switch') {
                 $templateFile = "view{$this->DS}module{$this->DS}radio";
                 if (isset($val['define']) && !empty($val['define'])) {
                     $define = $this->buildRadioView($field, '{in name="k" value="' . $val['default'] . '"}checked=""{/in}');
@@ -1221,6 +1271,9 @@ class BuildCurdService
                 } elseif (isset($val['define']) && !empty($val['define'])) {
                     $define = $this->buildOptionView($field);
                 }
+            } elseif ($val['formType'] == 'table') {
+                $templateFile = "view{$this->DS}module{$this->DS}table";
+                $define = $this->buildTableView($field, $val, $val['default']);
             }
 
 
@@ -1280,7 +1333,7 @@ class BuildCurdService
                 if (!in_array($define, ['year', 'month', 'date', 'time', 'datetime'])) {
                     $define = 'datetime';
                 }
-            } elseif ($val['formType'] == 'radio') {
+            } elseif ($val['formType'] == 'radio' || $val['formType'] == 'switch') {
                 $templateFile = "view{$this->DS}module{$this->DS}radio";
                 if (isset($val['define']) && !empty($val['define'])) {
                     $define = $this->buildRadioView($field, '{in name="k" value="$row.' . $field . '"}checked=""{/in}');
@@ -1300,6 +1353,9 @@ class BuildCurdService
             } elseif (in_array($field, ['remark']) || $val['formType'] == 'textarea') {
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
                 $value = '{$row.' . $field . '|raw|default=\'\'}';
+            } elseif ($val['formType'] == 'table') {
+                $templateFile = "view{$this->DS}module{$this->DS}table";
+                $define = $this->buildTableView($field, $val, $value);
             }
 
             $editFormList .= $this->replaceTemplate(
