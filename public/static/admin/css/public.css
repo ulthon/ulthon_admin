@@ -1,6 +1,7 @@
 @import url("../../plugs/layui-v2.7.2/css/layui.css");
 @import url("../../plugs/font-awesome-4.7.0/css/font-awesome.min.css");
 @import url("../css/iconfont.css");
+@import url('../../plugs/jq-module/city-picker/css/city-picker.css');
 
 html,
 body {
@@ -620,6 +621,32 @@ table样式
     display: flex;
     width  : 274px;
 }
+
 .form-item-number-limit .layui-input-inline {
     display: flex;
+}
+
+/* 重写地区选择器的样式 */
+
+.city-picker-span {
+    height          : 38px;
+    border-width    : 1px;
+    border-style    : solid;
+    background-color: #fff;
+    color           : rgba(0, 0, 0, .85);
+    border-radius   : 2px;
+    border-color    : #eee;
+}
+
+.city-picker-span:hover {
+    border-color: #eee !important;
+}
+
+.city-picker-span>.placeholder {
+    padding-left: 10px;
+}
+
+.city-picker-span.focus,
+.city-picker-span.open {
+    border-color: #d2d2d2 !important;
 }

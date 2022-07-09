@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function ($, tableSelect, undefined, miniTheme, tableData) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData','citypicker'], function ($, tableSelect, undefined, miniTheme, tableData) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -1706,6 +1706,20 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function
                                     var name = $(this).attr("name");
                                     dataField[name] = CKEDITOR.instances[name].getData();
                                 });
+                            }
+
+                            var cityList= $(v).closest('.layui-form').find('[data-toggle="city-picker"]');
+
+                            if(cityList.length > 0){
+                                $.each(cityList, function (i, v) {
+                                    console.log(i);
+                                    console.log(v);
+                                    var code = $(v).data('citypicker').getCode(type);
+                                    var text = $(v).data('citypicker').getVal(type);
+
+                                    console.log(code);
+                                    console.log(text);
+                                })
                             }
 
                             if (typeof preposeCallback === 'function') {

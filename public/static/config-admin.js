@@ -22,6 +22,8 @@ require.config({
         "autocomplete": ["plugs/lay-module/autocomplete/autocomplete"],
         "vue": ["plugs/vue-2.6.10/vue.min"],
         "ckeditor": ["plugs/ckeditor4/ckeditor"],
+        'citypicker': ['plugs/jq-module/city-picker/js/city-picker.min'],
+        'ChineseDistricts': ['plugs/jq-module/city-picker/js/city-picker.data.min'],
     }
 });
 
