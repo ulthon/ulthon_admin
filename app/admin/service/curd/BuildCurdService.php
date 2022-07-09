@@ -1264,6 +1264,8 @@ class BuildCurdService
             } elseif (in_array($field, ['remark']) || $val['formType'] == 'textarea') {
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
             } elseif ($val['formType'] == 'relation') {
+
+
                 // 使用select生成
                 $templateFile = "view{$this->DS}module{$this->DS}select";
                 if (isset($val['bindRelation'])) {
@@ -1353,6 +1355,16 @@ class BuildCurdService
             } elseif (in_array($field, ['remark']) || $val['formType'] == 'textarea') {
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
                 $value = '{$row.' . $field . '|raw|default=\'\'}';
+            } elseif ($val['formType'] == 'relation') {
+
+
+                // 使用select生成
+                $templateFile = "view{$this->DS}module{$this->DS}select";
+                if (isset($val['bindRelation'])) {
+                    $define = $this->buildOptionView($val['bindRelation'], '{in name="k" value="$row.' . $field . '"}selected=""{/in}');
+                } elseif (isset($val['define']) && !empty($val['define'])) {
+                    $define = $this->buildOptionView($field, '{in name="k" value="$row.' . $field . '"}selected=""{/in}');
+                }
             } elseif ($val['formType'] == 'table') {
                 $templateFile = "view{$this->DS}module{$this->DS}table";
                 $define = $this->buildTableView($field, $val, $value);
