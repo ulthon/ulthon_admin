@@ -45,7 +45,7 @@ define(['jquery', 'vue'], function ($, Vue) {
         }
 
         var options = $.extend(defaultOption, data);
-        console.log(options);
+
 
         var valueField = options.valueField;
 
@@ -68,11 +68,8 @@ define(['jquery', 'vue'], function ($, Vue) {
             },
             watch: {
                 listSelected(value) {
-                    console.log(value);
 
                     var valueList = value.map(itemValue => itemValue[valueField])
-
-
 
                     this.value = valueList.join(',')
                 }
@@ -97,19 +94,19 @@ define(['jquery', 'vue'], function ($, Vue) {
 
             methods: {
                 openSelectPage() {
+                    var selectedIds = this.listSelected.map(item => item.id);
 
+                    
                     var index = layer.open({
                         title: '选择数据',
                         type: 2,
                         area: [options.width, options.height],
-                        content: options.index,
+                        content: options.index+'&selectedIds='+selectedIds.join(','),
                         maxmin: true,
                         moveOut: true,
                         shadeClose: true,
                         success: (layero, index) => {
                             window[options.selectConfirmCallback] = (data) => {
-                                console.log(data);
-
                                 data.forEach(dataItem => {
 
                                     var itemFind = this.listSelected.find(itemSelect => itemSelect[valueField] == dataItem[valueField])

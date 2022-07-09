@@ -367,6 +367,37 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData'], function
                 options.cols = admin.table.renderTrueHide(options.cols, options.elem);
 
 
+                var parseData = function (res) { return res }
+
+                if (typeof options.parseData === 'function') {
+                    parseData = options.parseData;
+                }
+
+                options.parseData = function (res) {
+
+                    // 初始化已经选择的值
+                    if (selectMode == 'checkbox' || selectMode == 'radio') {
+
+                        var selectedIds = admin.getQueryVariable('selectedIds', '');
+
+                        if (selectedIds.length > 0) {
+                            var selectedIdArr = selectedIds.split(',');
+                            console.log(selectedIdArr);
+
+                            for (let index = 0; index < res.data.length; index++) {
+                                const dataItem = res.data[index];
+                                console.log(dataItem);
+
+                                if (selectedIdArr.indexOf(dataItem.id.toString()) > -1) {
+                                    res.data[index].LAY_DISABLED = true;
+                                }
+                            }
+                        }
+                    }
+                    
+                    res = parseData(res)
+                    return res;
+                }
 
 
                 // 初始化表格
