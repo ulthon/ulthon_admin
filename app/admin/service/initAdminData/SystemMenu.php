@@ -142,7 +142,18 @@ $ul_system_menu = array(
         "target" => "_self",
         "sort" => 0,
         "status" => 1,
-    )
+    ),
+    array(
+        "id" => 254,
+        "pid" => 249,
+        "title" => "商品标签",
+        "icon" => "fa fa-connectdevelop",
+        "href" => "mall.tag/index",
+        "params" => "",
+        "target" => "_self",
+        "sort" => 0,
+        "status" => 1,
+    ),
 );
 
 

@@ -32,6 +32,7 @@ class MallGoods extends Migrator
             ->setComment('商品列表')
             ->addColumn(Column::bigInteger('cate_id')->setUnsigned()->setComment('分类ID'))
             ->addColumn(Column::char('title', 20)->setDefault('')->setComment('商品名称'))
+            ->addColumn(Column::char('tag', 100)->setDefault('')->setComment('商品标签'))
             ->addColumn(Column::char('logo')->setComment('商品logo {image}'))
             ->addColumn(Column::text('images')->setComment('商品图片 {images}'))
             ->addColumn(Column::text('describe')->setComment('商品描述 {editor}'))

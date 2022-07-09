@@ -4,6 +4,7 @@ namespace app\admin\service;
 
 use app\admin\model\MallCate;
 use app\admin\model\MallGoods;
+use app\admin\model\MallTag;
 use app\admin\model\SystemAdmin;
 use app\admin\model\SystemAuth;
 use app\admin\model\SystemAuthNode;
@@ -51,6 +52,10 @@ class InitAdminService
                 MallGoods::create($data_goods);
             }
         }
+
+        $list_tag = $this->requireData('MallTag');
+
+        $this->installData(MallTag::class, $list_tag);
     }
 
     public function initQuick()
