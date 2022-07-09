@@ -76,24 +76,24 @@ define(['jquery', 'vue'], function ($, Vue) {
             },
             created() {
                 this.value = options.selectValue;
-                if(typeof this.value != 'string') {
+                if (typeof this.value != 'string') {
                     this.value = this.value.toString();
                 }
                 var valueLength = this.value.split(',').length;
                 loading.show();
-                $.get(options.index,{
-                    page:1,
-                    limit:valueLength,
-                    filter:JSON.stringify({id:this.value}),
-                    op: JSON.stringify({id:'in'})
-                },(result)=>{
+                $.get(options.index, {
+                    page: 1,
+                    limit: valueLength,
+                    filter: JSON.stringify({ id: this.value }),
+                    op: JSON.stringify({ id: 'in' })
+                }, (result) => {
                     loading.hide()
                     this.listSelected = result.data;
                 })
 
             },
             mounted() {
-                if(options.required == 1){
+                if (options.required == 1) {
                     $(this.$refs['tableData']).closest('.layui-form-item').children('.layui-form-label').addClass('required');
                 }
             },
@@ -103,18 +103,22 @@ define(['jquery', 'vue'], function ($, Vue) {
                 openSelectPage() {
                     var selectedIds = this.listSelected.map(item => item.id);
 
-                    
+
                     var index = layer.open({
                         title: '选择数据',
                         type: 2,
                         area: [options.width, options.height],
-                        content: options.index+'&selectedIds='+selectedIds.join(','),
+                        content: options.index + '&selectedIds=' + selectedIds.join(','),
                         maxmin: true,
                         moveOut: true,
                         shadeClose: true,
                         success: (layero, index) => {
                             window[options.selectConfirmCallback] = (data) => {
                                 data.forEach(dataItem => {
+
+                                    if (options.selectType == 'radio') {
+                                        this.listSelected = [];
+                                    }
 
                                     var itemFind = this.listSelected.find(itemSelect => itemSelect[valueField] == dataItem[valueField])
 

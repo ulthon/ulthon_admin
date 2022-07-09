@@ -708,27 +708,7 @@ class BuildCurdService
         );
         return $selectCode;
     }
-    /**
-     * 构建关联下拉控制器
-     * @param $field
-     * @return mixed
-     */
-    protected function buildRelationSelectController($field)
-    {
-
-        $name = $this->getFieldMethodName($field);
-        $var_name = $this->getFieldVarName($field);
-
-        $selectCode = $this->replaceTemplate(
-            $this->getTemplate("controller{$this->DS}relationSelect"),
-            [
-                'name' => $name,
-                'var_name' => $var_name,
-            ]
-        );
-        return $selectCode;
-    }
-
+   
     /**
      * 构架下拉模型
      * @param $field
@@ -750,28 +730,6 @@ class BuildCurdService
             [
                 'name'   => $name,
                 'values' => $values,
-            ]
-        );
-        return $selectCode;
-    }
-
-    /**
-     * 构架关联下拉模型
-     * @param $relation
-     * @param $filed
-     * @return mixed
-     */
-    protected function buildRelationSelectModel($relation, $filed)
-    {
-        $relationArray = explode('\\', $relation);
-        $name = end($relationArray);
-        $name = "getList{$name}";
-        $selectCode = $this->replaceTemplate(
-            $this->getTemplate("model{$this->DS}relationSelect"),
-            [
-                'name'     => $name,
-                'relation' => $relation,
-                'values'   => $filed,
             ]
         );
         return $selectCode;
@@ -804,8 +762,10 @@ class BuildCurdService
     protected function buildTableView($field, $options, $value)
     {
         $default_define = [
+            'table' => '',            // 必填
             'type' => 'checkbox',
-            'value_filed' => 'id',
+            'valueField' => 'id',
+            'fieldName' => 'title',        // 必填
             'comment' => $options['comment'],
             'field' => $field,
             'required' => $options['required'],
@@ -816,7 +776,6 @@ class BuildCurdService
 
         $table_controller_name = $this->getTableControllerName($define['table']);
 
-
         $nodeArray = explode($this->DS, $table_controller_name);
         $formatArray = [];
         foreach ($nodeArray as $vo) {
@@ -825,7 +784,6 @@ class BuildCurdService
         $controller_url = implode('.', $formatArray);
 
         $define['controller_url'] = $controller_url;
-
 
         $table_main_code = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}tableMain"),
@@ -1069,12 +1027,7 @@ class BuildCurdService
             );
         }
         $selectList = '';
-        foreach ($this->relationArray as $relation) {
-            if (!empty($relation['bindSelectField'])) {
-                $relationArray = explode('\\', $relation['modelFilename']);
-                $selectList .= $this->buildRelationSelectController(end($relationArray));
-            }
-        }
+
         foreach ($this->tableColumns as $field => $val) {
             if (isset($val['formType']) && in_array($val['formType'], ['select', 'switch', 'radio', 'checkbox']) && isset($val['define'])) {
                 $selectList .= $this->buildSelectController($field);
@@ -1126,11 +1079,7 @@ class BuildCurdService
         }
 
         $selectList = '';
-        foreach ($this->relationArray as $relation) {
-            if (!empty($relation['bindSelectField'])) {
-                $selectList .= $this->buildRelationSelectModel($relation['modelFilename'], $relation['bindSelectField']);
-            }
-        }
+
         foreach ($this->tableColumns as $field => $val) {
             if (isset($val['formType']) && in_array($val['formType'], ['select', 'switch', 'radio', 'checkbox']) && isset($val['define'])) {
                 $selectList .= $this->buildSelectModel($field, $val['define']);
@@ -1257,6 +1206,7 @@ class BuildCurdService
             } elseif ($val['formType'] == 'select') {
                 $templateFile = "view{$this->DS}module{$this->DS}select";
                 if (isset($val['bindRelation'])) {
+                    // TODO:这里的兼容关联不知道还有没有用，可能是技术债务，需要清理
                     $define = $this->buildOptionView($val['bindRelation']);
                 } elseif (isset($val['define']) && !empty($val['define'])) {
                     $define = $this->buildOptionView($field);
@@ -1266,13 +1216,13 @@ class BuildCurdService
             } elseif ($val['formType'] == 'relation') {
 
 
-                // 使用select生成
-                $templateFile = "view{$this->DS}module{$this->DS}select";
-                if (isset($val['bindRelation'])) {
-                    $define = $this->buildOptionView($val['bindRelation']);
-                } elseif (isset($val['define']) && !empty($val['define'])) {
-                    $define = $this->buildOptionView($field);
-                }
+                $val['define']['type'] = 'radio';
+                $val['define']['valueField'] = 'id';
+                $val['define']['fieldName'] = $val['define']['relationBindSelect'];
+
+                $templateFile = "view{$this->DS}module{$this->DS}table";
+
+                $define = $this->buildTableView($field, $val, $val['default']);
             } elseif ($val['formType'] == 'table') {
                 $templateFile = "view{$this->DS}module{$this->DS}table";
                 $define = $this->buildTableView($field, $val, $val['default']);
@@ -1348,6 +1298,7 @@ class BuildCurdService
             } elseif ($val['formType'] == 'select') {
                 $templateFile = "view{$this->DS}module{$this->DS}select";
                 if (isset($val['bindRelation'])) {
+                    // TODO:这里的兼容关联不知道还有没有用，可能是技术债务，需要清理
                     $define = $this->buildOptionView($val['bindRelation'], '{in name="k" value="$row.' . $field . '"}selected=""{/in}');
                 } elseif (isset($val['define']) && !empty($val['define'])) {
                     $define = $this->buildOptionView($field, '{in name="k" value="$row.' . $field . '"}selected=""{/in}');
@@ -1358,13 +1309,13 @@ class BuildCurdService
             } elseif ($val['formType'] == 'relation') {
 
 
-                // 使用select生成
-                $templateFile = "view{$this->DS}module{$this->DS}select";
-                if (isset($val['bindRelation'])) {
-                    $define = $this->buildOptionView($val['bindRelation'], '{in name="k" value="$row.' . $field . '"}selected=""{/in}');
-                } elseif (isset($val['define']) && !empty($val['define'])) {
-                    $define = $this->buildOptionView($field, '{in name="k" value="$row.' . $field . '"}selected=""{/in}');
-                }
+                $val['define']['type'] = 'radio';
+                $val['define']['valueField'] = 'id';
+                $val['define']['fieldName'] = $val['define']['relationBindSelect'];
+
+                $templateFile = "view{$this->DS}module{$this->DS}table";
+
+                $define = $this->buildTableView($field, $val, $value);
             } elseif ($val['formType'] == 'table') {
                 $templateFile = "view{$this->DS}module{$this->DS}table";
                 $define = $this->buildTableView($field, $val, $value);
@@ -1417,6 +1368,8 @@ class BuildCurdService
                 continue;
             } elseif ($val['formType'] == 'editor') {
                 continue;
+            } elseif ($val['formType'] == 'table') {
+                continue;
             } elseif (in_array($field, $this->switchFields)) {
                 if (isset($val['define']) && !empty($val['define'])) {
                     $templateValue = "{field: '{$field}', search: 'select', selectList: ea.getDataBrage('{$var_name}'), title: '{$val['comment']}', templet: ea.table.switch}";
@@ -1453,6 +1406,8 @@ class BuildCurdService
                 } elseif ($val['formType'] == 'files') {
                     continue;
                 } elseif ($val['formType'] == 'editor') {
+                    continue;
+                } elseif ($val['formType'] == 'table') {
                     continue;
                 } elseif ($val['formType'] == 'select') {
                     $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}'}";
