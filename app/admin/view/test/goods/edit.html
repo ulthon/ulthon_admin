@@ -155,7 +155,15 @@
             <label class="layui-form-label">产地</label>
             <div class="layui-input-block">
 
-                <input class="layui-input" name="area_street" value="山东省/临沂市/沂南县" readonly type="text" data-toggle="city-picker">
+                <input class="layui-input" name="from_area" value="{$row.from_area|default=''}" data-field-code="0" readonly type="text" data-toggle="city-picker">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库</label>
+            <div class="layui-input-block">
+
+                <input class="layui-input" name="store_city" value="{$row.store_city|default=''}" readonly type="text" data-toggle="city-picker" data-level="city" >
 
             </div>
         </div>

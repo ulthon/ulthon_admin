@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData','citypicker'], function ($, tableSelect, undefined, miniTheme, tableData) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker'], function ($, tableSelect, undefined, miniTheme, tableData) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -234,6 +234,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData','citypicke
                 options.modifyReload = admin.parame(options.modifyReload, true);
                 options.elem = options.elem || options.init.table_elem;
                 options.id = options.id || options.init.table_render_id;
+                options.scrollPos = options.scrollPos || 'fixed';
                 options.layFilter = options.id + '_LayFilter';
                 options.url = options.url || admin.url(options.init.index_url);
                 options.headers = admin.headers();
@@ -394,7 +395,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData','citypicke
                             }
                         }
                     }
-                    
+
                     res = parseData(res)
                     return res;
                 }
@@ -1699,28 +1700,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData','citypicke
                         form.on('submit(' + filter + ')', function (data) {
                             var dataField = data.field;
 
-                            // 富文本数据处理
-                            var editorList = $(v).closest('.layui-form').find('.editor')
-                            if (editorList.length > 0) {
-                                $.each(editorList, function (i, v) {
-                                    var name = $(this).attr("name");
-                                    dataField[name] = CKEDITOR.instances[name].getData();
-                                });
-                            }
+                            dataField = admin.api.formSubmitEditor(dataField, v)
 
-                            var cityList= $(v).closest('.layui-form').find('[data-toggle="city-picker"]');
-
-                            if(cityList.length > 0){
-                                $.each(cityList, function (i, v) {
-                                    console.log(i);
-                                    console.log(v);
-                                    var code = $(v).data('citypicker').getCode(type);
-                                    var text = $(v).data('citypicker').getVal(type);
-
-                                    console.log(code);
-                                    console.log(text);
-                                })
-                            }
+                            dataField = admin.api.formSubmitCity(dataField, v)
 
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
@@ -1732,6 +1714,96 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData','citypicke
                     });
                 }
 
+            },
+            formSubmitEditor(dataField, form) {
+                // 富文本数据处理
+                var editorList = $(form).closest('.layui-form').find('.editor')
+                if (editorList.length > 0) {
+                    $.each(editorList, function (i, v) {
+                        var name = $(this).attr("name");
+                        dataField[name] = CKEDITOR.instances[name].getData();
+                    });
+                }
+
+                return dataField;
+            },
+
+            formSubmitCity(dataField, form) {
+
+                var cityList = $(form).closest('.layui-form').find('[data-toggle="city-picker"]');
+
+                if (cityList.length > 0) {
+                    $.each(cityList, function (i, v) {
+                        console.log(i);
+                        console.log(v);
+                        // format-all=解析全部，name=不进行解析（提交名称），code=不进行解析（提交地区代码），format-name=解析名称，format-code，解析地区代码
+
+                        var fieldName = $(v).attr('name');
+                        var code = $(v).data('citypicker').getCode();
+                        var text = $(v).data('citypicker').getVal();
+                        var level = $(v).data('level');
+                        var formatTargetList = {};
+
+                        console.log(level);
+
+                        formatTargetList['name'] = 1;
+                        formatTargetList['code'] = 1;
+                        formatTargetList['name-province'] = 1;
+                        formatTargetList['name-city'] = 1;
+                        formatTargetList['name-district'] = 1;
+                        formatTargetList['code-province'] = 1;
+                        formatTargetList['code-city'] = 1;
+                        formatTargetList['code-district'] = 1;
+
+
+                        $.each(formatTargetList, function (targetType, value) {
+
+                            var valueSet = $(v).data('field-' + targetType);
+
+                            if (valueSet == 0) {
+                                formatTargetList[targetType] = 0;
+                            }
+
+                        })
+
+                        var codeArr = code.split('/')
+                        var textArr = text.split('/');
+
+                        if (formatTargetList['name'] == 1) {
+                            dataField[fieldName] = text;
+                        }
+                        if (formatTargetList['code'] == 1) {
+                            dataField[fieldName + '_code'] = code;
+                        }
+                        if (formatTargetList['name-province'] == 1) {
+                            dataField[fieldName + '_name_province'] = textArr[0] || '';
+                        }
+                        if (formatTargetList['name-city'] == 1) {
+                            dataField[fieldName + '_name_city'] = textArr[1] || '';
+                        }
+                        if (formatTargetList['name-district'] == 1) {
+                            dataField[fieldName + '_name_district'] = textArr[2] || '';
+                        }
+                        if (formatTargetList['code-province'] == 1) {
+                            dataField[fieldName + '_code_province'] = codeArr[0] || '';
+                        }
+                        if (formatTargetList['code-city'] == 1) {
+                            dataField[fieldName + '_code_city'] = codeArr[1] || '';
+                        }
+                        if (formatTargetList['code-district'] == 1) {
+                            dataField[fieldName + '_code_district'] = codeArr[2] || '';
+                        }
+
+
+
+                        console.log(fieldName);
+
+                        console.log(code);
+                        console.log(text);
+
+                    })
+                }
+                return dataField
             },
             upload: function () {
                 var uploadList = document.querySelectorAll("[data-upload]");
