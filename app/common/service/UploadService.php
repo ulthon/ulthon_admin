@@ -2,9 +2,11 @@
 
 namespace app\common\service;
 
+use app\admin\model\SystemUploadfile;
 use think\facade\Filesystem;
 use think\facade\Validate;
 use think\File;
+use think\file\UploadedFile;
 
 class UploadService
 {
@@ -31,7 +33,7 @@ class UploadService
         if (!is_null($allow_size)) {
             $uploadConfig['upload_allow_size'] = $allow_size;
         }
-        
+
         $rule = [
             'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
             'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadConfig['upload_allow_size']}",
@@ -51,6 +53,21 @@ class UploadService
     public function save(File $file)
     {
 
+        $model_file = new SystemUploadfile();
+
+        $model_file->upload_type = $this->uploadType;
+        $model_file->file_ext = strtolower($file->extension());
+
+
+        if ($file instanceof UploadedFile) {
+
+            $model_file->original_name = $file->getOriginalName();
+            $model_file->mime_type = $file->getOriginalMime();
+        } else {
+            $model_file->original_name = $file->getFilename();
+            $model_file->mime_type = $file->getMime();
+        }
+
 
         $save_name = Filesystem::disk($this->uploadType)->putFile('upload', $file, function () {
             return date('Ymd') . DIRECTORY_SEPARATOR . uniqid();
@@ -58,6 +75,15 @@ class UploadService
 
         $url = build_upload_url($save_name);
 
+        $model_file->url = $url;
+        $model_file->save_name = $save_name;
+
+        $model_file->sha1 = $file->sha1();
+
+
+        $model_file->file_size = $file->getSize();
+
+        $model_file->save();
         return [
             'url' => $url,
             'save_name' => $save_name
