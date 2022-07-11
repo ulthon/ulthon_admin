@@ -1,0 +1,3 @@
+"/public/static/common/css/theme/*.scss",
+"/public/static/plugs/lay-module/tableData/tableData.scss",
+"/public/static/plugs/lay-module/tagInput/tagInput.scss"
