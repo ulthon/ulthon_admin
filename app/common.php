@@ -233,10 +233,13 @@ function build_upload_url($url)
 
     switch ($upload_type) {
         case 'local_public':
-            $prefix_url = Request::domain();
+            // $prefix_url = Request::domain();
             break;
         case 'qnoss':
             $prefix_url = $config['qnoss_domain'];
+            break;
+        case 'alioss':
+            $prefix_url = $config['alioss_domain'];
             break;
 
         default:

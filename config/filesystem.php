@@ -23,7 +23,10 @@ return [
         ],
         'qnoss' => [
             'type' => 'Qiniu'
-        ]
+        ],
+        'alioss' => [
+            'type' => 'Alioss'
+        ],
         // 更多的磁盘配置信息
     ],
 ];
