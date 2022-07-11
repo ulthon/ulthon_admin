@@ -10,7 +10,6 @@ class Txcos extends Driver
 {
     protected function createAdapter(): AdapterInterface
     {
-
         $secretId = sysconfig('upload', 'txcos_secret_id');
         $secretKey = sysconfig('upload', 'txcos_secret_key');
         $region = sysconfig('upload', 'txcos_region'); //set a default bucket region 设置一个默认的存储桶地域 
@@ -25,7 +24,7 @@ class Txcos extends Driver
                 'signHost' => false
             )
         );
-        $bucket = sysconfig('upload', 'tecos_bucket'); //存储桶名称 格式：BucketName-APPID
+        $bucket = sysconfig('upload', 'txcos_bucket'); //存储桶名称 格式：BucketName-APPID
 
 
 

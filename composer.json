@@ -23,7 +23,6 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-view": "^1.0",
         "topthink/think-captcha": "^3.0",
-        "qcloud/cos-sdk-v5": "^2.0",
         "zhongshaofa/easy-admin": "^1.0.2",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.4",

@@ -190,7 +190,7 @@ $ul_system_config = array(
         "sort" => 0,
     ),
     array(
-        "name" => "tecos_bucket",
+        "name" => "txcos_bucket",
         "group" => "upload",
         "value" => "填你的",
         "remark" => "存储桶名称",

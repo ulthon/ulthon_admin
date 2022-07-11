@@ -241,9 +241,9 @@ function build_upload_url($url)
         case 'alioss':
             $prefix_url = $config['alioss_domain'];
             break;
-        // case 'alioss':
-        //     $prefix_url = $config['alioss_domain'];
-        //     break;
+        case 'txcos':
+            $prefix_url = $config['txcos_domain'];
+            break;
 
         default:
             # code...
