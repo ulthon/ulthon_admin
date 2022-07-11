@@ -225,7 +225,7 @@ class BuildCurdService
      * 表单类型
      * @var array
      */
-    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city'];
+    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city','tag'];
 
     /**
      * 初始化
@@ -1277,6 +1277,8 @@ class BuildCurdService
             } elseif ($val['formType'] == 'city') {
                 $templateFile = "view{$this->DS}module{$this->DS}city";
                 $define = $this->buildCityView($field, $val, $val['default']);
+            }elseif ($val['formType'] == 'tag') {
+                $templateFile = "view{$this->DS}module{$this->DS}tag";
             }
 
 
@@ -1286,6 +1288,7 @@ class BuildCurdService
                     'comment'  => $val['comment'],
                     'field'    => $field,
                     'required' => $this->buildRequiredHtml($val['required']),
+                    'required_text'    => $val['required'] ? '1' : '',
                     'value'    => $val['default'],
                     'define'   => $define,
                 ]
@@ -1373,6 +1376,8 @@ class BuildCurdService
             } elseif ($val['formType'] == 'city') {
                 $templateFile = "view{$this->DS}module{$this->DS}city";
                 $define = $this->buildCityView($field, $val, $value);
+            }elseif ($val['formType'] == 'tag') {
+                $templateFile = "view{$this->DS}module{$this->DS}tag";
             }
 
             $editFormList .= $this->replaceTemplate(
@@ -1381,6 +1386,7 @@ class BuildCurdService
                     'comment'  => $val['comment'],
                     'field'    => $field,
                     'required' => $this->buildRequiredHtml($val['required']),
+                    'required_text'    => $val['required'] ? '1' : '',
                     'value'    => $value,
                     'define'   => $define,
                 ]
@@ -1479,7 +1485,7 @@ class BuildCurdService
             }
         }
 
-        $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool},\r");
+        $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool , fixed:'right'},\r");
 
         $jsValue = $this->replaceTemplate(
             $this->getTemplate("static{$this->DS}js"),

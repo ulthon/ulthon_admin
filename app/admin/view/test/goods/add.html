@@ -144,9 +144,9 @@
             </div>
         </div>        
         <div class="layui-form-item">
-            <label class="layui-form-label">商品标签2</label>
+            <label class="layui-form-label">商品标签（单选）</label>
             <div class="layui-input-block">
-                <div data-toggle="table-data" data-index="{:__url('mall.tag/index')}" data-select-type="checkbox" data-select-value="" data-value-field="id" data-name="tag_backup" data-field-name="title" data-required="">
+                <div data-toggle="table-data" data-index="{:__url('mall.tag/index')}" data-select-type="radio" data-select-value="" data-value-field="id" data-name="tag_backup" data-field-name="title" data-required="">
 
                 </div>
             </div>
@@ -160,7 +160,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">仓库</label>
             <div class="layui-input-block">
-                <input class="layui-input" name="store_city" data-toggle="city-picker" lay-verify="required" value="" type="text" data-level="city" readonly >
+                <input class="layui-input" name="store_city" data-toggle="city-picker" lay-verify="required" value="山东省/临沂市" type="text" data-level="city" readonly >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品标签 （输入）</label>
+            <div class="layui-input-block">
+                <div data-toggle="tag-input" data-name="tag_input" data-value="" data-required="1"></div>
             </div>
         </div>
         <div class="hr-line"></div>

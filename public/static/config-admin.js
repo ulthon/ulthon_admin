@@ -18,6 +18,7 @@ require.config({
         "treetable": ["plugs/lay-module/treetable-lay/treetable"],
         "tableSelect": ["plugs/lay-module/tableSelect/tableSelect"],
         "tableData": ["plugs/lay-module/tableData/tableData"],
+        "tagInput": ["plugs/lay-module/tagInput/tagInput"],
         "iconPickerFa": ["plugs/lay-module/iconPicker/iconPickerFa"],
         "autocomplete": ["plugs/lay-module/autocomplete/autocomplete"],
         "vue": ["plugs/vue-2.6.10/vue.min"],

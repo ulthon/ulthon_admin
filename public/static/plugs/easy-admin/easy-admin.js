@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker'], function ($, tableSelect, undefined, miniTheme, tableData) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker','tagInput'], function ($, tableSelect, undefined, miniTheme, tableData,citypicker,tagInput) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -1355,6 +1355,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             // 监听通用表格数据控件生成
             admin.api.tableData();
 
+            // 监听标签输入控件生成
+            admin.api.tagInput();
+
             // 初始化layui表单
             form.render();
 
@@ -1734,17 +1737,12 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 if (cityList.length > 0) {
                     $.each(cityList, function (i, v) {
-                        console.log(i);
-                        console.log(v);
-                        // format-all=解析全部，name=不进行解析（提交名称），code=不进行解析（提交地区代码），format-name=解析名称，format-code，解析地区代码
 
                         var fieldName = $(v).attr('name');
                         var code = $(v).data('citypicker').getCode();
                         var text = $(v).data('citypicker').getVal();
                         var level = $(v).data('level');
                         var formatTargetList = {};
-
-                        console.log(level);
 
                         formatTargetList['name'] = 1;
                         formatTargetList['code'] = 1;
@@ -1793,13 +1791,6 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         if (formatTargetList['code-district'] == 1) {
                             dataField[fieldName + '_code_district'] = codeArr[2] || '';
                         }
-
-
-
-                        console.log(fieldName);
-
-                        console.log(code);
-                        console.log(text);
 
                     })
                 }
@@ -2058,13 +2049,21 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 }
             },
             tableData() {
-                var dateList = document.querySelectorAll('[data-toggle="table-data"]');
-                $.each(dateList, function (i, v) {
+                var tableList = document.querySelectorAll('[data-toggle="table-data"]');
+                $.each(tableList, function (i, v) {
                     var data = $(v).data()
                     tableData.render(v, data, admin);
                 });
 
-            }
+            },
+            tagInput() {
+                var list = document.querySelectorAll('[data-toggle="tag-input"]');
+                $.each(list, function (i, v) {
+                    var data = $(v).data()
+                    tagInput.render(v, data, admin);
+                });
+
+            },
         },
         getQueryVariable(variable, defaultValue) {
             if (typeof defaultValue == 'undefined') {
