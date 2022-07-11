@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker','tagInput'], function ($, tableSelect, undefined, miniTheme, tableData,citypicker,tagInput) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -718,7 +718,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 return html;
             },
-            buildOperatHtml: function (operat) {
+            buildOperatHtml: function (operat, data) {
                 var html = '';
                 operat.class = operat.class || '';
                 operat.icon = operat.icon || '';
@@ -727,6 +727,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 operat.extend = operat.extend || '';
                 operat.method = operat.method || 'open';
                 operat.field = operat.field || 'id';
+                operat.data = operat.data || ['id'];
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
 
@@ -742,7 +743,13 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 } else {
                     formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
                 }
-                html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + '>' + formatOperat.icon + formatOperat.text + '</a>';
+
+                formatOperat.dataBind = ' ';
+                operat.data.forEach((item, index) => {
+                    formatOperat.dataBind += 'data-' + item + '="' + data[item] + '" '
+                });
+
+                html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + formatOperat.dataBind + '>' + formatOperat.icon + formatOperat.text + '</a>';
 
                 return html;
             },
@@ -862,7 +869,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    html += admin.table.buildOperatHtml(operat);
+                                    html += admin.table.buildOperatHtml(operat, data);
                                 }
                                 break;
                             case 'delete':
@@ -879,7 +886,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    html += admin.table.buildOperatHtml(operat);
+                                    html += admin.table.buildOperatHtml(operat, data);
                                 }
                                 break;
                         }
@@ -909,7 +916,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             }
 
                             if (admin.checkAuth(operat.auth, elem)) {
-                                html += admin.table.buildOperatHtml(operat);
+                                html += admin.table.buildOperatHtml(operat, data);
                             }
                         });
                     }

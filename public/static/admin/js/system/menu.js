@@ -35,10 +35,10 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
 
                     // @todo 不直接使用ea.table.render(); 进行表格初始化, 需要使用 ea.table.formatCols(); 方法格式化`cols`列数据
                     cols: ea.table.formatCols([[
-                        {type: 'checkbox'},
-                        {field: 'title', width: 250, title: '菜单名称', align: 'left'},
-                        {field: 'icon', width: 80, title: '图标', templet: ea.table.icon},
-                        {field: 'href', minWidth: 120, title: '菜单链接'},
+                        { type: 'checkbox' },
+                        { field: 'title', width: 250, title: '菜单名称', align: 'left' },
+                        { field: 'icon', width: 80, title: '图标', templet: ea.table.icon },
+                        { field: 'href', minWidth: 120, title: '菜单链接' },
                         {
                             field: 'is_home',
                             width: 80,
@@ -54,8 +54,8 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                 }
                             }
                         },
-                        {field: 'status', title: '状态', width: 85, templet: ea.table.switch},
-                        {field: 'sort', width: 80, title: '排序', edit: 'text'},
+                        { field: 'status', title: '状态', width: 85, templet: ea.table.switch },
+                        { field: 'sort', width: 80, title: '排序', edit: 'text' },
                         {
                             width: 220,
                             title: '操作',
@@ -76,8 +76,15 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'edit',
                                     class: 'layui-btn layui-btn-xs layui-btn-success',
                                     extend: 'data-full="true"',
-                                }],
-                                'delete'
+                                }, {
+                                    text: '删除',
+                                    method: 'none',
+                                    auth: 'delete',
+                                    class: 'layui-btn layui-btn-xs layui-btn-danger',
+                                    extend: 'data-treetable-delete-item="1" data-url="'+init.delete_url+'"',
+                                    data: ['id', 'title']
+                                },],
+
                             ]
                         }
                     ]], init),
@@ -98,6 +105,25 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             $('body').on('click', '[data-treetable-refresh]', function () {
                 renderTable();
             });
+
+            $('body').on('click', '[data-treetable-delete-item]', function () {
+                var id = $(this).data('id');
+                var url = $(this).attr('data-url');
+                url = url != undefined ? ea.url(url) : window.location.href;
+                ea.msg.confirm('确定删除？', function () {
+                    ea.request.post({
+                        url: url,
+                        data: {
+                            id: id
+                        },
+                    }, function (res) {
+                        ea.msg.success(res.msg, function () {
+                            renderTable();
+                        });
+                    });
+                });
+                return false;
+            })
 
             $('body').on('click', '[data-treetable-delete]', function () {
                 var tableId = $(this).attr('data-treetable-delete'),
@@ -129,7 +155,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                 return false;
             });
 
-            ea.table.listenSwitch({filter: 'status', url: init.modify_url});
+            ea.table.listenSwitch({ filter: 'status', url: init.modify_url });
 
             ea.table.listenEdit(init, 'currentTable', init.table_render_id, true);
 
