@@ -225,7 +225,7 @@ class BuildCurdService
      * 表单类型
      * @var array
      */
-    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table'];
+    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city'];
 
     /**
      * 初始化
@@ -665,9 +665,9 @@ class BuildCurdService
         preg_match('/\([\s\S]*?\)/i', $string, $defineMatch);
         if (!empty($formTypeMatch) && isset($defineMatch[0])) {
             $colum['comment'] = str_replace($defineMatch[0], '', $colum['comment']);
-            if (isset($colum['formType']) && in_array($colum['formType'], ['images', 'files', 'select', 'switch', 'radio', 'checkbox', 'date', 'relation', 'table'])) {
+            if (isset($colum['formType']) && in_array($colum['formType'], ['images', 'files', 'select', 'switch', 'radio', 'checkbox', 'date', 'relation', 'table', 'city'])) {
                 $define = str_replace(')', '', str_replace('(', '', $defineMatch[0]));
-                if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox', 'relation', 'table'])) {
+                if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox', 'relation', 'table', 'city'])) {
                     $formatDefine = [];
                     $explodeArray = explode(',', $define);
                     foreach ($explodeArray as $vo) {
@@ -708,7 +708,7 @@ class BuildCurdService
         );
         return $selectCode;
     }
-   
+
     /**
      * 构架下拉模型
      * @param $field
@@ -753,6 +753,54 @@ class BuildCurdService
         );
         return $optionCode;
     }
+
+    protected function buildCityView($field, $options, $value)
+    {
+
+
+        $default_define = [
+            'comment' => $options['comment'],
+            'field' => $field,
+            'required' => $this->buildRequiredHtml($options['required']),
+            'value' => $value,
+            'level' => ''
+        ];
+
+
+
+
+        $define = array_merge($default_define, $options['define']);
+
+
+        $formatTargetList = [];
+        $formatTargetList['name'] = 1;
+        $formatTargetList['code'] = 1;
+        $formatTargetList['name-province'] = 1;
+        $formatTargetList['name-city'] = 1;
+        $formatTargetList['name-district'] = 1;
+        $formatTargetList['code-province'] = 1;
+        $formatTargetList['code-city'] = 1;
+        $formatTargetList['code-district'] = 1;
+
+        $submit_field_content = '';
+
+        foreach ($formatTargetList as $key => $value) {
+            if (isset($define[$key])) {
+                $submit_field_content .= 'data-field-' . $key . '="' . $define[$key] . '" ';
+            }
+        }
+
+        $define['submit_field_content'] = $submit_field_content;
+
+
+        $city_main_code = $this->replaceTemplate(
+            $this->getTemplate("view{$this->DS}module{$this->DS}cityMain"),
+            $define
+        );
+
+        return $city_main_code;
+    }
+
     /**
      * 构建表格选择器视图
      * @param $field
@@ -1226,6 +1274,9 @@ class BuildCurdService
             } elseif ($val['formType'] == 'table') {
                 $templateFile = "view{$this->DS}module{$this->DS}table";
                 $define = $this->buildTableView($field, $val, $val['default']);
+            } elseif ($val['formType'] == 'city') {
+                $templateFile = "view{$this->DS}module{$this->DS}city";
+                $define = $this->buildCityView($field, $val, $val['default']);
             }
 
 
@@ -1319,6 +1370,9 @@ class BuildCurdService
             } elseif ($val['formType'] == 'table') {
                 $templateFile = "view{$this->DS}module{$this->DS}table";
                 $define = $this->buildTableView($field, $val, $value);
+            } elseif ($val['formType'] == 'city') {
+                $templateFile = "view{$this->DS}module{$this->DS}city";
+                $define = $this->buildCityView($field, $val, $value);
             }
 
             $editFormList .= $this->replaceTemplate(

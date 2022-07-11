@@ -1,6 +1,6 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-
+                
         <div class="layui-form-item">
             <label class="layui-form-label">分类ID</label>
             <div class="layui-input-block">
@@ -18,7 +18,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">商品logo</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="logo" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传商品logo" value="{$row.logo|default=''}">
+                <input name="logo" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传商品logo" value="{$row.logo|default=''}">
                 <div class="layuimini-upload-btn">
                     <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
                     <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
@@ -28,7 +28,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">商品图片</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="images" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传商品图片" value="{$row.images|default=''}">
+                <input name="images" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传商品图片" value="{$row.images|default=''}">
                 <div class="layuimini-upload-btn">
                     <span><a class="layui-btn" data-upload="images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image" data-upload-sign=""><i class="fa fa-upload"></i> 上传</a></span>
                     <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="images" data-upload-number="more" data-upload-mimetype="image/*" data-upload-sign=""><i class="fa fa-list"></i> 选择</a></span>
@@ -57,7 +57,7 @@
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
                 {foreach $select_list_status as $k=>$v}
-                <input type="radio" name="status" value="{$k}" title="{$v}" {in name="k" value="$row.status" }checked="" {/in}>
+                <input type="radio" name="status" value="{$k}" title="{$v}" {in name="k" value="$row.status"}checked=""{/in}>
                 {/foreach}
             </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">合格证</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="cert_file" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传合格证" value="{$row.cert_file|default=''}">
+                <input name="cert_file" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传合格证" value="{$row.cert_file|default=''}">
                 <div class="layuimini-upload-btn">
                     <span><a class="layui-btn" data-upload="cert_file" data-upload-number="one" data-upload-exts="zip" data-upload-icon="file" data-disable-preview="1"><i class="fa fa-upload"></i> 上传</a></span>
                     <span><a class="layui-btn layui-btn-normal" id="select_cert_file" data-upload-select="cert_file" data-upload-number="one" data-upload-mimetype="*"><i class="fa fa-list"></i> 选择</a></span>
@@ -75,9 +75,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">检测报告</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="verfiy_file" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传检测报告" value="{$row.verfiy_file|default=''}">
+                <input name="verfiy_file" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传检测报告" value="{$row.verfiy_file|default=''}">
                 <div class="layuimini-upload-btn">
-                    <span><a class="layui-btn" data-upload="verfiy_file" data-upload-number="more" data-upload-exts="zip" data-upload-icon="file" data-disable-preview="1"><i class="fa fa-upload" data-upload-sign=""></i> 上传</a></span>
+                    <span><a class="layui-btn" data-upload="verfiy_file" data-upload-number="more" data-upload-exts="zip" data-upload-icon="file" data-disable-preview="1"><i class="fa fa-upload" data-upload-sign="" ></i> 上传</a></span>
                     <span><a class="layui-btn layui-btn-normal" id="select_verfiy_file" data-upload-select="verfiy_file" data-upload-number="more" data-upload-mimetype="*" data-upload-sign=""><i class="fa fa-list"></i> 选择</a></span>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                 <select name="time_status" lay-verify="required">
                     <option value=''></option>
                     {foreach $select_list_time_status as $k=>$v}
-                    <option value='{$k}' {in name="k" value="$row.time_status" }selected="" {/in}>{$v}</option>
+                    <option value='{$k}' {in name="k" value="$row.time_status"}selected=""{/in}>{$v}</option>
                     {/foreach}
                 </select>
             </div>
@@ -121,7 +121,7 @@
             <label class="layui-form-label">是否推荐</label>
             <div class="layui-input-block">
                 {foreach $select_list_is_recommend as $k=>$v}
-                <input type="radio" name="is_recommend" value="{$k}" title="{$v}" {in name="k" value="$row.is_recommend" }checked="" {/in}>
+                <input type="radio" name="is_recommend" value="{$k}" title="{$v}" {in name="k" value="$row.is_recommend"}checked=""{/in}>
                 {/foreach}
             </div>
         </div>
@@ -130,11 +130,11 @@
             <label class="layui-form-label">商品类型</label>
             <div class="layui-input-block">
                 {foreach $select_list_shop_type as $k=>$v}
-                <input type="checkbox" name="shop_type[]" value="{$k}" lay-skin="primary" title="{$v}" {in name="k" value="$row.shop_type" }checked="" {/in}>
+                <input type="checkbox" name="shop_type[]" value="{$k}" lay-skin="primary" title="{$v}" {in name="k" value="$row.shop_type"}checked=""{/in}>
                 {/foreach}
             </div>
         </div>
-
+        
         <div class="layui-form-item">
             <label class="layui-form-label">商品标签</label>
             <div class="layui-input-block">
@@ -142,7 +142,7 @@
 
                 </div>
             </div>
-        </div>
+        </div>        
         <div class="layui-form-item">
             <label class="layui-form-label">商品标签2</label>
             <div class="layui-input-block">
@@ -150,21 +150,17 @@
 
                 </div>
             </div>
-        </div>
+        </div>        
         <div class="layui-form-item">
             <label class="layui-form-label">产地</label>
             <div class="layui-input-block">
-
-                <input class="layui-input" name="from_area" value="{$row.from_area|default=''}" data-field-code="0" readonly type="text" data-toggle="city-picker">
-
+                <input class="layui-input" name="from_area" data-toggle="city-picker" lay-verify="required" value="{$row.from_area|default=''}" type="text" data-level="" readonly data-field-code="0" data-field-name-province="0" >
             </div>
-        </div>
+        </div>        
         <div class="layui-form-item">
             <label class="layui-form-label">仓库</label>
             <div class="layui-input-block">
-
-                <input class="layui-input" name="store_city" value="{$row.store_city|default=''}" readonly type="text" data-toggle="city-picker" data-level="city" >
-
+                <input class="layui-input" name="store_city" data-toggle="city-picker" lay-verify="required" value="{$row.store_city|default=''}" type="text" data-level="city" readonly >
             </div>
         </div>
         <div class="hr-line"></div>
