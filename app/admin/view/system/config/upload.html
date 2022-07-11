@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">存储方式</label>
         <div class="layui-input-block">
-            {foreach ['local'=>'本地存储','alioss'=>'阿里云oss','qnoss'=>'七牛云oss','txcos'=>'腾讯云cos'] as $key=>$val}
+            {foreach ['local_public'=>'本地存储','alioss'=>'阿里云oss','qnoss'=>'七牛云oss','txcos'=>'腾讯云cos'] as $key=>$val}
             <input type="radio" v-model="upload_type" name="upload_type" lay-filter="upload_type" value="{$key}" title="{$val}" {if $key==sysconfig('upload','upload_type')}checked=""{/if}>
             {/foreach}
         </div>
@@ -53,7 +53,7 @@
         <label class="layui-form-label required">空间名称</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入空间名称" placeholder="请输入空间名称" value="{:sysconfig('upload','alioss_bucket')}">
-            <tip>例子：easy-admin</tip>
+            <tip>例子：ulthon-admin</tip>
         </div>
     </div>
 
@@ -61,7 +61,7 @@
         <label class="layui-form-label required">访问域名</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_domain" class="layui-input" lay-verify="required" lay-reqtext="请输入访问域名" placeholder="请输入访问域名" value="{:sysconfig('upload','alioss_domain')}">
-            <tip>例子：easy-admin.oss-cn-shenzhen.aliyuncs.com</tip>
+            <tip>例子：ulthon-admin.oss-cn-shenzhen.aliyuncs.com</tip>
         </div>
     </div>
 
@@ -93,7 +93,7 @@
         <label class="layui-form-label required">存储桶名称</label>
         <div class="layui-input-block">
             <input type="text" name="tecos_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入存储桶名称" placeholder="请输入存储桶名称" value="{:sysconfig('upload','tecos_bucket')}">
-            <tip>例子：easyadmin-1251997243</tip>
+            <tip>例子：ulthon-admin-1251997243</tip>
         </div>
     </div>
 
@@ -117,7 +117,7 @@
         <label class="layui-form-label required">存储空间</label>
         <div class="layui-input-block">
             <input type="text" name="qnoss_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入存储桶地域" placeholder="请输入存储桶地域" value="{:sysconfig('upload','qnoss_bucket')}">
-            <tip>例子：easyadmin</tip>
+            <tip>例子：ulthon-admin</tip>
         </div>
     </div>
 

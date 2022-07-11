@@ -3,6 +3,7 @@
 
 use app\common\service\AuthService;
 use think\facade\Cache;
+use think\facade\Request;
 use think\route\Url;
 
 if (!function_exists('__url')) {
@@ -218,4 +219,29 @@ if (!function_exists('unparse_url')) {
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
         return "$scheme$user$pass$host$port$path$query$fragment";
     }
+}
+
+
+function build_upload_url($url)
+{
+    $config = sysconfig('upload');
+
+
+    $upload_type = $config['upload_type'] ?? 'local_public';
+
+    $prefix_url = '';
+
+    switch ($upload_type) {
+        case 'local_public':
+            $prefix_url = Request::domain();
+            break;
+        case 'qnoss':
+            $prefix_url = $config['qnoss_domain'];
+            break;
+
+        default:
+            # code...
+            break;
+    }
+    return trim($prefix_url, '/') . '/' . trim($url, '/');
 }

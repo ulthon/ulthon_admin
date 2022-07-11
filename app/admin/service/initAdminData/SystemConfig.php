@@ -17,8 +17,8 @@ $ul_system_config = array(
     array(
         "name" => "upload_type",
         "group" => "upload",
-        "value" => "local",
-        "remark" => "当前上传方式 （local,alioss,qnoss,txoss）",
+        "value" => "local_public",
+        "remark" => "当前上传方式 local_public,alioss,qnoss,txoss）",
         "sort" => 0,
     ),
     array(
@@ -45,7 +45,7 @@ $ul_system_config = array(
     array(
         "name" => "upload_allow_type",
         "group" => "upload",
-        "value" => "local,alioss,qnoss,txcos",
+        "value" => "local_public,alioss,qnoss,txcos",
         "remark" => "可用的上传文件方式",
         "sort" => 0,
     ),

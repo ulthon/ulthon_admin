@@ -25,13 +25,13 @@
         "topthink/think-captcha": "^3.0",
         "aliyuncs/oss-sdk-php": "^2.3",
         "qcloud/cos-sdk-v5": "^2.0",
-        "qiniu/php-sdk": "^7.2",
         "alibabacloud/client": "^1.5",
         "zhongshaofa/easy-admin": "^1.0.2",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
-        "topthink/think-migration": "^3.0"
+        "topthink/think-migration": "^3.0",
+        "overtrue/flysystem-qiniu": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

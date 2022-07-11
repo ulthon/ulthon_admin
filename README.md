@@ -2,17 +2,6 @@
 
 新版基于`EasyAdmin`打造,`EasyAdmin`是一款优秀的开源后台框架,致谢.
 
-
-
-
-[![Php Version](https://img.shields.io/badge/php-%3E=7.1.0-brightgreen.svg?maxAge=2592000&color=yellow)](https://github.com/php/php-src)
-[![Mysql Version](https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&color=orange)](https://www.mysql.com/)
-[![Thinkphp Version](https://img.shields.io/badge/thinkphp-%3E=6.0.2-brightgreen.svg?maxAge=2592000)](https://github.com/top-think/framework)
-[![Layui Version](https://img.shields.io/badge/layui-=2.5.5-brightgreen.svg?maxAge=2592000&color=critical)](https://github.com/sentsin/layui)
-[![Layuimini Version](https://img.shields.io/badge/layuimini-%3E=2.0.4.2-brightgreen.svg?maxAge=2592000&color=ff69b4)](https://github.com/ulthon/layuimini)
-[![ulthon_admin Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](http://doc.ulthon.com/home/read/ulthon_admin/home.html)
-[![ulthon_admin License](https://img.shields.io/badge/license-mulan-green?maxAge=2592000&color=blue)](https://gitee.com/ulthon/ulthon_admin/blob/master/LICENSE)
-
 ## 项目介绍
 
 只为`开发人员`服务,只为`需求定制`服务.
@@ -73,7 +62,7 @@ php think run
 
 * 文档地址：[http://doc.ulthon.com/home/read/ulthon_admin/home.html](http://doc.ulthon.com/home/read/ulthon_admin/home.html)
 
-* 演示地址：[http://admin.demo.ulthon.com](http://admin.demo.ulthon.com)（账号：admin，密码：123456。备注：只有查看信息的权限）
+* 演示地址：[http://admin.demo.ulthon.com/admin](http://admin.demo.ulthon.com/admin)（账号：admin，密码：123456。备注：只有查看信息的权限）
  
 ## 代码仓库
 
@@ -106,9 +95,7 @@ php think run
    * 对table表格再次封装，在使用上更加舒服
    * 根据table的`cols`参数再次进行封装，提供接口实现`image`、`switch`、`list`等功能，再次基础上可以自己再次扩展
    * 根据table参数一键生成`搜索表单`，无需自己编写
-* 完善的后台操作日志
-   * 记录用户的详细操作信息
-   * 按月份进行`分表记录`
+* 默认使用数据库记录日志
 * 一键部署静态资源到OSS上
    * 所有在`public\static`目录下的文件都可以一键部署
    * 一个配置项切换静态资源（oss/本地）
