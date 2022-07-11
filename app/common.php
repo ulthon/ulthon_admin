@@ -233,7 +233,7 @@ function build_upload_url($url)
 
     switch ($upload_type) {
         case 'local_public':
-            // $prefix_url = Request::domain();
+            $prefix_url = Request::domain().'/storage';
             break;
         case 'qnoss':
             $prefix_url = $config['qnoss_domain'];
@@ -249,5 +249,5 @@ function build_upload_url($url)
             # code...
             break;
     }
-    return trim($prefix_url, '/') . '/' . trim($url, '/');
+    return rtrim($prefix_url, '/') . '/' . ltrim($url, '/');
 }
