@@ -70,7 +70,7 @@ class UploadService
 
 
         $save_name = Filesystem::disk($this->uploadType)->putFile('upload', $file, function () {
-            return date('Ymd') . DIRECTORY_SEPARATOR . uniqid();
+            return date('Ymd') . '/' . uniqid();
         });
 
         $url = build_upload_url($save_name);

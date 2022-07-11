@@ -27,6 +27,9 @@ return [
         'alioss' => [
             'type' => 'Alioss'
         ],
+        'txcos' => [
+            'type' => 'Txcos'
+        ],
         // 更多的磁盘配置信息
     ],
 ];

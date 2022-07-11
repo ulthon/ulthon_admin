@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "111f94878583850a9fed799619afc3d7",
+    "content-hash": "2dae06d14067806fb0de04359c23b7e7",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -45,6 +45,43 @@
             "description": "Aliyun OSS SDK for PHP",
             "homepage": "http://www.aliyun.com/product/oss/",
             "time": "2022-05-13T07:41:28+00:00"
+        },
+        {
+            "name": "chunpat/flysystem-tencent-cos",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chunpat/flysystem-tencent-cos.git",
+                "reference": "ef53f4aea50614055b4ea785e742a09a011b9c0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.huaweicloud.com/repository/php/chunpat/flysystem-tencent-cos/0.0.1/chunpat-flysystem-tencent-cos-0.0.1.zip",
+                "reference": "ef53f4aea50614055b4ea785e742a09a011b9c0c",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0",
+                "php": ">=7.1.0",
+                "qcloud/cos-sdk-v5": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Chunpat\\FlysystemTencentCos\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "chunpat",
+                    "email": "chunpat@163.com"
+                }
+            ],
+            "description": "Package description here.",
+            "time": "2020-06-22T17:18:34+00:00"
         },
         {
             "name": "doctrine/annotations",
