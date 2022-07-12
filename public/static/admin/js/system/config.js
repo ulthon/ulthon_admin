@@ -5,15 +5,12 @@ define(["jquery", "easy-admin", "vue"], function ($, ea, Vue) {
     var Controller = {
         index: function () {
 
-            var app = new Vue({
-                el: '#app',
-                data: {
-                    upload_type: upload_type
-                }
-            });
-
+            $('.show-type-item').hide();
+            $('.show-type-item.' + upload_type).show();
             form.on("radio(upload_type)", function (data) {
-                app.upload_type = this.value;
+
+                $('.show-type-item').hide();
+                $('.show-type-item.' + this.value).show();
             });
 
             ea.listen();

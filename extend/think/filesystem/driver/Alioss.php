@@ -22,4 +22,9 @@ class Alioss  extends Driver
             $config
         );
     }
+
+    public function url(string $path): string
+    {
+        return $this->concatPathToUrl(sysconfig('upload', 'alioss_domain'), $path);
+    }
 }

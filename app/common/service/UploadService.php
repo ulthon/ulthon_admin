@@ -50,6 +50,12 @@ class UploadService
         return $this->validate($file, $allow_ext, $allow_size, true);
     }
 
+    public function url($save_name)
+    {
+        $url = Filesystem::disk($this->uploadType)->url($save_name);
+        return $url;
+    }
+
     public function save(File $file)
     {
 
@@ -73,7 +79,7 @@ class UploadService
             return date('Ymd') . '/' . uniqid();
         });
 
-        $url = build_upload_url($save_name);
+        $url = $this->url($save_name);
 
         $model_file->url = $url;
         $model_file->save_name = $save_name;

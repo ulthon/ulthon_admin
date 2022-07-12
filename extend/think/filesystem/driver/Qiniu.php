@@ -16,5 +16,10 @@ class Qiniu  extends Driver
             sysconfig('upload','qnoss_domain')
         );
     }
+
+    public function url(string $path): string
+    {
+        return $this->concatPathToUrl(sysconfig('upload', 'qnoss_domain'), $path);
+    }
 }
 

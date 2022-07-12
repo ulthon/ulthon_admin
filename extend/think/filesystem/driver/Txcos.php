@@ -32,4 +32,9 @@ class Txcos extends Driver
 
         return $adapter;
     }
+
+    public function url(string $path): string
+    {
+        return $this->concatPathToUrl(sysconfig('upload', 'txcos_domain'), $path);
+    }
 }

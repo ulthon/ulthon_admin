@@ -3,6 +3,7 @@
 
 use app\common\service\AuthService;
 use think\facade\Cache;
+use think\facade\Filesystem;
 use think\facade\Request;
 use think\route\Url;
 
@@ -222,32 +223,11 @@ if (!function_exists('unparse_url')) {
 }
 
 
-function build_upload_url($url)
+function build_upload_url($url, $upload_type = null)
 {
-    $config = sysconfig('upload');
 
-
-    $upload_type = $config['upload_type'] ?? 'local_public';
-
-    $prefix_url = '';
-
-    switch ($upload_type) {
-        case 'local_public':
-            $prefix_url = Request::domain().'/storage';
-            break;
-        case 'qnoss':
-            $prefix_url = $config['qnoss_domain'];
-            break;
-        case 'alioss':
-            $prefix_url = $config['alioss_domain'];
-            break;
-        case 'txcos':
-            $prefix_url = $config['txcos_domain'];
-            break;
-
-        default:
-            # code...
-            break;
+    if (is_null($upload_type)) {
+        $upload_type = sysconfig('upload', 'upload_type', 'local_public');
     }
-    return rtrim($prefix_url, '/') . '/' . ltrim($url, '/');
+    return Filesystem::disk($upload_type)->url($url);
 }

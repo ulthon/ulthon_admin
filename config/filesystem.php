@@ -1,6 +1,7 @@
 <?php
 
 use think\facade\Env;
+use think\facade\Request;
 
 return [
     // 默认磁盘
@@ -17,7 +18,7 @@ return [
             // 磁盘路径
             'root'       => app()->getRootPath() . 'public/storage',
             // 磁盘路径对应的外部URL路径
-            'url'        => '/storage',
+            'url'        => Request::domain() . '/storage',
             // 可见性
             'visibility' => 'public',
         ],
