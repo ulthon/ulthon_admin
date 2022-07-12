@@ -13,7 +13,7 @@ class UploadService
 
     protected $uploadType = 'local_public';
 
-    public function __construct($upload_type = 'local_public')
+    public function __construct($upload_type = null)
     {
         $uploadConfig = sysconfig('upload');
 
@@ -56,10 +56,32 @@ class UploadService
         return $url;
     }
 
-    public function save(File $file, string $save_name = null)
+    /**
+     * 存储文件
+     *
+     * @param File $file
+     * @param string|null $save_name
+     * @param boolean $force_save 指定$save_name才可以用,设为true强制写入（不报错，如果存在则删除），否则是驱动的默认行为（覆盖、失败、异常）
+     * @param string $upload_dir
+     * @param bool $disable_model
+     * @return mixed
+     */
+    public function save(File $file, string $save_name = null, $force_save = false, $upload_dir = 'upload', $disable_model = false)
     {
 
-        $model_file = new SystemUploadfile();
+        $model_file = null;
+
+        if ($force_save && !is_null($save_name)) {
+            $file_path = $upload_dir . '/' . $save_name;
+            if (Filesystem::disk($this->uploadType)->has($file_path)) {
+                $model_file = SystemUploadfile::where('save_name', $save_name)->where('upload_type', $this->uploadType)->find();
+                Filesystem::disk($this->uploadType)->delete($file_path);
+            }
+        }
+
+        if (empty($model_file)) {
+            $model_file = new SystemUploadfile();
+        }
 
         $model_file->upload_type = $this->uploadType;
         $model_file->file_ext = strtolower($file->extension());
@@ -74,9 +96,21 @@ class UploadService
             $model_file->mime_type = $file->getMime();
         }
 
-        $save_name = Filesystem::disk($this->uploadType)->putFile('upload', $file, function () use ($save_name) {
+
+        $save_name = Filesystem::disk($this->uploadType)->putFile($upload_dir, $file, function () use ($save_name,$file) {
             if (!is_null($save_name)) {
-                return $save_name;
+
+                $ext_name = $file->extension();
+
+                if(empty($ext_name)){
+                    return $save_name;
+                }
+
+                $list_name = explode('.',$save_name);
+
+                array_pop($list_name);
+
+                return implode('.', $list_name);
             }
             return date('Ymd') . '/' . uniqid();
         });
@@ -88,13 +122,11 @@ class UploadService
 
         $model_file->sha1 = $file->sha1();
 
-
         $model_file->file_size = $file->getSize();
-
-        $model_file->save();
-        return [
-            'url' => $url,
-            'save_name' => $save_name
-        ];
+        
+        if (!$disable_model) {
+            $model_file->save();
+        }
+        return $model_file;
     }
 }
