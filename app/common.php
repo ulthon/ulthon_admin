@@ -222,6 +222,18 @@ if (!function_exists('unparse_url')) {
     }
 }
 
+if (!function_exists('ua_htmlspecialchars')) {
+    function ua_htmlspecialchars($string)
+    {
+
+        if (is_null($string)) {
+            $string = '';
+        }
+
+        return htmlspecialchars($string);
+    }
+}
+
 
 function build_upload_url($url, $upload_type = null)
 {

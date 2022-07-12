@@ -34,7 +34,8 @@
 }
 
 .layui-table {
-    color: #2e3436;
+    color     : #2e3436;
+    background: transparent;
 }
 
 .layui-table-view .layui-table[lay-size="sm"] .layui-table-cell {
@@ -307,7 +308,7 @@
     transition         : none;
     padding            : 3px 12px;
     min-height         : 30px;
-    min-width          : 30px;
+    min-width          : 65px;
     display            : flex;
     justify-content    : center;
     align-items        : center;
@@ -666,10 +667,22 @@
     padding    : 0 10px;
 }
 
-.layuimini-container .layui-form-select dl dd.layui-this{
+.layuimini-container .layui-form-select dl dd.layui-this {
     background-color: #3c88e5 !important;
 }
 
 .layui-table-header .layui-table {
     margin-bottom: 0;
+}
+
+.layui-header .layui-nav .layui-nav-child dd.layui-this a,
+.layui-header .layui-nav-child dd.layui-this,
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child .layui-this a {
+    background-color: #3c88e5 !important;
+}
+
+.layuimini-mobile-show {
+    .layui-nav-more {
+        top: 4px;
+    }
 }

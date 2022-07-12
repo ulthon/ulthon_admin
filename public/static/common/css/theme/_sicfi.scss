@@ -741,3 +741,9 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-iconpicker .layui-iconpicker-list {
     background-color: $black-color;
 }
+
+.layui-header .layui-nav .layui-nav-child dd.layui-this a,
+.layui-header .layui-nav-child dd.layui-this,
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child .layui-this a {
+    background-color: $active-color !important;
+}

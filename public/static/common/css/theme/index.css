@@ -624,6 +624,11 @@
 .elem-style-sicfi .layui-iconpicker .layui-iconpicker-list {
   background-color: rgb(2, 17, 20);
 }
+.elem-style-sicfi .layui-header .layui-nav .layui-nav-child dd.layui-this a,
+.elem-style-sicfi .layui-header .layui-nav-child dd.layui-this,
+.elem-style-sicfi .layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child .layui-this a {
+  background-color: rgba(62, 251, 251, 0.5) !important;
+}
 
 .elem-style-gtk {
   background-color: #f6f5f4;
@@ -651,6 +656,7 @@
 }
 .elem-style-gtk .layui-table {
   color: #2e3436;
+  background: transparent;
 }
 .elem-style-gtk .layui-table-view .layui-table[lay-size=sm] .layui-table-cell {
   line-height: 30px;
@@ -881,7 +887,7 @@
   transition: none;
   padding: 3px 12px;
   min-height: 30px;
-  min-width: 30px;
+  min-width: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1167,6 +1173,14 @@
 }
 .elem-style-gtk .layui-table-header .layui-table {
   margin-bottom: 0;
+}
+.elem-style-gtk .layui-header .layui-nav .layui-nav-child dd.layui-this a,
+.elem-style-gtk .layui-header .layui-nav-child dd.layui-this,
+.elem-style-gtk .layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child .layui-this a {
+  background-color: #3c88e5 !important;
+}
+.elem-style-gtk .layuimini-mobile-show .layui-nav-more {
+  top: 4px;
 }
 
 .elem-style-nes a,
