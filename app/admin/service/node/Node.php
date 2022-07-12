@@ -22,7 +22,6 @@ use think\helper\Str;
 /**
  * 节点处理类
  * Class Node
- * @package EasyAdmin\auth
  */
 class Node
 {

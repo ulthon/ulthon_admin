@@ -9,7 +9,6 @@ use app\admin\service\ConfigService;
 use app\BaseController;
 use app\common\constants\AdminConstant;
 use app\common\service\AuthService;
-use EasyAdmin\tool\CommonTool;
 use think\facade\Env;
 use think\facade\View;
 use think\Model;
@@ -208,7 +207,7 @@ class AdminController extends BaseController
         $excludes = [];
 
         // 判断是否关联查询
-        $tableName = CommonTool::humpToLine(lcfirst($this->model->getName()));
+        $tableName = \think\helper\Str::snake(lcfirst($this->model->getName()));
 
         foreach ($filters as $key => $val) {
             if (in_array($key, $excludeFields)) {

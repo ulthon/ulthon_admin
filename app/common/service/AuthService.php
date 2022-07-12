@@ -4,7 +4,6 @@
 namespace app\common\service;
 
 use app\common\constants\AdminConstant;
-use EasyAdmin\tool\CommonTool;
 use think\facade\Config;
 use think\facade\Db;
 
@@ -200,7 +199,7 @@ class AuthService
             if ($key == 0) {
                 $val = explode('.', $val);
                 foreach ($val as &$vo) {
-                    $vo = CommonTool::humpToLine(lcfirst($vo));
+                    $vo = \think\helper\Str::snake(lcfirst($vo));
                 }
                 $val = implode('.', $val);
                 $array[$key] = $val;

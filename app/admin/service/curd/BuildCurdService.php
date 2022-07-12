@@ -11,7 +11,6 @@ use think\helper\Str;
 /**
  * 快速构建系统CURD
  * Class BuildCurd
- * @package EasyAdmin\curd
  */
 class BuildCurdService
 {

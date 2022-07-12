@@ -7,10 +7,9 @@ use app\admin\model\SystemUploadfile;
 use app\common\controller\AdminController;
 use app\common\service\MenuService;
 use app\common\service\UploadService;
-use EasyAdmin\upload\Uploadfile;
 use think\db\Query;
 use think\facade\Cache;
-use think\facade\Filesystem;
+
 
 class Ajax extends AdminController
 {
@@ -61,7 +60,7 @@ class Ajax extends AdminController
             'upload_type' => $this->request->post('upload_type'),
             'file'        => $this->request->file('file'),
         ];
-       
+
         try {
 
             $upload_service = new UploadService($data['upload_type']);
@@ -69,7 +68,6 @@ class Ajax extends AdminController
             $upload_service->validateException($data['file']);
 
             $result = $upload_service->save($data['file']);
-            
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -88,35 +86,26 @@ class Ajax extends AdminController
             'upload_type' => $this->request->post('upload_type'),
             'file'        => $this->request->file('upload'),
         ];
-        $uploadConfig = sysconfig('upload');
-        empty($data['upload_type']) && $data['upload_type'] = $uploadConfig['upload_type'];
-        $rule = [
-            'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
-            'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadConfig['upload_allow_size']}",
-        ];
-        $this->validate($data, $rule);
+
         try {
-            $upload = Uploadfile::instance()
-                ->setUploadType($data['upload_type'])
-                ->setUploadConfig($uploadConfig)
-                ->setFile($data['file'])
-                ->save();
+            $upload_service = new UploadService($data['upload_type']);
+
+            $upload_service->validateException($data['file']);
+
+            $result = $upload_service->save($data['file']);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
-        if ($upload['save'] == true) {
-            return json([
-                'error'    => [
-                    'message' => '上传成功',
-                    'number'  => 201,
-                ],
-                'fileName' => '',
-                'uploaded' => 1,
-                'url'      => $upload['url'],
-            ]);
-        } else {
-            $this->error($upload['msg']);
-        }
+
+        return json([
+            'error'    => [
+                'message' => '上传成功',
+                'number'  => 201,
+            ],
+            'fileName' => '',
+            'uploaded' => 1,
+            'url'      => $result['url'],
+        ]);
     }
 
     /**

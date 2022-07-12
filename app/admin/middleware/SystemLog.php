@@ -4,8 +4,8 @@
 namespace app\admin\middleware;
 
 use app\Request;
-use EasyAdmin\tool\CommonTool;
 use think\facade\Log;
+use think\facade\Request as FacadeRequest;
 
 /**
  * 系统操作日志中间件
@@ -40,7 +40,7 @@ class SystemLog
 
         if ($request->isAjax()) {
             if (in_array($method, ['post', 'put', 'delete'])) {
-                $ip = CommonTool::getRealIp();
+                $ip = FacadeRequest::ip();
                 $data = [
                     'admin_id'    => session('admin.id'),
                     'url'         => $url,

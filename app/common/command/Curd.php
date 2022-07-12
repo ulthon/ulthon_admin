@@ -4,15 +4,11 @@
 namespace app\common\command;
 
 
-use app\admin\model\SystemNode;
 use app\admin\service\curd\BuildCurdService;
-use EasyAdmin\console\CliEcho;
-use app\common\tools\BuildCurdTools;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
-use EasyAdmin\auth\Node as NodeService;
 use think\Exception;
 
 class Curd extends Command
@@ -39,10 +35,8 @@ class Curd extends Command
         $force = $input->getOption('force');
         $delete = $input->getOption('delete');
 
-
-
         if (empty($table)) {
-            CliEcho::error('请设置主表');
+            $output->error('请设置主表');
             return false;
         }
 
@@ -63,7 +57,7 @@ class Curd extends Command
                     $define = $column['define'];
 
                     if (!isset($define['table'])) {
-                        CliEcho::error("关联字段{$field}没有设置关联表名称");
+                        $output->error("关联字段{$field}没有设置关联表名称");
                         return false;
                     }
 
@@ -92,40 +86,40 @@ class Curd extends Command
 
             if (!$delete) {
                 if ($force) {
-                    $output->info(">>>>>>>>>>>>>>>");
+                    $output->writeln(">>>>>>>>>>>>>>>");
                     foreach ($fileList as $key => $val) {
-                        $output->info($key);
+                        $output->writeln($key);
                     }
-                    $output->info(">>>>>>>>>>>>>>>");
-                    $output->info("确定强制生成上方所有文件? 如果文件存在会直接覆盖。 请输入 'yes' 按回车键继续操作: ");
+                    $output->writeln(">>>>>>>>>>>>>>>");
+                    $output->writeln("确定强制生成上方所有文件? 如果文件存在会直接覆盖。 请输入 'yes' 按回车键继续操作: ");
                     $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
                     if (trim($line) != 'yes') {
                         throw new Exception("取消文件CURD生成操作");
                     }
                 }
                 $result = $build->create();
-                CliEcho::success('自动生成CURD成功');
+                $output->info('自动生成CURD成功');
             } else {
-                $output->info(">>>>>>>>>>>>>>>");
+                $output->writeln(">>>>>>>>>>>>>>>");
                 foreach ($fileList as $key => $val) {
-                    $output->info($key);
+                    $output->writeln($key);
                 }
-                $output->info(">>>>>>>>>>>>>>>");
-                $output->info("确定删除上方所有文件?  请输入 'yes' 按回车键继续操作: ");
+                $output->writeln(">>>>>>>>>>>>>>>");
+                $output->writeln("确定删除上方所有文件?  请输入 'yes' 按回车键继续操作: ");
                 $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
                 if (trim($line) != 'yes') {
                     throw new Exception("取消删除文件操作");
                 }
                 $result = $build->delete();
-                CliEcho::success('>>>>>>>>>>>>>>>');
-                CliEcho::success('删除自动生成CURD文件成功');
+                $output->info('>>>>>>>>>>>>>>>');
+                $output->info('删除自动生成CURD文件成功');
             }
-            CliEcho::success('>>>>>>>>>>>>>>>');
+            $output->info('>>>>>>>>>>>>>>>');
             foreach ($result as $vo) {
-                CliEcho::success($vo);
+                $output->info($vo);
             }
         } catch (\Exception $e) {
-            CliEcho::error($e->getMessage());
+            $output->error($e->getMessage());
             return false;
         }
     }

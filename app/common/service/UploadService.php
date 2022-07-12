@@ -56,7 +56,7 @@ class UploadService
         return $url;
     }
 
-    public function save(File $file)
+    public function save(File $file, string $save_name = null)
     {
 
         $model_file = new SystemUploadfile();
@@ -74,8 +74,10 @@ class UploadService
             $model_file->mime_type = $file->getMime();
         }
 
-
-        $save_name = Filesystem::disk($this->uploadType)->putFile('upload', $file, function () {
+        $save_name = Filesystem::disk($this->uploadType)->putFile('upload', $file, function () use ($save_name) {
+            if (!is_null($save_name)) {
+                return $save_name;
+            }
             return date('Ymd') . '/' . uniqid();
         });
 
