@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdcd785c44698afc23b274a2b7f63fa6",
+    "content-hash": "aec378b2b865fbec9bc9c7252034abff",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -2582,49 +2582,6 @@
                 "flysystem-aliyun-oss"
             ],
             "time": "2019-11-12T07:57:34+00:00"
-        },
-        {
-            "name": "zhongshaofa/easy-admin",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zhongshaofa/easyadmin-sdk.git",
-                "reference": "89670cc868d476b81672817110cd5789edfabac7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.huaweicloud.com/repository/php/zhongshaofa/easy-admin/v1.0.2/zhongshaofa-easy-admin-v1.0.2.zip",
-                "reference": "89670cc868d476b81672817110cd5789edfabac7",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/annotations": "^1.13.1",
-                "ext-json": "*",
-                "php": ">=7.1.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.3.0",
-                "phpunit/phpunit": "^8.5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Test\\": "tests",
-                    "MockApp\\": "mock_app",
-                    "EasyAdmin\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "zhongshaofa",
-                    "email": "2286732552@qq.com"
-                }
-            ],
-            "description": "EasyAdmin工具，https://github.com/zhongshaofa/easyadmin-sdk",
-            "time": "2021-09-20T14:28:06+00:00"
         }
     ],
     "packages-dev": [
@@ -2841,5 +2798,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

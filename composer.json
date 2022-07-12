@@ -23,14 +23,14 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-view": "^1.0",
         "topthink/think-captcha": "^3.0",
-        "zhongshaofa/easy-admin": "^1.0.2",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
         "topthink/think-migration": "^3.0",
         "overtrue/flysystem-qiniu": "*",
         "xxtime/flysystem-aliyun-oss": "^1.5",
-        "chunpat/flysystem-tencent-cos": "^0.0.1"
+        "chunpat/flysystem-tencent-cos": "^0.0.1",
+        "doctrine/annotations": "^1.13"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
