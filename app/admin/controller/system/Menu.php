@@ -7,8 +7,8 @@ use app\admin\model\SystemMenu;
 use app\admin\model\SystemNode;
 use app\admin\service\TriggerService;
 use app\common\constants\MenuConstant;
-use EasyAdmin\annotation\ControllerAnnotation;
-use EasyAdmin\annotation\NodeAnotation;
+use app\admin\service\annotation\ControllerAnnotation;
+use app\admin\service\annotation\NodeAnotation;
 use app\common\controller\AdminController;
 use think\App;
 

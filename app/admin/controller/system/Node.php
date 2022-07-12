@@ -7,8 +7,8 @@ namespace app\admin\controller\system;
 use app\admin\model\SystemNode;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
-use EasyAdmin\annotation\ControllerAnnotation;
-use EasyAdmin\annotation\NodeAnotation;
+use app\admin\service\annotation\ControllerAnnotation;
+use app\admin\service\annotation\NodeAnotation;
 use app\admin\service\NodeService;
 use think\App;
 

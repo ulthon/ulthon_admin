@@ -4,7 +4,7 @@
 namespace app\admin\service;
 
 
-use EasyAdmin\auth\Node;
+use app\admin\service\node\Node;
 
 class NodeService
 {

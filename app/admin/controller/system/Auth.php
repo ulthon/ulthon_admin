@@ -8,8 +8,8 @@ use app\admin\model\SystemAuth;
 use app\admin\model\SystemAuthNode;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
-use EasyAdmin\annotation\ControllerAnnotation;
-use EasyAdmin\annotation\NodeAnotation;
+use app\admin\service\annotation\ControllerAnnotation;
+use app\admin\service\annotation\NodeAnotation;
 use think\App;
 
 /**

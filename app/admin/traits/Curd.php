@@ -3,7 +3,7 @@
 
 namespace app\admin\traits;
 
-use EasyAdmin\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnotation;
 
 
 /**
