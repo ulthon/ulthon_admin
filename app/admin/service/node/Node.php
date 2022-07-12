@@ -123,8 +123,10 @@ class Node
      */
     protected function readControllerFiles($path)
     {
+
+        
         list($list, $temp_list, $dirExplode) = [[], scandir($path), explode($this->basePath, $path)];
-        $middleDir = isset($dirExplode[1]) && !empty($dirExplode[1]) ? str_replace('/', '\\', substr($dirExplode[1], 1)) . "\\" : null;
+        $middleDir = isset($dirExplode[1]) && !empty($dirExplode[1]) ? str_replace('/', '\\', substr($dirExplode[1], 1)) . "\\" : '';
 
         foreach ($temp_list as $file) {
             // 排除根目录和没有开启注解的模块
@@ -144,9 +146,12 @@ class Node
                 // 根目录下的文件
                 $className = str_replace('.php', '', $file);
                 $controllerFormat = str_replace('\\', '.', $middleDir) . Str::snake(lcfirst($className));
+
+                
                 $list[$controllerFormat] = "{$this->baseNamespace}\\{$middleDir}" . $className;
             }
         }
+        
         return $list;
     }
 }
