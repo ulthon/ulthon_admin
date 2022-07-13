@@ -22,8 +22,11 @@
 第一步，下载安装包
 git clone https://gitee.com/ulthon/ulthon_admin
 
+或者使用composer创建
+composer create-project ulthon/ulthon_admin
 
-第二步，安装依赖包
+
+第二步，安装依赖包(使用composer创建可忽略)
 composer install
 
 第三步, 配置`.env`
