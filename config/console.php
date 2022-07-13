@@ -3,6 +3,7 @@
 // | 控制台配置
 // +----------------------------------------------------------------------
 
+use app\common\command\admin\Version;
 use app\common\command\admin\ResetPassword;
 use app\common\command\Timer;
 
@@ -14,5 +15,6 @@ return [
         'OssStatic' => 'app\common\command\OssStatic',
         ResetPassword::class,
         Timer::class,
+        Version::class
     ],
 ];
