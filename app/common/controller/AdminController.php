@@ -104,6 +104,17 @@ class AdminController extends BaseController
         $this->isDemo = Env::get('adminsystem.is_demo', false);
         $this->viewInit();
         $this->checkAuth();
+
+        $this->initSort();
+    }
+
+    public function initSort()
+    {
+        $sort = $this->request->param('sort');
+
+        if (!empty($sort)) {
+            $this->sort = $sort;
+        }
     }
 
     /**

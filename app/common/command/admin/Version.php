@@ -12,10 +12,10 @@ use think\console\Output;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.4';
+    const VERSION = 'v2.0.5';
 
     const COMMENT = [
-        '自动生成CURD导出生成关联查询',
+        '实现表格的接口排序并且默认开启',
     ];
 
     protected function configure()

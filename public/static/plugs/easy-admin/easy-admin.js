@@ -13,6 +13,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
     }
     window.onInitElemStyle();
 
+    var lastTableWhere = {};
+
     var selectMode, selectConfirmCallback;
 
     var form = layui.form,
@@ -241,6 +243,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 options.page = admin.parame(options.page, true);
                 options.search = admin.parame(options.search, true);
                 options.skin = options.skin || 'line';
+                options.autoSort = options.autoSort || false;
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
@@ -406,6 +409,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 // 监听表格搜索开关显示
                 admin.table.listenToolbar(options.layFilter, options.id);
+
+                // 监听表格瓶排序
+                admin.table.listenTableSort(options);
 
                 // 监听表格开关切换
                 admin.table.renderSwitch(options.cols, options.init, options.id, options.modifyReload);
@@ -620,6 +626,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     op: JSON.stringify(formatOp)
                 }
 
+                lastTableWhere[tableId] = options.where;
+
                 return options;
             },
             renderSwitch: function (cols, tableInit, tableId, modifyReload) {
@@ -763,6 +771,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     for (index in col) {
                         var val = col[index];
 
+                        if (val.sort === undefined) {
+
+                            cols[i][index]['sort'] = true;
+                        }
+
                         // 判断是否包含初始化数据
                         if (val.init === undefined) {
                             cols[i][index]['init'] = init;
@@ -771,6 +784,10 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         // 格式化列操作栏
                         if (val.templet === admin.table.tool && val.operat === undefined) {
                             cols[i][index]['operat'] = ['edit', 'delete'];
+                        }
+                        // 格式化列操作栏
+                        if (val.templet === admin.table.tool) {
+                            cols[i][index]['sort'] = false;
                         }
 
                         // 判断是否包含开关组件
@@ -797,6 +814,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         // 初始化图片高度
                         if (val.templet === admin.table.image && val.imageHeight === undefined) {
                             cols[i][index]['imageHeight'] = 40;
+                            cols[i][index]['sort'] = false;
                         }
 
                         // 判断是否列表数据转换
@@ -1079,14 +1097,17 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             formatOp[key] = op;
                         }
                     });
+
+                    var where = {
+                        filter: JSON.stringify(formatFilter),
+                        op: JSON.stringify(formatOp)
+                    }
+                    lastTableWhere[tableId] = where
                     table.reload(tableId, {
                         page: {
                             curr: 1
                         }
-                        , where: {
-                            filter: JSON.stringify(formatFilter),
-                            op: JSON.stringify(formatOp)
-                        }
+                        , where: where
                     }, 'data');
                     return false;
                 });
@@ -1126,6 +1147,23 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             table.reload(option.tableId);
                         });
                     }
+                });
+            },
+            listenTableSort(option) {
+                //触发排序事件 
+                table.on('sort(' + option.layFilter + ')', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+
+                    var lastWhere = lastTableWhere[option.id] ?? {};
+
+                    lastWhere.sort = {}
+                    lastWhere.sort[obj.field] = obj.type;
+
+                    table.reload(option.id, {
+                        initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                        , where: lastWhere
+                    });
+
+
                 });
             },
             listenToolbar: function (layFilter, tableId) {
@@ -1270,7 +1308,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         toUrl = admin.url(url);
                         if (toUrl.indexOf('?') < 0) {
                             toUrl += '?';
-                        }else{
+                        } else {
                             toUrl += '&'
                         }
                         toUrl += query;
@@ -1510,14 +1548,15 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 if (tableId === undefined || tableId === '' || tableId == null) {
                     tableId = init.table_render_id;
                 }
+                var where = {
+                    filter: '{}',
+                    op: '{}'
+                };
                 table.reload(tableId, {
                     page: {
                         curr: 1
                     }
-                    , where: {
-                        filter: '{}',
-                        op: '{}'
-                    }
+                    , where: where
                 }, 'data');
             });
 

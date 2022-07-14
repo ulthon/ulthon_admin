@@ -36,11 +36,11 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     // @todo 不直接使用ea.table.render(); 进行表格初始化, 需要使用 ea.table.formatCols(); 方法格式化`cols`列数据
                     cols: ea.table.formatCols([[
                         { type: 'checkbox' },
-                        { field: 'title', width: 250, title: '菜单名称', align: 'left' },
-                        { field: 'icon', width: 80, title: '图标', templet: ea.table.icon },
-                        { field: 'href', minWidth: 120, title: '菜单链接' },
+                        { field: 'title', sort: false, width: 250, title: '菜单名称', align: 'left' },
+                        { field: 'icon', sort: false, width: 80, title: '图标', templet: ea.table.icon },
+                        { field: 'href', sort: false, minWidth: 120, title: '菜单链接' },
                         {
-                            field: 'is_home',
+                            field: 'is_home', sort: false,
                             width: 80,
                             title: '类型',
                             templet: function (d) {
@@ -54,8 +54,8 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                 }
                             }
                         },
-                        { field: 'status', title: '状态', width: 85, templet: ea.table.switch },
-                        { field: 'sort', width: 80, title: '排序', edit: 'text' },
+                        { field: 'status', sort: false, title: '状态', width: 85, templet: ea.table.switch },
+                        { field: 'sort', sort: false, width: 80, title: '排序', edit: 'text' },
                         {
                             width: 220,
                             title: '操作',
@@ -81,7 +81,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     method: 'none',
                                     auth: 'delete',
                                     class: 'layui-btn layui-btn-xs layui-btn-danger',
-                                    extend: 'data-treetable-delete-item="1" data-url="'+init.delete_url+'"',
+                                    extend: 'data-treetable-delete-item="1" data-url="' + init.delete_url + '"',
                                     data: ['id', 'title']
                                 },],
 
