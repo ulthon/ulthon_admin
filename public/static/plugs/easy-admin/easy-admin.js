@@ -1270,6 +1270,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         toUrl = admin.url(url);
                         if (toUrl.indexOf('?') < 0) {
                             toUrl += '?';
+                        }else{
+                            toUrl += '&'
                         }
                         toUrl += query;
 

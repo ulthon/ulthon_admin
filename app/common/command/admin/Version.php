@@ -12,11 +12,10 @@ use think\console\Output;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.2';
+    const VERSION = 'v2.0.3';
 
     const COMMENT = [
-        '新增查看当前版本命令',
-        '简单修改了说明文件'
+        '优化导出功能，兼容自定义参数、兼容关联查询用法',
     ];
 
     protected function configure()

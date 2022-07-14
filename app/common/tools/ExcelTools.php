@@ -23,66 +23,77 @@ class ExcelTools
 
         $runtime_file_list = [];
 
-        $model
-            ->where($where)->chunk(100, function ($list) use ($sheet, &$write_line, $fields, $image_fields, &$runtime_file_list, $select_fields, $date_fields) {
-                foreach ($list as $list_index => $item) {
-                    $write_line++;
-                    $write_col = 1;
+        $limit = 1000;
 
-                    foreach ($fields as $field_key => $field_name) {
-                        $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
+        $page = 0;
 
-                        $cel =  null;
+        while (true) {
+            $page++;
+            $list = $model
+                ->where($where)->page($page, $limit)->select();
+            foreach ($list as $list_index => $item) {
+                $write_line++;
+                $write_col = 1;
 
-                        $value  = \think\helper\Arr::get($item, $field_key);
+                foreach ($fields as $field_key => $field_name) {
+                    $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
 
-                        if (in_array($field_key, $image_fields)) {
-                            // 是图片
-                            $cel = $value;
+                    $cel =  null;
 
-                            try {
+                    $value  = \think\helper\Arr::get($item, $field_key);
 
-                                if (filter_var($value, FILTER_VALIDATE_URL)) {
+                    if (in_array($field_key, $image_fields)) {
+                        // 是图片
+                        $cel = $value;
 
-                                    $runtime_file = PathTools::tempBuildPath(uniqid());
+                        try {
 
-                                    $runtime_file_list[] = $runtime_file;
+                            if (filter_var($value, FILTER_VALIDATE_URL)) {
 
-                                    file_put_contents($runtime_file, file_get_contents($value));
+                                $runtime_file = PathTools::tempBuildPath(uniqid());
 
-                                    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-                                    $drawing->setName($field_name);
-                                    $drawing->setDescription($field_key);
-                                    $drawing->setPath($runtime_file);
-                                    $drawing->setHeight(36);
+                                $runtime_file_list[] = $runtime_file;
 
-                                    $drawing->setCoordinates($col_key . $write_line);
-                                    $drawing->setWorksheet($sheet);
-                                }
-                            } catch (\Throwable $th) {
-                                $message = $th->getMessage();
+                                file_put_contents($runtime_file, file_get_contents($value));
 
-                                $cel .= "\n" . $message;
+                                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                                $drawing->setName($field_name);
+                                $drawing->setDescription($field_key);
+                                $drawing->setPath($runtime_file);
+                                $drawing->setHeight(36);
+
+                                $drawing->setCoordinates($col_key . $write_line);
+                                $drawing->setWorksheet($sheet);
                             }
-                        } else if (array_key_exists($field_key, $select_fields)) {
-                            // 需要设置选项
+                        } catch (\Throwable $th) {
+                            $message = $th->getMessage();
 
-                            $cel = $select_fields[$field_key][$value];
-                        } else if (in_array($field_key, $date_fields)) {
-                            if (empty($value)) {
-                                $cel = '';
-                            } else {
-                                $cel = date('Y-m-d H:i:s', $value);
-                            }
-                        } else {
-                            $cel  = $value;
+                            $cel .= "\n" . $message;
                         }
+                    } else if (array_key_exists($field_key, $select_fields)) {
+                        // 需要设置选项
 
-                        $sheet->setCellValueExplicit($col_key . $write_line, $cel, DataType::TYPE_STRING);
-                        $write_col++;
+                        $cel = $select_fields[$field_key][$value];
+                    } else if (in_array($field_key, $date_fields)) {
+                        if (empty($value)) {
+                            $cel = '';
+                        } else {
+                            $cel = date('Y-m-d H:i:s', $value);
+                        }
+                    } else {
+                        $cel  = $value;
                     }
+
+                    $sheet->setCellValueExplicit($col_key . $write_line, $cel, DataType::TYPE_STRING);
+                    $write_col++;
                 }
-            });
+            }
+
+            if (count($list) < $limit) {
+                break;
+            }
+        }
+
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
@@ -92,7 +103,9 @@ class ExcelTools
         ob_clean();
 
         foreach ($runtime_file_list as  $runtime_file) {
-            unlink($runtime_file);
+            if(file_exists($runtime_file)){
+                unlink($runtime_file);
+            }
         }
 
         return $content;
