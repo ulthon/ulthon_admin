@@ -72,8 +72,8 @@ class ExcelTools
                         }
                     } else if (array_key_exists($field_key, $select_fields)) {
                         // 需要设置选项
-
-                        $cel = $select_fields[$field_key][$value];
+                        
+                        $cel = $select_fields[$field_key][$value] ?? '';
                     } else if (in_array($field_key, $date_fields)) {
                         if (empty($value)) {
                             $cel = '';

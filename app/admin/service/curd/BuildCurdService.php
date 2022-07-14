@@ -224,7 +224,7 @@ class BuildCurdService
      * 表单类型
      * @var array
      */
-    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city','tag'];
+    protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city', 'tag'];
 
     /**
      * 初始化
@@ -1060,6 +1060,7 @@ class BuildCurdService
         $controllerFile = "{$this->rootDir}app{$this->DS}admin{$this->DS}controller{$this->DS}{$this->controllerFilename}.php";
         if (empty($this->relationArray)) {
             $controllerIndexMethod = '';
+            $controllerExportMethod = '';
         } else {
             $relationCode = '';
             foreach ($this->relationArray as $key => $val) {
@@ -1070,6 +1071,12 @@ class BuildCurdService
                 $this->getTemplate("controller{$this->DS}indexMethod"),
                 [
                     'relationIndexMethod' => $relationCode,
+                ]
+            );
+            $controllerExportMethod = $this->replaceTemplate(
+                $this->getTemplate("controller{$this->DS}exportMethod"),
+                [
+                    'relationIndexMethod' => trim($relationCode),
                 ]
             );
         }
@@ -1091,6 +1098,7 @@ class BuildCurdService
                 'controllerAnnotation' => $this->tableComment,
                 'modelFilename'        => "\app\admin\model\\{$modelFilenameExtend}",
                 'indexMethod'          => $controllerIndexMethod,
+                'exportMethod'          => $controllerExportMethod,
                 'selectList'           => $selectList,
             ]
         );
@@ -1276,7 +1284,7 @@ class BuildCurdService
             } elseif ($val['formType'] == 'city') {
                 $templateFile = "view{$this->DS}module{$this->DS}city";
                 $define = $this->buildCityView($field, $val, $val['default']);
-            }elseif ($val['formType'] == 'tag') {
+            } elseif ($val['formType'] == 'tag') {
                 $templateFile = "view{$this->DS}module{$this->DS}tag";
             }
 
@@ -1375,7 +1383,7 @@ class BuildCurdService
             } elseif ($val['formType'] == 'city') {
                 $templateFile = "view{$this->DS}module{$this->DS}city";
                 $define = $this->buildCityView($field, $val, $value);
-            }elseif ($val['formType'] == 'tag') {
+            } elseif ($val['formType'] == 'tag') {
                 $templateFile = "view{$this->DS}module{$this->DS}tag";
             }
 

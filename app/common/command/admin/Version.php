@@ -12,10 +12,10 @@ use think\console\Output;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.3';
+    const VERSION = 'v2.0.4';
 
     const COMMENT = [
-        '优化导出功能，兼容自定义参数、兼容关联查询用法',
+        '自动生成CURD导出生成关联查询',
     ];
 
     protected function configure()

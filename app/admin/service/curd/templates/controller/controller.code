@@ -24,4 +24,7 @@ class {{controllerName}} extends AdminController
     }
 
     {{indexMethod}}
+
+    
+    {{exportMethod}}
 }
