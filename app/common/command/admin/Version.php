@@ -12,10 +12,10 @@ use think\console\Output;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.5';
+    const VERSION = 'v2.0.6';
 
     const COMMENT = [
-        '实现表格的接口排序并且默认开启',
+        '完善特效皮肤的细节问题',
     ];
 
     protected function configure()

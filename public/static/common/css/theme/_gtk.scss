@@ -35,7 +35,7 @@
 
 .layui-table {
     color     : #2e3436;
-    background: transparent;
+    background: #f6f5f4;
 }
 
 .layui-table-view .layui-table[lay-size="sm"] .layui-table-cell {
@@ -506,7 +506,8 @@
 .layui-input,
 .layui-select,
 .layui-textarea,
-.layui-upload-button {
+.layui-upload-button,
+.city-picker-span {
     border-radius: 5px;
     border       : 1px solid #cdc7c2;
 }

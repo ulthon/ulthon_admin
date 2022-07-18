@@ -525,9 +525,32 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-input,
 .layui-select,
-.layui-textarea {
+.layui-textarea,
+.city-picker-span,
+.main-input {
     background-color: $cover-color;
     color           : $main-color;
+}
+
+.city-picker-span>.title>span {
+    color: $main-color;
+
+    &:hover {
+        background-color: $main-color;
+        color           : $black-color;
+    }
+}
+
+.layui-form-radio:hover *,
+.layui-form-radioed,
+.layui-form-radioed>i {
+    color: $main-color;
+}
+
+.layui-form-checked[lay-skin="primary"] i {
+    border-color    : $main-color !important;
+    background-color: $main-color;
+    color           : $black-color;
 }
 
 .layui-input:focus,
@@ -538,6 +561,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-input:hover,
 .layui-textarea:hover {
     border-color: $main-color !important;
+
 }
 
 .layui-badge-rim,

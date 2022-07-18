@@ -445,9 +445,28 @@
 }
 .elem-style-sicfi .layui-input,
 .elem-style-sicfi .layui-select,
-.elem-style-sicfi .layui-textarea {
+.elem-style-sicfi .layui-textarea,
+.elem-style-sicfi .city-picker-span,
+.elem-style-sicfi .main-input {
   background-color: rgba(62, 251, 251, 0.05);
   color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .city-picker-span > .title > span {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .city-picker-span > .title > span:hover {
+  background-color: rgb(126, 252, 246);
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-form-radio:hover *,
+.elem-style-sicfi .layui-form-radioed,
+.elem-style-sicfi .layui-form-radioed > i {
+  color: rgb(126, 252, 246);
+}
+.elem-style-sicfi .layui-form-checked[lay-skin=primary] i {
+  border-color: rgb(126, 252, 246) !important;
+  background-color: rgb(126, 252, 246);
+  color: rgb(2, 17, 20);
 }
 .elem-style-sicfi .layui-input:focus,
 .elem-style-sicfi .layui-textarea:focus {
@@ -656,7 +675,7 @@
 }
 .elem-style-gtk .layui-table {
   color: #2e3436;
-  background: transparent;
+  background: #f6f5f4;
 }
 .elem-style-gtk .layui-table-view .layui-table[lay-size=sm] .layui-table-cell {
   line-height: 30px;
@@ -1047,7 +1066,8 @@
 .elem-style-gtk .layui-input,
 .elem-style-gtk .layui-select,
 .elem-style-gtk .layui-textarea,
-.elem-style-gtk .layui-upload-button {
+.elem-style-gtk .layui-upload-button,
+.elem-style-gtk .city-picker-span {
   border-radius: 5px;
   border: 1px solid #cdc7c2;
 }
