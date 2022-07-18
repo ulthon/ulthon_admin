@@ -420,9 +420,7 @@
 .elem-style-sicfi .layui-text {
   color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layuimini-notice:hover {
-  background-color: rgba(62, 251, 251, 0.5);
-}
+
 .elem-style-sicfi .layuimini-qiuck-module {
   cursor: pointer;
 }

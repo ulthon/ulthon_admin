@@ -20,8 +20,8 @@ class Curd extends Command
             ->addOption('controllerFilename', 'c', Option::VALUE_REQUIRED, '控制器文件名', null)
             ->addOption('modelFilename', 'm', Option::VALUE_REQUIRED, '主表模型文件名', null)
             #
-            ->addOption('force', 'f', Option::VALUE_REQUIRED, '强制覆盖模式', 0)
-            ->addOption('delete', 'd', Option::VALUE_REQUIRED, '删除模式', 0)
+            ->addOption('force', 'f', Option::VALUE_NONE, '强制覆盖模式')
+            ->addOption('delete', 'd', Option::VALUE_NONE, '删除模式')
             ->setDescription('一键curd命令服务');
     }
 
@@ -32,8 +32,16 @@ class Curd extends Command
         $controllerFilename = $input->getOption('controllerFilename');
         $modelFilename = $input->getOption('modelFilename');
 
-        $force = $input->getOption('force');
-        $delete = $input->getOption('delete');
+        $force = 0;
+        $delete = 0;
+
+        if ($input->hasOption('force')) {
+            $force = 1;
+        }
+
+        if ($input->hasOption('delete')) {
+            $delete = 1;
+        }
 
         if (empty($table)) {
             $output->error('请设置主表');
@@ -47,9 +55,7 @@ class Curd extends Command
 
             $columns = $build->getTableColumns();
 
-
             $relations = [];
-
 
             foreach ($columns as $field => $column) {
 
@@ -76,7 +82,7 @@ class Curd extends Command
             !empty($controllerFilename) && $build = $build->setControllerFilename($controllerFilename);
             !empty($modelFilename) && $build = $build->setModelFilename($modelFilename);
 
-            
+
             foreach ($relations as $relation) {
                 $build = $build->setRelation($relation['table'], $relation['foreignKey'], $relation['primaryKey'], $relation['modelFilename'], $relation['onlyFileds'], $relation['relationBindSelect']);
             }

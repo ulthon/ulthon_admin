@@ -14,10 +14,13 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.7';
+    const VERSION = 'v2.0.8';
 
     const COMMENT = [
-        '给版本命令增加自动推送功能',
+        '优化curd命令的调用方式',
+        '调整后台工作台内容',
+        '优化版本命令代码',
+        
     ];
 
     protected function configure()
@@ -48,12 +51,14 @@ class Version extends Command
         $is_push_tag = $input->hasOption('push-tag');
 
         if ($is_push_tag) {
-            $root_path = App::getRootPath();
+            $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+            
             $version = $this::VERSION;
             $comment = implode(';', $this::COMMENT);
-
+            $output->info('生成标签：' . $version);
+            $output->info('标签描述：' . $comment);
             exec("git tag -a $version -m \"$comment\"");
-
+            $output->info('推送到远程仓库');
             exec("git push --tags");
         }
     }
