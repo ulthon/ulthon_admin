@@ -14,12 +14,10 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.8';
+    const VERSION = 'v2.0.9';
 
     const COMMENT = [
-        '优化curd命令的调用方式',
-        '调整后台工作台内容',
-        '优化版本命令代码',
+        '修复authCache的tag缓存拼接问题',
         
     ];
 

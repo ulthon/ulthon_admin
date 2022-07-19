@@ -28,7 +28,7 @@ class Query extends DbQuery
         if (is_null($key)) {
             $key = $this->getOptionsMd5();
         }
-        
+
         if (!is_null($field_key_value)) {
             $key = $key . '_' . $field_key_value;
         }
@@ -36,14 +36,14 @@ class Query extends DbQuery
 
         if (!is_null($tag)) {
 
-            if (!is_null($field_key_value)) {
+            if (!is_null($field_tag_value)) {
                 $tag = $tag . '_' . $field_tag_value;
             }
 
             $tag = $table_name . '_' . $tag;
         }
 
-        if(Env::get('app.auto_cache_log')){
+        if (Env::get('app.auto_cache_log')) {
             Log::debug('use auto cache:' . $key);
             Log::debug('use auto cache tag:' . $tag);
         }
