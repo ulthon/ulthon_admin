@@ -482,7 +482,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
                     d.searchValue = d.searchValue || '';
                     d.searchHide = d.searchHide || '';
-                    d.defaultSearchValue = d.defaultSearchValue || '';
+                    d.defaultSearchValue = d.defaultSearchValue;
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
 
@@ -501,7 +501,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     }
 
 
-                    if (d.defaultSearchValue.length > 0) {
+                    if (d.defaultSearchValue != undefined) {
                         if (d.searchValue.length == 0) {
                             d.searchValue = d.defaultSearchValue;
                         }
