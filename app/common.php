@@ -234,6 +234,18 @@ if (!function_exists('ua_htmlspecialchars')) {
     }
 }
 
+if (!function_exists('ua_htmlentities')) {
+    function ua_htmlentities($string)
+    {
+
+        if (is_null($string)) {
+            $string = '';
+        }
+
+        return htmlentities($string);
+    }
+}
+
 
 function build_upload_url($url, $upload_type = null)
 {
