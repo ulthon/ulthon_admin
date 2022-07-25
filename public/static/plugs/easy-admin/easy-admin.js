@@ -736,20 +736,28 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 operat.method = operat.method || 'open';
                 operat.field = operat.field || 'id';
                 operat.data = operat.data || ['id'];
+                operat.titleField = operat.titleField || 'title';
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
+
+                var titleEndfix = '';
+
+                if (data[operat.titleField]) {
+                    titleEndfix = '-' + data[operat.titleField];
+                }
+
 
                 var formatOperat = operat;
                 formatOperat.icon = formatOperat.icon !== '' ? '<i class="' + formatOperat.icon + '"></i> ' : '';
                 formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
                 if (operat.method === 'open') {
-                    formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
+                    formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + titleEndfix + '" ' : '';
                 } else if (operat.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatOperat.method = '';
                 } else if (operat.method === 'blank') {
                     formatOperat.method = ' href="' + formatOperat.url + '" target="_blank" ';
                 } else {
-                    formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
+                    formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + titleEndfix + '" ' : '';
                 }
 
                 formatOperat.dataBind = ' ';
