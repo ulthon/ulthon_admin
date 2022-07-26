@@ -44,6 +44,7 @@ class SystemAdmin extends Migrator
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('username')
             ->addIndex('phone')
+            ->addIndex('delete_time')
             ->create();
     }
 }

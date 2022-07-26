@@ -46,6 +46,7 @@ class SystemUploadfile extends Migrator
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('upload_type')
             ->addIndex('original_name')
+            ->addIndex('delete_time')
             ->create();
     }
 }

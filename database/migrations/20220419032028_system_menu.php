@@ -44,6 +44,7 @@ class SystemMenu extends Migrator
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('title')
             ->addIndex('href')
+            ->addIndex('delete_time')
             ->create();
     }
 }

@@ -39,6 +39,7 @@ class MallCate extends Migrator
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('title')
+            ->addIndex('delete_time')
             ->save();
     }
 }

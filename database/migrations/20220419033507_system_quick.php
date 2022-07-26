@@ -39,6 +39,7 @@ class SystemQuick extends Migrator
             ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addIndex('delete_time')
             ->create();
     }
 }

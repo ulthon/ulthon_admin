@@ -49,6 +49,7 @@ class MallGoods extends Migrator
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addIndex('cate_id')
+            ->addIndex('delete_time')
             ->create();
     }
 }
