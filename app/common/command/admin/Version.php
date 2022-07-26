@@ -14,11 +14,15 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.9';
+    const VERSION = 'v2.0.10';
 
     const COMMENT = [
-        '修复authCache的tag缓存拼接问题',
-        
+        '设置数据库安装的软删除字段索引',
+        '修复管理员表单的问题',
+        '清理文件上传管理的技术债务',
+        '修改重置密码命令的命令格式',
+        '修改部分样式细节',
+        '优化弹框标题获取数据标题',
     ];
 
     protected function configure()
