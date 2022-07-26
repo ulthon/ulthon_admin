@@ -17,7 +17,7 @@ class ResetPassword extends Command
     protected function configure()
     {
         // 指令配置
-        $this->setName('admin:resetPassword')
+        $this->setName('admin:reset:password')
             ->addOption('password','p', Option::VALUE_OPTIONAL)
             ->setDescription('重置超管密码');
     }
@@ -25,7 +25,7 @@ class ResetPassword extends Command
     protected function execute(Input $input, Output $output)
     {
         // 指令输出
-        $output->writeln('admin:resetPassword');
+        $output->writeln('admin:reset:password');
 
 
         $model_admin = SystemAdmin::find(AdminConstant::SUPER_ADMIN_ID);
