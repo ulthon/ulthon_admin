@@ -240,6 +240,7 @@ html {
     letter-spacing: 0;
     cursor: pointer;
     border: none;
+    display: block;
 }
 
 .login-main .login-bottom .center .item .validateImg {
