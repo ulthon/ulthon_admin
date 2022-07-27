@@ -1,4 +1,4 @@
-define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTab"], function ($, ea, echarts, undefined, miniAdmin, miniTab) {
+define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin"], function ($, ea, echarts, undefined, miniAdmin) {
 
     var Controller = {
         index: function () {
@@ -27,9 +27,6 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
             });
         },
         welcome: function () {
-
-            miniTab.listen();
-
 
             /**
              * 报表功能
@@ -111,7 +108,7 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                     clearInterval(checkChartVisibleTimer)
                 }
             }, 3000);
-
+            ea.listen();
         },
         editAdmin: function () {
             ea.listen();

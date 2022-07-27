@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'miniTab'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput, miniTab) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -756,6 +756,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     formatOperat.method = '';
                 } else if (operat.method === 'blank') {
                     formatOperat.method = ' href="' + formatOperat.url + '" target="_blank" ';
+                } else if (operat.method === 'tab') {
+                    formatOperat.method = ' layuimini-content-href="' + formatOperat.url + '" data-title="' + formatOperat.title + titleEndfix + '"';
                 } else {
                     formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + titleEndfix + '" ' : '';
                 }
@@ -779,14 +781,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     for (index in col) {
                         var val = col[index];
 
-                        if (val['width'] == undefined && val['minWidth'] == undefined) {
+                        if (val['minWidth'] == undefined) {
                             var width = null;
                             if (val.title) {
                                 width = val.title.length * 15 + 55
                             }
 
                             if (width != null) {
-                                cols[i][index]['width'] = width
+                                cols[i][index]['minWidth'] = width
                             }
                         }
 
@@ -1423,6 +1425,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
             // 监听标签输入控件生成
             admin.api.tagInput();
+
+            // 监听tab操作
+            miniTab.listen();
 
             // 初始化layui表单
             form.render();
