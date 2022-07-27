@@ -779,7 +779,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     for (index in col) {
                         var val = col[index];
 
-                        if (val['width'] == undefined) {
+                        if (val['width'] == undefined && val['minWidth'] == undefined) {
                             var width = null;
                             if (val.title) {
                                 width = val.title.length * 15 + 55
