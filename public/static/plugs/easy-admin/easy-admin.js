@@ -1072,7 +1072,18 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 }
                 return '<span>' + value + '</span>';
             },
-
+            bytes: (data) => {
+                var size = admin.table.returnColumnValue(data);
+                if (size > 0) {
+                    const kb = 1024
+                    const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+                    const i = Math.floor(Math.log(size) / Math.log(kb))
+                    const num = (size / Math.pow(kb, i)).toPrecision(3)
+                    const u = unit[i]
+                    return num + u;
+                }
+                return '0B'
+            },
             // 统一列返回数据处理
             returnColumnValue(data) {
                 if (!data.LAY_COL) {
