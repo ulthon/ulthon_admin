@@ -14,15 +14,11 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.10';
+    const VERSION = 'v2.0.11';
 
     const COMMENT = [
-        '设置数据库安装的软删除字段索引',
-        '修复管理员表单的问题',
-        '清理文件上传管理的技术债务',
-        '修改重置密码命令的命令格式',
-        '修改部分样式细节',
-        '优化弹框标题获取数据标题',
+        'operat新增tab的打开方式',
+        '实现表格默认自动计算宽度',
     ];
 
     protected function configure()
