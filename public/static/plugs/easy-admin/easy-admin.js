@@ -41,7 +41,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
     var extGroup = {
         // 图片扩展名数组
-        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp'],
+        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
         // word扩展名数组
         'word': ['doc', 'docx'],
         // excel扩展名数组
