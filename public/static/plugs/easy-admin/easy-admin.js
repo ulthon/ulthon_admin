@@ -78,6 +78,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             shade: [0.02, '#000'],
         },
         url: function (url) {
+            
+            if (url.indexOf('/') === 0) {
+                return url;
+            }
+
             return '/' + CONFIG.ADMIN + '/' + url;
         },
         headers: function () {
