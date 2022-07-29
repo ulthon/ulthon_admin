@@ -78,7 +78,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             shade: [0.02, '#000'],
         },
         url: function (url) {
-            
+
             if (url.indexOf('/') === 0) {
                 return url;
             }
@@ -747,10 +747,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 var titleEndfix = '';
 
-                if (data[operat.titleField]) {
+                if (typeof operat.titleField == 'function') {
+                    titleEndfix = operat.titleField(data)
+                } else if (data[operat.titleField]) {
                     titleEndfix = '-' + data[operat.titleField];
                 }
-
 
                 var formatOperat = operat;
                 formatOperat.icon = formatOperat.icon !== '' ? '<i class="' + formatOperat.icon + '"></i> ' : '';
