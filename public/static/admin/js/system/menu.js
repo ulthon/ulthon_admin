@@ -69,6 +69,13 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'add',
                                     class: 'layui-btn layui-btn-xs layui-btn-normal',
                                     extend: 'data-full="true"',
+                                    if: function (data) {
+                                        if (data.pid == 99999999) {
+                                            return false;
+                                        }
+
+                                        return true;
+                                    }
                                 }, {
                                     text: '编辑',
                                     url: init.edit_url,

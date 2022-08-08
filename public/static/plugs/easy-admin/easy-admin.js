@@ -744,6 +744,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 operat.titleField = operat.titleField || 'title';
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
+                operat.if = operat.if || function () { return true };
+
+                if (operat.if(data, operat) !== true) {
+                    return '';
+                }
 
                 var titleEndfix = '';
 
