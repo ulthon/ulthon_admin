@@ -178,7 +178,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     $('#icon').val('fa ' + data.icon);
                 },
                 success: function (d) {
-                    console.log(d);
+                    
                 }
             });
             autocomplete.render({
