@@ -746,9 +746,22 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 operat.text = operat.text || operat.title;
                 operat.if = operat.if || function () { return true };
 
-                if (operat.if(data, operat) !== true) {
-                    return '';
+
+                if (typeof operat.if == 'function') {
+
+                    if (operat.if(data, operat) !== true) {
+                        return '';
+                    }
+                } else if (typeof operat.if == 'string') {
+
+                    var ifValue = admin.table.returnColumnValue(data,operat.if,false);
+
+                    if(!ifValue){
+                        return ''
+                    }
+
                 }
+
 
                 var titleEndfix = '';
 
@@ -1096,13 +1109,13 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 return '0B'
             },
             // 统一列返回数据处理
-            returnColumnValue(data) {
+            returnColumnValue(data, field, defaultValue) {
                 if (!data.LAY_COL) {
                     return '';
                 }
                 var option = data.LAY_COL;
-                var field = option.field;
-                var defaultValue = option.defaultValue;
+                field = field || option.field;
+                defaultValue = defaultValue || option.defaultValue;
                 var value = defaultValue;
                 try {
                     value = eval("data." + field);

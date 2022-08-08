@@ -83,6 +83,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'edit',
                                     class: 'layui-btn layui-btn-xs layui-btn-success',
                                     extend: 'data-full="true"',
+                                    if:'status'
                                 }, {
                                     text: '删除',
                                     method: 'none',
