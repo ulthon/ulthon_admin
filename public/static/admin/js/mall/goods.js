@@ -17,6 +17,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         index: function () {
             ea.table.render({
                 init: init,
+                totalRow: true,
                 toolbar: ['refresh',
                     [{
                         text: '添加',
@@ -30,7 +31,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     'delete', 'export'],
                 cols: [[
                     { type: "checkbox" },
-                    { field: 'id', width: 80, title: 'ID' },
+                    { field: 'id', width: 80, title: 'ID', totalRowText: '合计：' },
                     { field: 'sort', width: 80, title: '排序', edit: 'text' },
                     { field: 'cate.title', minWidth: 80, title: '商品分类', },
                     { field: 'cate.id', minWidth: 80, title: '商品分类', hide: true, defaultSearchValue: ea.getQueryVariable('cate_id', '') },
@@ -38,8 +39,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     { field: 'title', minWidth: 80, title: '商品名称', },
                     { field: 'logo', minWidth: 80, title: '商品图片', search: false, templet: ea.table.image },
                     { field: 'market_price', width: 100, title: '市场价', templet: ea.table.price },
-                    { field: 'discount_price', width: 100, title: '折扣价', templet: ea.table.price },
-                    { field: 'total_stock', width: 100, title: '库存统计' },
+                    { field: 'discount_price', width: 100, title: '折扣价', templet: ea.table.price, totalRow: true },
+                    { field: 'total_stock', width: 100, title: '库存统计', totalRow: '{{= parseInt(d.TOTAL_NUMS) }} 个' },
                     { field: 'stock', width: 100, title: '剩余库存' },
                     { field: 'virtual_sales', width: 100, title: '虚拟销量' },
                     { field: 'sales', width: 80, title: '销量' },
