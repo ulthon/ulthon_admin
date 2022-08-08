@@ -217,6 +217,8 @@ class AdminController extends BaseController
         $where = [];
         $excludes = [];
 
+        $request_options = [];
+
         // 判断是否关联查询
         $tableName = \think\helper\Str::snake(lcfirst($this->model->getName()));
 
@@ -268,11 +270,14 @@ class AdminController extends BaseController
                     $where[] = [$key, '>=', strtotime($beginTime)];
                     $where[] = [$key, '<=', strtotime($endTime)];
                     break;
+                case 'none':
+                    $request_options[$key] = $val;
+                    break;
                 default:
                     $where[] = [$key, $op, "%{$val}"];
             }
         }
-        return [$page, $limit, $where, $excludes];
+        return [$page, $limit, $where, $excludes, $request_options];
     }
 
     /**
