@@ -5,11 +5,13 @@ namespace app\common\command;
 
 
 use app\admin\service\curd\BuildCurdService;
+use app\common\tools\PathTools;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
 use think\Exception;
+use think\facade\App;
 
 class Curd extends Command
 {
@@ -22,6 +24,7 @@ class Curd extends Command
             #
             ->addOption('force', 'f', Option::VALUE_NONE, '强制覆盖模式')
             ->addOption('delete', 'd', Option::VALUE_NONE, '删除模式')
+            ->addOption('runtime', 'r', Option::VALUE_NONE, '临时生成')
             ->setDescription('一键curd命令服务');
     }
 
@@ -52,6 +55,15 @@ class Curd extends Command
             $build = (new BuildCurdService())
                 ->setTable($table)
                 ->setForce($force);
+
+            if ($input->hasOption('runtime')) {
+
+                $runtime_path = App::getRuntimePath() . 'source/build/' . date('YmdHis') . '/';
+                dump($runtime_path);
+                PathTools::intiDir($runtime_path . 'a.temp');
+
+                $build->setRootDir($runtime_path);
+            }
 
             $columns = $build->getTableColumns();
 

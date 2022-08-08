@@ -244,6 +244,13 @@ class BuildCurdService
         return $this->tableColumns;
     }
 
+    public function setRootDir($dir)
+    {
+        $this->rootDir = $dir;
+
+        return $this;
+    }
+
 
     /**
      * 设置主表
