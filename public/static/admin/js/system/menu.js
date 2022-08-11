@@ -76,6 +76,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
 
                                         return true;
                                     }
+
                                 }, {
                                     text: '编辑',
                                     url: init.edit_url,
@@ -83,7 +84,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'edit',
                                     class: 'layui-btn layui-btn-xs layui-btn-success',
                                     extend: 'data-full="true"',
-                                    if:'status'
+                                    if: 'status'
                                 }, {
                                     text: '删除',
                                     method: 'none',
@@ -178,7 +179,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     $('#icon').val('fa ' + data.icon);
                 },
                 success: function (d) {
-                    
+
                 }
             });
             autocomplete.render({

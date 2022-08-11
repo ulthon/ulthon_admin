@@ -754,9 +754,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     }
                 } else if (typeof operat.if == 'string') {
 
-                    var ifValue = admin.table.returnColumnValue(data,operat.if,false);
+                    var ifValue = admin.table.returnColumnValue(data, operat.if, false);
 
-                    if(!ifValue){
+                    if (!ifValue) {
                         return ''
                     }
 
@@ -975,7 +975,15 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             if (typeof operat.field != 'function') {
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                             } else {
-                                operat.url = operat.field(operat.url, data, operat)
+
+                                var querys = '';
+                                if (operat.url.indexOf("?") !== -1) {
+                                    querys = '&'
+                                } else {
+                                    querys = '?'
+                                }
+
+                                operat.url += querys + $.param(operat.field(data, operat))
                             }
 
                             if (admin.checkAuth(operat.auth, elem)) {
