@@ -4,9 +4,9 @@ namespace app\common\tools;
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
-class ExcelTools
+class ExportTools
 {
-    public static function exportModel($model, $where = [], $fields = [], $image_fields = [], $select_fields = [], $date_fields = [])
+    public static function excel($model, $where = [], $fields = [], $image_fields = [], $select_fields = [], $date_fields = [])
     {
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
