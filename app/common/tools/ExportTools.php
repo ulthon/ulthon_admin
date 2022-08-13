@@ -72,8 +72,8 @@ class ExportTools
                         }
                     } else if (array_key_exists($field_key, $select_fields)) {
                         // 需要设置选项
-                        
-                        $cel = $select_fields[$field_key][$value] ?? '';
+
+                        $cel = $select_fields[$field_key][$value] ?? $value;
                     } else if (in_array($field_key, $date_fields)) {
                         if (empty($value)) {
                             $cel = '';
@@ -103,7 +103,7 @@ class ExportTools
         ob_clean();
 
         foreach ($runtime_file_list as  $runtime_file) {
-            if(file_exists($runtime_file)){
+            if (file_exists($runtime_file)) {
                 unlink($runtime_file);
             }
         }
