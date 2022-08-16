@@ -9,11 +9,7 @@ use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnotation;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use think\App;
-use think\helper\Arr;
 
 /**
  * Class Goods
@@ -87,5 +83,14 @@ class Goods extends AdminController
         $this->assign('row', $row);
         return $this->fetch();
     }
-    
+
+    public function read($id)
+    {
+
+        $row = $this->model->find($id);
+
+        $this->assign('row', $row);
+
+        return $this->fetch();
+    }
 }

@@ -10,6 +10,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'mall.goods/export',
         modify_url: 'mall.goods/modify',
         stock_url: 'mall.goods/stock',
+        read_url: 'mall.goods/read',
     };
 
     var Controller = {
@@ -65,7 +66,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 method: 'open',
                                 auth: 'stock',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }],
+                            }, {
+                                text: '详情',
+                                url: init.read_url,
+                                method: 'open',
+                                auth: 'edit',
+                                extend: 'data-full="true"',
+                                class: 'layui-btn layui-btn-xs layui-btn-primary',
+                            },],
                             'delete']
                     }
                 ]],
@@ -80,6 +88,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
         stock: function () {
+            ea.listen();
+        },
+        read: function () {
             ea.listen();
         },
     };
