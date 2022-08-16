@@ -14,20 +14,12 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.12';
+    const VERSION = 'v2.0.13';
 
     const COMMENT = [
-        '表格新增存储容量格式化模板',
-        '优化图片扩展名',
-        '优化表格宽度自动计算',
-        '优化核心库的url生成助手函数',
-        '增加titleField的回调用法',
-        '默认关闭CSRF配置项',
-        '增加表格合计统计例子',
-        '新增CURD临时生成模式',
-        '表格新增if属性',
-        '表格搜素searchOp新增none用法',
-        '去除部分技术债务',
+        '优化导出功能',
+        '增加商品详情的导出',
+        '清理部分技术债务',
     ];
 
     protected function configure()
