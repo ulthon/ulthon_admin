@@ -9,9 +9,8 @@ use think\facade\Env;
 
 $level = [];
 
-
 if (!Env::get('APP_DEBUG')) {
-    $level = ['error'];
+    $level = ['error', 'info', 'notice', 'warning', 'critical', 'alert', 'emergency'];
 }
 
 return [
