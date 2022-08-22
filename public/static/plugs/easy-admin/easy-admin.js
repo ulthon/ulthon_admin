@@ -372,8 +372,6 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 // 判断是否有操作列表权限
                 options.cols = admin.table.renderOperat(options.cols, options.elem);
 
-
-
                 // 判断是否有操作列表权限
                 options.cols = admin.table.renderTrueHide(options.cols, options.elem);
 
@@ -393,11 +391,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                         if (selectedIds.length > 0) {
                             var selectedIdArr = selectedIds.split(',');
-                            console.log(selectedIdArr);
 
                             for (let index = 0; index < res.data.length; index++) {
                                 const dataItem = res.data[index];
-                                console.log(dataItem);
 
                                 if (selectedIdArr.indexOf(dataItem.id.toString()) > -1) {
                                     res.data[index].LAY_DISABLED = true;
