@@ -14,12 +14,11 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.14';
+    const VERSION = 'v2.0.15';
 
     const COMMENT = [
-        '修复curd生成缺少导出权限',
-        '重构上传组件',
-        '表格选择器使用固定高度',
+        '优化表格按钮无权限效果',
+        '清理部分技术债务',
     ];
 
     protected function configure()
