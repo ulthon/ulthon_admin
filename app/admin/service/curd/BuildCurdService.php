@@ -1070,10 +1070,13 @@ class BuildCurdService
             $controllerExportMethod = '';
         } else {
             $relationCode = '';
+            $relation_table = [];
+
             foreach ($this->relationArray as $key => $val) {
                 $relation = Str::camel($key);
-                $relationCode = "->withJoin('{$relation}', 'LEFT')\r";
+                $relation_table[] = $relation;
             }
+            $relationCode = "->withJoin(['" . implode('\',\'', $relation_table) . "'], 'LEFT')\r";
             $controllerIndexMethod = $this->replaceTemplate(
                 $this->getTemplate("controller{$this->DS}indexMethod"),
                 [
