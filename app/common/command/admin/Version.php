@@ -14,12 +14,12 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.13';
+    const VERSION = 'v2.0.14';
 
     const COMMENT = [
-        '优化导出功能',
-        '增加商品详情的导出',
-        '清理部分技术债务',
+        '修复curd生成缺少导出权限',
+        '重构上传组件',
+        '表格选择器使用固定高度',
     ];
 
     protected function configure()
