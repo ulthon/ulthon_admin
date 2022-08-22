@@ -373,7 +373,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 options.cols = admin.table.renderOperat(options.cols, options.elem);
 
                 // 判断是否有操作列表权限
-                options.cols = admin.table.renderTrueHide(options.cols, options.elem);
+                options.cols = admin.table.renderTrueHide(options.cols, options);
 
 
                 var parseData = function (res) { return res }
@@ -680,14 +680,23 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 }
                 return data;
             },
-            renderTrueHide(data, elem) {
+            renderTrueHide(data, options) {
                 var newData = [];
                 for (dk in data) {
                     var newCol = [];
                     var col = data[dk];
 
                     col.forEach(colItem => {
-                        if (!colItem.trueHide) {
+                        var trueHide = false;
+                        if (typeof colItem.trueHide == 'function') {
+                            trueHide = colItem.trueHide(colItem, col, options)
+                        } else if (typeof colItem.trueHide == 'string') {
+                            trueHide = !admin.checkAuth(colItem.trueHide, options.elem);
+                        } else {
+                            trueHide = colItem.trueHide;
+                        }
+                        
+                        if (!trueHide) {
                             newCol.push(colItem)
                         }
                     });
