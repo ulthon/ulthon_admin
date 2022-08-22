@@ -363,6 +363,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 if (selectMode == 'checkbox' || selectMode == 'radio') {
                     options.toolbar.unshift('selectConfirm');
+
+                    options.height = 'full-85'
                 }
 
                 options.toolbar = admin.table.renderToolbar(options.toolbar, options.elem, options.id, options.init);
