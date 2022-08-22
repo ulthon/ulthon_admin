@@ -5,6 +5,7 @@
                data-auth-edit="{:auth('{{controllerUrl}}/edit')}"
                data-auth-delete="{:auth('{{controllerUrl}}/delete')}"
                data-auth-export="{:auth('{{controllerUrl}}/export')}"
+               data-auth-modify="{:auth('{{controllerUrl}}/modify')}"
                lay-filter="currentTable">
         </table>
     </div>

@@ -1065,9 +1065,15 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             },
             switch: function (data) {
                 var option = data.LAY_COL;
+
+                if (!admin.checkAuth('modify', option.init.table_elem)) {
+                    return admin.table.list(data);
+                }
+
                 option.filter = option.filter || option.field || null;
                 option.checked = option.checked || 1;
                 option.tips = option.tips || '开|关';
+
                 var value = admin.table.returnColumnValue(data);
                 var checked = value === option.checked ? 'checked' : '';
                 return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
