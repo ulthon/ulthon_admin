@@ -3,6 +3,8 @@
 namespace app\common\service;
 
 use app\admin\model\SystemUploadfile;
+use app\common\tools\PathTools;
+use think\facade\App;
 use think\facade\Filesystem;
 use think\facade\Validate;
 use think\File;
@@ -97,16 +99,16 @@ class UploadService
         }
 
 
-        $save_name = Filesystem::disk($this->uploadType)->putFile($upload_dir, $file, function () use ($save_name,$file) {
+        $save_name = Filesystem::disk($this->uploadType)->putFile($upload_dir, $file, function () use ($save_name, $file) {
             if (!is_null($save_name)) {
 
                 $ext_name = $file->extension();
 
-                if(empty($ext_name)){
+                if (empty($ext_name)) {
                     return $save_name;
                 }
 
-                $list_name = explode('.',$save_name);
+                $list_name = explode('.', $save_name);
 
                 array_pop($list_name);
 
@@ -123,10 +125,31 @@ class UploadService
         $model_file->sha1 = $file->sha1();
 
         $model_file->file_size = $file->getSize();
-        
+
         if (!$disable_model) {
             $model_file->save();
         }
         return $model_file;
+    }
+
+    public function saveUrlFile($url, string $save_name = null, $force_save = false, $upload_dir = 'upload', $disable_model = false)
+    {
+
+        $runtime_path = App::getRuntimePath() . 'upload/temp/' . basename($url);
+
+        PathTools::intiDir($runtime_path);
+
+
+        $file_content = file_get_contents($url);
+
+        file_put_contents($runtime_path, $file_content);
+
+        $file = new File($runtime_path);
+
+        $response = $this->save($file, $save_name, $force_save, $upload_dir, $disable_model);
+
+        unlink($runtime_path);
+
+        return $response;
     }
 }

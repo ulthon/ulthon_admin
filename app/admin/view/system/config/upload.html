@@ -4,7 +4,7 @@
         <label class="layui-form-label required">存储方式</label>
         <div class="layui-input-block">
             {foreach ['local_public'=>'本地存储','alioss'=>'阿里云oss','qnoss'=>'七牛云oss','txcos'=>'腾讯云cos'] as $key=>$val}
-            <input type="radio" name="upload_type" lay-filter="upload_type" value="{$key}" title="{$val}" {if $key==sysconfig('upload','upload_type')}checked=""{/if}>
+            <input type="radio" name="upload_type" lay-filter="upload_type" value="{$key}" title="{$val}" {if $key==sysconfig('upload','upload_type')}checked="" {/if}>
             {/foreach}
         </div>
     </div>
@@ -24,8 +24,14 @@
             <tip>设置允许上传大小。</tip>
         </div>
     </div>
-
-    <div class="layui-form-item show-type-item alioss" >
+    <div class="layui-form-item show-type-item local_public">
+        <label class="layui-form-label">站点域名</label>
+        <div class="layui-input-block">
+            <input type="text" name="local_domain" class="layui-input" placeholder="请输入站点域名" value="{:sysconfig('upload','local_domain')}">
+            <tip>例子：{$Request.domain}，如果不填写，那么自动获取当前站点域名，但是在命令行调用上传时不能正确生成地址。</tip>
+        </div>
+    </div>
+    <div class="layui-form-item show-type-item alioss">
         <label class="layui-form-label required">公钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_access_key_id" class="layui-input" lay-verify="required" lay-reqtext="请输入公钥信息" placeholder="请输入公钥信息" value="{:sysconfig('upload','alioss_access_key_id')}">
@@ -33,7 +39,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item alioss" >
+    <div class="layui-form-item show-type-item alioss">
         <label class="layui-form-label required">私钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_access_key_secret" class="layui-input" lay-verify="required" lay-reqtext="请输入私钥信息" placeholder="请输入私钥信息" value="{:sysconfig('upload','alioss_access_key_secret')}">
@@ -41,7 +47,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item alioss" >
+    <div class="layui-form-item show-type-item alioss">
         <label class="layui-form-label required">数据中心</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_endpoint" class="layui-input" lay-verify="required" lay-reqtext="请输入数据中心" placeholder="请输入数据中心" value="{:sysconfig('upload','alioss_endpoint')}">
@@ -49,7 +55,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item alioss" >
+    <div class="layui-form-item show-type-item alioss">
         <label class="layui-form-label required">空间名称</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入空间名称" placeholder="请输入空间名称" value="{:sysconfig('upload','alioss_bucket')}">
@@ -57,7 +63,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item alioss" >
+    <div class="layui-form-item show-type-item alioss">
         <label class="layui-form-label required">访问域名</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_domain" class="layui-input" lay-verify="required" lay-reqtext="请输入访问域名" placeholder="请输入访问域名" value="{:sysconfig('upload','alioss_domain')}">
@@ -65,7 +71,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item txcos" >
+    <div class="layui-form-item show-type-item txcos">
         <label class="layui-form-label required">公钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_secret_id" class="layui-input" lay-verify="required" lay-reqtext="请输入公钥信息" placeholder="请输入公钥信息" value="{:sysconfig('upload','txcos_secret_id')}">
@@ -73,7 +79,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item txcos" >
+    <div class="layui-form-item show-type-item txcos">
         <label class="layui-form-label required">私钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_secret_key" class="layui-input" lay-verify="required" lay-reqtext="请输入私钥信息" placeholder="请输入私钥信息" value="{:sysconfig('upload','txcos_secret_key')}">
@@ -81,7 +87,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item txcos" >
+    <div class="layui-form-item show-type-item txcos">
         <label class="layui-form-label required">存储桶地域</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_region" class="layui-input" lay-verify="required" lay-reqtext="请输入存储桶地域" placeholder="请输入存储桶地域" value="{:sysconfig('upload','txcos_region')}">
@@ -89,14 +95,14 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item txcos" >
+    <div class="layui-form-item show-type-item txcos">
         <label class="layui-form-label required">存储桶名称</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入存储桶名称" placeholder="请输入存储桶名称" value="{:sysconfig('upload','txcos_bucket')}">
             <tip>例子：ulthon-admin-1251997243</tip>
         </div>
     </div>
-    <div class="layui-form-item show-type-item txcos" >
+    <div class="layui-form-item show-type-item txcos">
         <label class="layui-form-label required">访问域名</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_domain" class="layui-input" lay-verify="required" lay-reqtext="请输入访问域名" placeholder="请输入访问域名" value="{:sysconfig('upload','txcos_domain')}">
@@ -104,7 +110,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item qnoss" >
+    <div class="layui-form-item show-type-item qnoss">
         <label class="layui-form-label required">公钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="qnoss_access_key" class="layui-input" lay-verify="required" lay-reqtext="请输入公钥信息" placeholder="请输入公钥信息" value="{:sysconfig('upload','qnoss_access_key')}">
@@ -112,7 +118,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item qnoss" >
+    <div class="layui-form-item show-type-item qnoss">
         <label class="layui-form-label required">私钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="qnoss_secret_key" class="layui-input" lay-verify="required" lay-reqtext="请输入私钥信息" placeholder="请输入私钥信息" value="{:sysconfig('upload','qnoss_secret_key')}">
@@ -120,7 +126,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item qnoss" >
+    <div class="layui-form-item show-type-item qnoss">
         <label class="layui-form-label required">存储空间</label>
         <div class="layui-input-block">
             <input type="text" name="qnoss_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入存储桶地域" placeholder="请输入存储桶地域" value="{:sysconfig('upload','qnoss_bucket')}">
@@ -128,7 +134,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item show-type-item qnoss" >
+    <div class="layui-form-item show-type-item qnoss">
         <label class="layui-form-label required">访问域名</label>
         <div class="layui-input-block">
             <input type="text" name="qnoss_domain" class="layui-input" lay-verify="required" lay-reqtext="请输入访问域名" placeholder="请输入访问域名" value="{:sysconfig('upload','qnoss_domain')}">

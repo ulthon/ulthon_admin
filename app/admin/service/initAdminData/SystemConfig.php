@@ -225,6 +225,13 @@ $ul_system_config = array(
         "sort" => 0,
     ),
     array(
+        "name" => "txcos_domain",
+        "group" => "upload",
+        "value" => "填你的",
+        "remark" => "访问域名",
+        "sort" => 0,
+    ),
+    array(
         "name" => "file",
         "group" => "site",
         "value" => "",

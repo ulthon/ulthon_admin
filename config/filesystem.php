@@ -14,21 +14,21 @@ return [
         ],
         'local_public' => [
             // 磁盘类型
-            'type'       => 'local',
+            'type'       => 'LocalPublic',
             // 磁盘路径
             'root'       => app()->getRootPath() . 'public/storage',
             // 磁盘路径对应的外部URL路径
-            'url'        => Request::domain() . '/storage',
+            'url'        => '/storage',
             // 可见性
             'visibility' => 'public',
         ],
         'local_static' => [
             // 磁盘类型
-            'type'       => 'local',
+            'type'       => 'LocalPublic',
             // 磁盘路径
             'root'       => app()->getRootPath() . 'public/static',
             // 磁盘路径对应的外部URL路径
-            'url'        => Request::domain() . '/static',
+            'url'        => '/static',
             // 可见性
             'visibility' => 'public',
         ],
