@@ -1180,7 +1180,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         op: JSON.stringify(formatOp)
                     }
                     lastTableWhere[tableId] = where
-                    table.reload(tableId, {
+                    table.reloadData(tableId, {
                         page: {
                             curr: 1
                         }
@@ -1214,14 +1214,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             data: data,
                         }, function (res) {
                             if (option.modifyReload) {
-                                table.reload(option.tableId);
+                                table.reloadData(option.tableId);
                             }
                         }, function (res) {
                             admin.msg.error(res.msg, function () {
-                                table.reload(option.tableId);
+                                table.reloadData(option.tableId);
                             });
                         }, function () {
-                            table.reload(option.tableId);
+                            table.reloadData(option.tableId);
                         });
                     }
                 });
@@ -1235,7 +1235,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     lastWhere.sort = {}
                     lastWhere.sort[obj.field] = obj.type;
 
-                    table.reload(option.id, {
+                    table.reloadData(option.id, {
                         initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
                         , where: lastWhere
                     });
@@ -1280,14 +1280,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             data: _data,
                         }, function (res) {
                             if (modifyReload) {
-                                table.reload(tableId);
+                                table.reloadData(tableId);
                             }
                         }, function (res) {
                             admin.msg.error(res.msg, function () {
-                                table.reload(tableId);
+                                table.reloadData(tableId);
                             });
                         }, function () {
-                            table.reload(tableId);
+                            table.reloadData(tableId);
                         });
                     });
                 }
@@ -1619,7 +1619,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 if (tableId === undefined || tableId === '' || tableId == null) {
                     tableId = init.table_render_id;
                 }
-                table.reload(tableId);
+                table.reloadData(tableId);
             });
 
             // 监听搜索表格重置
@@ -1632,7 +1632,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     filter: '{}',
                     op: '{}'
                 };
-                table.reload(tableId, {
+                table.reloadData(tableId, {
                     page: {
                         curr: 1
                     }
@@ -1684,7 +1684,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         data: postData,
                     }, function (res) {
                         admin.msg.success(res.msg, function () {
-                            table.reload(tableId);
+                            table.reloadData(tableId);
                         });
                     })
                 });
@@ -1717,7 +1717,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         },
                     }, function (res) {
                         admin.msg.success(res.msg, function () {
-                            table.reload(tableId);
+                            table.reloadData(tableId);
                         });
                     });
                 });
@@ -1760,7 +1760,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
                 if (option.refreshTable !== false) {
-                    parent.layui.table.reload(option.refreshTable);
+                    parent.layui.table.reloadData(option.refreshTable);
                 }
                 if (option.refreshFrame) {
                     parent.location.reload();
@@ -1773,7 +1773,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             },
             refreshTable: function (tableName) {
                 tableName = tableName || 'currentTableRenderId';
-                table.reload(tableName);
+                table.reloadData(tableName);
             },
             formRequired: function () {
                 var verifyList = document.querySelectorAll("[lay-verify]");
