@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace app\common\command\admin;
 
+use think\App as ThinkApp;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -15,6 +16,8 @@ class Version extends Command
 {
 
     const VERSION = 'v2.0.16';
+
+    const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
         'CURD修复生成控制器多个关联时代码',
@@ -33,6 +36,8 @@ class Version extends Command
 
         // 指令输出
         $output->info('当前版本号为：' . $this::VERSION);
+        $output->info('当前Layui版本号为：' . $this::LAYUI_VERSION);
+        $output->info('当前ThinkPHP版本号为：' . ThinkApp::VERSION);
 
         $output->writeln('当前的修改说明:');
         $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
