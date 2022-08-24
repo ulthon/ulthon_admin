@@ -41,7 +41,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
     var extGroup = {
         // 图片扩展名数组
-        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
+        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico', 'webp'],
         // word扩展名数组
         'word': ['doc', 'docx'],
         // excel扩展名数组
@@ -695,7 +695,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         } else {
                             trueHide = colItem.trueHide;
                         }
-                        
+
                         if (!trueHide) {
                             newCol.push(colItem)
                         }
