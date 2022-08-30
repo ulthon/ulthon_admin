@@ -69,7 +69,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'add',
                                     class: 'layui-btn layui-btn-xs layui-btn-normal',
                                     extend: 'data-full="true"',
-                                    if: function (data) {
+                                    _if: function (data) {
                                         if (data.pid == 99999999) {
                                             return false;
                                         }
@@ -84,7 +84,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'edit',
                                     class: 'layui-btn layui-btn-xs layui-btn-success',
                                     extend: 'data-full="true"',
-                                    if: 'status'
+                                    _if: 'status'
                                 }, {
                                     text: '删除',
                                     method: 'none',

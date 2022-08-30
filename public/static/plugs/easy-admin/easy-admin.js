@@ -751,17 +751,17 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 operat.titleField = operat.titleField || 'title';
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
-                operat.if = operat.if || function () { return true };
+                operat._if = operat._if || function () { return true };
 
 
-                if (typeof operat.if == 'function') {
+                if (typeof operat._if == 'function') {
 
-                    if (operat.if(data, operat) !== true) {
+                    if (operat._if(data, operat) !== true) {
                         return '';
                     }
-                } else if (typeof operat.if == 'string') {
+                } else if (typeof operat._if == 'string') {
 
-                    var ifValue = admin.table.returnColumnValue(data, operat.if, false);
+                    var ifValue = admin.table.returnColumnValue(data, operat._if, false);
 
                     if (!ifValue) {
                         return ''
