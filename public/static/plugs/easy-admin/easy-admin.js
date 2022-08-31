@@ -882,9 +882,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         }
 
                         // 如果未定义则默认使用value
-                        if (val.templet === undefined) {
-                            cols[i][index]['templet'] = admin.table.value;
-                        }
+                        // if (val.templet === undefined) {
+                        //     cols[i][index]['templet'] = admin.table.value;
+                        // }
 
                         if (val.fieldFormat == undefined) {
 
@@ -1147,7 +1147,6 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 if (defaultValue != undefined && admin.empty(value)) {
                     value = defaultValue;
                 }
-
                 return value;
             },
             listenTableSearch: function (tableId) {
