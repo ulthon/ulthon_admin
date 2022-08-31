@@ -751,23 +751,6 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 operat.titleField = operat.titleField || 'title';
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
-                operat._if = operat._if || function () { return true };
-
-
-                if (typeof operat._if == 'function') {
-
-                    if (operat._if(data, operat) !== true) {
-                        return '';
-                    }
-                } else if (typeof operat._if == 'string') {
-
-                    var ifValue = admin.table.returnColumnValue(data, operat._if, false);
-
-                    if (!ifValue) {
-                        return ''
-                    }
-
-                }
 
 
                 var titleEndfix = '';
@@ -972,6 +955,19 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             operat.title = operat.title || operat.text;
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
+
+                            operat._if = operat._if || function () { return true };
+
+                            if (typeof operat._if == 'function') {
+                                if (operat._if(data, operat) !== true) {
+                                    return '';
+                                }
+                            } else if (typeof operat._if == 'string') {
+                                var ifValue = admin.table.returnColumnValue(data, operat._if, false);
+                                if (!ifValue) {
+                                    return ''
+                                }
+                            }
 
                             // 自定义表格opreat按钮的弹窗标题风格，extra是表格里的欲加入标题中的字段
                             operat.extra = operat.extra || '';
