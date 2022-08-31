@@ -865,9 +865,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         }
 
                         // 如果未定义则默认使用value
-                        // if (val.templet === undefined) {
-                        //     cols[i][index]['templet'] = admin.table.value;
-                        // }
+                        if (val.templet === undefined) {
+                            cols[i][index]['templet'] = admin.table.value;
+                        }
 
                         if (val.fieldFormat == undefined) {
 
@@ -893,6 +893,20 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 val.fixed = false;
                             }
                         }
+
+                        // 重新整理配置参数，兼容templet在edit时缺少LAY_COL的问题，如果在layui2.8解决，那么应当删除这些代码
+
+                        var endVal = {...col[index]};
+                        endVal.endTemplet = endVal.templet;
+                        endVal.templet = function(data){
+                            if(!data.LAY_COL){
+                                data.LAY_COL = this
+                            }
+
+                            return this.endTemplet(data)
+                        }
+
+                        cols[i][index] = endVal;
 
 
 
