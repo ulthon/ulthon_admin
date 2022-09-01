@@ -27,6 +27,12 @@ Route::view('/', 'welcome', [
             'target' => '_blank',
         ],
         [
+            'name'   => '商业支持',
+            'active' => false,
+            'href'   => 'https://ulthon.com/bussiness.html',
+            'target' => '_blank',
+        ],
+        [
             'name'   => 'QQ群',
             'active' => false,
             'href'   => 'https://jq.qq.com/?_wv=1027&k=TULvsosz',
