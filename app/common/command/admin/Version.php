@@ -15,21 +15,12 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.17';
+    const VERSION = 'v2.0.18';
 
     const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
-        '增加trueHide的回调用法',
-        '增加trueHide的权限检测用法',
-        '明确指定生产环境的日志级别',
-        '增加图片的webp格式上传',
-        '增加需要编译的scss文件说明',
-        '调整后台布局细节',
-        '优化商城导出',
-        '表格的reload修改为reloadData',
-        '升级layui到2.7.6',
-        '优化version显示',
+        '优化底层代码建设',
     ];
 
     protected function configure()
