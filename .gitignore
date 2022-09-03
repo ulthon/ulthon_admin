@@ -13,3 +13,4 @@ app/test/
 vendor
 runtime
 ul.db
+/app/tools/controller/Install.php

@@ -16,7 +16,7 @@
 
 > 建议设置composer的镜像为阿里镜像源
 
-#### 通过git下载安装包，composer安装依赖包
+### 通过git下载安装包，composer安装依赖包
 
 ```bash
 第一步，下载安装包
@@ -57,6 +57,20 @@ php think run
 ```
 
 > 这个安装方式对开发体验非常友好
+
+### 下载完整包
+
+我们提供了完整包的下载方式：
+
+[完整包下载](http://program.hl7.top/index/Index/program/uid/630d6309b8436.html)
+
+### 在线安装(初始化)数据库
+
+框架并没有在线安装的功能，以后也不会内置提供。
+
+但ulthon_admin使用数据库迁移工具安装数据库，不一定要在命令行环境使用，在普通的控制器中也可以使用。我们提供一个简单地代码脚本演示如何在线安装。
+
+[如何在线上安装数据库](https://doc.ulthon.com/read/augushong/ulthon_admin/online_install.html)
 
 
 ## 站点地址
@@ -139,3 +153,16 @@ php think run
 
 `tp6后台`，`thinkphp6后台`，`layui后台`,`curd后台`
 
+## 皮肤预览
+
+> 支持多款特效皮肤，更多请前往[演示站点](http://admin.demo.ulthon.com) 查看
+
+### 标准
+规规矩矩，简洁大方，稳重不失活泼。
+![](/public/static/index/images/preview/normal.png)
+### 科幻
+适合夜间使用，适合物联网系统、监控系统、大屏系统等非常规后台使用。
+![](/public/static/index/images/preview/sifi.png)
+### gnome
+感受到来自gnome的恐惧了吗？一个“兼容Linux”的后台框架。
+![](/public/static/index/images/preview/gtk.png)
