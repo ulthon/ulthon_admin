@@ -8,9 +8,12 @@
     <meta name="keywords" content="tp6后台,curd后台,layui后台,ulthon_admin,ulthon_admin官网,thinkphp6.0框架,layui前端框架,后台快速开发框架,php框架">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>ulthon_admin | 一款基于ThinkPHP6.0和Layui的快速开发的后台管理框架系统</title>
+    <link rel="stylesheet" href="//layui.ulthon.com/cdn/layui-ul.css">
     <link rel="stylesheet" href="__STATIC__/common/css/welcome.css?v={$version}">
+    <link rel="stylesheet" href="/static/plugs/layui-v2.7.6/css/layui.css">
+    <script src="/static/plugs/layui-v2.7.6/layui.js"></script>
 
-    {:htmlspecialchars_decode(sysconfig('site','site_js_insert'))}
+
 </head>
 
 <body>
@@ -47,6 +50,45 @@
 
                     <a class="gitee button-grya" target="_blank" href="https://gitee.com/ulthon/ulthon_admin"><i class="icon-gitee"></i>Gitee</a>
                 </p>
+            </div>
+            <!-- 框架皮肤-->
+            <div class="introduction">
+                <!-- 特性标题-->
+                <div class="top">
+                    <div class="part-title">
+                        <p class="text">特效皮肤</p>
+                        <p class="line"></p>
+                    </div>
+                    <p class="part-desc">
+                        后台框架千千万，这样酷的不多见。除了简单地导航菜单的皮肤设置外，还支持一键设置多种特效皮肤。所有样式仅通过css实现，无需修改任何HTML结构。
+                    </p>
+                </div>
+                <!-- 特性介绍-->
+                <div class="bottom">
+                    {foreach $skin as $vo}
+                    <div class="item shadow img-preview" data-src="{$vo.preview_image}">
+                        <div class="ul-info-card" style="height: 100%;">
+                            <div class="header" style="cursor: pointer;">
+                                <div class="img" style="background-image: url('{$vo.preview_image}');">
+                                </div>
+                            </div>
+                            <div class="body">
+                                <div class="title" style="padding-bottom: 0;">
+                                    {$vo.name}
+                                </div>
+                                <div class="line">
+                                </div>
+                                <div class="info" style="padding: 0 15px;">
+                                    <div class="info-item" style="padding-bottom:10px;width: 100%;border-bottom: 0;">
+                                        <div class="info-title">简介</div>
+                                        <div class="info-value" style="min-height: 45px;">{$vo.description}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
             </div>
             <!-- 框架特性-->
             <div class="introduction">
@@ -105,7 +147,27 @@
             <p>Site designed by <a href="https://gitee.com/ulthon" target="_blank">ulthon</a></p>
         </div>
     </footer>
-    </div>
+    <script>
+        $ = layui.$;
+
+        $('.img-preview .header').click(function () {
+            layer.photos({
+                photos: {
+                    "title": "特效皮肤", //相册标题
+                    "id": 1, //相册id
+                    "start": 0, //初始显示的图片序号，默认0
+                    "data": [   //相册包含的图片，数组格式
+                        {
+                            "alt": $(this).closest('.img-preview').find('.title').text(),
+                            "pid": 666, //图片id
+                            "src": $(this).closest('.img-preview').data('src'), //原图地址
+                        }
+                    ]
+                }
+            })
+        })
+    </script>
+    {:htmlspecialchars_decode(sysconfig('site','site_js_insert'))}
 </body>
 
 </html>

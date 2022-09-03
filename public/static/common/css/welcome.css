@@ -128,6 +128,7 @@ header .right {
     margin-left: 30px;
     font-size: 16px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .navbar-item.active {
@@ -406,6 +407,10 @@ footer a {
 .introduction .bottom .item {
     width: 294px;
     margin-right: 108px;
+}
+
+.introduction .bottom .item.shadow{
+    box-shadow: 0 0 6px #999;
 }
 
 .introduction .bottom .item:nth-child(n+4) {
