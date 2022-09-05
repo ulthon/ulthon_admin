@@ -14,3 +14,4 @@ vendor
 runtime
 ul.db
 /app/tools/controller/Install.php
+/app/common/command/curd/migrate_output.php

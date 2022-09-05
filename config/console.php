@@ -5,6 +5,7 @@
 
 use app\common\command\admin\Version;
 use app\common\command\admin\ResetPassword;
+use app\common\command\curd\Migrate;
 use app\common\command\Timer;
 
 return [
@@ -15,6 +16,7 @@ return [
         'OssStatic' => 'app\common\command\OssStatic',
         ResetPassword::class,
         Timer::class,
-        Version::class
+        Version::class,
+        Migrate::class
     ],
 ];
