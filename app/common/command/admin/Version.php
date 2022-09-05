@@ -15,12 +15,15 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.18';
+    const VERSION = 'v2.0.19';
 
     const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
-        '优化底层代码建设',
+        '新增curd生成数据库迁移代码功能',
+        '优化首页链接',
+        '在后台增加进入首页的导航',
+        '优化curd的代码技术债务，使用tp内置方法实现交互',
     ];
 
     protected function configure()
