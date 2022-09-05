@@ -109,9 +109,10 @@ class Curd extends Command
                         $output->writeln($key);
                     }
                     $output->writeln(">>>>>>>>>>>>>>>");
-                    $output->writeln("确定强制生成上方所有文件? 如果文件存在会直接覆盖。 请输入 'yes' 按回车键继续操作: ");
-                    $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
-                    if (trim($line) != 'yes') {
+
+                    $ask_force_delete_result = $output->confirm($input,'确定强制生成上方所有文件? 如果文件存在会直接覆盖。');
+                    
+                    if (!$ask_force_delete_result) {
                         throw new Exception("取消文件CURD生成操作");
                     }
                 }
@@ -123,9 +124,10 @@ class Curd extends Command
                     $output->writeln($key);
                 }
                 $output->writeln(">>>>>>>>>>>>>>>");
-                $output->writeln("确定删除上方所有文件?  请输入 'yes' 按回车键继续操作: ");
-                $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
-                if (trim($line) != 'yes') {
+
+                $ask_force_delete_result = $output->confirm($input,'确定删除上方所有文件? ');
+                    
+                if (!$ask_force_delete_result) {
                     throw new Exception("取消删除文件操作");
                 }
                 $result = $build->delete();
