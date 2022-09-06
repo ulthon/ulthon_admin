@@ -147,7 +147,9 @@ php think run
 
 ## 与`EasyAdmin`的关系
 
-`EasyAdmin`是一个优秀和流行的开源后台项目,新版的`ulthon_admin`相当于它的一个分支.
+`EasyAdmin`是一个优秀和流行的开源后台项目,新版的`ulthon_admin`相当于它的一个分支。
+
+目前ulthon_admin已经重写和新增了大量的底层功能建设。欢迎使用，欢迎star。
 
 `ulthon_admin`将不会向`市场插件`方向发展,只为`开发人员`服务,只为`需求定制`服务.
 
