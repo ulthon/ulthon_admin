@@ -135,7 +135,17 @@ class Migrate extends Command
                 $column_item['type'] = $type_info[0];
 
                 $length = substr($type_info[1], 0, strpos($type_info[1], ')'));
-                $column_item['options']['limit'] = $length;
+
+                if (strpos($length, ',') !== false) {
+
+                    $length_info = explode(',', $length);
+
+                    $column_item['options']['precision'] = $length_info[0];
+                    $column_item['options']['scale'] = $length_info[1];
+                } else {
+
+                    $column_item['options']['limit'] = $length;
+                }
 
                 if (strpos($type, 'unsigned') !== false) {
                     // 无符号
@@ -182,6 +192,17 @@ class Migrate extends Command
 
             if (isset($type_map[$column_item_set['type']])) {
                 $column_item_set['type'] = $type_map[$column_item_set['type']];
+            }
+
+            foreach ($column_item_set['options'] as $key => $option) {
+
+                if(is_array($option)){
+
+                    $column_item_set['options'][$key] = "[".implode(',',$option)."]";
+                    
+                }else{
+                    $column_item_set['options'][$key] = "'{$option}'";
+                }
             }
         }
 

@@ -28,7 +28,7 @@ class {$class_name} extends Migrator
     {
         $table = $this->table('{$table}')
             ->setComment('{$table_info.TABLE_COMMENT}')
-            {volist name="table_columns" id="column"}->addColumn('{$column.field}', '{$column.type}', [{volist name="column.options" id="option"}'{$key}' => '{$option}', {/volist}])
+            {volist name="table_columns" id="column"}->addColumn('{$column.field}', '{$column.type}', [{volist name="column.options" id="option"}'{$key}' => {$option|raw}, {/volist}])
             {/volist}
             {volist name="table_keys_uni" id="vo"}->addIndex('{$vo}',['unique'=>true])
             {/volist}
