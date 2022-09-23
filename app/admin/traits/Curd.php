@@ -24,14 +24,16 @@ trait Curd
             if (input('selectFields')) {
                 return $this->selectList();
             }
-            list($page, $limit, $where) = $this->buildTableParames();
+            list($page, $limit, $where, $excludes, $request_options, $group) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->group($group)
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->page($page, $limit)
                 ->order($this->sort)
+                ->group($group)
                 ->select();
             $data = [
                 'code'  => 0,

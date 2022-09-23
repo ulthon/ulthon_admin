@@ -4,7 +4,7 @@
         <div class="placeholder" v-if="listSelected.length == 0">{{setting.placeholder}}</div>
         <div class="layui-btn layui-btn-xs layui-btn-normal" v-for="(itemSelect,indexSelect) in listSelected">
             <span>{{itemSelect[setting.fieldName]}}</span>
-            <i class="layui-icon layui-icon-close" @click.stop="removeItem(itemSelect,indexSelect)"></i>
+            <i class="layui-icon layui-icon-close" @click.stop="removeItem(itemSelect,indexSelect)" v-if="setting.readonly != 1"></i>
         </div>
 
     </div>

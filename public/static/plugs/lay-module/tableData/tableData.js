@@ -46,7 +46,6 @@ define(['jquery', 'vue'], function ($, Vue) {
 
         var options = $.extend(defaultOption, data);
 
-
         var valueField = options.valueField;
 
         if (options.index.indexOf('?') > -1) {
@@ -84,8 +83,9 @@ define(['jquery', 'vue'], function ($, Vue) {
                 $.get(options.index, {
                     page: 1,
                     limit: valueLength,
-                    filter: JSON.stringify({ id: this.value }),
-                    op: JSON.stringify({ id: 'in' })
+                    filter: JSON.stringify({ [options.valueField]: this.value }),
+                    op: JSON.stringify({ [options.valueField]: 'in' }),
+                    group: options.valueField
                 }, (result) => {
                     loading.hide()
                     this.listSelected = result.data;
@@ -101,8 +101,12 @@ define(['jquery', 'vue'], function ($, Vue) {
 
             methods: {
                 openSelectPage() {
-                    var selectedIds = this.listSelected.map(item => item.id);
 
+                    if(options.readonly == 1){
+                        return false;
+                    }
+
+                    var selectedIds = this.listSelected.map(item => item.id);
 
                     var index = layer.open({
                         title: '选择数据',
