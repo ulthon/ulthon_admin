@@ -1063,6 +1063,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 var urlNameField = option.urlNameField || '';
 
                 var value = admin.table.returnColumnValue(data);
+
+                if (admin.empty(value)) {
+                    return ''
+                }
+
                 var urlName = value;
 
                 if (urlNameField != '') {
