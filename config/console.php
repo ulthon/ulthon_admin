@@ -3,6 +3,7 @@
 // | 控制台配置
 // +----------------------------------------------------------------------
 
+use app\common\command\admin\Clear;
 use app\common\command\admin\Version;
 use app\common\command\admin\ResetPassword;
 use app\common\command\curd\Migrate;
@@ -17,6 +18,7 @@ return [
         ResetPassword::class,
         Timer::class,
         Version::class,
-        Migrate::class
+        Migrate::class,
+        Clear::class
     ],
 ];
