@@ -896,10 +896,10 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                         // 重新整理配置参数，兼容templet在edit时缺少LAY_COL的问题，如果在layui2.8解决，那么应当删除这些代码
 
-                        var endVal = {...col[index]};
+                        var endVal = { ...col[index] };
                         endVal.endTemplet = endVal.templet;
-                        endVal.templet = function(data){
-                            if(!data.LAY_COL){
+                        endVal.templet = function (data) {
+                            if (!data.LAY_COL) {
                                 data.LAY_COL = this
                             }
 
@@ -1587,38 +1587,31 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
             // 放大一组图片
             $('body').on('click', '[data-images]', function () {
-                var title = $(this).attr('data-images'),
-                    // 从当前元素向上找layuimini-upload-show找到第一个后停止, 再找其所有子元素li
-                    doms = $(this).closest(".layuimini-upload-show").children("li"),
-                    // 被点击的图片地址
-                    now_src = $(this).attr('src'),
-                    alt = $(this).attr('alt'),
+                var doms = $(this).closest(".layuimini-upload-show").children("li"),  // 从当前元素向上找layuimini-upload-show找到第一个后停止, 再找其所有子元素li
+                    currentSrc = $(this).attr('src'), // 被点击的图片地址
+                    start = 0,
                     data = [];
                 $.each(doms, function (key, value) {
-                    var src = $(value).find('img').attr('src');
-                    if (src != now_src) {
-                        // 压入其他图片地址
-                        data.push({
-                            "alt": alt,
-                            "pid": Math.random(),
-                            "src": src,
-                            "thumb": src
-                        });
-                    } else {
-                        // 把当前图片插入到头部
-                        data.unshift({
-                            "alt": alt,
-                            "pid": Math.random(),
-                            "src": now_src,
-                            "thumb": now_src
-                        });
+                    var img = $(value).find('img'),
+                        src = img.attr('src'),
+                        alt = img.attr('alt');
+                    data.push({
+                        "alt": alt,
+                        "pid": Math.random(),
+                        "src": src,
+                        "thumb": src
+                    });
+                    if (src === currentSrc) {
+                        start = key;
                     }
                 });
                 var photos = {
-                    "title": title,
+                    "title": '',
+                    "start": start,
                     "id": Math.random(),
                     "data": data,
                 };
+
                 layer.photos({
                     photos: photos,
                     anim: 5
@@ -2004,7 +1997,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                                         if (extGroup.image.indexOf(ext) != -1) {
                                             // 是图片
-                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-image  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
 
                                         } else {
                                             // 不是图片
