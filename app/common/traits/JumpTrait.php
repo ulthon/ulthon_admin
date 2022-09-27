@@ -41,6 +41,11 @@ trait JumpTrait
 
         $type = $this->getResponseType();
         if ($type == 'html') {
+
+            if (is_null($result['url'])) {
+                $result['url'] = '';
+            }
+
             $response = view(app('config')->get('app.dispatch_success_tmpl'), $result);
         } elseif ($type == 'json') {
             $response = json($result);
@@ -76,6 +81,9 @@ trait JumpTrait
             'wait' => $wait,
         ];
         if ($type == 'html') {
+            if (is_null($result['url'])) {
+                $result['url'] = '';
+            }
             $response = view(app('config')->get('app.dispatch_error_tmpl'), $result);
         } elseif ($type == 'json') {
             $response = json($result);
