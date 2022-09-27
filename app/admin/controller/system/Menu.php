@@ -31,6 +31,8 @@ class Menu extends AdminController
     {
         parent::__construct($app);
         $this->model = new SystemMenu();
+
+        $this->assign('menu_home_pid', MenuConstant::HOME_PID, true);
     }
 
     /**
@@ -109,6 +111,12 @@ class Menu extends AdminController
                 'icon|菜单图标'  => 'require',
             ];
             $this->validate($post, $rule);
+
+            //防止首页pid被修改而导致渲染时报错
+            if ($row->pid == MenuConstant::HOME_PID) {
+                unset($post['pid']);
+            }
+
             try {
                 $save = $row->save($post);
             } catch (\Exception $e) {
@@ -206,5 +214,4 @@ class Menu extends AdminController
             'type'    => 'success',
         ]);
     }
-
 }

@@ -91,7 +91,15 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'delete',
                                     class: 'layui-btn layui-btn-xs layui-btn-danger',
                                     extend: 'data-treetable-delete-item="1" data-url="' + init.delete_url + '"',
-                                    data: ['id', 'title']
+                                    data: ['id', 'title'],
+                                    _if(data) {
+
+                                        if (data.pid == ea.getDataBrage('menu_home_pid')) {
+                                            return false
+                                        }
+
+                                        return true;
+                                    }
                                 },],
 
                             ]
