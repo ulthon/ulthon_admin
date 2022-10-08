@@ -52,7 +52,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     },
                     { field: 'total_stock', width: 100, title: '库存统计', totalRow: '{{= parseInt(d.TOTAL_NUMS) }} 个' },
                     {
-                        field: 'stock', width: 100, title: '剩余库存', valueParser(value, data) {
+                        field: 'stock',
+                        width: 100,
+                        title: '剩余库存',
+                        valueParser(value, data) {
                             if (value >= 20) {
                                 return value;
                             }
