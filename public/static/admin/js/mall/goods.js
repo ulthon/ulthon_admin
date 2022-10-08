@@ -40,9 +40,25 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     { field: 'title', minWidth: 80, title: '商品名称', },
                     { field: 'logo', minWidth: 80, title: '商品图片', search: false, templet: ea.table.image },
                     { field: 'market_price', width: 100, title: '市场价', templet: ea.table.price },
-                    { field: 'discount_price', width: 100, title: '折扣价', templet: ea.table.price, totalRow: true },
+                    {
+                        field: 'discount_price', width: 120, title: '折扣价', templet: ea.table.price, totalRow: true,
+                        templet: ea.table.copyText,
+                        valueParser(value) {
+                            return '￥' + value
+                        },
+                        copyText(value, data) {
+                            return data.discount_price;
+                        }
+                    },
                     { field: 'total_stock', width: 100, title: '库存统计', totalRow: '{{= parseInt(d.TOTAL_NUMS) }} 个' },
-                    { field: 'stock', width: 100, title: '剩余库存' },
+                    {
+                        field: 'stock', width: 100, title: '剩余库存', valueParser(value, data) {
+                            if (value >= 20) {
+                                return value;
+                            }
+                            return value + '(缺货)'
+                        }
+                    },
                     { field: 'virtual_sales', width: 100, title: '虚拟销量' },
                     { field: 'sales', width: 80, title: '销量' },
                     { field: 'status', title: '状态', width: 85, selectList: { 0: '禁用', 1: '启用' }, templet: ea.table.switch },

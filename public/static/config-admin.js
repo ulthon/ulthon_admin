@@ -25,6 +25,7 @@ require.config({
         "ckeditor": ["plugs/ckeditor4/ckeditor"],
         'citypicker': ['plugs/jq-module/city-picker/js/city-picker.min'],
         'ChineseDistricts': ['plugs/jq-module/city-picker/js/city-picker.data.min'],
+        'clipboardjs': ['plugs/clipboard.js/clipboard.min'],
     }
 });
 

@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'miniTab'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput, miniTab) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'miniTab', 'clipboardjs'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput, miniTab, ClipboardJS) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -302,7 +302,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     table2card()
                     tableFixedAutoHeight()
 
-
+                    // 监听表格内的复制组件
+                    admin.api.copyText('[lay-id=' + options.id + ']');
                 }
 
 
@@ -1144,6 +1145,18 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 }
                 return '0B'
             },
+            copyText(data) {
+                var option = data.LAY_COL;
+                var value = admin.table.returnColumnValue(data);
+                var copyValue = value;
+                var copyText = option.copyText;
+
+                if (typeof copyText === 'function') {
+                    copyValue = copyText(value, data);
+                }
+
+                return '<span data-toggle="copy-text" data-clipboard-text="' + copyValue + '"><i class="fa fa-copy"></i> ' + value + '</span>';
+            },
             // 统一列返回数据处理
             returnColumnValue(data, field, defaultValue) {
                 if (!data.LAY_COL) {
@@ -1152,6 +1165,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 var option = data.LAY_COL;
                 field = field || option.field;
                 defaultValue = defaultValue || option.defaultValue;
+                var valueParser = option.valueParser;
                 var value = defaultValue;
                 try {
                     value = eval("data." + field);
@@ -1162,6 +1176,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 if (defaultValue != undefined && admin.empty(value)) {
                     value = defaultValue;
                 }
+
+                if (typeof valueParser == 'function') {
+                    value = valueParser(value, data);
+                }
+
                 return value;
             },
             listenTableSearch: function (tableId) {
@@ -1495,6 +1514,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
             // 监听标签输入控件生成
             admin.api.tagInput();
+
+            // 监听点击复制
+            admin.api.copyText();
 
             // 监听tab操作
             miniTab.listen();
@@ -2199,6 +2221,31 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 });
 
             },
+            copyText(elem) {
+                if (elem == undefined) {
+                    elem = 'body'
+                }
+                var list = $(elem).find('[data-toggle="copy-text"]');
+
+                $.each(list, function (i, v) {
+
+                    if ($(v).hasClass('copy-rendered')) {
+                        return false;
+                    }
+
+                    $(v).addClass('copy-rendered');
+                    var clipboard = new ClipboardJS(v);
+
+                    clipboard.on('success', function (e) {
+                        admin.msg.success('复制成功')
+                    });
+
+                    clipboard.on('error', function (e) {
+                        admin.msg.error('复制失败')
+
+                    });
+                });
+            }
         },
         getQueryVariable(variable, defaultValue) {
             if (typeof defaultValue == 'undefined') {

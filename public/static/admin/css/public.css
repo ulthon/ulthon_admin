@@ -650,3 +650,7 @@ table样式
 .city-picker-span.open {
     border-color: #d2d2d2 !important;
 }
+
+[data-toggle="copy-text"].copy-rendered {
+    cursor: pointer;
+}
