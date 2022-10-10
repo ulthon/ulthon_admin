@@ -79,8 +79,15 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
         },
         url: function (url) {
 
-            if (url.indexOf('/') === 0) {
-                return url;
+            var urlPrefixCheck = ['/', 'http://', 'https://'];
+
+            for (const index in urlPrefixCheck) {
+                if (Object.hasOwnProperty.call(urlPrefixCheck, index)) {
+                    const prefix = urlPrefixCheck[index];
+                    if (url.indexOf(prefix) === 0) {
+                        return url;
+                    }
+                }
             }
 
             return '/' + CONFIG.ADMIN + '/' + url;
@@ -1676,7 +1683,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     tableId = $(this).attr('data-table'),
                     checkbox = $(this).attr('data-checkbox'),
                     direct = $(this).attr('data-direct'),
-                    field = $(this).attr('data-field') || 'id';
+                    field = $(this).attr('data-field') || 'id',
+                    endMethod = $(this).attr('data-end-method') || 'reload-table';
 
                 title = title || '确定进行该操作？';
 
@@ -1703,18 +1711,19 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     postData[field] = ids;
                 }
 
-
                 url = admin.url(url);
 
-                tableId = tableId || init.table_render_id;
                 admin.msg.confirm(title, function () {
                     admin.request.post({
                         url: url,
                         data: postData,
                     }, function (res) {
-                        admin.msg.success(res.msg, function () {
-                            table.reloadData(tableId);
-                        });
+                        if (endMethod == 'reload-table') {
+                            tableId = tableId || init.table_render_id;
+                            table.reload(tableId);
+                        } else if (endMethod == 'refresh-page') {
+                            location.reload();
+                        }
                     })
                 });
                 return false;
