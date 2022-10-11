@@ -246,7 +246,7 @@ if (!function_exists('ua_htmlentities')) {
     }
 }
 
-if (!function_exists('htmlspecialchars_decode')) {
+if (!function_exists('ua_htmlspecialchars_decode')) {
     function ua_htmlspecialchars_decode($string, $flag = ENT_QUOTES | ENT_SUBSTITUTE)
     {
 
