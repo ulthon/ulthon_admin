@@ -246,6 +246,19 @@ if (!function_exists('ua_htmlentities')) {
     }
 }
 
+if (!function_exists('htmlspecialchars_decode')) {
+    function ua_htmlspecialchars_decode($string, $flag = ENT_QUOTES | ENT_SUBSTITUTE)
+    {
+
+        if (is_null($string)) {
+            $string = '';
+        }
+
+        return ua_htmlspecialchars_decode($string, $flag);
+    }
+}
+
+
 
 function build_upload_url($url, $upload_type = null)
 {
