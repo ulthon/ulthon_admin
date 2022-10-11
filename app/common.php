@@ -254,7 +254,7 @@ if (!function_exists('ua_htmlspecialchars_decode')) {
             $string = '';
         }
 
-        return ua_htmlspecialchars_decode($string, $flag);
+        return htmlspecialchars_decode($string, $flag);
     }
 }
 
