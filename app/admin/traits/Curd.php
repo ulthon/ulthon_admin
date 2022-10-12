@@ -122,7 +122,13 @@ trait Curd
 
         $content = \app\common\tools\ExportTools::excel($this->model, $where, $fields, $image_fields, $select_fields, $date_fields);
 
-        return download($content, $this->model->getName() . date('YmdHis') . '.xlsx', true);
+        $export_file_name = $this->exportFileName;
+
+        if (empty($export_file_name)) {
+            $export_file_name = $this->model->getName();
+        }
+
+        return download($content,  $export_file_name . date('YmdHis') . '.xlsx', true);
     }
 
     /**

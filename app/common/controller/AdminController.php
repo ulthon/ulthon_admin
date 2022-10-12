@@ -95,6 +95,13 @@ class AdminController extends BaseController
     protected $batchValidate = false;
 
     /**
+     * 导出文件的名称，支持中文，为空则获取模型名称
+     *
+     * @var string
+     */
+    protected $exportFileName = null;
+
+    /**
      * 初始化方法
      */
     protected function initialize()
