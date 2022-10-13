@@ -2283,7 +2283,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 (!Array.isArray(keys)
                     ? keys.replace(/\[/g, '.').replace(/\]/g, '').split('.')
                     : keys
-                ).reduce((o, k) => (o || {})[k], this.dataBrage) || defaultVal
+                ).reduce((o, k) => (o || {})[k], this.dataBrage) || defaultValue
             );
 
         },
