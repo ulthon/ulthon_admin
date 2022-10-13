@@ -2270,7 +2270,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             return defaultValue;
         },
         dataBrage: null,
-        getDataBrage(name, defaultValue) {
+        getDataBrage(keys, defaultValue) {
             if (this.dataBrage == null) {
                 this.dataBrage = JSON.parse($('#data-brage').text());
             }
@@ -2279,11 +2279,12 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 defaultValue = undefined;
             }
 
-            if (typeof this.dataBrage[name] == 'undefined') {
-                return defaultValue;
-            }
-
-            return this.dataBrage[name];
+            return (
+                (!Array.isArray(keys)
+                    ? keys.replace(/\[/g, '.').replace(/\]/g, '').split('.')
+                    : keys
+                ).reduce((o, k) => (o || {})[k], this.dataBrage) || defaultVal
+            );
 
         },
         getExtGroupName(ext) {
