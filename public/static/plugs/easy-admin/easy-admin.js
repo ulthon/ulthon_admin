@@ -1718,12 +1718,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         url: url,
                         data: postData,
                     }, function (res) {
-                        if (endMethod == 'reload-table') {
-                            tableId = tableId || init.table_render_id;
-                            table.reload(tableId);
-                        } else if (endMethod == 'refresh-page') {
-                            location.reload();
-                        }
+                        admin.msg.success(res.msg, function () {
+                            if (endMethod == 'reload-table') {
+                                tableId = tableId || init.table_render_id;
+                                table.reload(tableId);
+                            } else if (endMethod == 'refresh-page') {
+                                location.reload();
+                            }
+                        });
                     })
                 });
                 return false;
