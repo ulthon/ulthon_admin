@@ -15,15 +15,28 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.19';
+    const VERSION = 'v2.0.20';
 
     const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
-        '新增curd生成数据库迁移代码功能',
-        '优化首页链接',
-        '在后台增加进入首页的导航',
-        '优化curd的代码技术债务，使用tp内置方法实现交互',
+        '优化多处细节',
+        '优化生成数据库迁移代码',
+        '优化tableData组件',
+        '优化表格链接模板',
+        '增加删除临时代码命令',
+        '修复data-images放大顺序问题',
+        '修复编辑菜单导致丢失pid问题',
+        '优化跳转页面对PHP8.1的兼容',
+        '新增表格列的valueParser设置',
+        '新增全局复制事件监听',
+        '新增表格复制模板',
+        '完善url拼装',
+        '新增data-request的参数设置',
+        '增加兼容php8.1的函数',
+        '优化管理员添加设置默认值头像',
+        '增加控制器设置导出文件的文件名',
+        '优化getDataBrage支持嵌套读取',
     ];
 
     protected function configure()
@@ -59,7 +72,7 @@ class Version extends Command
             $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             
             $version = $this::VERSION;
-            $comment = implode(';', $this::COMMENT);
+            $comment = implode("\n", $this::COMMENT);
             $output->info('生成标签：' . $version);
             $output->info('标签描述：' . $comment);
             exec("git tag -a $version -m \"$comment\"");
