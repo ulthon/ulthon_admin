@@ -72,7 +72,7 @@ class Version extends Command
             $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             
             $version = $this::VERSION;
-            $comment = implode("\n", $this::COMMENT);
+            $comment = implode(";", $this::COMMENT);
             $output->info('生成标签：' . $version);
             $output->info('标签描述：' . $comment);
             exec("git tag -a $version -m \"$comment\"");
