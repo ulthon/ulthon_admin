@@ -1142,15 +1142,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             },
             bytes: (data) => {
                 var size = admin.table.returnColumnValue(data);
-                if (size > 0) {
-                    const kb = 1024
-                    const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-                    const i = Math.floor(Math.log(size) / Math.log(kb))
-                    const num = (size / Math.pow(kb, i)).toPrecision(3)
-                    const u = unit[i]
-                    return num + u;
-                }
-                return '0B'
+                sizeReadable = admin.bytes(size)
+                return sizeReadable
             },
             copyText(data) {
                 var option = data.LAY_COL;
@@ -2313,6 +2306,18 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             }
             return !1
         },
+
+        bytes(size) {
+            if (size > 0) {
+                const kb = 1024
+                const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+                const i = Math.floor(Math.log(size) / Math.log(kb))
+                const num = (size / Math.pow(kb, i)).toPrecision(3)
+                const u = unit[i]
+                return num + u;
+            }
+            return '0B';
+        }
 
     };
     return admin;
