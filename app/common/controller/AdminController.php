@@ -4,7 +4,7 @@
 
 namespace app\common\controller;
 
-
+use app\admin\model\SystemAdmin;
 use app\admin\service\ConfigService;
 use app\BaseController;
 use app\common\constants\AdminConstant;
@@ -100,6 +100,12 @@ class AdminController extends BaseController
      * @var string
      */
     protected $exportFileName = null;
+
+    /**
+     * 当前登陆的管理员
+     * @var SystemAdmin
+     */
+    protected $sessionAdmin;
 
     /**
      * 初始化方法
@@ -374,6 +380,12 @@ class AdminController extends BaseController
                 $this->error('演示环境下不允许修改');
             }
         }
+
+        $model_admin = SystemAdmin::autoCache('read',$adminId)->find($adminId);
+
+        $this->sessionAdmin = $model_admin;
+
+        $this->assign('session_admin',$model_admin);
     }
 
     /**
