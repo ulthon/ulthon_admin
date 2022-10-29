@@ -15,28 +15,19 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.20';
+    const VERSION = 'v2.0.21';
 
     const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
-        '优化多处细节',
-        '优化生成数据库迁移代码',
-        '优化tableData组件',
-        '优化表格链接模板',
-        '增加删除临时代码命令',
-        '修复data-images放大顺序问题',
-        '修复编辑菜单导致丢失pid问题',
-        '优化跳转页面对PHP8.1的兼容',
-        '新增表格列的valueParser设置',
-        '新增全局复制事件监听',
-        '新增表格复制模板',
-        '完善url拼装',
-        '新增data-request的参数设置',
-        '增加兼容php8.1的函数',
-        '优化管理员添加设置默认值头像',
-        '增加控制器设置导出文件的文件名',
-        '优化getDataBrage支持嵌套读取',
+        '优化多处细节,继续提升开发体验',
+        '升级为最新的echart扩展',
+        '后台使用增加基类全局状态',
+        '修改默认头像为中性头像',
+        '优化上传，增加svg扩展',
+        '优化上传，增加设置扩展名分组的用法',
+        '优化上传，增加检测上传代码注入的用法',
+        '增加配置系统默认密码，并修改了表结构',
     ];
 
     protected function configure()
@@ -70,7 +61,7 @@ class Version extends Command
 
         if ($is_push_tag) {
             $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-            
+
             $version = $this::VERSION;
             $comment = implode(";", $this::COMMENT);
             $output->info('生成标签：' . $version);
