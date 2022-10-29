@@ -79,7 +79,7 @@ trait Curd
             try {
                 $save = $row->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败:' . $e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
@@ -98,7 +98,7 @@ trait Curd
         try {
             $save = $row->delete();
         } catch (\Exception $e) {
-            $this->error('删除失败');
+            $this->error('删除失败:' . $e->getMessage());
         }
         $save ? $this->success('删除成功') : $this->error('删除失败');
     }
@@ -156,7 +156,7 @@ trait Curd
                 $post['field'] => $post['value'],
             ]);
         } catch (\Exception $e) {
-            $this->error($e->getMessage());
+            $this->error('修改失败:' . $e->getMessage());
         }
         $this->success('保存成功');
     }

@@ -11,6 +11,8 @@ use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnotation;
 use think\App;
+use think\facade\Validate;
+use think\validate\ValidateRule;
 
 /**
  * Class Admin
@@ -76,12 +78,23 @@ class Admin extends AdminController
             $post = $this->request->post();
             $authIds = $this->request->post('auth_ids', []);
             $post['auth_ids'] = implode(',', array_keys($authIds));
-            $rule = [];
+            $rule = Validate::rule('username|用户登录名', ValidateRule::isRequire());
+            $post['password'] = password(sysconfig('site', 'site_default_password', '123456'));
             $this->validate($post, $rule);
+
+
+
             try {
+
+                $model_admin = SystemAdmin::where('username', $post['username'])->find();
+
+                if (!empty($model_admin)) {
+                    throw new \Exception('同名用户已存在');
+                }
+
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败:' . $e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }

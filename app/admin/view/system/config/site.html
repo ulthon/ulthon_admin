@@ -50,6 +50,13 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">默认密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="site_default_password" class="layui-input" placeholder="请输入默认密码" value="{:sysconfig('site','site_default_password')}">
+            <tip>添加账号时自动填充的密码，默认为：123456 。建议填写为您系统特有的默认密码规则，比如：ul-aa@@123</tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">js脚本</label>
         <div class="layui-input-block">
             <textarea name="site_js_insert" class="layui-textarea">{:sysconfig('site','site_js_insert')}</textarea>

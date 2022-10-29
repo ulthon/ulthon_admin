@@ -74,6 +74,8 @@ abstract class BaseController
         if (is_array($validate)) {
             $v = new Validate();
             $v->rule($validate);
+        } else if ($validate instanceof Validate) {
+            $v = $validate;
         } else {
             if (strpos($validate, '.')) {
                 // 支持场景
