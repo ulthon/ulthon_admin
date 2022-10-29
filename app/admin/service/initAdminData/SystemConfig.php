@@ -24,7 +24,7 @@ $ul_system_config = array(
     array(
         "name" => "upload_allow_ext",
         "group" => "upload",
-        "value" => "jpg,jpeg,png,gif,bmp,doc,docx,xls,xlsx,ppt,pptx,pdf,zip,rar,7z,txt,mp3,wma,wav,mid,m4a,mp4,avi,wmv,3gp,flv,webp",
+        "value" => "jpg,jpeg,png,gif,bmp,doc,docx,xls,xlsx,ppt,pptx,pdf,zip,rar,7z,txt,mp3,wma,wav,mid,m4a,mp4,avi,wmv,3gp,flv,webp,svg",
         "remark" => "允许上传的文件类型",
         "sort" => 0,
     ),

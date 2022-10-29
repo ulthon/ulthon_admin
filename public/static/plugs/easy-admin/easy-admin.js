@@ -41,7 +41,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
     var extGroup = {
         // 图片扩展名数组
-        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico', 'webp'],
+        'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico', 'webp', 'svg'],
         // word扩展名数组
         'word': ['doc', 'docx'],
         // excel扩展名数组
@@ -1975,6 +1975,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                         if (uploadExts == '*') {
                             uploadExts = init.upload_exts;
+                        }else if(uploadExts.charAt(0) == '*'){
+                            var extGroupName = uploadExts.slice(1);
+                            if(extGroup[extGroupName]){
+                                uploadExts = extGroup[extGroupName].join('|');
+                            }
                         }
 
                         // 监听上传事件
