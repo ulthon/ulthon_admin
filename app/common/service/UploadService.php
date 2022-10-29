@@ -4,6 +4,7 @@ namespace app\common\service;
 
 use app\admin\model\SystemUploadfile;
 use app\common\tools\PathTools;
+use think\exception\ValidateException;
 use think\facade\App;
 use think\facade\Filesystem;
 use think\facade\Validate;
@@ -24,7 +25,7 @@ class UploadService
         $this->uploadType = $upload_type;
     }
 
-    public function validate($file, $allow_ext = null, $allow_size = null, $fail_exception = false)
+    public function validate(File $file, $allow_ext = null, $allow_size = null, $fail_exception = false)
     {
         $uploadConfig = sysconfig('upload');
 
@@ -41,10 +42,28 @@ class UploadService
             'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadConfig['upload_allow_size']}",
         ];
 
-        return Validate::failException($fail_exception)->check([
+        $validat_result = Validate::failException($fail_exception)->check([
             'upload_type' => $this->uploadType,
             'file' => $file
         ], $rule);
+
+        if (!$validat_result) {
+            return $validat_result;
+        }
+
+
+        // 出于性能原因，您可以注释掉下面的代码
+        $file_path = $file->getRealPath();
+
+        if (strpos(file_get_contents($file_path), '<?php') !== false) {
+            if ($fail_exception) {
+                throw new ValidateException("文件含有PHP注入代码");
+            } else {
+                return '文件含有PHP注入代码';
+            }
+        }
+
+        return true;
     }
 
     public function validateException($file, $allow_ext = null, $allow_size = null)

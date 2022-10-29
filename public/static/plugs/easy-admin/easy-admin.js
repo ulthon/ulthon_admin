@@ -63,15 +63,17 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
         'file': []
     }
 
+    var allExtGroup = [];
+
     for (const extGroupName in extGroup) {
         if (Object.hasOwnProperty.call(extGroup, extGroupName)) {
             const extGroupList = extGroup[extGroupName];
-            if (init.upload_exts.length > 0) {
-                init.upload_exts += '|';
-            }
-            init.upload_exts += extGroupList.join('|')
+
+            allExtGroup = allExtGroup.concat(extGroupList)
+
         }
     }
+    init.upload_exts += allExtGroup.join('|')
 
     var admin = {
         config: {
@@ -1963,7 +1965,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 if (uploadList.length > 0) {
                     $.each(uploadList, function (i, v) {
-                        var uploadExts = $(this).attr('data-upload-exts') || init.upload_exts,
+                        var uploadExts = $(this).attr('data-upload-exts'),
                             uploadName = $(this).attr('data-upload'),
                             uploadNumber = $(this).attr('data-upload-number') || 'one',
                             uploadSign = $(this).attr('data-upload-sign') || '|',
@@ -1975,9 +1977,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                         if (uploadExts == '*') {
                             uploadExts = init.upload_exts;
-                        }else if(uploadExts.charAt(0) == '*'){
+                        } else if (uploadExts.charAt(0) == '*') {
                             var extGroupName = uploadExts.slice(1);
-                            if(extGroup[extGroupName]){
+                            if (extGroup[extGroupName]) {
                                 uploadExts = extGroup[extGroupName].join('|');
                             }
                         }
