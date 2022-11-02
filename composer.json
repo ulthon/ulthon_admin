@@ -30,7 +30,8 @@
         "overtrue/flysystem-qiniu": "*",
         "xxtime/flysystem-aliyun-oss": "^1.5",
         "chunpat/flysystem-tencent-cos": "^0.0.1",
-        "doctrine/annotations": "^1.13"
+        "doctrine/annotations": "^1.13",
+        "nikic/php-parser": "^4.15"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
