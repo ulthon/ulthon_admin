@@ -1716,7 +1716,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         admin.msg.success(res.msg, function () {
                             if (endMethod == 'reload-table') {
                                 tableId = tableId || init.table_render_id;
-                                table.reload(tableId);
+                                table.reloadData(tableId);
                             } else if (endMethod == 'refresh-page') {
                                 location.reload();
                             }
