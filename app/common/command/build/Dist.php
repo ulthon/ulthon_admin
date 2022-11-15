@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace app\common\command\build;
 
-use app\common\class\phpparser\NodeVisitor;
 use app\common\exception\DirFindedException;
 use app\common\tools\PathTools;
+use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PhpParser\Node;
@@ -23,6 +23,7 @@ use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
+use think\facade\View;
 
 class Dist extends Command
 {
@@ -104,8 +105,10 @@ class Dist extends Command
 
 
 
+        $lib_php_file = 'lib/index.' . uniqid() . '.php';
+        $lib_php_path = $this->distPath . '/' . $lib_php_file;
 
-        $lib_php_path = $this->distPath . '/lib/index.' . uniqid() . '.php';
+
         PathTools::intiDir($lib_php_path);
 
         $prettyPrinter = new Standard();
@@ -114,6 +117,18 @@ class Dist extends Command
         $newCode = $prettyPrinter->prettyPrintFile($stmts);
 
         file_put_contents($lib_php_path, $newCode);
+
+        $index_code = file_get_contents(__DIR__ . '/tpl/index.php.temp');
+
+        $index_code = str_replace('{$lib_php_file}', $lib_php_file, $index_code);
+
+        $dist_filesystem->put('public/index.php', $index_code);
+
+        $think_code = file_get_contents(__DIR__ . '/tpl/think.temp');
+
+        $think_code = str_replace('{$lib_php_file}', $lib_php_file, $think_code);
+
+        $dist_filesystem->put('think', $think_code);
 
         $output->info('打包完成');
     }
@@ -135,8 +150,6 @@ class Dist extends Command
 
         $stmts = $this->parseStmts($stmts, $name);
 
-
-
         $this->packList = array_merge($this->packList, $stmts);
 
         return null;
@@ -156,7 +169,7 @@ class Dist extends Command
 
         $traverser = new NodeTraverser();
 
-        $node_visitor = new NodeVisitor($this, $name);
+        $node_visitor = new NodeVisitorTools($this, $name);
 
         $traverser->addVisitor($node_visitor);
 
