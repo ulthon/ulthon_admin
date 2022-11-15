@@ -10,8 +10,10 @@ use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PhpParser\Node;
+use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
@@ -24,6 +26,7 @@ use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
 use think\facade\View;
+use think\helper\Str;
 
 class Dist extends Command
 {
@@ -111,9 +114,33 @@ class Dist extends Command
 
         PathTools::intiDir($lib_php_path);
 
-        $prettyPrinter = new Standard();
+        $prettyPrinter = new  Standard();
 
-        $stmts = array_merge($this->usedClass, $this->packList);
+
+        ksort($this->packList);
+
+        $new_pack_list = [];
+        $back_pack_list = [];
+
+        foreach ($this->packList as $namespace_name => $stmt) {
+            if (Str::startsWith($namespace_name, 'app\common')) {
+                $new_pack_list[$namespace_name] = $stmt;
+            } else {
+                $back_pack_list[$namespace_name] = $stmt;
+            }
+        }
+
+        $this->packList = array_merge($new_pack_list, $back_pack_list);
+
+        $stmts = [];
+        foreach ($this->packList as $namespace_name => $stmt) {
+            dump($namespace_name);
+            $namespace_node_name = null;
+            if (!empty($namespace_name)) {
+                $namespace_node_name = new Name($namespace_name);
+            }
+            $stmts[] = new Namespace_($namespace_node_name, $stmt);
+        }
         $newCode = $prettyPrinter->prettyPrintFile($stmts);
 
         file_put_contents($lib_php_path, $newCode);
@@ -148,9 +175,34 @@ class Dist extends Command
         }
 
 
+        $current_namespace = null;
+        foreach ($stmts as $stmts_item) {
+            if ($stmts_item instanceof Namespace_) {
+                $current_namespace = $stmts_item->name->toString();
+                if (empty($current_namespace)) {
+                    $current_namespace = null;
+                }
+            }
+        }
+
+
+
+        if (!isset($this->packList[$current_namespace])) {
+            $this->packList[$current_namespace] = [];
+        }
+
         $stmts = $this->parseStmts($stmts, $name);
 
-        $this->packList = array_merge($this->packList, $stmts);
+        foreach ($stmts as $stmts_item) {
+            if ($stmts_item instanceof Namespace_) {
+
+                $this->packList[$current_namespace] = array_merge($this->packList[$current_namespace], $stmts_item->stmts);
+            } else {
+
+                $this->packList[$current_namespace][] = $stmts_item;
+            }
+        }
+
 
         return null;
     }
@@ -230,14 +282,18 @@ class Dist extends Command
         $ignore_path = [
             '/^vendor/',
             '/^config/',
+            '/^database\/*/',
             '/event\.php/',
             '/middleware\.php/',
             '/provider\.php/',
             '/service\.php/',
             '/^app\/.*\/config\/.*/',
+            '/app\/common.php/',
             '/config.php/',
             '/^public\/index\.php/',
             '/^public\/router\.php/',
+            '/^route\/*/',
+            '/^app\/admin\/service\/initAdminData\/*/',
         ];
 
         foreach ($ignore_path as  $rule) {
