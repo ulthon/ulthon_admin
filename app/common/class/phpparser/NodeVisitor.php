@@ -6,8 +6,11 @@ use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\TraitUseAdaptation\Alias;
@@ -71,26 +74,59 @@ class NodeVisitor extends NodeVisitorAbstract
                     }
                 }
             }
-        } else if ($node instanceof Expression) {
-            if (
-                $node->expr instanceof StaticCall ||
-                $node->expr instanceof New_
-            ) {
-                $used_class_str = implode('\\', $node->expr->class->parts);
-                if ($used_class_str != 'static' && $used_class_str != 'self' && $used_class_str != 'parent') {
-                    $is_replaced = false;
-                    foreach ($this->usedClass as $class_name => $class_name_md5) {
-                        if (Str::endsWith($class_name, $used_class_str)) {
-                            $is_replaced = true;
-                            $node->expr->class = new Name($class_name_md5);
-                        }
-                    }
-                    if(!$is_replaced){
-                        dump($node);
+        } else if ($node instanceof StaticCall || $node instanceof New_) {
+
+
+            if($node->class instanceof Variable){
+                return;
+            }
+
+            if($node->class instanceof Class_){
+                return;
+            }
+            // exit;
+
+            $used_class_str = implode('\\', $node->class->parts);
+            
+
+           
+
+            if ($used_class_str != 'static' && $used_class_str != 'self' && $used_class_str != 'parent') {
+                $is_replaced = false;
+                foreach ($this->usedClass as $class_name => $class_name_md5) {
+                    if (Str::endsWith($class_name, $used_class_str)) {
+                        $is_replaced = true;
+                        $node->class = new Name($class_name_md5);
                     }
                 }
-
+                if (!$is_replaced) {
+                    // dump($this->name);
+                    // dump($used_class_str);
+                    // dump($this->usedClass);
+                    // dump($node);
+                }
             }
+        }else if($node instanceof Param){
+           
+
+            if(is_null($node->type)){
+                return;
+            }
+
+            if($node->type instanceof Identifier){
+                return;
+            }
+
+         
+            $used_class_str = implode('\\', $node->type->parts);
+
+            foreach ($this->usedClass as $class_name => $class_name_md5) {
+                if (Str::endsWith($class_name, $used_class_str)) {
+                    $is_replaced = true;
+                    $node->type = new Name($class_name_md5);
+                }
+            }
+
         }
 
         return null;
