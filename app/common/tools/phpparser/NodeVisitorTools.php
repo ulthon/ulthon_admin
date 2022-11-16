@@ -7,7 +7,9 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
@@ -114,7 +116,8 @@ class NodeVisitorTools extends NodeVisitorAbstract
             $node instanceof StaticCall ||
             $node instanceof New_ ||
             $node instanceof ClassConstFetch ||
-            $node instanceof Instanceof_
+            $node instanceof Instanceof_ ||
+            $node instanceof StaticPropertyFetch
         ) {
 
             if ($node->class instanceof Variable) {
@@ -125,6 +128,12 @@ class NodeVisitorTools extends NodeVisitorAbstract
                 return;
             }
 
+            if ($node->class instanceof PropertyFetch) {
+
+                if ($node->class->var->name == 'this') {
+                    return;
+                }
+            }
 
             $used_class_str = $node->class->toString();
 
