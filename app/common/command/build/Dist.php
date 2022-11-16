@@ -14,6 +14,7 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
@@ -35,6 +36,9 @@ class Dist extends Command
 
     public $packList = [];
     public $usedClass = [];
+    public $hasClass = [];
+    public $newPackList = [];
+    public $classExtendList = [];
 
     protected $distPath;
 
@@ -123,31 +127,10 @@ class Dist extends Command
         $this->parsePackList();
 
         $stmts = [];
-        foreach ($this->packList as $namespace_name => $namespace_item) {
-            dump($namespace_name);
-            $namespace_node_name = null;
-            if (!empty($namespace_name)) {
-                $namespace_node_name = new Name($namespace_name);
+        foreach ($this->packList as $class_name => $class_item) {
+            foreach ($class_item['stmts'] as $stmt_item) {
+                $stmts[] = $stmt_item;
             }
-
-            $stmt = [];
-
-            $use_item = [];
-            foreach ($namespace_item['used_class'] as $use_alias => $use_name) {
-
-                if($use_alias == $use_name){
-                    $use_alias = null;
-                }
-                $use_item[] = new UseUse(new Name($use_name), $use_alias);
-            }
-            if(!empty($use_item)){
-                $stmt[] = new Use_($use_item);
-            }
-            foreach ($namespace_item['class'] as $class_item) {
-                $stmt = array_merge($stmt, $class_item['stmts']);
-            }
-
-            $stmts[] = new Namespace_($namespace_node_name, $stmt);
         }
 
 
@@ -172,18 +155,84 @@ class Dist extends Command
 
     public function parsePackList()
     {
-        dump($this->usedClass);
-        foreach ($this->packList as $namespace_name => $namespace_item) {
-            foreach ($namespace_item['class'] as  $class_item) {
-                foreach ($class_item['stmts'] as  $stmt_item) {
-                    if ($stmt_item instanceof Class_) {
-                        if ($stmt_item->name) {
-                            $class_namesepace_name = $namespace_name . '\\' . $stmt_item->name->toString();
-                            dump($class_namesepace_name);
-                        }
+
+        foreach ($this->packList as $class_name => $class_item) {
+
+            $extend_name_orginal = $this->usedClass[$class_item['extend_name']] ?? '';
+
+            $this->classExtendList[$class_name] = $extend_name_orginal;
+        }
+
+        foreach ($this->packList as $class_name => $class_item) {
+            $this->insertToNewPackList($class_name, $class_item);
+        }
+
+        $this->packList = $this->newPackList;
+
+        $this->newPackList = [];
+    }
+
+    public function insertToNewPackList($class_name, $class_item)
+    {
+        if (isset($this->newPackList[$class_name])) {
+            return;
+        }
+
+        $extend_name = $this->classExtendList[$class_name] ?? '';
+
+        if (!empty($extend_name)) {
+            if (isset($this->packList[$extend_name])) {
+                $this->insertToNewPackList($extend_name, $this->packList[$extend_name]);
+            }
+        } else {
+            $extend_name = $class_item['extend_name'];
+
+
+            if (!empty($extend_name)) {
+                $try_namse_extend_name = $class_item['namespace_name'] . '\\' . $extend_name;
+
+                if (isset($this->packList[$try_namse_extend_name])) {
+                    $this->insertToNewPackList($try_namse_extend_name, $this->packList[$try_namse_extend_name]);
+                }
+
+            }
+        }
+
+
+
+
+
+        $this->newPackList[$class_name] = $class_item;
+    }
+
+    /**
+     * 
+     *
+     * @param Node\Stmt[] $stmts
+     * @return void
+     */
+    public function checkStmts($stmts, $name)
+    {
+
+        $class_count = 0;
+        $namsepace_count = 0;
+        foreach ($stmts as  $stmt_item) {
+            if ($stmt_item instanceof Namespace_) {
+                $namsepace_count++;
+                foreach ($stmt_item->stmts as  $class_item) {
+
+                    if ($class_item instanceof ClassLike) {
+                        $class_count++;
                     }
                 }
             }
+        }
+
+        if ($namsepace_count !== 1) {
+            throw new \Exception('一个文件至少有一个命名空间：' . $name);
+        }
+        if ($class_count !== 1) {
+            throw new \Exception('一个文件只能有一个类：' . $name);
         }
     }
 
@@ -201,64 +250,55 @@ class Dist extends Command
             return $content;
         }
 
+        $this->checkStmts($stmts, $name);
 
-        $current_namespace = null;
-        foreach ($stmts as $stmts_item) {
-            if ($stmts_item instanceof Namespace_) {
-                $current_namespace = $stmts_item->name->toString();
-                if (empty($current_namespace)) {
-                    $current_namespace = null;
-                }
-            }
-        }
-
-
-
-        if (!isset($this->packList[$current_namespace])) {
-            $this->packList[$current_namespace] = [
-                'sort' => 0,
-                'used_class' => [],
-                'class' => [],
-            ];
-        }
 
         $stmts = $this->parseStmts($stmts, $name);
 
-        foreach ($stmts as $stmts_item) {
-            $stmts = [];
-            if ($stmts_item instanceof Namespace_) {
-                $stmts = $stmts_item->stmts;
-            } else {
-                $stmts = $stmts_item;
-            }
+        $class_name = null;
+        $extend_name = null;
+        $namespace_name = null;
+        foreach ($stmts as  $stmt_item) {
+            if ($stmt_item instanceof Namespace_) {
+                $namespace_name = $stmt_item->name->toString();
+                foreach ($stmt_item->stmts as  $class_item) {
 
-            $new_stmts = [];
+                    if ($class_item instanceof Use_) {
+                        foreach ($class_item->uses as $stmt_use) {
+                            $use_class = $stmt_use->name->toString();
+                            $alias = $use_class;
 
-            foreach ($stmts as  $stmt_item) {
-                if ($stmt_item instanceof Use_) {
-                    foreach ($stmt_item->uses as $stmt_use) {
-                        $use_class = $stmt_use->name->toString();
-                        $alias = $use_class;
-
-                        if (!empty($stmt_use->alias)) {
-                            $alias = $stmt_use->alias->toString();
+                            if (!empty($stmt_use->alias)) {
+                                $alias = $stmt_use->alias->toString();
+                            }
+                            $this->usedClass[$alias] = $use_class;
                         }
-                        $this->usedClass[$alias] = $use_class;
-                        $this->packList[$current_namespace]['used_class'][$alias] = $use_class;
                     }
-                } else {
-                    $new_stmts[] = $stmt_item;
+
+                    if ($class_item instanceof ClassLike) {
+                        $class_name = $namespace_name . '\\' . $class_item->name->toString();
+
+                        if ($class_item instanceof Class_) {
+
+                            if (!empty($class_item->extends)) {
+                                $extend_name = $class_item->extends->toString();
+                            }
+                        }
+                    }
                 }
             }
-
-            $class_item = [
-                'sort' => 0,
-                'stmts' => $new_stmts,
-            ];
-
-            $this->packList[$current_namespace]['class'][] = $class_item;
         }
 
+        $this->hasClass[] = $class_name;
+        $pack_item = [
+            'file_name' => $name,
+            'class_name' => $class_name,
+            'extend_name' => $extend_name,
+            'namespace_name' => $namespace_name,
+            'stmts' => $stmts
+        ];
+
+        $this->packList[$class_name] = $pack_item;
 
         return null;
     }

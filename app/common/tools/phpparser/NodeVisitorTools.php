@@ -37,9 +37,9 @@ class NodeVisitorTools extends NodeVisitorAbstract
 
     public $callClass = [];
     protected $skipClass = [
-        'Doctrine\Common\Annotations\Annotation\Attributes',
-        'app\admin\service\annotation\ControllerAnnotation',
-        'app\admin\service\annotation\NodeAnotation',
+        // 'Doctrine\Common\Annotations\Annotation\Attributes',
+        // 'app\admin\service\annotation\ControllerAnnotation',
+        // 'app\admin\service\annotation\NodeAnotation',
     ];
 
     public function __construct($cmd, $name)
@@ -94,8 +94,6 @@ class NodeVisitorTools extends NodeVisitorAbstract
         } else if ($node instanceof Class_) {
 
             if (!empty($node->extends)) {
-
-
                 $used_class_str = $node->extends->toString();
                 $result_name = $this->findClassName($used_class_str);
                 if (!empty($result_name)) {
@@ -105,12 +103,10 @@ class NodeVisitorTools extends NodeVisitorAbstract
 
             if (!empty($node->implements)) {
                 foreach ($node->implements as &$node_implements) {
-                    $used_class_str = implode('\\', $node_implements->parts);
-
-                    foreach ($this->usedClass as $class_name => $class_name_md5) {
-                        if (Str::endsWith($class_name, '\\' . $used_class_str)) {
-                            $node_implements = new Name($class_name_md5);
-                        }
+                    $used_class_str = $node_implements->toString();
+                    $result_name = $this->findClassName($used_class_str);
+                    if (!empty($result_name)) {
+                        $node_implements = new Name($result_name);
                     }
                 }
             }
@@ -150,7 +146,6 @@ class NodeVisitorTools extends NodeVisitorAbstract
                 return;
             }
 
-            // dump($node);
             $used_class_str = $node->type->toString();
 
             $result_name = $this->findClassName($used_class_str);
