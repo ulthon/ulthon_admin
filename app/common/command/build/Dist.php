@@ -229,7 +229,7 @@ class Dist extends Command
         }
 
         if ($namsepace_count !== 1) {
-            throw new \Exception('一个文件至少有一个命名空间：' . $name);
+            throw new \Exception('一个文件只能有一个命名空间：' . $name);
         }
         if ($class_count !== 1) {
             throw new \Exception('一个文件只能有一个类：' . $name);

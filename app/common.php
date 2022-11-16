@@ -268,31 +268,3 @@ function build_upload_url($url, $upload_type = null)
     }
     return Filesystem::disk($upload_type)->url($url);
 }
-
-
-/**
- * @param $input [需要修改的数组]
- * @param $offset [插入的起始位置或键名后]
- * @param $length [插入的长度或键名前]
- * @param $replacement [需要插入的元素(array、string....)]
- * @return array
- */
-function array_splice_assoc(&$input, $offset, $length = 0, $replacement = array())
-{
-    $replacement = (array)$replacement;
-    $key_indices = array_flip(array_keys($input));
-
-    if (isset($input [$offset]) & is_string($offset)) {
-        $offset = $key_indices [$offset];
-    }
-    if (isset($input[$length]) && is_string($length)) {
-        $length = $key_indices [$length] - $offset;
-    }
-
-    // 先取出添加位置之前的元素与要添加的元素合并,再取添加位置之后的元素再合并
-    $result = array_slice($input, 0, $offset, TRUE)
-        + $replacement
-        + array_slice($input, $offset + $length, NULL, TRUE);
-
-    return $result;
-}
