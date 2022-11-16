@@ -10,11 +10,15 @@ use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PhpParser\Node;
+use PhpParser\Node\Expr\BinaryOp\Concat;
+use PhpParser\Node\Expr\Include_;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\MagicConst\Dir;
+use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
+use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
@@ -114,8 +118,8 @@ class Dist extends Command
 
 
 
-        $lib_php_file = 'lib/index.' . uniqid() . '.php';
-        $lib_php_path = $this->distPath . '/' . $lib_php_file;
+        $lib_php_file = '/lib.' . uniqid() . '.php';
+        $lib_php_path = $this->distPath . '/lib' . $lib_php_file;
 
 
         PathTools::intiDir($lib_php_path);
@@ -138,19 +142,26 @@ class Dist extends Command
 
         file_put_contents($lib_php_path, $newCode);
 
-        $index_code = file_get_contents(__DIR__ . '/tpl/index.php.temp');
-
-        $index_code = str_replace('{$lib_php_file}', $lib_php_file, $index_code);
-
-        $dist_filesystem->put('public/index.php', $index_code);
-
-        $think_code = file_get_contents(__DIR__ . '/tpl/think.temp');
-
-        $think_code = str_replace('{$lib_php_file}', $lib_php_file, $think_code);
-
-        $dist_filesystem->put('think', $think_code);
+        $this->buildIncludeIndexFile([
+            $lib_php_file
+        ]);
 
         $output->info('打包完成');
+    }
+
+    public function buildIncludeIndexFile($files)
+    {
+        $file_stmts = [];
+
+        foreach ($files as  $file_name) {
+            $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($file_name)), Include_::TYPE_REQUIRE_ONCE));
+        }
+        $prettyPrinter = new  Standard();
+
+
+        $newCode = $prettyPrinter->prettyPrintFile($file_stmts);
+
+        file_put_contents($this->distPath . '/lib/index.php', $newCode);
     }
 
     public function parsePackList()
@@ -194,7 +205,6 @@ class Dist extends Command
                 if (isset($this->packList[$try_namse_extend_name])) {
                     $this->insertToNewPackList($try_namse_extend_name, $this->packList[$try_namse_extend_name]);
                 }
-
             }
         }
 
@@ -370,6 +380,7 @@ class Dist extends Command
         $ignore_path = [
             '/^vendor/',
             '/^config/',
+            '/^lib\//',
             '/^database\/*/',
             '/event\.php/',
             '/middleware\.php/',

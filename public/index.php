@@ -4,6 +4,8 @@
 namespace think;
 
 require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../lib/index.php';
+
 
 // 声明全局变量
 define('DS', DIRECTORY_SEPARATOR);
