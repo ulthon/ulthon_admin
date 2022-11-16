@@ -13,8 +13,10 @@ use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\UseUse;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
@@ -117,30 +119,38 @@ class Dist extends Command
         $prettyPrinter = new  Standard();
 
 
-        ksort($this->packList);
-
-        $new_pack_list = [];
-        $back_pack_list = [];
-
-        foreach ($this->packList as $namespace_name => $stmt) {
-            if (Str::startsWith($namespace_name, 'app\common')) {
-                $new_pack_list[$namespace_name] = $stmt;
-            } else {
-                $back_pack_list[$namespace_name] = $stmt;
-            }
-        }
-
-        $this->packList = array_merge($new_pack_list, $back_pack_list);
+        // 根据调用次数排序
+        $this->parsePackList();
 
         $stmts = [];
-        foreach ($this->packList as $namespace_name => $stmt) {
+        foreach ($this->packList as $namespace_name => $namespace_item) {
             dump($namespace_name);
             $namespace_node_name = null;
             if (!empty($namespace_name)) {
                 $namespace_node_name = new Name($namespace_name);
             }
+
+            $stmt = [];
+
+            $use_item = [];
+            foreach ($namespace_item['used_class'] as $use_alias => $use_name) {
+
+                if($use_alias == $use_name){
+                    $use_alias = null;
+                }
+                $use_item[] = new UseUse(new Name($use_name), $use_alias);
+            }
+            if(!empty($use_item)){
+                $stmt[] = new Use_($use_item);
+            }
+            foreach ($namespace_item['class'] as $class_item) {
+                $stmt = array_merge($stmt, $class_item['stmts']);
+            }
+
             $stmts[] = new Namespace_($namespace_node_name, $stmt);
         }
+
+
         $newCode = $prettyPrinter->prettyPrintFile($stmts);
 
         file_put_contents($lib_php_path, $newCode);
@@ -158,6 +168,23 @@ class Dist extends Command
         $dist_filesystem->put('think', $think_code);
 
         $output->info('打包完成');
+    }
+
+    public function parsePackList()
+    {
+        dump($this->usedClass);
+        foreach ($this->packList as $namespace_name => $namespace_item) {
+            foreach ($namespace_item['class'] as  $class_item) {
+                foreach ($class_item['stmts'] as  $stmt_item) {
+                    if ($stmt_item instanceof Class_) {
+                        if ($stmt_item->name) {
+                            $class_namesepace_name = $namespace_name . '\\' . $stmt_item->name->toString();
+                            dump($class_namesepace_name);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function buildPhpContent($content, $name)
@@ -188,33 +215,54 @@ class Dist extends Command
 
 
         if (!isset($this->packList[$current_namespace])) {
-            $this->packList[$current_namespace] = [];
+            $this->packList[$current_namespace] = [
+                'sort' => 0,
+                'used_class' => [],
+                'class' => [],
+            ];
         }
 
         $stmts = $this->parseStmts($stmts, $name);
 
         foreach ($stmts as $stmts_item) {
+            $stmts = [];
             if ($stmts_item instanceof Namespace_) {
-
-                $this->packList[$current_namespace] = array_merge($this->packList[$current_namespace], $stmts_item->stmts);
+                $stmts = $stmts_item->stmts;
             } else {
-
-                $this->packList[$current_namespace][] = $stmts_item;
+                $stmts = $stmts_item;
             }
+
+            $new_stmts = [];
+
+            foreach ($stmts as  $stmt_item) {
+                if ($stmt_item instanceof Use_) {
+                    foreach ($stmt_item->uses as $stmt_use) {
+                        $use_class = $stmt_use->name->toString();
+                        $alias = $use_class;
+
+                        if (!empty($stmt_use->alias)) {
+                            $alias = $stmt_use->alias->toString();
+                        }
+                        $this->usedClass[$alias] = $use_class;
+                        $this->packList[$current_namespace]['used_class'][$alias] = $use_class;
+                    }
+                } else {
+                    $new_stmts[] = $stmt_item;
+                }
+            }
+
+            $class_item = [
+                'sort' => 0,
+                'stmts' => $new_stmts,
+            ];
+
+            $this->packList[$current_namespace]['class'][] = $class_item;
         }
 
 
         return null;
     }
 
-    public function addUsedClass(Node $node)
-    {
-        if (array_search($node, $this->usedClass)) {
-            dump('已存在');
-        } else {
-            $this->usedClass[] = $node;
-        }
-    }
 
     public function parseStmts($stmts, $name)
     {

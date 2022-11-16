@@ -37,9 +37,9 @@ class NodeVisitorTools extends NodeVisitorAbstract
 
     public $callClass = [];
     protected $skipClass = [
-        // 'Doctrine\Common\Annotations\Annotation\Attributes',
-        // 'app\admin\service\annotation\ControllerAnnotation',
-        // 'app\admin\service\annotation\NodeAnotation',
+        'Doctrine\Common\Annotations\Annotation\Attributes',
+        'app\admin\service\annotation\ControllerAnnotation',
+        'app\admin\service\annotation\NodeAnotation',
     ];
 
     public function __construct($cmd, $name)
