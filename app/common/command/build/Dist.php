@@ -10,7 +10,11 @@ use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PhpParser\Node;
+use PhpParser\Node\Arg;
+use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\BinaryOp\Concat;
+use PhpParser\Node\Expr\ConstFetch;
+use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\Include_;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\MagicConst\Dir;
@@ -46,7 +50,7 @@ class Dist extends Command
 
     protected $distPath;
 
-
+    public $constDirList = [];
 
     protected function configure()
     {
@@ -142,8 +146,34 @@ class Dist extends Command
 
         file_put_contents($lib_php_path, $newCode);
 
+        $lib_dir_const_file = '/lib.dir.const.' . uniqid() . '.php';
+        $lib_dir_const_path = $this->distPath . '/lib' . $lib_dir_const_file;
+
+        $dir_const_stmts = [];
+
+        foreach ($this->constDirList as $const_key => $const_value) {
+
+            $dir_const_stmts[] = new Expression(new FuncCall(
+                new Name('define'),
+                [
+                    new Arg(new String_($const_key)),
+                    new Arg(new Concat(
+                        new Dir(),
+                        new String_('/../'.$const_value)
+                    )),
+                ]
+            ));
+        }
+
+
+
+        $dir_const_code = $prettyPrinter->prettyPrintFile($dir_const_stmts);
+
+        file_put_contents($lib_dir_const_path, $dir_const_code);
+
         $this->buildIncludeIndexFile([
-            $lib_php_file
+            $lib_dir_const_file,
+            $lib_php_file,
         ]);
 
         $output->info('打包完成');
@@ -249,16 +279,11 @@ class Dist extends Command
     public function buildPhpContent($content, $name)
     {
 
-
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
         $stmts = $parser->parse($content);
 
-        $is_magic_const_dir = $this->scanForMagicConstDir($stmts);
-
-        if ($is_magic_const_dir) {
-            return $content;
-        }
+        $this->scanForMagicConstDir($stmts, $name);
 
         $this->checkStmts($stmts, $name);
 
@@ -328,32 +353,34 @@ class Dist extends Command
         return $stmts;
     }
 
-    public function scanForMagicConstDir($stmts)
+    public function scanForMagicConstDir($stmts, $name)
     {
-        $is_dir_find = false;
 
         $traverser = new NodeTraverser();
-        $traverser->addVisitor(new class extends NodeVisitorAbstract
+        $traverser->addVisitor(new class($name, $this) extends NodeVisitorAbstract
         {
-            public function enterNode(Node $node)
+            protected $name;
+            protected $mainClass;
+            public function __construct($name, $main_class)
             {
+                $this->name = $name;
+                $this->mainClass = $main_class;
+            }
+
+            public function leaveNode(Node $node)
+            {
+                $name = $this->name;
                 if ($node instanceof Dir) {
                     // Clean out the function body
+                    $const_key = 'dirconst' . uniqid();
 
-                    throw new DirFindedException("finded", 1);
+                    $this->mainClass->constDirList[$const_key] = dirname($name);
+                    return new ConstFetch(new Name($const_key));
                 }
             }
         });
 
-        try {
-
-            $stmts = $traverser->traverse($stmts);
-        } catch (DirFindedException $th) {
-
-            $is_dir_find = true;
-        }
-
-        return $is_dir_find;
+        $stmts = $traverser->traverse($stmts);
     }
 
     public function isSkip($path)
