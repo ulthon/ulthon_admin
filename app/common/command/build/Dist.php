@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace app\common\command\build;
 
-use app\common\exception\DirFindedException;
 use app\common\tools\PathTools;
 use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
@@ -29,7 +28,7 @@ use PhpParser\Node\Stmt\UseUse;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
+use app\common\tools\phpparser\PrettyPrinterTools as Standard;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
