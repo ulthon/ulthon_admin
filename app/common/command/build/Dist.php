@@ -264,7 +264,7 @@ class Dist extends Command
             });
 
 
-            $traverser->traverse($stmts);
+            $stmts = $traverser->traverse($stmts);
             
             foreach ($stmts as  $stmt_item) {
                 $function_stmts[] = $stmt_item;
