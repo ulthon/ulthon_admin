@@ -51,6 +51,16 @@ class Dist extends Command
 
     public $constDirList = [];
 
+    /**
+     * @var FileSystem
+     */
+    protected $appFilesystem;
+
+    /**
+     * @var FileSystem
+     */
+    protected $distFilesystem;
+
     protected function configure()
     {
         // 指令配置
@@ -76,9 +86,13 @@ class Dist extends Command
 
         $app_filesystem = new Filesystem($app_adapter);
 
+        $this->appFilesystem = $app_filesystem;
+
         $dist_adapter = new Local($dist_path);
 
         $dist_filesystem = new Filesystem($dist_adapter);
+
+        $this->distFilesystem = $dist_filesystem;
 
         $list_dist = $dist_filesystem->listContents();
 
@@ -158,7 +172,7 @@ class Dist extends Command
                     new Arg(new String_($const_key)),
                     new Arg(new Concat(
                         new Dir(),
-                        new String_('/../'.$const_value)
+                        new String_('/../' . $const_value)
                     )),
                 ]
             ));
@@ -175,7 +189,26 @@ class Dist extends Command
             $lib_php_file,
         ]);
 
+        $this->buildAllAppDir();
+
         $output->info('打包完成');
+    }
+
+    public function buildAllAppDir()
+    {
+        $list = $this->appFilesystem->listContents('');
+
+        foreach ($list as  $item) {
+            if ($item['type'] != 'dir') {
+                continue;
+            }
+
+            if ($this->distFilesystem->has($item['path'])) {
+                continue;
+            }
+
+            $this->distFilesystem->createDir($item['path']);
+        }
     }
 
     public function buildIncludeIndexFile($files)
