@@ -73,6 +73,8 @@ if (!function_exists('xdebug')) {
      */
     function xdebug($data, $type = 'xdebug', $suffix = null, $force = false, $file = null)
     {
+        // 调试
+        __DIR__;
         !is_dir(runtime_path() . 'xdebug/') && mkdir(runtime_path() . 'xdebug/');
         if (is_null($file)) {
             $file = is_null($suffix) ? runtime_path() . 'xdebug/' . date('Ymd') . '.txt' : runtime_path() . 'xdebug/' . date('Ymd') . "_{$suffix}" . '.txt';

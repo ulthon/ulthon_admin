@@ -29,6 +29,7 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use app\common\tools\phpparser\PrettyPrinterTools as Standard;
+use PhpParser\Comment;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -143,13 +144,6 @@ class Dist extends Command
 
         $this->buildMainClassFile($lib_php_path);
 
-
-
-
-
-
-
-
         $lib_function_file = '/lib.' . uniqid() . '.php';
         $lib_function_path = $this->distPath . '/lib' . $lib_function_file;
         $this->buildFunctionFile($lib_function_path);
@@ -219,6 +213,11 @@ class Dist extends Command
         file_put_contents($lib_dir_const_path, $dir_const_code);
     }
 
+    public function buildDirConstCode($stmt)
+    {
+        # code...
+    }
+
     public function buildFunctionFile($lib_function_path)
     {
         $function_path = Config::get('dist.function_path', []);
@@ -257,10 +256,16 @@ class Dist extends Command
                         $this->mainClass->constDirList[$const_key] = dirname($name);
                         return new ConstFetch(new Name($const_key));
                     }
+
+                    if($node instanceof Comment){
+                        return NodeTraverser::REMOVE_NODE;
+                    }
                 }
             });
 
 
+            $traverser->traverse($stmts);
+            
             foreach ($stmts as  $stmt_item) {
                 $function_stmts[] = $stmt_item;
             }
