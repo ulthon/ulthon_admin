@@ -35,6 +35,7 @@ use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
+use think\facade\Config;
 use think\facade\View;
 use think\helper\Str;
 
@@ -135,15 +136,48 @@ class Dist extends Command
 
 
 
+
+
         $lib_php_file = '/lib.' . uniqid() . '.php';
         $lib_php_path = $this->distPath . '/lib' . $lib_php_file;
+
+        $this->buildMainClassFile($lib_php_path);
+
+
+
+
+
+
+
+
+        $lib_function_file = '/lib.' . uniqid() . '.php';
+        $lib_function_path = $this->distPath . '/lib' . $lib_function_file;
+        $this->buildFunctionFile($lib_function_path);
+
+
+        $lib_dir_const_file = '/lib.' . uniqid() . '.php';
+        $lib_dir_const_path = $this->distPath . '/lib' . $lib_dir_const_file;
+        $this->buildDirConstFile($lib_dir_const_path);
+
 
 
         PathTools::intiDir($lib_php_path);
 
+        $this->buildIncludeIndexFile([
+            $lib_function_file,
+            $lib_dir_const_file,
+            $lib_php_file,
+        ]);
+
+
+        $this->buildAllAppDir();
+        $output->info('打包完成');
+    }
+
+
+    public function buildMainClassFile($lib_php_path)
+    {
         $prettyPrinter = new  Standard();
-
-
         // 根据调用次数排序
         $this->parsePackList();
 
@@ -158,10 +192,10 @@ class Dist extends Command
         $newCode = $prettyPrinter->prettyPrintFile($stmts);
 
         file_put_contents($lib_php_path, $newCode);
+    }
 
-        $lib_dir_const_file = '/lib.dir.const.' . uniqid() . '.php';
-        $lib_dir_const_path = $this->distPath . '/lib' . $lib_dir_const_file;
-
+    public function buildDirConstFile($lib_dir_const_path)
+    {
         $dir_const_stmts = [];
 
         foreach ($this->constDirList as $const_key => $const_value) {
@@ -178,20 +212,66 @@ class Dist extends Command
             ));
         }
 
-
+        $prettyPrinter = new  Standard();
 
         $dir_const_code = $prettyPrinter->prettyPrintFile($dir_const_stmts);
 
         file_put_contents($lib_dir_const_path, $dir_const_code);
+    }
 
-        $this->buildIncludeIndexFile([
-            $lib_dir_const_file,
-            $lib_php_file,
-        ]);
+    public function buildFunctionFile($lib_function_path)
+    {
+        $function_path = Config::get('dist.function_path', []);
 
-        $this->buildAllAppDir();
+        $function_stmts = [];
 
-        $output->info('打包完成');
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        foreach ($function_path as  $function_file) {
+
+            $function_file_path = App::getRootPath() . '' . $function_file;
+
+
+            $function_content = file_get_contents($function_file_path);
+
+            $stmts = $parser->parse($function_content);
+
+            $traverser = new NodeTraverser();
+            $traverser->addVisitor(new class($function_file, $this) extends NodeVisitorAbstract
+            {
+                protected $name;
+                protected $mainClass;
+                public function __construct($name, $main_class)
+                {
+                    $this->name = $name;
+                    $this->mainClass = $main_class;
+                }
+
+                public function leaveNode(Node $node)
+                {
+                    $name = $this->name;
+                    if ($node instanceof Dir) {
+                        // Clean out the function body
+                        $const_key = 'dirconst' . uniqid();
+
+                        $this->mainClass->constDirList[$const_key] = dirname($name);
+                        return new ConstFetch(new Name($const_key));
+                    }
+                }
+            });
+
+
+            foreach ($stmts as  $stmt_item) {
+                $function_stmts[] = $stmt_item;
+            }
+        }
+
+
+        $prettyPrinter = new  Standard();
+
+        $function_code = $prettyPrinter->prettyPrintFile($function_stmts);
+
+        file_put_contents($lib_function_path, $function_code);
     }
 
     public function buildAllAppDir()
@@ -418,11 +498,7 @@ class Dist extends Command
     public function isSkip($path)
     {
 
-        $skip_path = [
-            '/^\.git/',
-            '/^dist/',
-            '/^runtime/',
-        ];
+        $skip_path = Config::get('dist.skip_path', []);
 
         foreach ($skip_path as  $rule) {
             if (preg_match($rule, $path)) {
@@ -436,23 +512,7 @@ class Dist extends Command
     public function isIgnored($path)
     {
 
-        $ignore_path = [
-            '/^vendor/',
-            '/^config/',
-            '/^lib\//',
-            '/^database\/*/',
-            '/event\.php/',
-            '/middleware\.php/',
-            '/provider\.php/',
-            '/service\.php/',
-            '/^app\/.*\/config\/.*/',
-            '/app\/common.php/',
-            '/config.php/',
-            '/^public\/index\.php/',
-            '/^public\/router\.php/',
-            '/^route\/*/',
-            '/^app\/admin\/service\/initAdminData\/*/',
-        ];
+        $ignore_path = Config::get('dist.ignore_path', []);
 
         foreach ($ignore_path as  $rule) {
 
