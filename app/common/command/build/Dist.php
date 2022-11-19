@@ -6,6 +6,7 @@ namespace app\common\command\build;
 
 use app\common\tools\PathTools;
 use app\common\tools\phpparser\MinifyPrinterTools;
+use app\common\tools\phpparser\NodeFakeVarVisitorTools;
 use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
@@ -313,6 +314,11 @@ class Dist extends Command
             }
         }
 
+        $traverser = new NodeTraverser();
+
+        $traverser->addVisitor(new NodeFakeVarVisitorTools);
+
+        $stmts = $traverser->traverse($stmts);
 
         $newCode = $prettyPrinter->prettyPrintFile($stmts);
 
@@ -409,6 +415,12 @@ class Dist extends Command
             }
         }
 
+
+        $traverser = new NodeTraverser();
+
+        $traverser->addVisitor(new NodeFakeVarVisitorTools);
+
+        $function_stmts = $traverser->traverse($function_stmts);
 
         $prettyPrinter = new  MinifyPrinterTools();
 
