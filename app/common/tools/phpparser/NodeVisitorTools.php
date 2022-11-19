@@ -3,6 +3,7 @@
 namespace app\common\tools\phpparser;
 
 use PhpParser\Comment;
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\Instanceof_;
@@ -53,21 +54,18 @@ class NodeVisitorTools extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
 
-        if ($node instanceof Node) {
-            if (isset($node->attributes['comments'])) {
-
-                $comments = $node->attributes['comments'];
-                $new_comments = [];
-                foreach ($comments as  $comment_item) {
-                    if ($comment_item instanceof Comment) {
-                    } else {
-                        $new_comments[] = $comment_item;
-                    }
-                }
-
-                $node->attributes['comments'] = $new_comments;
+        $comments = $node->getComments();
+        if (!empty($comments)) {
+            $new_comments = [];
+            foreach ($comments as  $comment_item) {
+                if ($comment_item instanceof Doc) {
+                    $new_comments[] = $comment_item;
+                } 
             }
+
+            $node->setAttribute('comments', $new_comments);
         }
+
 
         if ($node instanceof Use_) {
 
