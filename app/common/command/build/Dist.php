@@ -226,6 +226,12 @@ class Dist extends Command
                 }
             });
 
+
+            $traverser_var_faker = new NodeTraverser();
+            $traverser_var_faker->addVisitor(new NodeFakeVarVisitorTools);
+    
+            $file_stmts = $traverser_var_faker->traverse($file_stmts);
+
             $function_code = $prettyPrinter->prettyPrintFile($file_stmts);
 
             $this->distFilesystem->put($item_file['path'], $function_code);
@@ -285,8 +291,13 @@ class Dist extends Command
                 }
             });
 
-
             $file_stmts = $traverser->traverse($file_stmts);
+
+            $traverser_var_faker = new NodeTraverser();
+            $traverser_var_faker->addVisitor(new NodeFakeVarVisitorTools);
+    
+            $file_stmts = $traverser_var_faker->traverse($file_stmts);
+
 
             $function_code = $prettyPrinter->prettyPrintFile($file_stmts);
 
