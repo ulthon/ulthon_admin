@@ -3,12 +3,11 @@
 namespace app\admin\controller\debug;
 
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\App;
 
 /**
- * @ControllerAnnotation(title="debug_log")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="debug_log")
  */
 class Log extends AdminController
 {

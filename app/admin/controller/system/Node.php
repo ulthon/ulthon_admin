@@ -7,13 +7,11 @@ namespace app\admin\controller\system;
 use app\admin\model\SystemNode;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
 use app\admin\service\NodeService;
 use think\App;
 
 /**
- * @ControllerAnnotation(title="系统节点管理")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="系统节点管理")
  * Class Node
  * @package app\admin\controller\system
  */
@@ -29,7 +27,7 @@ class Node extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @\app\admin\service\annotation\NodeAnotation(title="列表")
      */
     public function index()
     {
@@ -53,7 +51,7 @@ class Node extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="系统节点更新")
+     * @\app\admin\service\annotation\NodeAnotation(title="系统节点更新")
      */
     public function refreshNode($force = 0)
     {
@@ -90,7 +88,7 @@ class Node extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="清除失效节点")
+     * @\app\admin\service\annotation\NodeAnotation(title="清除失效节点")
      */
     public function clearNode()
     {

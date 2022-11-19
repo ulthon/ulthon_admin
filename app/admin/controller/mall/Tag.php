@@ -3,12 +3,11 @@
 namespace app\admin\controller\mall;
 
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\App;
 
 /**
- * @ControllerAnnotation(title="mall_tag")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="mall_tag")
  */
 class Tag extends AdminController
 {

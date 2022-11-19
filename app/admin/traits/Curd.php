@@ -3,9 +3,6 @@
 
 namespace app\admin\traits;
 
-use app\admin\service\annotation\NodeAnotation;
-
-
 /**
  * 后台CURD复用
  * Trait Curd
@@ -16,7 +13,7 @@ trait Curd
 
 
     /**
-     * @NodeAnotation(title="列表")
+     * @\app\admin\service\annotation\NodeAnotation(title="列表")
      */
     public function index()
     {
@@ -47,7 +44,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="添加")
+     * @\app\admin\service\annotation\NodeAnotation(title="添加")
      */
     public function add()
     {
@@ -66,7 +63,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @\app\admin\service\annotation\NodeAnotation(title="编辑")
      */
     public function edit($id)
     {
@@ -88,7 +85,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="删除")
+     * @\app\admin\service\annotation\NodeAnotation(title="删除")
      */
     public function delete($id)
     {
@@ -104,7 +101,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="导出")
+     * @\app\admin\service\annotation\NodeAnotation(title="导出")
      */
     public function export()
     {
@@ -132,7 +129,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="属性修改")
+     * @\app\admin\service\annotation\NodeAnotation(title="属性修改")
      */
     public function modify()
     {

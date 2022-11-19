@@ -6,12 +6,11 @@ namespace app\admin\controller\system;
 
 use app\admin\model\SystemQuick;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\App;
 
 /**
- * @ControllerAnnotation(title="快捷入口管理")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="快捷入口管理")
  * Class Quick
  * @package app\admin\controller\system
  */

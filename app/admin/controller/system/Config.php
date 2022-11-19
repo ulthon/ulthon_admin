@@ -7,14 +7,13 @@ namespace app\admin\controller\system;
 use app\admin\model\SystemConfig;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\App;
 
 /**
  * Class Config
  * @package app\admin\controller\system
- * @ControllerAnnotation(title="系统配置管理")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="系统配置管理")
  */
 class Config extends AdminController
 {
@@ -26,7 +25,7 @@ class Config extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @\app\admin\service\annotation\NodeAnotation(title="列表")
      */
     public function index()
     {
@@ -34,7 +33,7 @@ class Config extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="保存")
+     * @\app\admin\service\annotation\NodeAnotation(title="保存")
      */
     public function save()
     {

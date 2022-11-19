@@ -19,10 +19,8 @@ class NodeService
     {
         $basePath = base_path() . 'admin' . DIRECTORY_SEPARATOR . 'controller';
         $baseNamespace = "app\admin\controller";
-
         $nodeList  = (new Node($basePath, $baseNamespace))
             ->getNodelist();
-
         return $nodeList;
     }
 }

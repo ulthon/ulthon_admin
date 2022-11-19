@@ -12,11 +12,12 @@
 
 namespace app\admin\service\node;
 
+use app\admin\service\annotation\ControllerAnnotation;
+use app\admin\service\annotation\NodeAnotation;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\DocParser;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\helper\Str;
 
 /**
@@ -69,6 +70,7 @@ class Node
 
                 // 获取类和方法的注释信息
                 $reflectionClass = new \ReflectionClass($controller);
+     
                 $methods         = $reflectionClass->getMethods();
                 $actionList      = [];
 
@@ -151,7 +153,7 @@ class Node
                 $list[$controllerFormat] = "{$this->baseNamespace}\\{$middleDir}" . $className;
             }
         }
-        
+
         return $list;
     }
 }

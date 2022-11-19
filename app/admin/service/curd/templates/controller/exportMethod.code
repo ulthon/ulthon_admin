@@ -1,6 +1,6 @@
 
     /**
-     * @NodeAnotation(title="导出")
+     * @\app\admin\service\annotation\NodeAnotation(title="导出")
      */
     public function export()
     {

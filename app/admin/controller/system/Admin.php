@@ -8,8 +8,6 @@ use app\admin\model\SystemAdmin;
 use app\admin\service\TriggerService;
 use app\common\constants\AdminConstant;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
 use think\App;
 use think\facade\Validate;
 use think\validate\ValidateRule;
@@ -17,7 +15,7 @@ use think\validate\ValidateRule;
 /**
  * Class Admin
  * @package app\admin\controller\system
- * @ControllerAnnotation(title="管理员管理")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="管理员管理")
  */
 class Admin extends AdminController
 {
@@ -40,7 +38,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @\app\admin\service\annotation\NodeAnotation(title="列表")
      */
     public function index()
     {
@@ -70,7 +68,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="添加")
+     * @\app\admin\service\annotation\NodeAnotation(title="添加")
      */
     public function add()
     {
@@ -102,7 +100,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @\app\admin\service\annotation\NodeAnotation(title="编辑")
      */
     public function edit($id)
     {
@@ -131,7 +129,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @\app\admin\service\annotation\NodeAnotation(title="编辑")
      */
     public function password($id)
     {
@@ -163,7 +161,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="删除")
+     * @\app\admin\service\annotation\NodeAnotation(title="删除")
      */
     public function delete($id)
     {
@@ -185,7 +183,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="属性修改")
+     * @\app\admin\service\annotation\NodeAnotation(title="属性修改")
      */
     public function modify()
     {

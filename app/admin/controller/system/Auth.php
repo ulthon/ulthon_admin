@@ -8,12 +8,11 @@ use app\admin\model\SystemAuth;
 use app\admin\model\SystemAuthNode;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\App;
 
 /**
- * @ControllerAnnotation(title="角色权限管理")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="角色权限管理")
  * Class Auth
  * @package app\admin\controller\system
  */
@@ -34,7 +33,7 @@ class Auth extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="授权")
+     * @\app\admin\service\annotation\NodeAnotation(title="授权")
      */
     public function authorize($id)
     {
@@ -49,7 +48,7 @@ class Auth extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="授权保存")
+     * @\app\admin\service\annotation\NodeAnotation(title="授权保存")
      */
     public function saveAuthorize()
     {

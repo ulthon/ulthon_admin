@@ -7,15 +7,14 @@ use app\admin\model\SystemMenu;
 use app\admin\model\SystemNode;
 use app\admin\service\TriggerService;
 use app\common\constants\MenuConstant;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use app\common\controller\AdminController;
 use think\App;
 
 /**
  * Class Menu
  * @package app\admin\controller\system
- * @ControllerAnnotation(title="菜单管理",auth=true)
+ * @\app\admin\service\annotation\ControllerAnnotation(title="菜单管理",auth=true)
  */
 class Menu extends AdminController
 {
@@ -36,7 +35,7 @@ class Menu extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @\app\admin\service\annotation\NodeAnotation(title="列表")
      */
     public function index()
     {
@@ -58,7 +57,7 @@ class Menu extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="添加")
+     * @\app\admin\service\annotation\NodeAnotation(title="添加")
      */
     public function add($id = null)
     {
@@ -97,7 +96,7 @@ class Menu extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @\app\admin\service\annotation\NodeAnotation(title="编辑")
      */
     public function edit($id)
     {
@@ -139,7 +138,7 @@ class Menu extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="删除")
+     * @\app\admin\service\annotation\NodeAnotation(title="删除")
      */
     public function delete($id)
     {
@@ -160,7 +159,7 @@ class Menu extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="属性修改")
+     * @\app\admin\service\annotation\NodeAnotation(title="属性修改")
      */
     public function modify()
     {
@@ -199,7 +198,7 @@ class Menu extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="添加菜单提示")
+     * @\app\admin\service\annotation\NodeAnotation(title="添加菜单提示")
      */
     public function getMenuTips()
     {

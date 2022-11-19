@@ -7,14 +7,13 @@ namespace app\admin\controller\mall;
 use app\admin\model\MallGoods;
 use app\admin\traits\Curd;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+
 use think\App;
 
 /**
  * Class Goods
  * @package app\admin\controller\mall
- * @ControllerAnnotation(title="商城商品管理")
+ * @\app\admin\service\annotation\ControllerAnnotation(title="商城商品管理")
  */
 class Goods extends AdminController
 {
@@ -30,7 +29,7 @@ class Goods extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @\app\admin\service\annotation\NodeAnotation(title="列表")
      */
     public function index()
     {
@@ -61,7 +60,7 @@ class Goods extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="入库")
+     * @\app\admin\service\annotation\NodeAnotation(title="入库")
      */
     public function stock($id)
     {
@@ -95,7 +94,7 @@ class Goods extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="导出")
+     * @\app\admin\service\annotation\NodeAnotation(title="导出")
      */
     public function export()
     {
