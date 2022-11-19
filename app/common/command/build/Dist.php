@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\common\command\build;
 
 use app\common\tools\PathTools;
+use app\common\tools\phpparser\MinifyPrinterTools;
 use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
@@ -158,9 +159,9 @@ class Dist extends Command
         PathTools::intiDir($lib_php_path);
 
         $this->buildIncludeIndexFile([
-            $lib_function_file,
             $lib_dir_const_file,
             $lib_php_file,
+            $lib_function_file,
         ]);
 
 
@@ -206,16 +207,11 @@ class Dist extends Command
             ));
         }
 
-        $prettyPrinter = new  Standard();
+        $prettyPrinter = new  MinifyPrinterTools();
 
         $dir_const_code = $prettyPrinter->prettyPrintFile($dir_const_stmts);
 
         file_put_contents($lib_dir_const_path, $dir_const_code);
-    }
-
-    public function buildDirConstCode($stmt)
-    {
-        # code...
     }
 
     public function buildFunctionFile($lib_function_path)
@@ -257,22 +253,22 @@ class Dist extends Command
                         return new ConstFetch(new Name($const_key));
                     }
 
-                    if($node instanceof Comment){
-                        return NodeTraverser::REMOVE_NODE;
+                    if ($node->hasAttribute('comments')) {
+                        $node->setAttribute('comments', []);
                     }
                 }
             });
 
 
             $stmts = $traverser->traverse($stmts);
-            
+
             foreach ($stmts as  $stmt_item) {
                 $function_stmts[] = $stmt_item;
             }
         }
 
 
-        $prettyPrinter = new  Standard();
+        $prettyPrinter = new  MinifyPrinterTools();
 
         $function_code = $prettyPrinter->prettyPrintFile($function_stmts);
 
@@ -303,7 +299,7 @@ class Dist extends Command
         foreach ($files as  $file_name) {
             $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($file_name)), Include_::TYPE_REQUIRE_ONCE));
         }
-        $prettyPrinter = new  Standard();
+        $prettyPrinter = new  MinifyPrinterTools();
 
 
         $newCode = $prettyPrinter->prettyPrintFile($file_stmts);
