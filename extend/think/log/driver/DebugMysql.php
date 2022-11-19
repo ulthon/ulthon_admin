@@ -40,7 +40,7 @@ class DebugMysql  implements LogHandlerInterface
             $dirname = dirname($log_path);
 
             if (!is_dir($dirname)) {
-                mkdir($log_path, 0777, true);
+                mkdir($dirname, 0777, true);
             }
 
             $first_line = false;

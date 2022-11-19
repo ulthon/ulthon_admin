@@ -149,6 +149,7 @@ class Dist extends Command
         $lib_function_path = $this->distPath . '/lib' . $lib_function_file;
         $this->buildFunctionFile($lib_function_path);
 
+        $this->buildMigrateFile();
 
         $lib_dir_const_file = '/lib.' . uniqid() . '.php';
         $lib_dir_const_path = $this->distPath . '/lib' . $lib_dir_const_file;
@@ -166,7 +167,66 @@ class Dist extends Command
 
 
         $this->buildAllAppDir();
+
+
         $output->info('打包完成');
+    }
+
+    public function buildMigrateFile()
+    {
+        $database_dir =  'database';
+
+        $list_files = $this->appFilesystem->listContents($database_dir, true);
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+
+        $prettyPrinter = new  MinifyPrinterTools();
+
+        foreach ($list_files as  $item_file) {
+            if ($item_file['type'] == 'dir') {
+                continue;
+            }
+
+            $file_content = $this->appFilesystem->read($item_file['path']);
+
+            $file_stmts = $parser->parse($file_content);
+
+            $traverser = new NodeTraverser();
+            $traverser->addVisitor(new class($item_file['path'], $this) extends NodeVisitorAbstract
+            {
+                protected $name;
+                protected $mainClass;
+                public function __construct($name, $main_class)
+                {
+                    $this->name = $name;
+                    $this->mainClass = $main_class;
+                }
+
+                public function leaveNode(Node $node)
+                {
+                    $name = $this->name;
+                    if ($node instanceof Dir) {
+                        // Clean out the function body
+                        $const_key = 'dirconst' . uniqid();
+
+                        $this->mainClass->constDirList[$const_key] = dirname($name);
+                        return new ConstFetch(new Name($const_key));
+                    }
+
+                    if ($node->hasAttribute('comments')) {
+                        $node->setAttribute('comments', []);
+                    }
+                }
+            });
+
+
+            $file_stmts = $traverser->traverse($file_stmts);
+
+            $function_code = $prettyPrinter->prettyPrintFile($file_stmts);
+
+            $this->distFilesystem->put($item_file['path'], $function_code);
+        }
     }
 
 
