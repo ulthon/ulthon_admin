@@ -15,7 +15,6 @@ return [
         '/^\.git/',
         '/^dist/',
         '/^runtime/',
-        '/app\/common.php/',
     ],
     // 支持正则表达式，将文件原封不动的挪到输出目录
     'ignore_path' => [

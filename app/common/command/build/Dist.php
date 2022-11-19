@@ -170,6 +170,12 @@ class Dist extends Command
     }
 
 
+    /**
+     * 打包标准类文件（核心）
+     *
+     * @param string $lib_php_path
+     * @return void
+     */
     public function buildMainClassFile($lib_php_path)
     {
         $prettyPrinter = new  Standard();
@@ -189,6 +195,12 @@ class Dist extends Command
         file_put_contents($lib_php_path, $newCode);
     }
 
+    /**
+     * 统一声明目录魔术常量
+     *
+     * @param string $lib_dir_const_path
+     * @return void
+     */
     public function buildDirConstFile($lib_dir_const_path)
     {
         $dir_const_stmts = [];
@@ -214,6 +226,12 @@ class Dist extends Command
         file_put_contents($lib_dir_const_path, $dir_const_code);
     }
 
+    /**
+     * 打包类库文件
+     *
+     * @param string $lib_function_path
+     * @return void
+     */
     public function buildFunctionFile($lib_function_path)
     {
         $function_path = Config::get('dist.function_path', []);
@@ -275,6 +293,11 @@ class Dist extends Command
         file_put_contents($lib_function_path, $function_code);
     }
 
+    /**
+     * 创建多应用空间
+     *
+     * @return void
+     */
     public function buildAllAppDir()
     {
         $list = $this->appFilesystem->listContents('');
@@ -292,6 +315,12 @@ class Dist extends Command
         }
     }
 
+    /**
+     * 生成引入文件
+     *
+     * @param string[] $files
+     * @return void
+     */
     public function buildIncludeIndexFile($files)
     {
         $file_stmts = [];
@@ -307,6 +336,11 @@ class Dist extends Command
         file_put_contents($this->distPath . '/lib/index.php', $newCode);
     }
 
+    /**
+     * 后处理核心类库
+     *
+     * @return void
+     */
     public function parsePackList()
     {
 
@@ -326,6 +360,13 @@ class Dist extends Command
         $this->newPackList = [];
     }
 
+    /**
+     * 调整类加载顺序
+     *
+     * @param string $class_name
+     * @param array $class_item
+     * @return void
+     */
     public function insertToNewPackList($class_name, $class_item)
     {
         if (isset($this->newPackList[$class_name])) {
@@ -389,6 +430,13 @@ class Dist extends Command
         }
     }
 
+    /**
+     * 扫描解析代码
+     *
+     * @param string $content
+     * @param string $name
+     * @return void
+     */
     public function buildPhpContent($content, $name)
     {
 
@@ -452,6 +500,13 @@ class Dist extends Command
     }
 
 
+    /**
+     * 遍历扫描代码
+     *
+     * @param Node\Stmt[]|null $stmts
+     * @param string $name
+     * @return void
+     */
     public function parseStmts($stmts, $name)
     {
 
@@ -466,6 +521,13 @@ class Dist extends Command
         return $stmts;
     }
 
+    /**
+     * 扫描魔术变量
+     *
+     * @param Node\Stmt[]|null $stmts
+     * @param string $name
+     * @return void
+     */
     public function scanForMagicConstDir($stmts, $name)
     {
 
@@ -499,9 +561,13 @@ class Dist extends Command
     public function isSkip($path)
     {
 
+        $system_skip_path = ['/app\/common.php/'];
+
         $skip_path = Config::get('dist.skip_path', []);
 
-        foreach ($skip_path as  $rule) {
+        $skip_path = array_merge($system_skip_path, $skip_path);
+
+        foreach ($skip_path as $rule) {
             if (preg_match($rule, $path)) {
                 return true;
             }
