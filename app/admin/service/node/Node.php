@@ -58,6 +58,8 @@ class Node
      */
     public function getNodelist()
     {
+
+
         list($nodeList, $controllerList) = [[], $this->getControllerList()];
 
         if (!empty($controllerList)) {
@@ -70,7 +72,7 @@ class Node
 
                 // 获取类和方法的注释信息
                 $reflectionClass = new \ReflectionClass($controller);
-     
+
                 $methods         = $reflectionClass->getMethods();
                 $actionList      = [];
 
@@ -109,13 +111,46 @@ class Node
         return $nodeList;
     }
 
+
+    public function getAllControllerClass()
+    {
+        $namespace  = $this->baseNamespace;
+
+        $myClasses  = array_filter(get_declared_classes(), function ($item) use ($namespace) {
+            return substr($item, 0, strlen($namespace)) === $namespace;
+        });
+
+        $theClasses = [];
+        foreach ($myClasses as $class) :
+            $theClasses[] = $class;
+        endforeach;
+        return $theClasses;
+    }
+
     /**
      * 获取所有控制器
      * @return array
      */
     public function getControllerList()
     {
-        return $this->readControllerFiles($this->basePath);
+        $list = [];
+        if (defined('ULTHON_ADMIN_BUILD_DIST')) {
+            $list = $this->getAllControllerClass();
+        } else {
+            $list = $this->readControllerFiles($this->basePath);
+        }
+
+        $target_list = [];
+
+        foreach ($list as  $class_name) {
+            $class_name_main = str_replace($this->baseNamespace . '\\', '', $class_name);
+
+            $controller_format = str_replace('\\', '.', $class_name_main);
+
+            $target_list[$controller_format] = $class_name;
+        }
+
+        return $target_list;
     }
 
     /**
@@ -123,12 +158,13 @@ class Node
      * @param $path
      * @return array
      */
-    protected function readControllerFiles($path)
+    protected function readControllerFiles($path = null)
     {
-
-        
-        list($list, $temp_list, $dirExplode) = [[], scandir($path), explode($this->basePath, $path)];
+        $temp_list = scandir($path);
+        $dirExplode = explode($this->basePath, $path);
         $middleDir = isset($dirExplode[1]) && !empty($dirExplode[1]) ? str_replace('/', '\\', substr($dirExplode[1], 1)) . "\\" : '';
+
+        $list = [];
 
         foreach ($temp_list as $file) {
             // 排除根目录和没有开启注解的模块
@@ -147,10 +183,8 @@ class Node
                 }
                 // 根目录下的文件
                 $className = str_replace('.php', '', $file);
-                $controllerFormat = str_replace('\\', '.', $middleDir) . Str::snake(lcfirst($className));
 
-                
-                $list[$controllerFormat] = "{$this->baseNamespace}\\{$middleDir}" . $className;
+                $list[] = $this->baseNamespace . '\\' . $middleDir . $className;
             }
         }
 

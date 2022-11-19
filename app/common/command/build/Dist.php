@@ -325,6 +325,14 @@ class Dist extends Command
     {
         $file_stmts = [];
 
+        $file_stmts[] = new Expression(new FuncCall(
+            new Name('define'),
+            [
+                new Arg(new String_('ULTHON_ADMIN_BUILD_DIST')),
+                new Arg(new String_('1'))
+            ]
+        ));
+
         foreach ($files as  $file_name) {
             $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($file_name)), Include_::TYPE_REQUIRE_ONCE));
         }
@@ -505,7 +513,7 @@ class Dist extends Command
      *
      * @param Node\Stmt[]|null $stmts
      * @param string $name
-     * @return void
+     * @return Node\Stmt[]
      */
     public function parseStmts($stmts, $name)
     {
