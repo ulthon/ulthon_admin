@@ -21,7 +21,7 @@ return [
         '/^vendor/',
         '/^config/',
         '/^lib\//',
-        '/^database\/*/',
+        
         '/event\.php/',
         '/middleware\.php/',
         '/provider\.php/',
@@ -30,7 +30,7 @@ return [
         '/config.php/',
         '/^public\/index\.php/',
         '/^public\/router\.php/',
-        '/^route\/*/',
+        
         '/^app\/admin\/service\/initAdminData\/*/',
     ]
 ];
