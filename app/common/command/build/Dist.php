@@ -31,7 +31,10 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use app\common\tools\phpparser\PrettyPrinterTools as Standard;
+use app\common\tools\phpparser\PrettyPrinterTools;
+use app\common\tools\phpparser\ReadEnvVisitorNodeTools;
 use PhpParser\Comment;
+use PhpParser\NodeVisitor\NameResolver;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -108,6 +111,8 @@ class Dist extends Command
             }
         }
 
+        $this->packEnv();
+
         $list_content = $app_filesystem->listContents('', true);
         foreach ($list_content as  $file_info) {
             if ($file_info['type'] == 'dir') {
@@ -167,11 +172,77 @@ class Dist extends Command
             $lib_function_file,
         ]);
 
+        
 
         $this->buildAllAppDir();
 
 
         $output->info('打包完成');
+    }
+
+
+    public function packEnv()
+    {
+
+
+        $list_files = $this->appFilesystem->listContents('', true);
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        $prettyPrinter = new  PrettyPrinterTools();
+
+
+        foreach ($list_files as  $item_file) {
+            $path = $item_file['path'];
+
+            if ($item_file['type'] == 'dir') {
+                continue;
+            }
+
+            if (!isset($item_file['extension'])) {
+                continue;
+            }
+            if ($item_file['extension'] != 'php') {
+                continue;
+            }
+
+            if (!$this->isPackEnv($path)) {
+                continue;
+            }
+            $file_content = $this->appFilesystem->read($path);
+
+            $file_stmts = $parser->parse($file_content);
+
+            $nameResolver = new NameResolver();
+            $nodeTraverser = new NodeTraverser;
+            $nodeTraverser->addVisitor($nameResolver);
+
+            // Resolve names
+            $file_stmts = $nodeTraverser->traverse($file_stmts);
+
+            $env_pack_visitor = new ReadEnvVisitorNodeTools;
+            $env_traverser = new NodeTraverser;
+
+            $env_traverser->addVisitor($env_pack_visitor);
+            $file_stmts = $env_traverser->traverse($file_stmts);
+
+            $result_content = $prettyPrinter->prettyPrintFile($file_stmts);
+
+            $this->appFilesystem->put($path, $result_content);
+        }
+    }
+
+    public function isPackEnv($path)
+    {
+        $pack_env_path = Config::get('dist.pack_env_path');
+        foreach ($pack_env_path as  $rule) {
+
+            if (preg_match($rule, $path)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -229,11 +300,12 @@ class Dist extends Command
 
             $traverser_var_faker = new NodeTraverser();
             $traverser_var_faker->addVisitor(new NodeFakeVarVisitorTools);
-    
+
             $file_stmts = $traverser_var_faker->traverse($file_stmts);
 
-            $function_code = $prettyPrinter->prettyPrintFile($file_stmts);
 
+            $function_code = $prettyPrinter->prettyPrintFile($file_stmts);
+ 
             $this->distFilesystem->put($item_file['path'], $function_code);
         }
     }
@@ -295,7 +367,7 @@ class Dist extends Command
 
             $traverser_var_faker = new NodeTraverser();
             $traverser_var_faker->addVisitor(new NodeFakeVarVisitorTools);
-    
+
             $file_stmts = $traverser_var_faker->traverse($file_stmts);
 
 

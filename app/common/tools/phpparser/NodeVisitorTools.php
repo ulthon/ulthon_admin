@@ -60,7 +60,7 @@ class NodeVisitorTools extends NodeVisitorAbstract
             foreach ($comments as  $comment_item) {
                 if ($comment_item instanceof Doc) {
                     $new_comments[] = $comment_item;
-                } 
+                }
             }
 
             $node->setAttribute('comments', $new_comments);
@@ -86,9 +86,12 @@ class NodeVisitorTools extends NodeVisitorAbstract
 
                 $this->usedClass[$used_class_str] = $name;
                 if (!empty($use_item->alias->name)) {
+
+                    $name .= md5($use_item->alias->name);
+
                     $this->usedClass[$use_item->alias->name] = $name;
                 }
-
+                
                 $use_item->alias = new Identifier($name);
             }
         } else if ($node instanceof Class_) {
