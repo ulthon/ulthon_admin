@@ -82,15 +82,14 @@ class NodeVisitorTools extends NodeVisitorAbstract
                     return;
                 }
 
+                if(isset($this->usedClass[$used_class_str])){
+                    return NodeTraverser::REMOVE_NODE;
+                }
+
                 $name .= md5($used_class_str);
 
                 $this->usedClass[$used_class_str] = $name;
-                if (!empty($use_item->alias->name)) {
-
-                    $name .= md5($use_item->alias->name);
-
-                    $this->usedClass[$use_item->alias->name] = $name;
-                }
+                
                 
                 $use_item->alias = new Identifier($name);
             }

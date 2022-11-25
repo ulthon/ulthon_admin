@@ -68,6 +68,11 @@ class Dist extends Command
      */
     protected $distFilesystem;
 
+    /**
+     * @var FileSystem
+     */
+    protected $tempFilesystem;
+
     protected function configure()
     {
         // 指令配置
@@ -83,23 +88,31 @@ class Dist extends Command
         $app_path = App::getRootPath();
 
         $dist_path = $app_path . 'dist';
-
         PathTools::intiDir($dist_path . '.temp');
+
+
+        $temp_path = $app_path . 'temp';
+        PathTools::intiDir($temp_path . '.temp');
 
 
         $this->distPath = $dist_path;
 
+
         $app_adapter = new Local($app_path);
-
         $app_filesystem = new Filesystem($app_adapter);
-
         $this->appFilesystem = $app_filesystem;
 
+
+
         $dist_adapter = new Local($dist_path);
-
         $dist_filesystem = new Filesystem($dist_adapter);
-
         $this->distFilesystem = $dist_filesystem;
+
+
+        $temp_adapter = new Local($temp_path);
+        $temp_filesystem = new Filesystem($temp_adapter);
+        $this->tempFilesystem = $temp_filesystem;
+
 
         $list_dist = $dist_filesystem->listContents();
 
@@ -113,7 +126,9 @@ class Dist extends Command
 
         $this->packEnv();
 
-        $list_content = $app_filesystem->listContents('', true);
+        return ;
+
+        $list_content = $temp_filesystem->listContents('', true);
         foreach ($list_content as  $file_info) {
             if ($file_info['type'] == 'dir') {
                 continue;
@@ -125,7 +140,7 @@ class Dist extends Command
                 continue;
             }
 
-            $file_content = $app_filesystem->read($file_path);
+            $file_content = $temp_filesystem->read($file_path);
             $path_info = pathinfo($file_path);
 
             if (!$this->isIgnored($file_path)) {
@@ -172,25 +187,34 @@ class Dist extends Command
             $lib_function_file,
         ]);
 
-        
+
 
         $this->buildAllAppDir();
-
+        $this->clearTempDir();
 
         $output->info('打包完成');
     }
 
+    public function clearTempDir()
+    {
+        $list_dist = $this->tempFilesystem->listContents();
+
+        foreach ($list_dist as  $file_info) {
+            if ($file_info['type'] == 'file') {
+                $this->tempFilesystem->delete($file_info['path']);
+            } else {
+                $this->tempFilesystem->deleteDir($file_info['path']);
+            }
+        }
+    }
 
     public function packEnv()
     {
-
-
         $list_files = $this->appFilesystem->listContents('', true);
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
         $prettyPrinter = new  PrettyPrinterTools();
-
 
         foreach ($list_files as  $item_file) {
             $path = $item_file['path'];
@@ -199,17 +223,21 @@ class Dist extends Command
                 continue;
             }
 
-            if (!isset($item_file['extension'])) {
-                continue;
+            $skip_path = Config::get('dist.skip_path', []);
+    
+            foreach ($skip_path as $rule) {
+                if (preg_match($rule, $path)) {
+                    continue 2;
+                }
             }
-            if ($item_file['extension'] != 'php') {
-                continue;
-            }
+    
 
-            if (!$this->isPackEnv($path)) {
+            $file_content = $this->appFilesystem->read($path);
+
+            if (!$this->isPackEnv($item_file)) {
+                $this->tempFilesystem->put($path, $file_content);
                 continue;
             }
-            $file_content = $this->appFilesystem->read($path);
 
             $file_stmts = $parser->parse($file_content);
 
@@ -220,7 +248,7 @@ class Dist extends Command
             // Resolve names
             $file_stmts = $nodeTraverser->traverse($file_stmts);
 
-            $env_pack_visitor = new ReadEnvVisitorNodeTools;
+            $env_pack_visitor = new ReadEnvVisitorNodeTools($path);
             $env_traverser = new NodeTraverser;
 
             $env_traverser->addVisitor($env_pack_visitor);
@@ -228,16 +256,27 @@ class Dist extends Command
 
             $result_content = $prettyPrinter->prettyPrintFile($file_stmts);
 
-            $this->appFilesystem->put($path, $result_content);
+            $this->tempFilesystem->put($path, $result_content);
+        }
+
+        if($this->tempFilesystem->has('.env')){
+            $this->tempFilesystem->delete('.env');
         }
     }
 
-    public function isPackEnv($path)
+    public function isPackEnv($item_file)
     {
-        $pack_env_path = Config::get('dist.pack_env_path');
+        if (!isset($item_file['extension'])) {
+            return false;
+        }
+        if ($item_file['extension'] != 'php') {
+            return false;
+        }
+
+        $pack_env_path = Config::get('dist.pack_env_path', []);
         foreach ($pack_env_path as  $rule) {
 
-            if (preg_match($rule, $path)) {
+            if (preg_match($rule, $item_file['path'])) {
                 return true;
             }
         }
@@ -254,7 +293,7 @@ class Dist extends Command
     {
         $route_dir = 'route';
 
-        $list_files = $this->appFilesystem->listContents($route_dir, true);
+        $list_files = $this->tempFilesystem->listContents($route_dir, true);
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
@@ -265,7 +304,7 @@ class Dist extends Command
                 continue;
             }
 
-            $file_content = $this->appFilesystem->read($item_file['path']);
+            $file_content = $this->tempFilesystem->read($item_file['path']);
 
             $file_stmts = $parser->parse($file_content);
 
@@ -305,7 +344,7 @@ class Dist extends Command
 
 
             $function_code = $prettyPrinter->prettyPrintFile($file_stmts);
- 
+
             $this->distFilesystem->put($item_file['path'], $function_code);
         }
     }
@@ -319,7 +358,7 @@ class Dist extends Command
     {
         $database_dir =  'database';
 
-        $list_files = $this->appFilesystem->listContents($database_dir, true);
+        $list_files = $this->tempFilesystem->listContents($database_dir, true);
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
@@ -331,7 +370,7 @@ class Dist extends Command
                 continue;
             }
 
-            $file_content = $this->appFilesystem->read($item_file['path']);
+            $file_content = $this->tempFilesystem->read($item_file['path']);
 
             $file_stmts = $parser->parse($file_content);
 
