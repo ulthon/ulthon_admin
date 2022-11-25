@@ -4,6 +4,7 @@ namespace app\common\tools\phpparser;
 
 use PhpOffice\PhpSpreadsheet\Calculation\Logical\Boolean;
 use PhpParser\Node;
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\Cast\Bool_;
 use PhpParser\Node\Expr\ConstFetch;
@@ -97,6 +98,11 @@ class ReadEnvVisitorNodeTools  extends NodeVisitorAbstract
         if (is_array($value)) {
             return new Array_($value);
         } else if (is_string($value)) {
+
+            return new FuncCall(new Name('base64_decode'), [
+                new Arg(new String_(base64_encode($value)))
+            ]);
+
             return new String_($value);
         } else if (is_integer($value)) {
             return new LNumber($value);
