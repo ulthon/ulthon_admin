@@ -90,6 +90,7 @@ class MenuService
                 ['pid', '<>', MenuConstant::HOME_PID],
             ])
             ->order([
+                'pid' => 'asc',
                 'sort' => 'desc',
                 'id'   => 'asc',
             ])

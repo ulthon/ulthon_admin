@@ -87,11 +87,11 @@ class Dist extends Command
 
         $app_path = App::getRootPath();
 
-        $dist_path = $app_path . 'dist';
+        $dist_path = $app_path . 'build/dist';
         PathTools::intiDir($dist_path . '.temp');
 
 
-        $temp_path = $app_path . 'temp';
+        $temp_path = $app_path . 'build/temp';
         PathTools::intiDir($temp_path . '.temp');
 
 
@@ -114,19 +114,10 @@ class Dist extends Command
         $this->tempFilesystem = $temp_filesystem;
 
 
-        $list_dist = $dist_filesystem->listContents();
-
-        foreach ($list_dist as  $file_info) {
-            if ($file_info['type'] == 'file') {
-                $dist_filesystem->delete($file_info['path']);
-            } else {
-                $dist_filesystem->deleteDir($file_info['path']);
-            }
-        }
+        $this->clearDistDir();
+        $this->clearTempDir();
 
         $this->packEnv();
-
-        return ;
 
         $list_content = $temp_filesystem->listContents('', true);
         foreach ($list_content as  $file_info) {
@@ -194,7 +185,19 @@ class Dist extends Command
 
         $output->info('打包完成');
     }
+    public function clearDistDir()
+    {
 
+        $list_dist = $this->distFilesystem->listContents();
+
+        foreach ($list_dist as  $file_info) {
+            if ($file_info['type'] == 'file') {
+                $this->distFilesystem->delete($file_info['path']);
+            } else {
+                $this->distFilesystem->deleteDir($file_info['path']);
+            }
+        }
+    }
     public function clearTempDir()
     {
         $list_dist = $this->tempFilesystem->listContents();
@@ -224,13 +227,13 @@ class Dist extends Command
             }
 
             $skip_path = Config::get('dist.skip_path', []);
-    
+
             foreach ($skip_path as $rule) {
                 if (preg_match($rule, $path)) {
                     continue 2;
                 }
             }
-    
+
 
             $file_content = $this->appFilesystem->read($path);
 
@@ -259,7 +262,7 @@ class Dist extends Command
             $this->tempFilesystem->put($path, $result_content);
         }
 
-        if($this->tempFilesystem->has('.env')){
+        if ($this->tempFilesystem->has('.env')) {
             $this->tempFilesystem->delete('.env');
         }
     }
@@ -650,17 +653,13 @@ class Dist extends Command
 
 
             if (!empty($extend_name)) {
-                $try_namse_extend_name = $class_item['namespace_name'] . '\\' . $extend_name;
+                $try_namse_extend_name = $extend_name;
 
                 if (isset($this->packList[$try_namse_extend_name])) {
                     $this->insertToNewPackList($try_namse_extend_name, $this->packList[$try_namse_extend_name]);
                 }
             }
         }
-
-
-
-
 
         $this->newPackList[$class_name] = $class_item;
     }
