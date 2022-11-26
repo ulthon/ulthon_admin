@@ -51,7 +51,7 @@ return [
     ],
     'pack_env' => [
         // 0:base64方式处理,1:明文打包,3:不要编译env配置
-        'pack_env_mode' => 1,
+        'pack_env_mode' => 0,
         // 实际上任何代码都可以，但是尽量只编译业务代码
         'include_path' => [
             "/^app/",

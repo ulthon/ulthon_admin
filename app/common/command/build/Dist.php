@@ -167,13 +167,13 @@ class Dist extends Command
         $this->log('删除注释并生成版权声明');
         $this->clearCommentAndGenerateCopyright();
 
-
         $this->log('编译env配置信息');
-        // 根据配置pack_env扫描编译
-        // $this->packEnv();
+        $this->packEnv();
+
 
         $this->log('编译所有代码以全命名空间路径调用');
         $this->packClassUseName();
+
         return;
 
 
@@ -378,7 +378,7 @@ class Dist extends Command
             $copyright = Config::get('dist.copyright', []);
 
             foreach ($copyright as  $text) {
-                $copyright_stmts[] = new Comment('// '.$text);
+                $copyright_stmts[] = new Comment('// ' . $text);
             }
 
             $copyright_stmts_item = new Nop();
@@ -416,9 +416,6 @@ class Dist extends Command
 
     public function packClassUseName()
     {
-        // 删除无效的use
-        // 将所有的use类名混淆
-
         $list_file = $this->tempFilesystem->listContents('', true);
 
 
@@ -580,16 +577,48 @@ class Dist extends Command
 
     public function packEnv()
     {
+
+        $env_pack_mode = Config::get('dist.pack_env.pack_env_mode');
+
+        if ($env_pack_mode == 3) {
+            $this->debug('跳过ENV配置打包');
+            return;
+        }
         $list_files = $this->tempFilesystem->listContents('', true);
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
-        $prettyPrinter = new  PrettyPrinterTools();
+        $pretty_printer = new  PrettyPrinterTools();
 
         foreach ($list_files as  $item_file) {
             $path = $item_file['path'];
 
 
+            $target_include = $this->getAllInclude();
+
+            $target_exclude = $this->getAllExclude();
+
+            if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
+                continue;
+            }
+
+            $this->debug('编译: ' . $path);
+
+            $file_content = $this->tempFilesystem->read($path);
+            $file_stmts = $parser->parse($file_content);
+
+            $env_traverser = new NodeTraverser;
+            $env_traverser->addVisitor(
+                new NameResolver()
+            );
+            $env_traverser->addVisitor(
+                new ReadEnvVisitorNodeTools($path)
+            );
+
+            $file_stmts = $env_traverser->traverse($file_stmts);
+
+            // 生成代码
+            $result_content = $pretty_printer->prettyPrintFile($file_stmts);
 
             $this->tempFilesystem->put($path, $result_content);
         }

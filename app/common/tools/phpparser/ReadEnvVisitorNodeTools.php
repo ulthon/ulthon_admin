@@ -60,7 +60,6 @@ class ReadEnvVisitorNodeTools  extends NodeVisitorAbstract
                 }
             }
         } else if ($node instanceof StaticCall) {
-
             if ($node->class instanceof FullyQualified) {
                 $class_name = $node->class->toString();
                 if ($class_name == 'think\\facade\\Env') {
@@ -101,7 +100,7 @@ class ReadEnvVisitorNodeTools  extends NodeVisitorAbstract
         } else if (is_string($value)) {
 
 
-            $env_pack_mode = Config::get('dist.pack_env_mode');
+            $env_pack_mode = Config::get('dist.pack_env.pack_env_mode');
 
             if ($env_pack_mode == 0) {
                 return new FuncCall(new Name('base64_decode'), [
