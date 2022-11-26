@@ -185,10 +185,11 @@ class Dist extends Command
 
         $this->log('编译魔术变量');
         $this->packMagickVar();
-
-
-        // 生成魔术变量文件
         $this->buildMagicVarMapFile();
+
+        $this->log('函数库文件');
+        // 根据配置function_path加载函数库并且编译成单独的文件
+        $this->buildFunctionFile();
 
         $this->log('生成索引文件');
         $this->buildIncludeIndexFile();
@@ -208,8 +209,7 @@ class Dist extends Command
         // // 凡是直接return的都需要编译，比如config，middleware等，其他的原样跳过
         // // 只需要压缩配置文件
 
-        $this->log('函数库文件');
-        // 根据配置function_path加载函数库并且编译成单独的文件
+
 
         $this->log('编译路由文件');
         // 根据tp规则编译路由文件
@@ -958,7 +958,7 @@ class Dist extends Command
      * @param string $lib_function_path
      * @return void
      */
-    public function buildFunctionFile($lib_function_path)
+    public function buildFunctionFile()
     {
         $function_path = Config::get('dist.function_path', []);
 
@@ -968,34 +968,17 @@ class Dist extends Command
 
         foreach ($function_path as  $function_file) {
 
-            $function_file_path = App::getRootPath() . '' . $function_file;
 
-
-            $function_content = file_get_contents($function_file_path);
+            $function_content = $this->tempFilesystem->read($function_file);
 
             $stmts = $parser->parse($function_content);
 
             $traverser = new NodeTraverser();
-            $traverser->addVisitor(new class($function_file, $this) extends NodeVisitorAbstract
+            $traverser->addVisitor(new class extends NodeVisitorAbstract
             {
-                protected $name;
-                protected $mainClass;
-                public function __construct($name, $main_class)
-                {
-                    $this->name = $name;
-                    $this->mainClass = $main_class;
-                }
 
                 public function leaveNode(Node $node)
                 {
-                    $name = $this->name;
-                    if ($node instanceof Dir) {
-                        // Clean out the function body
-                        $const_key = 'dirconst' . uniqid();
-
-                        $this->mainClass->constDirList[$const_key] = dirname($name);
-                        return new ConstFetch(new Name($const_key));
-                    }
 
                     if ($node->hasAttribute('comments')) {
                         $node->setAttribute('comments', []);
@@ -1003,12 +986,15 @@ class Dist extends Command
                 }
             });
 
+            
 
             $stmts = $traverser->traverse($stmts);
 
             foreach ($stmts as  $stmt_item) {
                 $function_stmts[] = $stmt_item;
             }
+
+            $this->tempFilesystem->delete($function_file);
         }
 
 
@@ -1022,7 +1008,9 @@ class Dist extends Command
 
         $function_code = $prettyPrinter->prettyPrintFile($function_stmts);
 
-        file_put_contents($lib_function_path, $function_code);
+        $lib_path = 'lib/' . uniqid() . '.php';
+        $this->includeLibPath['function_lib_file'] = $lib_path;
+        $this->tempFilesystem->put($lib_path, $function_code);
     }
 
     /**
@@ -1066,6 +1054,7 @@ class Dist extends Command
         ));
 
         $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['magic_var_map'])), Include_::TYPE_REQUIRE_ONCE));
+        $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['function_lib_file'])), Include_::TYPE_REQUIRE_ONCE));
 
         $prettyPrinter = new  MinifyPrinterTools();
 
