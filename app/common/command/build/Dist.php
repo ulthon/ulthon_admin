@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace app\common\command\build;
 
+use app\commmon\tools\phpparser\PackUseNodeVisitorTools;
 use app\common\tools\PathTools;
+use app\common\tools\phpparser\FindClassNodeVisitorTools;
 use app\common\tools\phpparser\MinifyPrinterTools;
 use app\common\tools\phpparser\NodeFakeVarVisitorTools;
 use app\common\tools\phpparser\NodeVisitorTools;
@@ -34,7 +36,9 @@ use app\common\tools\phpparser\PrettyPrinterTools as Standard;
 use app\common\tools\phpparser\PrettyPrinterTools;
 use app\common\tools\phpparser\ReadEnvVisitorNodeTools;
 use PhpParser\Comment;
+use PhpParser\Comment\Doc;
 use PhpParser\NodeVisitor\NameResolver;
+use think\Collection;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -44,6 +48,15 @@ use think\facade\App;
 use think\facade\Config;
 use think\facade\View;
 use think\helper\Str;
+use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Expr\PropertyFetch;
+use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
+use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Expr\Instanceof_;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Param;
 
 class Dist extends Command
 {
@@ -103,8 +116,9 @@ class Dist extends Command
         }
     }
 
-    protected function output($content){
-        $this->output->writeln($content);
+    protected function output($content)
+    {
+        $this->output->writeln(date('Y-m-d H:i:s') . ' ' . $content);
     }
 
     protected function execute(Input $input, Output $output)
@@ -147,19 +161,20 @@ class Dist extends Command
         $this->clearTempDir();
 
         $this->log('将源码移动到临时目录');
-        // 根据配置skip_path跳过相关目录,比如：runtime,.git
-
-
         $this->moveCodeToTemp();
 
-        return;
+        $this->log('删除注释并生成版权声明');
+        $this->clearCommentAndGenerateCopyright();
 
-        $this->log('编译所有代码以全命名空间路径调用');
-        // 删除无效的use
-        // 将所有的use类名混淆
 
         $this->log('编译env配置信息');
         // 根据配置pack_env扫描编译
+        // $this->packEnv();
+
+        $this->log('编译所有代码以全命名空间路径调用');
+        $this->packClassUseName();
+        return;
+
 
         $this->log('编译混淆变量名');
         // 根据配置pack_var扫描编译
@@ -190,7 +205,6 @@ class Dist extends Command
 
 
 
-        $this->packEnv();
 
         $list_content = $temp_filesystem->listContents('', true);
         foreach ($list_content as  $file_info) {
@@ -293,7 +307,7 @@ class Dist extends Command
 
         foreach ($list_file as  $item_file) {
 
-            if($item_file['type'] != 'file'){
+            if ($item_file['type'] != 'file') {
                 continue;
             }
 
@@ -303,14 +317,237 @@ class Dist extends Command
 
             $this->tempFilesystem->put($item_file['path'], $this->appFilesystem->read($item_file['path']));
         }
-
     }
 
-    protected function checkPregMatch($rules, $path)
+    protected function clearCommentAndGenerateCopyright()
     {
+        $list_file = $this->tempFilesystem->listContents('', true);
+
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        $pretty_printer = new PrettyPrinterTools();
+
+
+        foreach ($list_file as $item_file) {
+            $path = $item_file['path'];
+
+
+            $target_include = $this->getAllInclude();
+
+            $target_exclude = $this->getAllExclude();
+
+            if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
+                continue;
+            }
+
+            $this->debug('编译: ' . $path);
+
+            $file_content = $this->tempFilesystem->read($path);
+            $file_stmts = $parser->parse($file_content);
+
+            $comment_traverser = new NodeTraverser;
+            $comment_traverser->addVisitor(
+                new class extends NodeVisitorAbstract
+                {
+                    protected $visitCount = 0;
+                    public function leaveNode(Node $node)
+                    {
+                        $this->visitCount++;
+
+                        $comments = $node->getComments();
+                        if (!empty($comments)) {
+                            $new_comments = [];
+                            foreach ($comments as  $comment_item) {
+                                if ($comment_item instanceof Doc) {
+                                    $new_comments[] = $comment_item;
+                                }
+                            }
+                            $node->setAttribute('comments', $new_comments);
+                        }
+                    }
+                }
+            );
+
+            $file_stmts = $comment_traverser->traverse($file_stmts);
+
+
+            $copyright_stmts = [];
+
+            $copyright = Config::get('dist.copyright', []);
+
+            foreach ($copyright as  $text) {
+                array_unshift($file_stmts, new Comment($text));
+            }
+
+
+            // 生成代码
+            $result_content = $pretty_printer->prettyPrintFile($file_stmts);
+
+            $this->tempFilesystem->put($path, $result_content);
+        }
+    }
+
+    protected function getAllInclude()
+    {
+        return array_merge(
+            Config::get('dist.pack_app.include_path', []),
+            Config::get('dist.pack_vars.include_path', []),
+            Config::get('dist.pack_config.include_path', []),
+            Config::get('dist.pack_env.include_path', []),
+        );
+    }
+
+    protected function getAllExclude()
+    {
+        return array_merge(
+            Config::get('dist.pack_app.exclude_path', []),
+            Config::get('dist.pack_vars.exclude_path', []),
+            Config::get('dist.pack_config.exclude_path', []),
+            Config::get('dist.pack_env.exclude_path', []),
+        );
+    }
+
+    public function packClassUseName()
+    {
+        // 删除无效的use
+        // 将所有的use类名混淆
+
+        $list_file = $this->tempFilesystem->listContents('', true);
+
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        $pretty_printer = new PrettyPrinterTools();
+
+        foreach ($list_file as $item_file) {
+            $path = $item_file['path'];
+
+            $target_include = $this->getAllInclude();
+
+            $target_exclude = $this->getAllExclude();
+
+            if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
+                continue;
+            }
+
+            $this->debug('编译: ' . $path);
+
+            $file_content = $this->tempFilesystem->read($path);
+            $file_stmts = $parser->parse($file_content);
+
+            $name_resolver = new NameResolver();
+            $node_name_traverser = new NodeTraverser;
+            $node_name_traverser->addVisitor($name_resolver);
+            $file_stmts = $node_name_traverser->traverse($file_stmts);
+
+            // 去除use，统计class调用
+            $list_used_class = new Collection();
+
+            $pack_use_traverser = new NodeTraverser;
+            $pack_use_traverser->addVisitor(
+                new class($list_used_class) extends FindClassNodeVisitorTools
+                {
+                    /**
+                     * @var Collection
+                     */
+                    protected $listUsedClass;
+                    public function __construct($list_used_class)
+                    {
+                        $this->listUsedClass = $list_used_class;
+                    }
+
+                    public function leaveNode(Node $node)
+                    {
+                        if ($node instanceof Use_) {
+                            return NodeTraverser::REMOVE_NODE;
+                        } else {
+                            parent::leaveNode($node);
+                        }
+                    }
+
+                    public function findClassNodeName(Name &$name)
+                    {
+                        $this->addUsedClass($name->toString());
+                    }
+
+                    protected function addUsedClass($class_name)
+                    {
+                        if (!isset($this->listUsedClass[$class_name])) {
+                            $class_alias = 'ul' . uniqid();
+                            $this->listUsedClass->push($class_alias, $class_name);
+                        }
+                    }
+                }
+            );
+
+            $file_stmts = $pack_use_traverser->traverse($file_stmts);
+
+            // 替换使用Use alias替换Class 
+            $useuse = [];
+
+            foreach ($list_used_class as $class_name => $alias) {
+                $useuse[] = new UseUse(new Name($class_name), $alias);
+            }
+
+            if (!empty($useuse)) {
+
+                $use_stmt = new Use_($useuse);
+
+                $has_namespace = false;
+                foreach ($file_stmts as  $item_stmts) {
+                    if ($item_stmts instanceof Namespace_) {
+                        $has_namespace = true;
+                        array_unshift($item_stmts->stmts, $use_stmt);
+                    }
+                }
+
+                if (!$has_namespace) {
+                    array_unshift($file_stmts, $use_stmt);
+                }
+            }
+
+            $pack_use_replace_traverser = new NodeTraverser;
+            $pack_use_replace_traverser->addVisitor(
+                new class($list_used_class) extends FindClassNodeVisitorTools
+                {
+                    /**
+                     * @var Collection
+                     */
+                    protected $listUsedClass;
+                    public function __construct($list_used_class)
+                    {
+                        $this->listUsedClass = $list_used_class;
+                    }
+
+                    public function findClassNodeName(Name &$name)
+                    {
+
+                        $class_name = $name->toString();
+
+                        if (isset($this->listUsedClass[$class_name])) {
+                            $name = new Name($this->listUsedClass[$class_name]);
+                        }
+                    }
+                }
+            );
+            $file_stmts = $pack_use_replace_traverser->traverse($file_stmts);
+
+            // 生成代码
+            $result_content = $pretty_printer->prettyPrintFile($file_stmts);
+
+            $this->tempFilesystem->put($path, $result_content);
+        }
+    }
+
+    protected function checkPregMatch($rules, $path, $empty_rules_result = true)
+    {
+        if (empty($rules)) {
+            return $empty_rules_result;
+        }
 
         foreach ($rules as  $rule) {
-
+            // dump($rule);
             if (preg_match($rule, $path)) {
                 return true;
             }
@@ -319,9 +556,25 @@ class Dist extends Command
         return false;
     }
 
+    protected function checkPregMatchPhp($rules, $item_file, $empty_rules_result = true)
+    {
+        if ($item_file['type'] != 'file') {
+            return false;
+        }
+        if (!isset($item_file['extension'])) {
+            return false;
+        }
+        if ($item_file['extension'] != 'php') {
+            return false;
+        }
+
+
+        return $this->checkPregMatch($rules, $item_file['path'], $empty_rules_result);
+    }
+
     public function packEnv()
     {
-        $list_files = $this->appFilesystem->listContents('', true);
+        $list_files = $this->tempFilesystem->listContents('', true);
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
@@ -330,42 +583,7 @@ class Dist extends Command
         foreach ($list_files as  $item_file) {
             $path = $item_file['path'];
 
-            if ($item_file['type'] == 'dir') {
-                continue;
-            }
 
-            $skip_path = Config::get('dist.skip_path', []);
-
-            foreach ($skip_path as $rule) {
-                if (preg_match($rule, $path)) {
-                    continue 2;
-                }
-            }
-
-
-            $file_content = $this->appFilesystem->read($path);
-
-            if (!$this->isPackEnv($item_file)) {
-                $this->tempFilesystem->put($path, $file_content);
-                continue;
-            }
-
-            $file_stmts = $parser->parse($file_content);
-
-            $nameResolver = new NameResolver();
-            $nodeTraverser = new NodeTraverser;
-            $nodeTraverser->addVisitor($nameResolver);
-
-            // Resolve names
-            $file_stmts = $nodeTraverser->traverse($file_stmts);
-
-            $env_pack_visitor = new ReadEnvVisitorNodeTools($path);
-            $env_traverser = new NodeTraverser;
-
-            $env_traverser->addVisitor($env_pack_visitor);
-            $file_stmts = $env_traverser->traverse($file_stmts);
-
-            $result_content = $prettyPrinter->prettyPrintFile($file_stmts);
 
             $this->tempFilesystem->put($path, $result_content);
         }
@@ -375,25 +593,7 @@ class Dist extends Command
         }
     }
 
-    public function isPackEnv($item_file)
-    {
-        if (!isset($item_file['extension'])) {
-            return false;
-        }
-        if ($item_file['extension'] != 'php') {
-            return false;
-        }
 
-        $pack_env_path = Config::get('dist.pack_env_path', []);
-        foreach ($pack_env_path as  $rule) {
-
-            if (preg_match($rule, $item_file['path'])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * 打包路由文件
