@@ -191,6 +191,16 @@ class Dist extends Command
         // 根据配置function_path加载函数库并且编译成单独的文件
         $this->buildFunctionFile();
 
+        $this->log('编译标准类库');
+        // 根据配置pack_app扫描编译
+        // 不标准的或排除的原样返回
+        // 编译的最终将打包到一个文件中
+        $this->packMainClassFile();
+
+        $this->buildMainClassFile();
+
+
+
         $this->log('生成索引文件');
         $this->buildIncludeIndexFile();
         return;
@@ -198,10 +208,6 @@ class Dist extends Command
 
 
 
-        $this->log('编译标准类库');
-        // 根据配置pack_app扫描编译
-        // 不标准的或排除的原样返回
-        // 编译的最终将打包到一个文件中
 
         // $this->log('编译配置文件');
         // // 之前的步骤能够实现代码压缩，如果要做，可以编程到tp流程中
@@ -221,37 +227,6 @@ class Dist extends Command
 
         $this->log('编译完成');
 
-
-
-
-        $list_content = $temp_filesystem->listContents('', true);
-        foreach ($list_content as  $file_info) {
-            if ($file_info['type'] == 'dir') {
-                continue;
-            }
-
-            $file_path = $file_info['path'];
-
-            if ($this->isSkip($file_path)) {
-                continue;
-            }
-
-            $file_content = $temp_filesystem->read($file_path);
-            $path_info = pathinfo($file_path);
-
-            if (!$this->isIgnored($file_path)) {
-
-                if (isset($path_info['extension'])) {
-                    if ($path_info['extension'] == 'php') {
-                        $file_content = $this->buildPhpContent($file_content, $file_path);
-                    }
-                }
-            }
-            if (!is_null($file_content)) {
-
-                $dist_filesystem->write($file_path, $file_content);
-            }
-        }
 
 
 
@@ -919,15 +894,34 @@ class Dist extends Command
         }
     }
 
-
-    /**
-     * 打包标准类文件（核心）
-     *
-     * @param string $lib_php_path
-     * @return void
-     */
-    public function buildMainClassFile($lib_php_path)
+    public function packMainClassFile()
     {
+
+
+        $list_content = $this->tempFilesystem->listContents('', true);
+        $target_include = Config::get('dist.pack_app.include_path', []);
+        $target_exclude = Config::get('dist.pack_app.exclude_path', []);
+        foreach ($list_content as  $file_info) {
+
+
+            $file_path = $file_info['path'];
+            $file_content = $this->tempFilesystem->read($file_path);
+
+            if (!$this->checkPregMatchPhp($target_include, $file_info) || $this->checkPregMatch($target_exclude, $file_path, false)) {
+                continue;
+            }
+
+            $file_content = $this->buildPhpContent($file_content, $file_path);
+
+            if (empty($file_content)) {
+                $this->tempFilesystem->delete($file_path);
+            }
+        }
+    }
+
+    public function buildMainClassFile()
+    {
+
         $prettyPrinter = new  Standard();
         // 根据调用次数排序
         $this->parsePackList();
@@ -939,15 +933,11 @@ class Dist extends Command
             }
         }
 
-        $traverser = new NodeTraverser();
-
-        $traverser->addVisitor(new NodeFakeVarVisitorTools);
-
-        $stmts = $traverser->traverse($stmts);
-
         $newCode = $prettyPrinter->prettyPrintFile($stmts);
 
-        file_put_contents($lib_php_path, $newCode);
+        $lib_class_file = 'lib/' . uniqid() . '.php';
+        $this->includeLibPath['main_class_file'] = $lib_class_file;
+        $this->tempFilesystem->put($lib_class_file, $newCode);
     }
 
 
@@ -986,7 +976,7 @@ class Dist extends Command
                 }
             });
 
-            
+
 
             $stmts = $traverser->traverse($stmts);
 
@@ -1055,6 +1045,7 @@ class Dist extends Command
 
         $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['magic_var_map'])), Include_::TYPE_REQUIRE_ONCE));
         $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['function_lib_file'])), Include_::TYPE_REQUIRE_ONCE));
+        $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['main_class_file'])), Include_::TYPE_REQUIRE_ONCE));
 
         $prettyPrinter = new  MinifyPrinterTools();
 
@@ -1167,13 +1158,15 @@ class Dist extends Command
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
         $stmts = $parser->parse($content);
+        
+        try {
+            $this->checkStmts($stmts, $name);
+        } catch (\Throwable $th) {
+            return $content;
+        }
 
-        $this->scanForMagicConstDir($stmts, $name);
 
-        $this->checkStmts($stmts, $name);
-
-
-        $stmts = $this->parseStmts($stmts, $name);
+        // $stmts = $this->parseStmts($stmts, $name);
 
         $class_name = null;
         $extend_name = null;
