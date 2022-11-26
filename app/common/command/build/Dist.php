@@ -57,6 +57,7 @@ use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\Nop;
 
 class Dist extends Command
 {
@@ -377,9 +378,14 @@ class Dist extends Command
             $copyright = Config::get('dist.copyright', []);
 
             foreach ($copyright as  $text) {
-                array_unshift($file_stmts, new Comment($text));
+                $copyright_stmts[] = new Comment('// '.$text);
             }
 
+            $copyright_stmts_item = new Nop();
+
+            $copyright_stmts_item->setAttribute('comments', $copyright_stmts);
+
+            array_unshift($file_stmts, $copyright_stmts_item);
 
             // 生成代码
             $result_content = $pretty_printer->prettyPrintFile($file_stmts);
