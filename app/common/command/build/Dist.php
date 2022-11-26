@@ -54,8 +54,12 @@ class Dist extends Command
     public $newPackList = [];
     public $classExtendList = [];
 
-    protected $distPath;
-
+    /**
+     * 编译过程中遇到的目录魔术变量和文件魔术变量
+     * 包括__DIR__,__FILE__,__LINE__
+     *
+     * @var array
+     */
     public $constDirList = [];
 
     /**
@@ -80,11 +84,36 @@ class Dist extends Command
             ->setDescription('the build:dist command');
     }
 
+    protected function log($content, $type = Output::VERBOSITY_VERY_VERBOSE)
+    {
+        if ($type <= $this->output->getVerbosity()) {
+            $this->output($content);
+        }
+    }
+    protected function write($content, $type = Output::VERBOSITY_NORMAL)
+    {
+        if ($type <= $this->output->getVerbosity()) {
+            $this->output($content);
+        }
+    }
+    protected function debug($content, $type = Output::VERBOSITY_DEBUG)
+    {
+        if ($type <= $this->output->getVerbosity()) {
+            $this->output($content);
+        }
+    }
+
+    protected function output($content){
+        $this->output->writeln($content);
+    }
+
     protected function execute(Input $input, Output $output)
     {
-        // 指令输出
-        $output->writeln('build:dist');
 
+        // 指令输出
+        $this->write('开始编译');
+
+        $this->log('创建编译环境相关目录');
         $app_path = App::getRootPath();
 
         $dist_path = $app_path . 'build/dist';
@@ -97,11 +126,9 @@ class Dist extends Command
 
         $this->distPath = $dist_path;
 
-
         $app_adapter = new Local($app_path);
         $app_filesystem = new Filesystem($app_adapter);
         $this->appFilesystem = $app_filesystem;
-
 
 
         $dist_adapter = new Local($dist_path);
@@ -114,8 +141,54 @@ class Dist extends Command
         $this->tempFilesystem = $temp_filesystem;
 
 
+
+        $this->log('清理编译环境相关目录');
         $this->clearDistDir();
         $this->clearTempDir();
+
+        $this->log('将源码移动到临时目录');
+        // 根据配置skip_path跳过相关目录,比如：runtime,.git
+
+
+        $this->moveCodeToTemp();
+
+        return;
+
+        $this->log('编译所有代码以全命名空间路径调用');
+        // 删除无效的use
+        // 将所有的use类名混淆
+
+        $this->log('编译env配置信息');
+        // 根据配置pack_env扫描编译
+
+        $this->log('编译混淆变量名');
+        // 根据配置pack_var扫描编译
+
+
+        $this->log('编译标准类库');
+        // 根据配置pack_app扫描编译
+        // 不标准的或排除的原样返回
+        // 编译的最终将打包到一个文件中
+
+        $this->log('编译配置文件');
+        // 根据pack_config扫描编译
+        // 凡是直接return的都需要编译，比如config，middleware等，其他的原样跳过
+        // 只需要压缩配置文件
+
+        $this->log('函数库文件');
+        // 根据配置function_path加载函数库并且编译成单独的文件
+
+        $this->log('编译路由文件');
+        // 根据tp规则编译路由文件
+        // 多个路由合并成一个路由
+
+        $this->log('输出到文件夹');
+
+        $this->log('生成TP多应用目录');
+
+        $this->log('编译完成');
+
+
 
         $this->packEnv();
 
@@ -209,6 +282,41 @@ class Dist extends Command
                 $this->tempFilesystem->deleteDir($file_info['path']);
             }
         }
+    }
+
+    protected function moveCodeToTemp()
+    {
+
+        $skip_path = Config::get('dist.skip_path');
+
+        $list_file = $this->appFilesystem->listContents('', true);
+
+        foreach ($list_file as  $item_file) {
+
+            if($item_file['type'] != 'file'){
+                continue;
+            }
+
+            if ($this->checkPregMatch($skip_path, $item_file['path'])) {
+                continue;
+            }
+
+            $this->tempFilesystem->put($item_file['path'], $this->appFilesystem->read($item_file['path']));
+        }
+
+    }
+
+    protected function checkPregMatch($rules, $path)
+    {
+
+        foreach ($rules as  $rule) {
+
+            if (preg_match($rule, $path)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function packEnv()
