@@ -174,11 +174,11 @@ class Dist extends Command
         $this->log('编译所有代码以全命名空间路径调用');
         $this->packClassUseName();
 
+        $this->log('编译混淆变量名');
+        $this->packFakeVar();
         return;
 
 
-        $this->log('编译混淆变量名');
-        // 根据配置pack_var扫描编译
 
 
         $this->log('编译标准类库');
@@ -329,14 +329,13 @@ class Dist extends Command
 
         $pretty_printer = new PrettyPrinterTools();
 
+        $target_include = $this->getAllInclude();
+        $target_exclude = $this->getAllExclude();
 
         foreach ($list_file as $item_file) {
             $path = $item_file['path'];
 
 
-            $target_include = $this->getAllInclude();
-
-            $target_exclude = $this->getAllExclude();
 
             if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
                 continue;
@@ -397,20 +396,18 @@ class Dist extends Command
     protected function getAllInclude()
     {
         return array_merge(
+            Config::get('dist.include_path', []),
             Config::get('dist.pack_app.include_path', []),
-            Config::get('dist.pack_vars.include_path', []),
             Config::get('dist.pack_config.include_path', []),
-            Config::get('dist.pack_env.include_path', []),
         );
     }
 
     protected function getAllExclude()
     {
         return array_merge(
+            Config::get('dist.exclude_path', []),
             Config::get('dist.pack_app.exclude_path', []),
-            Config::get('dist.pack_vars.exclude_path', []),
             Config::get('dist.pack_config.exclude_path', []),
-            Config::get('dist.pack_env.exclude_path', []),
         );
     }
 
@@ -423,12 +420,13 @@ class Dist extends Command
 
         $pretty_printer = new PrettyPrinterTools();
 
+        $target_include = $this->getAllInclude();
+
+        $target_exclude = $this->getAllExclude();
+
         foreach ($list_file as $item_file) {
             $path = $item_file['path'];
 
-            $target_include = $this->getAllInclude();
-
-            $target_exclude = $this->getAllExclude();
 
             if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
                 continue;
@@ -590,13 +588,13 @@ class Dist extends Command
 
         $pretty_printer = new  PrettyPrinterTools();
 
+        $target_include = $this->getAllInclude();
+
+        $target_exclude = $this->getAllExclude();
         foreach ($list_files as  $item_file) {
             $path = $item_file['path'];
 
 
-            $target_include = $this->getAllInclude();
-
-            $target_exclude = $this->getAllExclude();
 
             if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
                 continue;
@@ -625,6 +623,58 @@ class Dist extends Command
 
         if ($this->tempFilesystem->has('.env')) {
             $this->tempFilesystem->delete('.env');
+        }
+    }
+    public function packFakeVar()
+    {
+
+
+        $pack_vars_mode = Config::get('dist.pack_vars.pack_vars_mode');
+
+        if ($pack_vars_mode == 1) {
+            return;
+        }
+
+        $list_files = $this->tempFilesystem->listContents('', true);
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        $pretty_printer = new  PrettyPrinterTools();
+
+        $target_include = $this->getAllInclude();
+
+        $target_exclude = $this->getAllExclude();
+
+
+        if ($pack_vars_mode == 2) {
+            $target_exclude = array_merge($target_exclude, Config::get('dist.pack_vars.controller_path', []));
+        }
+
+        foreach ($list_files as  $item_file) {
+            $path = $item_file['path'];
+
+
+
+            if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
+                continue;
+            }
+
+            $this->debug('编译: ' . $path);
+
+            $file_content = $this->tempFilesystem->read($path);
+            $file_stmts = $parser->parse($file_content);
+
+            $fake_var_traverser = new NodeTraverser;
+            $fake_var_traverser->addVisitor(
+                new NodeFakeVarVisitorTools()
+            );
+
+            $file_stmts = $fake_var_traverser->traverse($file_stmts);
+
+            // 生成代码
+            $result_content = $pretty_printer->prettyPrintFile($file_stmts);
+
+            $this->tempFilesystem->put($path, $result_content);
         }
     }
 

@@ -11,6 +11,15 @@ return [
         '/^runtime/',
     ],
 
+    // 基础的加载规则
+    'include_path' => [
+        '/^app/',
+        '/^extend/',
+        '/^database/',
+        '/^config/',
+        '/^route/',
+    ],
+
     'pack_app' => [
         // 应当是标准的thinkphp类库文件，比如控制器、模型等
         'include_path' => [
@@ -18,18 +27,6 @@ return [
             "/^extend/",
         ],
         // 应当是thinkphp的其他非类库文件，比如配置、中间件配置、自定义加载类、函数库、路由等
-        'exclude_path' => [],
-    ],
-    'pack_vars' => [
-        // 实际上任何代码都可以，但是尽量只编译业务代码
-        'include_path' => [
-            "/^app/",
-            "/^config/",
-            "/^database/",
-            "/^extend/",
-            "/^route/",
-        ],
-        // 基本不需要排除
         'exclude_path' => [],
     ],
     'pack_config' => [
@@ -51,17 +48,14 @@ return [
     ],
     'pack_env' => [
         // 0:base64方式处理,1:明文打包,3:不要编译env配置
-        'pack_env_mode' => 0,
-        // 实际上任何代码都可以，但是尽量只编译业务代码
-        'include_path' => [
-            "/^app/",
-            "/^config/",
-            "/^database/",
-            "/^extend/",
-            "/^route/",
-        ],
-        // 基本不需要排除
-        'exclude_path' => [],
+        'pack_env_mode' => 0
+    ],
+    'pack_vars' => [
+        // 0:全部编译，1：关闭编译，2：不编译controller的方法
+        'pack_vars_mode' => 0,
+        'controller_path' => [
+            '/\/controller\//',
+        ]
     ],
     // 全局函数库，否则无论是否以/开头，都以项目根目录开头定位，如果有其他的文件，在这里声明
     // 不支持项目以外的位置定义
