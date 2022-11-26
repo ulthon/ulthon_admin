@@ -57,6 +57,8 @@ use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Param;
+use PhpParser\Node\Scalar\MagicConst\File;
+use PhpParser\Node\Scalar\MagicConst\Line;
 use PhpParser\Node\Stmt\Nop;
 
 class Dist extends Command
@@ -75,6 +77,10 @@ class Dist extends Command
      * @var array
      */
     public $constDirList = [];
+
+    public $magicVarMap = [];
+
+    public $includeLibPath = [];
 
     /**
      * @var FileSystem
@@ -176,6 +182,16 @@ class Dist extends Command
 
         $this->log('编译混淆变量名');
         $this->packFakeVar();
+
+        $this->log('编译魔术变量');
+        $this->packMagickVar();
+
+
+        // 生成魔术变量文件
+        $this->buildMagicVarMapFile();
+
+        $this->log('生成索引文件');
+        $this->buildIncludeIndexFile();
         return;
 
 
@@ -186,10 +202,11 @@ class Dist extends Command
         // 不标准的或排除的原样返回
         // 编译的最终将打包到一个文件中
 
-        $this->log('编译配置文件');
-        // 根据pack_config扫描编译
-        // 凡是直接return的都需要编译，比如config，middleware等，其他的原样跳过
-        // 只需要压缩配置文件
+        // $this->log('编译配置文件');
+        // // 之前的步骤能够实现代码压缩，如果要做，可以编程到tp流程中
+        // // 根据pack_config扫描编译
+        // // 凡是直接return的都需要编译，比如config，middleware等，其他的原样跳过
+        // // 只需要压缩配置文件
 
         $this->log('函数库文件');
         // 根据配置function_path加载函数库并且编译成单独的文件
@@ -260,11 +277,7 @@ class Dist extends Command
 
         PathTools::intiDir($lib_php_path);
 
-        $this->buildIncludeIndexFile([
-            $lib_dir_const_file,
-            $lib_php_file,
-            $lib_function_file,
-        ]);
+        $this->buildIncludeIndexFile();
 
 
 
@@ -398,7 +411,6 @@ class Dist extends Command
         return array_merge(
             Config::get('dist.include_path', []),
             Config::get('dist.pack_app.include_path', []),
-            Config::get('dist.pack_config.include_path', []),
         );
     }
 
@@ -407,7 +419,6 @@ class Dist extends Command
         return array_merge(
             Config::get('dist.exclude_path', []),
             Config::get('dist.pack_app.exclude_path', []),
-            Config::get('dist.pack_config.exclude_path', []),
         );
     }
 
@@ -678,6 +689,102 @@ class Dist extends Command
         }
     }
 
+    public function packMagickVar()
+    {
+        $list_files = $this->tempFilesystem->listContents('', true);
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        $pretty_printer = new  PrettyPrinterTools();
+
+        $target_include = $this->getAllInclude();
+
+        $target_exclude = $this->getAllExclude();
+
+
+        foreach ($list_files as  $item_file) {
+            $path = $item_file['path'];
+
+            if (!$this->checkPregMatchPhp($target_include, $item_file) || $this->checkPregMatch($target_exclude, $path, false)) {
+                continue;
+            }
+
+            $this->debug('编译: ' . $path);
+
+            $file_content = $this->tempFilesystem->read($path);
+            $file_stmts = $parser->parse($file_content);
+
+            $magic_var_traverser = new NodeTraverser;
+            $magic_var_traverser->addVisitor(
+                new class($item_file['path'], $this) extends NodeVisitorAbstract
+                {
+                    protected $name;
+                    protected $mainClass;
+                    public function __construct($name, $main_class)
+                    {
+                        $this->name = $name;
+                        $this->mainClass = $main_class;
+                    }
+
+                    public function leaveNode(Node $node)
+                    {
+                        $name = $this->name;
+                        if ($node instanceof Dir) {
+                            // Clean out the function body
+                            $const_key = 'ul' . uniqid();
+
+                            $this->mainClass->magicVarMap[$const_key] = dirname($name);
+                            return new ConstFetch(new Name($const_key));
+                        } else if ($node instanceof File) {
+                            $const_key = 'ul' . uniqid();
+                            $this->mainClass->magicVarMap[$const_key] = $name;
+                            return new ConstFetch(new Name($const_key));
+                        } else if ($node instanceof Line) {
+                            $const_key = 'ul' . uniqid();
+                            $this->mainClass->magicVarMap[$const_key] = $node->getStartLine();
+                            return new ConstFetch(new Name($const_key));
+                        }
+                    }
+                }
+            );
+
+            $file_stmts = $magic_var_traverser->traverse($file_stmts);
+
+            // 生成代码
+            $result_content = $pretty_printer->prettyPrintFile($file_stmts);
+
+            $this->tempFilesystem->put($path, $result_content);
+        }
+    }
+
+    public function buildMagicVarMapFile()
+    {
+        $dir_const_stmts = [];
+
+        foreach ($this->magicVarMap as $const_key => $const_value) {
+
+            $dir_const_stmts[] = new Expression(new FuncCall(
+                new Name('define'),
+                [
+                    new Arg(new String_($const_key)),
+                    new Arg(new Concat(
+                        new Dir(),
+                        new String_('/../' . $const_value)
+                    )),
+                ]
+            ));
+        }
+
+        $prettyPrinter = new  MinifyPrinterTools();
+
+        $dir_const_code = $prettyPrinter->prettyPrintFile($dir_const_stmts);
+
+        $dir_const_path = 'lib/' . uniqid() . '.php';
+
+        $this->includeLibPath['magic_var_map'] = $dir_const_path;
+        $this->tempFilesystem->put($dir_const_path, $dir_const_code);
+    }
+
 
 
     /**
@@ -843,36 +950,7 @@ class Dist extends Command
         file_put_contents($lib_php_path, $newCode);
     }
 
-    /**
-     * 统一声明目录魔术常量
-     *
-     * @param string $lib_dir_const_path
-     * @return void
-     */
-    public function buildDirConstFile($lib_dir_const_path)
-    {
-        $dir_const_stmts = [];
 
-        foreach ($this->constDirList as $const_key => $const_value) {
-
-            $dir_const_stmts[] = new Expression(new FuncCall(
-                new Name('define'),
-                [
-                    new Arg(new String_($const_key)),
-                    new Arg(new Concat(
-                        new Dir(),
-                        new String_('/../' . $const_value)
-                    )),
-                ]
-            ));
-        }
-
-        $prettyPrinter = new  MinifyPrinterTools();
-
-        $dir_const_code = $prettyPrinter->prettyPrintFile($dir_const_stmts);
-
-        file_put_contents($lib_dir_const_path, $dir_const_code);
-    }
 
     /**
      * 打包类库文件
@@ -975,7 +1053,7 @@ class Dist extends Command
      * @param string[] $files
      * @return void
      */
-    public function buildIncludeIndexFile($files)
+    public function buildIncludeIndexFile()
     {
         $file_stmts = [];
 
@@ -987,15 +1065,14 @@ class Dist extends Command
             ]
         ));
 
-        foreach ($files as  $file_name) {
-            $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($file_name)), Include_::TYPE_REQUIRE_ONCE));
-        }
+        $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['magic_var_map'])), Include_::TYPE_REQUIRE_ONCE));
+
         $prettyPrinter = new  MinifyPrinterTools();
 
 
         $newCode = $prettyPrinter->prettyPrintFile($file_stmts);
 
-        file_put_contents($this->distPath . '/lib/index.php', $newCode);
+        $this->tempFilesystem->put('lib/index.php', $newCode);
     }
 
     /**

@@ -29,23 +29,7 @@ return [
         // 应当是thinkphp的其他非类库文件，比如配置、中间件配置、自定义加载类、函数库、路由等
         'exclude_path' => [],
     ],
-    'pack_config' => [
-        // 主要是config、middleware等直接return的文件，会自动判断是否return。自定义的return的php文件也会编译
-        'include_path' => [
-            "/^config/",
-            "/^app\/middleware\.php/",
-            "/^app\/event\.php/",
-            "/^app\/service\.php/",
-            "/^app\/provider\.php/",
-            "/^app\/.*\/config\/.*/",
-            "/^app\/.*\/middleware\.php/",
-            "/^app\/.*\/event\.php/",
-            "/^app\/.*\/service\.php/",
-            "/^app\/.*\/provider\.php/",
-        ],
-        // 基本不需要排除
-        'exclude_path' => [],
-    ],
+    
     'pack_env' => [
         // 0:base64方式处理,1:明文打包,3:不要编译env配置
         'pack_env_mode' => 0
