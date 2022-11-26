@@ -18,6 +18,7 @@ use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
+use think\facade\Config;
 
 class ReadEnvVisitorNodeTools  extends NodeVisitorAbstract
 {
@@ -99,9 +100,14 @@ class ReadEnvVisitorNodeTools  extends NodeVisitorAbstract
             return new Array_($value);
         } else if (is_string($value)) {
 
-            return new FuncCall(new Name('base64_decode'), [
-                new Arg(new String_(base64_encode($value)))
-            ]);
+
+            $env_pack_mode = Config::get('dist.pack_env_mode');
+
+            if ($env_pack_mode == 0) {
+                return new FuncCall(new Name('base64_decode'), [
+                    new Arg(new String_(base64_encode($value)))
+                ]);
+            }
 
             return new String_($value);
         } else if (is_integer($value)) {

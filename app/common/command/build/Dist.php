@@ -561,7 +561,7 @@ class Dist extends Command
      */
     public function buildAllAppDir()
     {
-        $list = $this->appFilesystem->listContents('');
+        $list = $this->appFilesystem->listContents('app');
 
         foreach ($list as  $item) {
             if ($item['type'] != 'dir') {

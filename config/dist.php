@@ -29,16 +29,18 @@ return [
         '/config.php/',
         '/^public\/index\.php/',
         '/^public\/router\.php/',
-        
+
         '/^app\/admin\/service\/initAdminData\/*/',
     ],
     // 希望将env打包的文件
-    'pack_env_path'=>[
+    'pack_env_path' => [
         '/^app/',
         '/^config/',
         '/^database/',
         '/^extend/',
         '/^lib/',
         '/^route/',
-    ]
+    ],
+    // 0:base64方式处理,1:明文打包
+    'pack_env_mode' => 1
 ];
