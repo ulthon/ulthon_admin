@@ -1003,14 +1003,20 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                             } else {
 
-                                var querys = '';
-                                if (operat.url.indexOf("?") !== -1) {
-                                    querys = '&'
+                                var fieldParam = operat.field(data, operat);
+
+                                if (typeof fieldParam == 'string') {
+                                    operat.url = fieldParam
                                 } else {
-                                    querys = '?'
+                                    var querys = '';
+                                    if (operat.url.indexOf("?") !== -1) {
+                                        querys = '&'
+                                    } else {
+                                        querys = '?'
+                                    }
+                                    operat.url += querys + $.param(fieldParam)
                                 }
 
-                                operat.url += querys + $.param(operat.field(data, operat))
                             }
 
                             if (admin.checkAuth(operat.auth, elem)) {
