@@ -49,7 +49,13 @@
                 {/foreach}
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限标志</label>
+            <div class="layui-input-block">
+                <input type="text" name="auth_node" class="layui-input" placeholder="请输入权限标志" value="">
+                <tip>明确指定一个权限标志，判断权限时按照该值判断。默认按照菜单链接判断权限。</tip>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">菜单排序</label>
             <div class="layui-input-block">
