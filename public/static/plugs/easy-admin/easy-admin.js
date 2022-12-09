@@ -1200,15 +1200,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         if (val !== '') {
                             formatFilter[key] = val;
 
-                            var elemId = key;
-
-                            if (key.indexOf('[') == 0) {
-                                var keyArr = key.replace('[', '').split(']');
-
-                                elemId = keyArr[0] + '-' + keyArr[1];
-                            }
-
-                            elemId = elemId.replace('.', '-');
+                            var elemId = admin.table.renderSearchFormItemElementId(key)
 
                             var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
@@ -1404,7 +1396,10 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     $.each(dataField, function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
-                            var op = $('#c-' + key).attr('data-search-op');
+
+                            var elemId = admin.table.renderSearchFormItemElementId(key)
+
+                            var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
                         }
@@ -1436,6 +1431,19 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         layer.close(index);
                     });
                 });
+            },
+            renderSearchFormItemElementId(key) {
+                
+                var elemId = key;
+                if (key.indexOf('[') == 0) {
+                    var keyArr = key.replace('[', '').split(']');
+
+                    elemId = keyArr[0] + '-' + keyArr[1];
+                }
+
+                elemId = elemId.replace('.', '-');
+
+                return elemId;
             }
         },
         checkMobile: function () {
