@@ -584,8 +584,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 formHtml += '\t<div class="layui-form-item form-item-time-limit layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '最小值" class="layui-input">\n' +
-                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '最大值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + d.searchValue + '" placeholder="最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + d.searchValue + '" placeholder="最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -594,8 +594,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 formHtml += '\t<div class="layui-form-item form-item-number-limit layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + d.searchValue + '" placeholder="' + d.searchTip + '最小值" class="layui-input">\n' +
-                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + d.searchValue + '" placeholder="' + d.searchTip + '最大值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + d.searchValue + '" placeholder="最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + d.searchValue + '" placeholder="最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;

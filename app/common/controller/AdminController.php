@@ -5,7 +5,6 @@
 namespace app\common\controller;
 
 use app\admin\model\SystemAdmin;
-use app\admin\service\ConfigService;
 use app\BaseController;
 use app\common\constants\AdminConstant;
 use app\common\service\AuthService;
@@ -331,7 +330,7 @@ class AdminController extends BaseController
             'thisControllerJsPath' => "{$thisControllerJsPath}",
             'autoloadJs'           => $autoloadJs,
             'isSuperAdmin'         => $isSuperAdmin,
-            'version'              => env('app_debug') ? time() : ConfigService::getVersion(),
+            'version'              => env('app_debug') ? time() : sysconfig('site', 'site_version')
         ];
 
         View::assign($data);
