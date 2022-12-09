@@ -17,6 +17,7 @@ class ExportTools
         foreach ($fields as $field_key => $field_name) {
             $col_key = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($write_col);
             $sheet->setCellValue($col_key . $write_line, $field_name);
+            $sheet->getColumnDimension($col_key)->setWidth(mb_strlen($field_name) * 3);
 
             $write_col++;
         }
