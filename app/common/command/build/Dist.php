@@ -206,11 +206,11 @@ class Dist extends Command
         $this->log('输出到文件夹');
         $this->outputToDistApp();
 
-        // $this->log('生成TP多应用目录');
-        // $this->buildAllAppDir();
+        $this->log('生成TP多应用目录');
+        $this->buildAllAppDir();
 
-        // $this->log('清理临时目录');
-        // $this->clearTempDir();
+        $this->log('清理临时目录');
+        $this->clearTempDir();
         
         $this->write('编译完成');
     }
