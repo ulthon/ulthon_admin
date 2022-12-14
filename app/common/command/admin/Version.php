@@ -15,19 +15,23 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.21';
+    const VERSION = 'v2.0.22';
 
     const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
-        '优化多处细节,继续提升开发体验',
-        '升级为最新的echart扩展',
-        '后台使用增加基类全局状态',
-        '修改默认头像为中性头像',
-        '优化上传，增加svg扩展',
-        '优化上传，增加设置扩展名分组的用法',
-        '优化上传，增加检测上传代码注入的用法',
-        '增加配置系统默认密码，并修改了表结构',
+        '升级ThinkPHP6.1',
+        '升级第三方flysystem组件',
+        '调整表格重载特性',
+        '完善CURD模板',
+        '修改table.operat.field特性',
+        '清理技术债务',
+        '增加权限菜单的权限标志',
+        '修复导出方法文件名获取方式',
+        '优化时间范围和数字范围的placeholder',
+        '优化版本设置有效性',
+        '优化表格导出按照字段字数设置宽度',
+        '默认允许icon上传',
     ];
 
     protected function configure()
