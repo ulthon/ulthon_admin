@@ -10,5 +10,7 @@ vendor
 runtime
 ul.db
 /app/tools/controller/Install.php
-/build
+/app/common/command/curd/migrate_output.php
+/dist
 /composer.lock
+/public/storage

@@ -1,19 +1,20 @@
 <?php
+
 namespace think\filesystem\driver;
 
-use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use think\filesystem\Driver;
 use Overtrue\Flysystem\Qiniu\QiniuAdapter;
 
 class Qiniu  extends Driver
 {
-    protected function createAdapter(): AdapterInterface
+    protected function createAdapter(): FilesystemAdapter
     {
         return new QiniuAdapter(
-            sysconfig('upload','qnoss_access_key'),
-            sysconfig('upload','qnoss_secret_key'),
-            sysconfig('upload','qnoss_bucket'),
-            sysconfig('upload','qnoss_domain')
+            sysconfig('upload', 'qnoss_access_key'),
+            sysconfig('upload', 'qnoss_secret_key'),
+            sysconfig('upload', 'qnoss_bucket'),
+            sysconfig('upload', 'qnoss_domain')
         );
     }
 
@@ -22,4 +23,3 @@ class Qiniu  extends Driver
         return $this->concatPathToUrl(sysconfig('upload', 'qnoss_domain'), $path);
     }
 }
-

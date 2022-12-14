@@ -34,6 +34,7 @@ class SystemMenu extends Migrator
             ->addColumn(Column::char('title', 100)->setDefault('')->setComment('名称'))
             ->addColumn(Column::char('icon', 100)->setDefault('')->setComment('菜单图标'))
             ->addColumn(Column::char('href', 100)->setDefault('')->setComment('链接'))
+            ->addColumn(Column::char('auth_node', 100)->setDefault('')->setComment('权限标志'))
             ->addColumn(Column::text('params')->setComment('链接参数'))
             ->addColumn(Column::char('target', 20)->setDefault('_self')->setComment('链接打开方式'))
             ->addColumn(Column::integer('sort')->setDefault(0)->setComment('排序'))

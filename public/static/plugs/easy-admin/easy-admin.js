@@ -584,8 +584,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 formHtml += '\t<div class="layui-form-item form-item-time-limit layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '最小值" class="layui-input">\n' +
-                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '最大值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + d.searchValue + '" placeholder="最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + d.searchValue + '" placeholder="最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -594,8 +594,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 formHtml += '\t<div class="layui-form-item form-item-number-limit layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + d.searchValue + '" placeholder="' + d.searchTip + '最小值" class="layui-input">\n' +
-                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + d.searchValue + '" placeholder="' + d.searchTip + '最大值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + d.searchValue + '" placeholder="最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + d.searchValue + '" placeholder="最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -1003,14 +1003,20 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                             } else {
 
-                                var querys = '';
-                                if (operat.url.indexOf("?") !== -1) {
-                                    querys = '&'
+                                var fieldParam = operat.field(data, operat);
+
+                                if (typeof fieldParam == 'string') {
+                                    operat.url = fieldParam
                                 } else {
-                                    querys = '?'
+                                    var querys = '';
+                                    if (operat.url.indexOf("?") !== -1) {
+                                        querys = '&'
+                                    } else {
+                                        querys = '?'
+                                    }
+                                    operat.url += querys + $.param(fieldParam)
                                 }
 
-                                operat.url += querys + $.param(operat.field(data, operat))
                             }
 
                             if (admin.checkAuth(operat.auth, elem)) {
@@ -1194,15 +1200,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         if (val !== '') {
                             formatFilter[key] = val;
 
-                            var elemId = key;
-
-                            if (key.indexOf('[') == 0) {
-                                var keyArr = key.replace('[', '').split(']');
-
-                                elemId = keyArr[0] + '-' + keyArr[1];
-                            }
-
-                            elemId = elemId.replace('.', '-');
+                            var elemId = admin.table.renderSearchFormItemElementId(key)
 
                             var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
@@ -1398,7 +1396,10 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     $.each(dataField, function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
-                            var op = $('#c-' + key).attr('data-search-op');
+
+                            var elemId = admin.table.renderSearchFormItemElementId(key)
+
+                            var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
                         }
@@ -1430,6 +1431,19 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         layer.close(index);
                     });
                 });
+            },
+            renderSearchFormItemElementId(key) {
+                
+                var elemId = key;
+                if (key.indexOf('[') == 0) {
+                    var keyArr = key.replace('[', '').split(']');
+
+                    elemId = keyArr[0] + '-' + keyArr[1];
+                }
+
+                elemId = elemId.replace('.', '-');
+
+                return elemId;
             }
         },
         checkMobile: function () {
@@ -1716,7 +1730,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         admin.msg.success(res.msg, function () {
                             if (endMethod == 'reload-table') {
                                 tableId = tableId || init.table_render_id;
-                                table.reload(tableId);
+                                table.reloadData(tableId);
                             } else if (endMethod == 'refresh-page') {
                                 location.reload();
                             }
