@@ -232,6 +232,13 @@ $ul_system_config = array(
         "sort" => 0,
     ),
     array(
+        "name" => "txcos_appid",
+        "group" => "upload",
+        "value" => "填你的",
+        "remark" => "APPID",
+        "sort" => 0,
+    ),
+    array(
         "name" => "file",
         "group" => "site",
         "value" => "",

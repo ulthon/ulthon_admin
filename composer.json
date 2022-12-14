@@ -27,10 +27,11 @@
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
         "topthink/think-migration": "^3.0",
-        "overtrue/flysystem-qiniu": "*",
-        "xxtime/flysystem-aliyun-oss": "^1.5",
-        "chunpat/flysystem-tencent-cos": "^0.0.1",
-        "doctrine/annotations": "^1.13"
+        "doctrine/annotations": "^1.13",
+        "topthink/think-filesystem": "^2.0",
+        "overtrue/flysystem-qiniu": "^2.0",
+        "overtrue/flysystem-cos": "^4.0",
+        "iidestiny/flysystem-oss": "^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"

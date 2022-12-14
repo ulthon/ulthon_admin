@@ -2,33 +2,38 @@
 
 namespace think\filesystem\driver;;
 
-use League\Flysystem\AdapterInterface;
-use Qcloud\Cos\Client;
+use League\Flysystem\FilesystemAdapter;
 use think\filesystem\Driver;
+use Overtrue\Flysystem\Cos\CosAdapter;
 
 class Txcos extends Driver
 {
-    protected function createAdapter(): AdapterInterface
+    protected function createAdapter(): FilesystemAdapter
     {
+        $appid = sysconfig('upload', 'txcos_appid');
         $secretId = sysconfig('upload', 'txcos_secret_id');
         $secretKey = sysconfig('upload', 'txcos_secret_key');
         $region = sysconfig('upload', 'txcos_region'); //set a default bucket region 设置一个默认的存储桶地域 
-        $cosClient = new Client(
-            array(
-                'region' => $region,
-                'schema' => 'https', //协议头部，默认为http
-                'credentials' => array(
-                    'secretId'  => $secretId,
-                    'secretKey' => $secretKey
-                ),
-                'signHost' => false
-            )
-        );
         $bucket = sysconfig('upload', 'txcos_bucket'); //存储桶名称 格式：BucketName-APPID
 
+        $config = [
+            // 必填，app_id、secret_id、secret_key 
+            // 可在个人秘钥管理页查看：https://console.cloud.tencent.com/capi
+            'app_id' => $appid,
+            'secret_id' => $secretId,
+            'secret_key' => $secretKey,
+            'region' => $region,
+            'bucket' => $bucket,
 
+            // 可选，如果 bucket 为私有访问请打开此项
+            'signed_url' => false,
 
-        $adapter = new \Chunpat\FlysystemTencentCos\Adapter($cosClient, $bucket);
+            // 可选，是否使用 https，默认 false
+            'use_https' => true,
+        ];
+
+        $adapter = new CosAdapter($config);
+
 
         return $adapter;
     }

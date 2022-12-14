@@ -33,13 +33,16 @@ return [
             'visibility' => 'public',
         ],
         'qnoss' => [
-            'type' => 'Qiniu'
+            'type' => 'Qiniu',
+            'visibility' => 'public',
         ],
         'alioss' => [
-            'type' => 'Alioss'
+            'type' => 'Alioss',
+            'visibility' => 'public',
         ],
         'txcos' => [
-            'type' => 'Txcos'
+            'type' => 'Txcos',
+            'visibility' => 'public',
         ],
         // 更多的磁盘配置信息
     ],

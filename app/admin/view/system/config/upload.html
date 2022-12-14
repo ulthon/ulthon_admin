@@ -72,6 +72,13 @@
     </div>
 
     <div class="layui-form-item show-type-item txcos">
+        <label class="layui-form-label required">APPID</label>
+        <div class="layui-input-block">
+            <input type="text" name="txcos_appid" class="layui-input" lay-verify="required" lay-reqtext="请输入APPID" placeholder="请输入APPID" value="{:sysconfig('upload','txcos_appid')}">
+            <tip>开发者访问 COS 服务时拥有的用户维度唯一资源标识，用以标识资源，可在 API 密钥管理 页面获取</tip>
+        </div>
+    </div>
+    <div class="layui-form-item show-type-item txcos">
         <label class="layui-form-label required">公钥信息</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_secret_id" class="layui-input" lay-verify="required" lay-reqtext="请输入公钥信息" placeholder="请输入公钥信息" value="{:sysconfig('upload','txcos_secret_id')}">
