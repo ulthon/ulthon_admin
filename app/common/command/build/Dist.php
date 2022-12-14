@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace app\common\command\build;
 
-use app\commmon\tools\phpparser\PackUseNodeVisitorTools;
 use app\common\tools\PathTools;
 use app\common\tools\phpparser\FindClassNodeVisitorTools;
 use app\common\tools\phpparser\MinifyPrinterTools;
 use app\common\tools\phpparser\NodeFakeVarVisitorTools;
-use app\common\tools\phpparser\NodeVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PhpParser\Node;
@@ -32,7 +30,6 @@ use PhpParser\Node\Stmt\UseUse;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
-use app\common\tools\phpparser\PrettyPrinterTools as Standard;
 use app\common\tools\phpparser\PrettyPrinterTools;
 use app\common\tools\phpparser\ReadEnvVisitorNodeTools;
 use PhpParser\Comment;
@@ -758,8 +755,7 @@ class Dist extends Command
 
     public function buildMainClassFile()
     {
-
-        $prettyPrinter = new  Standard();
+        $prettyPrinter = new PrettyPrinterTools();
         // 根据调用次数排序
         $this->parsePackList();
 
