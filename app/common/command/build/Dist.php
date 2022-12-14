@@ -196,70 +196,40 @@ class Dist extends Command
         // 不标准的或排除的原样返回
         // 编译的最终将打包到一个文件中
         $this->packMainClassFile();
-
         $this->buildMainClassFile();
 
 
 
         $this->log('生成索引文件');
         $this->buildIncludeIndexFile();
-        return;
 
 
-
-
-
-        // $this->log('编译配置文件');
-        // // 之前的步骤能够实现代码压缩，如果要做，可以编程到tp流程中
-        // // 根据pack_config扫描编译
-        // // 凡是直接return的都需要编译，比如config，middleware等，其他的原样跳过
-        // // 只需要压缩配置文件
-
-
-
-        $this->log('编译路由文件');
-        // 根据tp规则编译路由文件
-        // 多个路由合并成一个路由
+        
 
         $this->log('输出到文件夹');
+        $this->outputToDistApp();
 
-        $this->log('生成TP多应用目录');
+        // $this->log('生成TP多应用目录');
+        // $this->buildAllAppDir();
 
-        $this->log('编译完成');
+        // $this->log('清理临时目录');
+        // $this->clearTempDir();
+        
+        $this->write('编译完成');
+    }
 
+    public function outputToDistApp()
+    {
+        $list_file = $this->tempFilesystem->listContents('', true);
 
+        foreach ($list_file as  $item_file) {
 
+            if ($item_file['type'] != 'file') {
+                continue;
+            }
 
-
-
-        $lib_php_file = '/lib.' . uniqid() . '.php';
-        $lib_php_path = $this->distPath . '/lib' . $lib_php_file;
-
-        $this->buildMainClassFile($lib_php_path);
-
-        $lib_function_file = '/lib.' . uniqid() . '.php';
-        $lib_function_path = $this->distPath . '/lib' . $lib_function_file;
-        $this->buildFunctionFile($lib_function_path);
-
-        $this->buildMigrateFile();
-        $this->buildRouteFile();
-
-        $lib_dir_const_file = '/lib.' . uniqid() . '.php';
-        $lib_dir_const_path = $this->distPath . '/lib' . $lib_dir_const_file;
-        $this->buildDirConstFile($lib_dir_const_path);
-
-
-
-        PathTools::intiDir($lib_php_path);
-
-        $this->buildIncludeIndexFile();
-
-
-
-        $this->buildAllAppDir();
-        $this->clearTempDir();
-
-        $output->info('打包完成');
+            $this->distFilesystem->put($item_file['path'], $this->tempFilesystem->read($item_file['path']));
+        }
     }
     public function clearDistDir()
     {
@@ -730,6 +700,40 @@ class Dist extends Command
 
             $this->tempFilesystem->put($path, $result_content);
         }
+    }
+
+        /**
+     * 统一声明目录魔术常量
+     *
+     * @param string $lib_dir_const_path
+     * @return void
+     */
+    public function buildDirConstFile()
+    {
+        $dir_const_stmts = [];
+
+        foreach ($this->constDirList as $const_key => $const_value) {
+
+            $dir_const_stmts[] = new Expression(new FuncCall(
+                new Name('define'),
+                [
+                    new Arg(new String_($const_key)),
+                    new Arg(new Concat(
+                        new Dir(),
+                        new String_('/../' . $const_value)
+                    )),
+                ]
+            ));
+        }
+
+        $prettyPrinter = new  MinifyPrinterTools();
+
+        $dir_const_code = $prettyPrinter->prettyPrintFile($dir_const_stmts);
+
+        $dir_const_path = 'lib/' . uniqid() . '.php';
+
+        $this->includeLibPath['dir_const_file'] = $dir_const_path;
+        $this->tempFilesystem->put($dir_const_path, $dir_const_code);
     }
 
     public function buildMagicVarMapFile()
