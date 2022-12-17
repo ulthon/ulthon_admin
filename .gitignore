@@ -18,3 +18,4 @@ ul.db
 /dist
 /composer.lock
 /public/storage
+/build
