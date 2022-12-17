@@ -201,7 +201,7 @@ class Dist extends Command
         $this->buildIncludeIndexFile();
 
 
-        
+
 
         $this->log('输出到文件夹');
         $this->outputToDistApp();
@@ -211,7 +211,7 @@ class Dist extends Command
 
         $this->log('清理临时目录');
         $this->clearTempDir();
-        
+
         $this->write('编译完成');
     }
 
@@ -875,10 +875,16 @@ class Dist extends Command
                 new Arg(new String_('1'))
             ]
         ));
+        $include_path = [];
 
-        $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['magic_var_map'])), Include_::TYPE_REQUIRE_ONCE));
-        $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['function_lib_file'])), Include_::TYPE_REQUIRE_ONCE));
-        $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($this->includeLibPath['main_class_file'])), Include_::TYPE_REQUIRE_ONCE));
+        $include_path[] = $this->includeLibPath['magic_var_map'];
+        $include_path[] = $this->includeLibPath['function_lib_file'];
+        $include_path[] = $this->includeLibPath['main_class_file'];
+
+        foreach ($include_path as  $path) {
+            $_path = substr($path, 3);
+            $file_stmts[] = new Expression(new Include_(new Concat(new Dir, new String_($_path)), Include_::TYPE_REQUIRE_ONCE));
+        }
 
         $prettyPrinter = new  MinifyPrinterTools();
 
@@ -991,7 +997,7 @@ class Dist extends Command
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
         $stmts = $parser->parse($content);
-        
+
         try {
             $this->checkStmts($stmts, $name);
         } catch (\Throwable $th) {
@@ -1045,7 +1051,4 @@ class Dist extends Command
 
         return null;
     }
-
-
-
 }
