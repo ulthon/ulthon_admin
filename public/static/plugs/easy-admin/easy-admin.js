@@ -1433,7 +1433,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 });
             },
             renderSearchFormItemElementId(key) {
-                
+
                 var elemId = key;
                 if (key.indexOf('[') == 0) {
                     var keyArr = key.replace('[', '').split(']');
@@ -1820,9 +1820,13 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 parent.location.reload();
                 return false;
             },
-            refreshTable: function (tableName) {
+            refreshTable: function (tableName, mode) {
                 tableName = tableName || 'currentTableRenderId';
-                table.reloadData(tableName);
+                if (mode == 'table') {
+                    table.reload(tableName);
+                } else {
+                    table.reloadData(tableName);
+                }
             },
             formRequired: function () {
                 var verifyList = document.querySelectorAll("[lay-verify]");
