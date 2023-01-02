@@ -999,8 +999,15 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 operat.title = data[operat.extra] + ' - ' + operat.title;
                             }
 
+                            if (typeof operat.url == 'function') {
+                                operat.url = operat.url(data, operat);
+                            }
+
+                            
                             if (typeof operat.field != 'function') {
-                                operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
+                                if(!admin.empty(operat.field)){
+                                    operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
+                                }
                             } else {
 
                                 var fieldParam = operat.field(data, operat);
