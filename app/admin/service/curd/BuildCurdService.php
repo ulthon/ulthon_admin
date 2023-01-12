@@ -4,6 +4,7 @@
 namespace app\admin\service\curd;
 
 use app\admin\service\curd\exceptions\TableException;
+use Phinx\Db\Adapter\AdapterFactory;
 use think\exception\FileException;
 use think\facade\Db;
 use think\helper\Str;
@@ -226,17 +227,44 @@ class BuildCurdService
      */
     protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city', 'tag'];
 
+
+    protected $dbConfig;
+
+    protected $dbMigrate;
+
     /**
      * 初始化
      * BuildCurd constructor.
      */
     public function __construct()
     {
-        $this->tablePrefix = config('database.connections.mysql.prefix');
-        $this->dbName = config('database.connections.mysql.database');
+        $default_conn = config('database.default');
+        $this->tablePrefix = config("database.connections.{$default_conn}.prefix");
+        $this->dbName = config("database.connections.{$default_conn}.database");
         $this->dir = __DIR__;
         $this->rootDir = root_path();
-        return $this;
+
+        $this->dbConfig = [
+            'adapter' => config("database.connections.{$default_conn}.type"),
+            'host' => config("database.connections.{$default_conn}.hostname"),
+            'name' => config("database.connections.{$default_conn}.database"),
+            'user' => config("database.connections.{$default_conn}.username"),
+            'pass' => config("database.connections.{$default_conn}.password"),
+            'port' => config("database.connections.{$default_conn}.hostport"),
+            'charset' => config("database.connections.{$default_conn}.charset"),
+            'table_prefix' => config("database.connections.{$default_conn}.prefix"),
+        ];
+
+        $this->dbConfig['default_migration_table'] = $this->dbConfig['table_prefix'] . config('database.migration_table', 'migrations');
+        $adapter = AdapterFactory::instance()->getAdapter($this->dbConfig['adapter'], $this->dbConfig);
+
+        if ($adapter->hasOption('table_prefix') || $adapter->hasOption('table_suffix')) {
+            $adapter = AdapterFactory::instance()->getWrapper('prefix', $adapter);
+        }
+
+        $this->dbMigrate = $adapter;
+
+
     }
 
     public function getTableColumns()
@@ -265,13 +293,14 @@ class BuildCurdService
 
             // 获取表列注释
             $colums = Db::query("SHOW FULL COLUMNS FROM {$this->tablePrefix}{$this->table}");
+            
             foreach ($colums as $vo) {
 
                 $colum = [
-                    'type'     => $vo['Type'],
-                    'comment'  => !empty($vo['Comment']) ? $vo['Comment'] : $vo['Field'],
+                    'type' => $vo['Type'],
+                    'comment' => !empty($vo['Comment']) ? $vo['Comment'] : $vo['Field'],
                     'required' => $vo['Null'] == "NO" ? true : false,
-                    'default'  => $vo['Default'],
+                    'default' => $vo['Default'],
                 ];
 
                 // 格式化列数据
@@ -359,7 +388,7 @@ class BuildCurdService
                     continue;
                 }
                 $colum = [
-                    'type'    => $vo['Type'],
+                    'type' => $vo['Type'],
                     'comment' => $vo['Comment'],
                     'default' => $vo['Default'],
                 ];
@@ -377,13 +406,13 @@ class BuildCurdService
             $modelName = array_pop($modelArray);
 
             $relation = [
-                'modelFilename'   => $modelFilename,
-                'modelName'       => $modelName,
-                'foreignKey'      => $foreignKey,
-                'primaryKey'      => $primaryKey,
+                'modelFilename' => $modelFilename,
+                'modelName' => $modelName,
+                'foreignKey' => $foreignKey,
+                'primaryKey' => $primaryKey,
                 'bindSelectField' => $bindSelectField,
-                'delete'          => $delete,
-                'tableColumns'    => $formatColums,
+                'delete' => $delete,
+                'tableColumns' => $formatColums,
             ];
             if (!empty($bindSelectField)) {
                 $relationArray = explode('\\', $modelFilename);
@@ -734,7 +763,7 @@ class BuildCurdService
         $selectCode = $this->replaceTemplate(
             $this->getTemplate("model{$this->DS}select"),
             [
-                'name'   => $name,
+                'name' => $name,
                 'values' => $values,
             ]
         );
@@ -753,7 +782,7 @@ class BuildCurdService
         $optionCode = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}option"),
             [
-                'name'   => $name,
+                'name' => $name,
                 'select' => $select,
             ]
         );
@@ -816,10 +845,12 @@ class BuildCurdService
     protected function buildTableView($field, $options, $value)
     {
         $default_define = [
-            'table' => '',            // 必填
+            'table' => '',
+            // 必填
             'type' => 'checkbox',
             'valueField' => 'id',
-            'fieldName' => 'title',        // 必填
+            'fieldName' => 'title',
+            // 必填
             'comment' => $options['comment'],
             'field' => $field,
             'required' => $options['required'],
@@ -859,8 +890,8 @@ class BuildCurdService
         $optionCode = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}radioInput"),
             [
-                'field'  => $field,
-                'name'   => $name,
+                'field' => $field,
+                'name' => $name,
                 'select' => $select,
             ]
         );
@@ -879,8 +910,8 @@ class BuildCurdService
         $optionCode = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}checkboxInput"),
             [
-                'field'  => $field,
-                'name'   => $name,
+                'field' => $field,
+                'name' => $name,
                 'select' => $select,
             ]
         );
@@ -1103,13 +1134,13 @@ class BuildCurdService
         $controllerValue = $this->replaceTemplate(
             $this->getTemplate("controller{$this->DS}controller"),
             [
-                'controllerName'       => $this->controllerName,
-                'controllerNamespace'  => $this->controllerNamespace,
+                'controllerName' => $this->controllerName,
+                'controllerNamespace' => $this->controllerNamespace,
                 'controllerAnnotation' => $this->tableComment,
-                'modelFilename'        => "\app\admin\model\\{$modelFilenameExtend}",
-                'indexMethod'          => $controllerIndexMethod,
-                'exportMethod'          => $controllerExportMethod,
-                'selectList'           => $selectList,
+                'modelFilename' => "\app\admin\model\\{$modelFilenameExtend}",
+                'indexMethod' => $controllerIndexMethod,
+                'exportMethod' => $controllerExportMethod,
+                'selectList' => $selectList,
             ]
         );
         $this->fileList[$controllerFile] = $controllerValue;
@@ -1134,9 +1165,9 @@ class BuildCurdService
                     $this->getTemplate("model{$this->DS}relation"),
                     [
                         'relationMethod' => $relation,
-                        'relationModel'  => "\app\admin\model\\{$val['modelFilename']}",
-                        'foreignKey'     => $val['foreignKey'],
-                        'primaryKey'     => $val['primaryKey'],
+                        'relationModel' => "\app\admin\model\\{$val['modelFilename']}",
+                        'foreignKey' => $val['foreignKey'],
+                        'primaryKey' => $val['primaryKey'],
                     ]
                 );
                 $relationList .= $relationCode;
@@ -1161,12 +1192,12 @@ class BuildCurdService
         $modelValue = $this->replaceTemplate(
             $this->getTemplate("model{$this->DS}model"),
             [
-                'modelName'      => $this->modelName,
+                'modelName' => $this->modelName,
                 'modelNamespace' => "app\admin\model{$extendNamespace}",
-                'table'          => $this->table,
-                'deleteTime'     => $this->delete ? '"delete_time"' : 'false',
-                'relationList'   => $relationList,
-                'selectList'     => $selectList,
+                'table' => $this->table,
+                'deleteTime' => $this->delete ? '"delete_time"' : 'false',
+                'relationList' => $relationList,
+                'selectList' => $selectList,
             ]
         );
         $this->fileList[$modelFile] = $modelValue;
@@ -1194,12 +1225,12 @@ class BuildCurdService
             $relationModelValue = $this->replaceTemplate(
                 $this->getTemplate("model{$this->DS}model"),
                 [
-                    'modelName'      => $val['modelName'],
+                    'modelName' => $val['modelName'],
                     'modelNamespace' => "app\admin\model{$extendNamespace}",
-                    'table'          => $key,
-                    'deleteTime'     => $val['delete'] ? '"delete_time"' : 'false',
-                    'relationList'   => '',
-                    'selectList'     => '',
+                    'table' => $key,
+                    'deleteTime' => $val['delete'] ? '"delete_time"' : 'false',
+                    'relationList' => '',
+                    'selectList' => '',
                 ]
             );
             $this->fileList[$relationModelFile] = $relationModelValue;
@@ -1302,12 +1333,12 @@ class BuildCurdService
             $addFormList .= $this->replaceTemplate(
                 $this->getTemplate($templateFile),
                 [
-                    'comment'  => $val['comment'],
-                    'field'    => $field,
+                    'comment' => $val['comment'],
+                    'field' => $field,
                     'required' => $this->buildRequiredHtml($val['required']),
-                    'required_text'    => $val['required'] ? '1' : '',
-                    'value'    => $val['default'],
-                    'define'   => $define,
+                    'required_text' => $val['required'] ? '1' : '',
+                    'value' => $val['default'],
+                    'define' => $define,
                 ]
             );
         }
@@ -1400,12 +1431,12 @@ class BuildCurdService
             $editFormList .= $this->replaceTemplate(
                 $this->getTemplate($templateFile),
                 [
-                    'comment'  => $val['comment'],
-                    'field'    => $field,
+                    'comment' => $val['comment'],
+                    'field' => $field,
                     'required' => $this->buildRequiredHtml($val['required']),
-                    'required_text'    => $val['required'] ? '1' : '',
-                    'value'    => $value,
-                    'define'   => $define,
+                    'required_text' => $val['required'] ? '1' : '',
+                    'value' => $value,
+                    'define' => $define,
                 ]
             );
         }
@@ -1508,7 +1539,7 @@ class BuildCurdService
             $this->getTemplate("static{$this->DS}js"),
             [
                 'controllerUrl' => $this->controllerUrl,
-                'indexCols'     => $indexCols,
+                'indexCols' => $indexCols,
             ]
         );
         $this->fileList[$jsFile] = $jsValue;
