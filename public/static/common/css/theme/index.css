@@ -87,6 +87,9 @@
   text-shadow: rgb(126, 252, 246) 0px 0px 1px;
   background-color: rgb(126, 252, 246);
 }
+.elem-style-sicfi .layui-btn.layui-btn-lg, .elem-style-win7 .layui-layer-easy .layui-layer-btn .elem-style-sicfi a.layui-btn-lg, .elem-style-nes .layui-layer-easy .layui-layer-btn .elem-style-sicfi a.layui-btn-lg, .elem-style-sicfi .elem-style-nes .layuimini-container .layui-table-tool .layui-btn-lg.layui-inline[lay-event], .elem-style-nes .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-lg.layui-inline[lay-event], .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-btn-lg.layui-nav-item, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-btn-lg.layui-nav-item, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li.layui-btn-lg, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li.layui-btn-lg, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span.layui-btn-lg, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span.layui-btn-lg, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span.layui-btn-lg, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span.layui-btn-lg, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-btn-lg.layui-inline[lay-event], .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-btn-lg.layui-inline[lay-event], .elem-style-sicfi .layui-layer-easy .layui-layer-btn a.layui-btn-lg {
+  padding-right: 25px;
+}
 .elem-style-sicfi .layui-btn::before, .elem-style-sicfi .elem-style-win7 .layui-layer-easy .layui-layer-btn a::before, .elem-style-win7 .layui-layer-easy .layui-layer-btn .elem-style-sicfi a::before, .elem-style-sicfi .elem-style-nes .layui-layer-easy .layui-layer-btn a::before, .elem-style-nes .layui-layer-easy .layui-layer-btn .elem-style-sicfi a::before, .elem-style-sicfi .elem-style-nes .layuimini-container .layui-table-tool .layui-inline[lay-event]::before, .elem-style-nes .layuimini-container .layui-table-tool .elem-style-sicfi .layui-inline[lay-event]::before, .elem-style-sicfi .elem-style-gtk .layuimini-header-menu > li.layui-nav-item::before, .elem-style-gtk .elem-style-sicfi .layuimini-header-menu > li.layui-nav-item::before, .elem-style-sicfi .elem-style-gtk .layui-tab-brief > .layui-tab-title li::before, .elem-style-gtk .layui-tab-brief > .layui-tab-title .elem-style-sicfi li::before, .elem-style-sicfi .elem-style-gtk .layui-laydate-footer span::before, .elem-style-gtk .layui-laydate-footer .elem-style-sicfi span::before, .elem-style-sicfi .elem-style-gtk .laydate-footer-btns span::before, .elem-style-gtk .laydate-footer-btns .elem-style-sicfi span::before, .elem-style-sicfi .elem-style-gtk .layuimini-container .layui-table-tool .layui-inline[lay-event]::before, .elem-style-gtk .layuimini-container .layui-table-tool .elem-style-sicfi .layui-inline[lay-event]::before, .elem-style-sicfi .layui-layer-easy .layui-layer-btn a::before {
   content: "";
   display: block;
@@ -335,16 +338,34 @@
   background-color: rgba(62, 251, 251, 0.05);
   color: rgb(126, 252, 246);
 }
-.elem-style-sicfi .layuimini-container .layui-form-select dl dd.layui-this {
-  background-color: rgb(126, 252, 246) !important;
-  color: rgb(2, 17, 20);
-}
 .elem-style-sicfi .layuimini-container .table-search-fieldset {
   color: rgb(126, 252, 246);
   border-color: rgb(6, 216, 215);
 }
-.elem-style-sicfi .layui-form-select dl {
+.elem-style-sicfi .layui-form-select dl,
+.elem-style-sicfi .layui-form-autocomplete dl {
+  color: rgb(126, 252, 246);
+  background-color: rgb(2, 17, 20);
+  border-color: rgb(6, 216, 215);
+}
+.elem-style-sicfi .layui-form-select dl dd.layui-this,
+.elem-style-sicfi .layui-form-autocomplete dl dd.layui-this {
+  background-color: rgb(126, 252, 246) !important;
   color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-form-select dl dd:hover,
+.elem-style-sicfi .layui-form-autocomplete dl dd:hover {
+  background-color: rgb(6, 216, 215) !important;
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-iconpicker-item,
+.elem-style-sicfi .layui-iconpicker-item:hover {
+  border-color: rgb(6, 216, 215) !important;
+  color: rgb(2, 17, 20);
+}
+.elem-style-sicfi .layui-iconpicker-item .layui-iconpicker-icon:hover,
+.elem-style-sicfi .layui-iconpicker-item:hover .layui-iconpicker-icon:hover {
+  border-color: rgb(6, 216, 215) !important;
 }
 .elem-style-sicfi .layui-nav-child {
   background-color: rgb(2, 17, 20);
@@ -420,7 +441,6 @@
 .elem-style-sicfi .layui-text {
   color: rgb(126, 252, 246);
 }
-
 .elem-style-sicfi .layuimini-qiuck-module {
   cursor: pointer;
 }

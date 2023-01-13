@@ -37,6 +37,12 @@ $green-color :rgb(0, 255, 0);
 $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
 
 .layui-btn {
+
+    &.layui-btn-lg {
+
+        padding-right: 25px;
+    }
+
     clip-path       : $box-shape;
     padding-right   : 10px;
     position        : relative;
@@ -374,20 +380,44 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     color           : $main-color;
 }
 
-.layuimini-container .layui-form-select dl dd.layui-this {
-    background-color: $main-color !important;
-    color           : $black-color;
-}
-
 .layuimini-container .table-search-fieldset {
     color       : $main-color;
     border-color: $less-main-color;
 
 }
 
-.layui-form-select dl {
-    color: $black-color;
+.layui-form-select,
+.layui-form-autocomplete {
+    dl {
+
+        color           : $main-color;
+        background-color: $black-color;
+        border-color    : $less-main-color;
+
+        dd {
+            &.layui-this {
+                background-color: $main-color !important;
+                color           : $black-color;
+            }
+
+            &:hover {
+                background-color: $less-main-color !important;
+                color           : $black-color;
+            }
+        }
+    }
 }
+
+.layui-iconpicker-item,
+.layui-iconpicker-item:hover {
+    border-color: $less-main-color !important;
+    color       : $black-color;
+
+    .layui-iconpicker-icon:hover {
+        border-color: $less-main-color !important;
+    }
+}
+
 
 .layui-nav-child {
     background-color: $black-color;
