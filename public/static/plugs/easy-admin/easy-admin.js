@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'miniTab', 'clipboardjs'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput, miniTab, ClipboardJS) {
+define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'propertyInput', 'miniTab', 'clipboardjs'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput, propertyInput, miniTab, ClipboardJS) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -1003,9 +1003,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 operat.url = operat.url(data, operat);
                             }
 
-                            
+
                             if (typeof operat.field != 'function') {
-                                if(!admin.empty(operat.field)){
+                                if (!admin.empty(operat.field)) {
                                     operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 }
                             } else {
@@ -1537,6 +1537,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
             // 监听标签输入控件生成
             admin.api.tagInput();
+            // 监听属性输入控件生成
+            admin.api.propertyInput();
 
             // 监听点击复制
             admin.api.copyText();
@@ -2254,6 +2256,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 $.each(list, function (i, v) {
                     var data = $(v).data()
                     tagInput.render(v, data, admin);
+                });
+
+            },
+            propertyInput() {
+                var list = document.querySelectorAll('[data-toggle="property-input"]');
+                $.each(list, function (i, v) {
+                    var data = $(v).data()
+                    propertyInput.render(v, data, admin);
                 });
 
             },

@@ -3,6 +3,7 @@
 public/static/common/css/theme/*.scss
 public/static/plugs/lay-module/tableData/tableData.scss
 public/static/plugs/lay-module/tagInput/tagInput.scss
+public/static/plugs/lay-module/propertyInput/propertyInput.scss
 ```
 
 
@@ -29,7 +30,8 @@ vscode中liveSassCompiler的配置:
     "liveSassCompile.settings.includeItems": [
         "/public/static/common/css/theme/*.scss",
         "/public/static/plugs/lay-module/tableData/tableData.scss",
-        "/public/static/plugs/lay-module/tagInput/tagInput.scss"
+        "/public/static/plugs/lay-module/tagInput/tagInput.scss",
+        "/public/static/plugs/lay-module/propertyInput/propertyInput.scss"
     ]
 }
 ```

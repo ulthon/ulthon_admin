@@ -67,6 +67,12 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">属性</label>
+            <div class="layui-input-block">
+                <div data-toggle="property-input" data-value-field="id" data-name="property" data-value="{$row.property|raw|default=''}"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">商品描述</label>
             <div class="layui-input-block">
                 <textarea name="describe" rows="20" class="layui-textarea editor" placeholder="请输入商品描述">{$row.describe|raw|default=''}</textarea>
