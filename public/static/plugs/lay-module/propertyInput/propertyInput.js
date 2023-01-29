@@ -33,6 +33,7 @@ define(['jquery', 'vue'], function ($, Vue) {
 
         var options = $.extend(defaultOption, data);
 
+        options.value = $.trim(options.value)
 
 
         app = new Vue({
@@ -62,6 +63,9 @@ define(['jquery', 'vue'], function ($, Vue) {
 
             created() {
                 if (this.setting.value) {
+                    if(typeof this.setting.value === 'string'){
+                        this.setting.value = JSON.parse(this.setting.value);
+                    }
                     this.listItem = this.setting.value;
                     this.value = this.setting.value;
                 }
