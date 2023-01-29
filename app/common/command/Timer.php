@@ -20,6 +20,8 @@ class Timer extends Command
     {
         // 指令配置
         $this->setName('timer')
+            ->addOption('temp', null, Option::VALUE_NONE)
+            ->addOption('quit', null, Option::VALUE_NONE)
             ->setDescription('内置秒级定时器');
     }
 
@@ -35,6 +37,7 @@ class Timer extends Command
             $output->writeln('请前往后台设置站点域名（site_domain）配置项');
             return;
         }
+        $output->writeln('站点域名：'.$site_domain);
 
         $client = new Client([
             'base_uri' => $site_domain,
@@ -87,8 +90,9 @@ class Timer extends Command
                 }
 
                 if (empty($list_promises)) {
-
-                    $output->writeln(date('Y-m-d H:i:s') . ' no request');
+                    if(!$input->hasOption('quit')){
+                        $output->writeln(date('Y-m-d H:i:s') . ' no request');
+                    }
                 } else {
                     $results = Utils::unwrap($list_promises);
                     $output->writeln(date('Y-m-d H:i:s') . ': request all finished');
@@ -100,7 +104,9 @@ class Timer extends Command
             }
 
 
-
+            if ($input->hasOption('temp')) {
+                break;
+            }
 
 
             sleep(1);
