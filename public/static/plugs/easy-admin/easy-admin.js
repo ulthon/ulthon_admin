@@ -1017,7 +1017,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                 } else {
                                     var querys = '';
                                     if (operat.url.indexOf("?") !== -1) {
-                                        querys = '&'
+                                        if (operat.url.indexOf("?") !== operat.url.length - 1) {
+                                            querys = '&'
+                                        }
                                     } else {
                                         querys = '?'
                                     }
@@ -2264,7 +2266,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 $.each(list, function (i, v) {
                     var data = $(v).data()
                     data.value = $(v).text()
-                    
+
                     propertyInput.render(v, data, admin);
                 });
 
