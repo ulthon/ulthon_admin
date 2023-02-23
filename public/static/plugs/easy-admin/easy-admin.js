@@ -1839,6 +1839,18 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     table.reloadData(tableName);
                 }
             },
+            // var options = {
+            //     url :'system.menu/index?id=1'
+            // }
+            // ea.api.reloadTable('currentTableRenderId',options)
+            reloadTable:function(tableName, options,mode){
+                tableName = tableName || 'currentTableRenderId';
+                if (mode == 'table') {
+                    table.reload(tableName,options);
+                } else {
+                    table.reloadData(tableName,options);
+                }
+            },
             formRequired: function () {
                 var verifyList = document.querySelectorAll("[lay-verify]");
                 if (verifyList.length > 0) {
