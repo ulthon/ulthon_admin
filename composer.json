@@ -31,7 +31,8 @@
         "topthink/think-filesystem": "^2.0",
         "overtrue/flysystem-qiniu": "^2.0",
         "overtrue/flysystem-cos": "^4.0",
-        "iidestiny/flysystem-oss": "^3.0"
+        "iidestiny/flysystem-oss": "^3.0",
+        "nikic/php-parser": "^4.15"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"

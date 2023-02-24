@@ -10,6 +10,7 @@ use app\common\tools\phpparser\MinifyPrinterTools;
 use app\common\tools\phpparser\NodeFakeVarVisitorTools;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Const_;
@@ -94,6 +95,8 @@ class Dist extends Command
      */
     protected $tempFilesystem;
 
+    protected $distPath;
+
     protected function configure()
     {
         // 指令配置
@@ -144,17 +147,17 @@ class Dist extends Command
 
         $this->distPath = $dist_path;
 
-        $app_adapter = new Local($app_path);
+        $app_adapter = new LocalFilesystemAdapter($app_path);
         $app_filesystem = new Filesystem($app_adapter);
         $this->appFilesystem = $app_filesystem;
 
 
-        $dist_adapter = new Local($dist_path);
+        $dist_adapter = new LocalFilesystemAdapter($dist_path);
         $dist_filesystem = new Filesystem($dist_adapter);
         $this->distFilesystem = $dist_filesystem;
 
 
-        $temp_adapter = new Local($temp_path);
+        $temp_adapter = new LocalFilesystemAdapter($temp_path);
         $temp_filesystem = new Filesystem($temp_adapter);
         $this->tempFilesystem = $temp_filesystem;
 
@@ -225,31 +228,31 @@ class Dist extends Command
                 continue;
             }
 
-            $this->distFilesystem->put($item_file['path'], $this->tempFilesystem->read($item_file['path']));
+            $this->distFilesystem->write($item_file['path'], $this->tempFilesystem->read($item_file['path']));
         }
     }
     public function clearDistDir()
     {
 
-        $list_dist = $this->distFilesystem->listContents();
+        $list_dist = $this->distFilesystem->listContents('/');
 
         foreach ($list_dist as  $file_info) {
             if ($file_info['type'] == 'file') {
                 $this->distFilesystem->delete($file_info['path']);
             } else {
-                $this->distFilesystem->deleteDir($file_info['path']);
+                $this->distFilesystem->deleteDirectory($file_info['path']);
             }
         }
     }
     public function clearTempDir()
     {
-        $list_dist = $this->tempFilesystem->listContents();
+        $list_dist = $this->tempFilesystem->listContents('/');
 
         foreach ($list_dist as  $file_info) {
             if ($file_info['type'] == 'file') {
                 $this->tempFilesystem->delete($file_info['path']);
             } else {
-                $this->tempFilesystem->deleteDir($file_info['path']);
+                $this->tempFilesystem->deleteDirectory($file_info['path']);
             }
         }
     }
@@ -271,7 +274,7 @@ class Dist extends Command
                 continue;
             }
 
-            $this->tempFilesystem->put($item_file['path'], $this->appFilesystem->read($item_file['path']));
+            $this->tempFilesystem->write($item_file['path'], $this->appFilesystem->read($item_file['path']));
         }
     }
 
@@ -344,7 +347,7 @@ class Dist extends Command
             // 生成代码
             $result_content = $pretty_printer->prettyPrintFile($file_stmts);
 
-            $this->tempFilesystem->put($path, $result_content);
+            $this->tempFilesystem->write($path, $result_content);
         }
     }
 
@@ -490,7 +493,7 @@ class Dist extends Command
             // 生成代码
             $result_content = $pretty_printer->prettyPrintFile($file_stmts);
 
-            $this->tempFilesystem->put($path, $result_content);
+            $this->tempFilesystem->write($path, $result_content);
         }
     }
 
@@ -515,10 +518,14 @@ class Dist extends Command
         if ($item_file['type'] != 'file') {
             return false;
         }
-        if (!isset($item_file['extension'])) {
+
+        $path_info = pathinfo($item_file['path']);
+
+
+        if (!isset($path_info['extension'])) {
             return false;
         }
-        if ($item_file['extension'] != 'php') {
+        if ($path_info['extension'] != 'php') {
             return false;
         }
 
@@ -571,10 +578,10 @@ class Dist extends Command
             // 生成代码
             $result_content = $pretty_printer->prettyPrintFile($file_stmts);
 
-            $this->tempFilesystem->put($path, $result_content);
+            $this->tempFilesystem->write($path, $result_content);
         }
 
-        if ($this->tempFilesystem->has('.env')) {
+        if ($this->tempFilesystem->fileExists('.env')) {
             $this->tempFilesystem->delete('.env');
         }
     }
@@ -627,7 +634,7 @@ class Dist extends Command
             // 生成代码
             $result_content = $pretty_printer->prettyPrintFile($file_stmts);
 
-            $this->tempFilesystem->put($path, $result_content);
+            $this->tempFilesystem->write($path, $result_content);
         }
     }
 
@@ -695,7 +702,7 @@ class Dist extends Command
             // 生成代码
             $result_content = $pretty_printer->prettyPrintFile($file_stmts);
 
-            $this->tempFilesystem->put($path, $result_content);
+            $this->tempFilesystem->write($path, $result_content);
         }
     }
 
@@ -724,7 +731,7 @@ class Dist extends Command
         $dir_const_path = 'lib/' . uniqid() . '.php';
 
         $this->includeLibPath['magic_var_map'] = $dir_const_path;
-        $this->tempFilesystem->put($dir_const_path, $dir_const_code);
+        $this->tempFilesystem->write($dir_const_path, $dir_const_code);
     }
 
 
@@ -732,18 +739,18 @@ class Dist extends Command
     {
 
 
-        $list_content = $this->tempFilesystem->listContents('', true);
+        $list_content = $this->tempFilesystem->listContents('/', true);
         $target_include = Config::get('dist.pack_app.include_path', []);
         $target_exclude = Config::get('dist.pack_app.exclude_path', []);
         foreach ($list_content as  $file_info) {
 
-
             $file_path = $file_info['path'];
-            $file_content = $this->tempFilesystem->read($file_path);
-
+            
             if (!$this->checkPregMatchPhp($target_include, $file_info) || $this->checkPregMatch($target_exclude, $file_path, false)) {
                 continue;
             }
+            
+            $file_content = $this->tempFilesystem->read($file_path);
 
             $file_content = $this->buildPhpContent($file_content, $file_path);
 
@@ -770,7 +777,7 @@ class Dist extends Command
 
         $lib_class_file = 'lib/' . uniqid() . '.php';
         $this->includeLibPath['main_class_file'] = $lib_class_file;
-        $this->tempFilesystem->put($lib_class_file, $newCode);
+        $this->tempFilesystem->write($lib_class_file, $newCode);
     }
 
 
@@ -833,7 +840,7 @@ class Dist extends Command
 
         $lib_path = 'lib/' . uniqid() . '.php';
         $this->includeLibPath['function_lib_file'] = $lib_path;
-        $this->tempFilesystem->put($lib_path, $function_code);
+        $this->tempFilesystem->write($lib_path, $function_code);
     }
 
     /**
@@ -850,11 +857,11 @@ class Dist extends Command
                 continue;
             }
 
-            if ($this->distFilesystem->has($item['path'])) {
-                continue;
-            }
+            // if ($this->distFilesystem->($item['path'])) {
+            //     continue;
+            // }
 
-            $this->distFilesystem->createDir($item['path']);
+            $this->distFilesystem->createDirectory($item['path']);
         }
     }
 
@@ -891,7 +898,7 @@ class Dist extends Command
 
         $newCode = $prettyPrinter->prettyPrintFile($file_stmts);
 
-        $this->tempFilesystem->put('lib/index.php', $newCode);
+        $this->tempFilesystem->write('lib/index.php', $newCode);
     }
 
     /**
@@ -989,7 +996,7 @@ class Dist extends Command
      *
      * @param string $content
      * @param string $name
-     * @return void
+     * @return void|string
      */
     public function buildPhpContent($content, $name)
     {
