@@ -261,13 +261,19 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                if (options.defaultToolbar !== false) {
-                    options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print'] : ['filter', 'print', {
+                
+                var defaultToolbar = ['filter', 'print'];
+
+                if (options.search) {
+                    defaultToolbar.push({
                         title: '搜索',
                         layEvent: 'TABLE_SEARCH',
                         icon: 'layui-icon-search',
                         extend: 'data-table-id="' + options.id + '"'
-                    }];
+                    })
+                }
+                if (options.defaultToolbar === undefined) {
+                    options.defaultToolbar = defaultToolbar
                 }
 
                 var table2card = function () {
