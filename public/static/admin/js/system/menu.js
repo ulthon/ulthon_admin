@@ -174,7 +174,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
 
             ea.table.listenSwitch({ filter: 'status', url: init.modify_url });
 
-            ea.table.listenEdit(init, 'currentTable', init.table_render_id, true);
+            ea.table.listenEdit(init, 'currentTable', init.table_render_id, false);
 
             ea.listen();
         },
