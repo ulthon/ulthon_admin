@@ -15,12 +15,17 @@ use think\facade\App;
 class Version extends Command
 {
 
-    const VERSION = 'v2.0.24';
+    const VERSION = 'v2.0.25';
 
     const LAYUI_VERSION = '2.7.6';
 
     const COMMENT = [
-        '修复属性输入组件bug',
+        '修复部分css没有正确使用缓存参数',
+        '修复table的field属性的边界情况处理',
+        '新增table的重载方法',
+        '优化table的tabbar设置关闭的情况',
+        '修复菜单管理修改排序的错误效果',
+        '新增curd生成的模型支持注解部分',
     ];
 
     protected function configure()
