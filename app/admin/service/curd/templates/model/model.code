@@ -4,6 +4,9 @@ namespace {{modelNamespace}};
 
 use app\common\model\TimeModel;
 
+/**
+{{doc_content}}
+ */
 class {{modelName}} extends TimeModel
 {
 
