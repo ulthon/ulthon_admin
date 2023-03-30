@@ -75,6 +75,8 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
     }
     init.upload_exts += allExtGroup.join('|')
 
+    extGroup['office'] = [].concat(extGroup['word'], extGroup['excel'], extGroup['ppt'], extGroup['pdf'])
+
     var admin = {
         config: {
             shade: [0.02, '#000'],
