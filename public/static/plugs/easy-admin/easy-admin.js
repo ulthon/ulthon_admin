@@ -76,6 +76,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
     init.upload_exts += allExtGroup.join('|')
 
     extGroup['office'] = [].concat(extGroup['word'], extGroup['excel'], extGroup['ppt'], extGroup['pdf'])
+    extGroup['media'] = [].concat(extGroup['image'], extGroup['music'], extGroup['video'])
 
     var admin = {
         config: {
