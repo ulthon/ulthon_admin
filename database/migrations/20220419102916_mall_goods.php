@@ -49,6 +49,8 @@ class MallGoods extends Migrator
             ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))
             ->addColumn(Column::integer('delete_time')->setLimit(11)->setUnsigned()->setDefault(0))
+            ->addColumn('license', 'string', ['limit' => '100', 'null' => '0', 'comment' => '授权文件 {file}', ])
+            ->addColumn('license_name', 'string', ['limit' => '100', 'null' => '0', 'comment' => '授权文件名称', ])
             ->addIndex('cate_id')
             ->addIndex('delete_time')
             ->create();

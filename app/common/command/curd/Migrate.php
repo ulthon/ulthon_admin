@@ -15,8 +15,8 @@ use think\facade\View;
 
 class Migrate extends Command
 {
-
     protected $table;
+    protected $database;
     protected $tablePrefix;
 
     protected function configure()
@@ -171,7 +171,7 @@ class Migrate extends Command
                     } else {
                         $table_keys[] = $column['Field'];
                     }
-                } else if ($key == 'UNI') {
+                } elseif ($key == 'UNI') {
                     $table_keys_uni[] = $column['Field'];
                 }
             }
@@ -196,11 +196,11 @@ class Migrate extends Command
 
             foreach ($column_item_set['options'] as $key => $option) {
 
-                if(is_array($option)){
+                if(is_array($option)) {
 
-                    $column_item_set['options'][$key] = "[".implode(',',$option)."]";
-                    
-                }else{
+                    $column_item_set['options'][$key] = "[".implode(',', $option)."]";
+
+                } else {
                     $column_item_set['options'][$key] = "'{$option}'";
                 }
             }
