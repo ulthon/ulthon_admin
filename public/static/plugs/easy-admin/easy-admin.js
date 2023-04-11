@@ -263,7 +263,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                
+
                 var defaultToolbar = ['filter', 'print'];
 
                 if (options.search) {
@@ -1859,12 +1859,12 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
             //     url :'system.menu/index?id=1'
             // }
             // ea.api.reloadTable('currentTableRenderId',options)
-            reloadTable:function(tableName, options,mode){
+            reloadTable: function (tableName, options, mode) {
                 tableName = tableName || 'currentTableRenderId';
                 if (mode == 'table') {
-                    table.reload(tableName,options);
+                    table.reload(tableName, options);
                 } else {
-                    table.reloadData(tableName,options);
+                    table.reloadData(tableName, options);
                 }
             },
             formRequired: function () {
@@ -2028,10 +2028,14 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             uploadSign = $(this).attr('data-upload-sign') || '|',
                             uploadAccept = $(this).attr('data-upload-accept') || 'file',
                             uploadAcceptMime = $(this).attr('data-upload-mimetype') || '',
-                            disablePreview = $(this).attr('data-disable-preview') || '',
+                            uploadDisablePreview = $(this).attr('data-upload-disable-preview') || '0',
+                            uploadFilenameField = $(this).attr('data-upload-filename-field') || '',
                             elem = "input[name='" + uploadName + "']",
-                            uploadElem = this;
 
+                            uploadElem = this;
+                        if (uploadFilenameField) {
+                            var elemFilenameField = "input[name='" + uploadFilenameField + "']";
+                        }
                         if (uploadExts == '*') {
                             uploadExts = init.upload_exts;
                         } else if (uploadExts.charAt(0) == '*') {
@@ -2053,11 +2057,22 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             done: function (res) {
                                 if (res.code === 1) {
                                     var url = res.data.url;
+                                    var filename = res.data.original_name;
                                     if (uploadNumber !== 'one') {
                                         var oldUrl = $(elem).val();
                                         if (oldUrl !== '') {
                                             url = oldUrl + uploadSign + url;
                                         }
+                                        if (elemFilenameField) {
+                                            var oldFilename = $(elemFilenameField).val();
+                                            if (oldFilename !== '') {
+                                                filename = oldFilename + uploadSign + filename;
+                                            }
+
+                                        }
+                                    }
+                                    if (elemFilenameField) {
+                                        $(elemFilenameField).val(filename);
                                     }
                                     $(elem).val(url);
                                     $(elem).trigger("input");
@@ -2069,7 +2084,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             }
                         });
 
-                        if (disablePreview == 0) {
+                        if (uploadDisablePreview == 0) {
                             // 监听上传input值变化
                             $(elem).bind("input propertychange", function (event) {
                                 var urlString = $(this).val(),
@@ -2141,6 +2156,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         var uploadName = $(this).attr('data-upload-select'),
                             uploadNumber = $(this).attr('data-upload-number') || 'one',
                             uploadSign = $(this).attr('data-upload-sign') || '|';
+                        uploadFilenameField = $(this).attr('data-upload-filename-field') || '';
+
+                        if (uploadFilenameField) {
+                            var elemFilenameField = "input[name='" + uploadFilenameField + "']";
+                        }
 
                         var selectCheck = uploadNumber === 'one' ? 'radio' : 'checkbox';
                         var elem = "input[name='" + uploadName + "']",
@@ -2166,12 +2186,18 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             },
                             done: function (e, data) {
                                 var urlArray = [];
+                                var filenameArray = [];
                                 $.each(data.data, function (index, val) {
                                     urlArray.push(val.url)
+                                    filenameArray.push(val.original_name)
                                 });
                                 var url = urlArray.join(uploadSign);
+                                var filename = filenameArray.join(uploadSign);
                                 admin.msg.success('选择成功', function () {
                                     $(elem).val(url);
+                                    if (uploadFilenameField) {
+                                        $(elemFilenameField).val(filename);
+                                    }
                                     $(elem).trigger("input");
                                 });
                             }
