@@ -1,10 +1,10 @@
 <?php
 
-
 namespace app\admin\controller\mall;
 
-
+use app\admin\model\MallCate;
 use app\admin\model\MallGoods;
+use app\admin\model\MallTag;
 use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
@@ -18,7 +18,6 @@ use think\App;
  */
 class Goods extends AdminController
 {
-
     use Curd;
 
     protected $relationSearch = true;
@@ -27,6 +26,8 @@ class Goods extends AdminController
     {
         parent::__construct($app);
         $this->model = new MallGoods();
+
+        $this->assign('select_list_cate', MallCate::select(), true);
     }
 
     /**

@@ -892,8 +892,23 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         }
 
                         // 如果未定义则默认使用value
-                        if (val.templet === undefined) {
+                        if (cols[i][index]['templet'] === undefined) {
                             cols[i][index]['templet'] = admin.table.value;
+                        } else {
+                            // 针对特定的模板做数据调整
+
+                            if (cols[i][index]['templet'] == admin.table.list) {
+                                if (val.selectValue) {
+
+                                    var newSelectList = {};
+                                    val.selectList.map(item => {
+                                        newSelectList[item[val.selectValue]] = item[val.selectLabel];
+                                    });
+
+                                    cols[i][index]['selectList'] = newSelectList;
+
+                                }
+                            }
                         }
 
                         if (val.fieldFormat == undefined) {
