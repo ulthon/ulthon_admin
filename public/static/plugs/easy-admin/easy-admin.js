@@ -387,6 +387,12 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     options.height = 'full-85'
                 }
 
+                if (options.init.formFullScreen == true) {
+                    options.init.formFullScreen = 'true'
+                } else {
+                    options.init.formFullScreen = 'false'
+                }
+
                 options.toolbar = admin.table.renderToolbar(options.toolbar, options.elem, options.id, options.init);
 
                 // 判断是否有操作列表权限
@@ -458,7 +464,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                         toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
                     } else if (v === 'add') {
                         if (admin.checkAuth('add', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加" data-full="' + init.formFullScreen + '"><i class="fa fa-plus"></i> 添加</button>\n';
                         }
                     } else if (v === 'delete') {
                         if (admin.checkAuth('delete', elem)) {
@@ -952,7 +958,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                                     title: '编辑信息',
                                     auth: 'edit',
                                     url: option.init.edit_url,
-                                    extend: ""
+                                    extend: option.init.formFullScreen == 'true' ? ' data-full="true"' : ''
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {

@@ -11,6 +11,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         modify_url: 'mall.goods/modify',
         stock_url: 'mall.goods/stock',
         read_url: 'mall.goods/read',
+        formFullScreen: true,
     };
 
     var Controller = {
@@ -19,17 +20,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.table.render({
                 init: init,
                 totalRow: true,
-                toolbar: ['refresh',
-                    [{
-                        text: '添加',
-                        url: init.add_url,
-                        method: 'open',
-                        auth: 'add',
-                        class: 'layui-btn layui-btn-normal layui-btn-sm',
-                        icon: 'fa fa-plus ',
-                        extend: 'data-full="true"',
-                    }],
-                    'delete', 'export'],
                 cols: [[
                     { type: "checkbox" },
                     { field: 'id', width: 80, title: 'ID', totalRowText: '合计：' },
@@ -72,14 +62,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         templet: ea.table.tool,
                         fixed: 'right',
                         operat: [
+                            'edit',
                             [{
-                                text: '编辑',
-                                url: init.edit_url,
-                                method: 'open',
-                                auth: 'edit',
-                                class: 'layui-btn layui-btn-xs layui-btn-success',
-                                extend: 'data-full="true"',
-                            }, {
                                 text: '入库',
                                 url: init.stock_url,
                                 method: 'open',
