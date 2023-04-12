@@ -1,5 +1,5 @@
 <div class="layuimini-container">
-    <form id="app-form" class="layui-form layuimini-form">
+    <form id="app-form" class="layui-form layuimini-form multiple-columns">
 
         <div class="layui-form-item">
             <label class="layui-form-label">商品分类</label>
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item full-line">
             <label class="layui-form-label required">商品LOGO</label>
             <div class="layui-input-block layuimini-upload">
                 <input name="logo" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传分类图片" value="{$row.logo|default=''}">
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item full-line">
             <label class="layui-form-label required">商品图片</label>
             <div class="layui-input-block layuimini-upload">
                 <input name="images" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传商品图片" value="{$row.images|default=''}">
@@ -66,13 +66,13 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item full-line">
             <label class="layui-form-label">属性</label>
             <div class="layui-input-block">
                 <div data-toggle="property-input" data-name="property">{$row.property|raw|ua_htmlspecialchars_decode|default=''}</div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item full-line">
             <label class="layui-form-label">商品描述</label>
             <div class="layui-input-block">
                 <textarea name="describe" rows="20" class="layui-textarea editor" placeholder="请输入商品描述">{$row.describe|raw|default=''}</textarea>
@@ -84,7 +84,7 @@
                 <input type="text" name="license_name" class="layui-input" lay-verify="required" placeholder="请输入授权文件名称" value="{$row.license_name|default=''}">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item full-line">
             <label class="layui-form-label required">授权文件</label>
             <div class="layui-input-block layuimini-upload">
                 <input name="license" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传授权文件" value="{$row.license|default=''}">
@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item layui-form-text">
+        <div class="layui-form-item layui-form-text full-line">
             <label class="layui-form-label">备注信息</label>
             <div class="layui-input-block">
                 <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">{$row.remark|default=''}</textarea>

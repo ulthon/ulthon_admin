@@ -26,12 +26,6 @@ body {
     border-radius   : 5px;
 }
 
-.layuimini-form .layui-form-item {
-    position   : relative;
-    padding    : 0 60px 0 0;
-    line-height: 24px;
-}
-
 .text-center {
     text-align: center;
 }
@@ -39,6 +33,32 @@ body {
 .layuimini-form {
     margin-top: 10px;
 }
+
+.layuimini-form .layui-form-item {
+    position   : relative;
+    padding    : 0 60px 0 0;
+    line-height: 24px;
+}
+
+.layuimini-form.multiple-columns .hr-line {
+    width: 100%;
+}
+
+.layuimini-form.multiple-columns .hr-line+.layui-form-item {
+    width: 100%;
+}
+
+.layuimini-form.multiple-columns .layui-form-item {
+    display: inline-block;
+    width: calc(50% - 62px);
+    flex-shrink: 1;
+}
+
+.layuimini-form.multiple-columns .layui-form-item.full-line {
+    display: block;
+    width: calc(100% - 62px);
+}
+
 
 .easy-bg-white {
     background-color: #ffffff;
