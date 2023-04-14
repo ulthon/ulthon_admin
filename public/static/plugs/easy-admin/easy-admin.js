@@ -1222,10 +1222,6 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     value = undefined;
                 }
 
-                if (defaultValue != undefined && admin.empty(value)) {
-                    value = defaultValue;
-                }
-
                 if (typeof valueParser == 'function') {
                     value = valueParser(value, data);
                 }
