@@ -643,3 +643,7 @@ table样式
 [data-toggle="copy-text"].copy-rendered {
     cursor: pointer;
 }
+
+#layuimini-bg-color {
+    background-color: #fff;
+}

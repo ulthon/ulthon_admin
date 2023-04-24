@@ -559,7 +559,7 @@ define(["jquery"], function ($) {
                     shade: 0.2,
                     anim: 2,
                     shadeClose: true,
-                    id: 'layuiminiBgColor',
+                    id: 'layuimini-bg-color',
                     area: ['340px', clientHeight + 'px'],
                     offset: 'rb',
                     content: html,
