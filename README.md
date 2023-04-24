@@ -1,12 +1,10 @@
 
 
-新版基于`EasyAdmin`打造,`EasyAdmin`是一款优秀的开源后台框架,致谢.
-
 ## 项目介绍
 
 只为`开发人员`服务,只为`需求定制`服务.
 
-基于ThinkPHP6.0和layui的快速开发的后台管理系统。
+基于ThinkPHP6.1和layui2.8的快速开发的后台管理系统。
 
 技术交流QQ群：[207160418](https://jq.qq.com/?_wv=1027&k=TULvsosz) 
 
