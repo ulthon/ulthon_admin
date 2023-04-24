@@ -727,7 +727,6 @@
   padding: 4px 9px;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   color: #2e3436;
   outline-color: rgba(53, 132, 228, 0.5);
@@ -852,7 +851,6 @@
   transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   outline-color: rgba(53, 132, 228, 0.5);
   border: 1px solid #cdc7c2;
@@ -933,7 +931,6 @@
   font-weight: normal;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   border: 0;
   border-top-style: none;
@@ -993,7 +990,6 @@
   padding: 4px 9px;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   color: #2e3436 !important;
   outline-color: rgba(53, 132, 228, 0.5);
@@ -1249,7 +1245,6 @@
   cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC) 14 0, pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   color: #212529;
   background-color: #fff;
@@ -1324,9 +1319,7 @@
   line-height: 24px;
 }
 .elem-style-nes .layui-table img {
-  -ms-interpolation-mode: nearest-neighbor;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: pixelated;
+  image-rendering: pixelated;
 }
 .elem-style-nes .layui-form-checkbox[lay-skin=primary] i {
   position: relative;
@@ -1470,7 +1463,7 @@
   background: linear-gradient(180deg, #eee 45%, #ddd 0, #bbb);
   border: 1.5px solid #888;
   border-radius: 3px;
-  box-shadow: inset 0 -1px 1px hsla(0deg, 0%, 100%, 0.8), inset 0 1px 1px #fff;
+  box-shadow: inset 0 -1px 1px hsla(0, 0%, 100%, 0.8), inset 0 1px 1px #fff;
   box-sizing: border-box;
   color: #222;
 }
@@ -1485,7 +1478,7 @@
   font-size: 12px;
 }
 .elem-style-win7 .layui-layer-title {
-  background: linear-gradient(90deg, hsla(0deg, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0deg, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4 !important;
+  background: linear-gradient(90deg, hsla(0, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4 !important;
   border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 6px 6px 0 0;
   height: 27px;
@@ -1505,7 +1498,7 @@
 .elem-style-win7 .layui-layer-easy .layui-layer-title ~ .layui-layer-setwin > a {
   height: 20px !important;
   line-height: 20px !important;
-  background: linear-gradient(hsla(0deg, 0%, 100%, 0.3), hsla(0deg, 0%, 100%, 0.3) 45%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, hsla(0deg, 0%, 100%, 0.5)) !important;
+  background: linear-gradient(hsla(0, 0%, 100%, 0.3), hsla(0, 0%, 100%, 0.3) 45%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, hsla(0, 0%, 100%, 0.5)) !important;
   border: 0;
   border-radius: 0;
   border-bottom-right-radius: 0px;
@@ -1537,7 +1530,7 @@
 }
 .elem-style-win7 .layui-layer-easy .layui-layer-title ~ .layui-layer-setwin > a.layui-layer-close1:hover {
   filter: contrast(1.3);
-  background-image: linear-gradient(hsla(0deg, 0%, 100%, 0.3), hsla(0deg, 0%, 100%, 0.3) 45%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, hsla(0deg, 0%, 100%, 0.5)) !important;
+  background-image: linear-gradient(hsla(0, 0%, 100%, 0.3), hsla(0, 0%, 100%, 0.3) 45%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, hsla(0, 0%, 100%, 0.5)) !important;
 }
 .elem-style-win7 .layui-layer-dialog {
   border-radius: 20px;
@@ -1554,7 +1547,7 @@
   border-bottom-width: 0;
 }
 .elem-style-win7 .layui-layer:not(.layui-layer-loading)::before {
-  background: linear-gradient(transparent 20%, hsla(0deg, 0%, 100%, 0.7) 40%, transparent 41%), linear-gradient(90deg, hsla(0deg, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0deg, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4;
+  background: linear-gradient(transparent 20%, hsla(0, 0%, 100%, 0.7) 40%, transparent 41%), linear-gradient(90deg, hsla(0, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4;
   border-radius: 6px;
   content: "";
   height: 100%;
@@ -1583,7 +1576,7 @@
   z-index: 0;
 }
 .elem-style-win7 .layui-card::before {
-  background: linear-gradient(transparent 20%, hsla(0deg, 0%, 100%, 0.7) 40%, transparent 41%), linear-gradient(90deg, hsla(0deg, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0deg, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4;
+  background: linear-gradient(transparent 20%, hsla(0, 0%, 100%, 0.7) 40%, transparent 41%), linear-gradient(90deg, hsla(0, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4;
   border-radius: 6px;
   content: "";
   height: 100%;
@@ -1593,7 +1586,7 @@
 }
 .elem-style-win7 .layui-card .layui-card-header {
   align-items: center;
-  background: linear-gradient(90deg, hsla(0deg, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0deg, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4;
+  background: linear-gradient(90deg, hsla(0, 0%, 100%, 0.4), rgba(0, 0, 0, 0.1), hsla(0, 0%, 100%, 0.2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 50%, transparent 53%), #4580c4;
   border-radius: 6px 6px 0 0;
   font: 9pt Segoe UI, sans-serif;
   justify-content: space-between;
@@ -1634,6 +1627,7 @@
 }
 .elem-style-win7 .layui-form-checked[lay-skin=primary] i {
   color: #16638f;
+  border-color: #888;
   display: block;
   font-weight: 700;
   position: absolute;
