@@ -1,25 +1,25 @@
 // 通常用于背景色
-$black-color    :rgb(2, 17, 20);
+$black-color :rgb(2, 17, 20);
 // 通常用于字体颜色
-$main-color     :rgb(126, 252, 246);
+$main-color :rgb(126, 252, 246);
 // 通常用于边框
 $less-main-color:rgb(6, 216, 215);
 
 $plus-main-color:rgb(0, 125, 124);
 
 // 通常用于激活状态,通常跟背景色搭配
-$cover-color  :rgba(62, 251, 251, 0.05);
+$cover-color :rgba(62, 251, 251, 0.05);
 // 更强的激活状态,适合做选项操作时使用
 $active-color :rgba(62, 251, 251, 0.5);
 
 
-$red-color   :rgb(255, 0, 0);
+$red-color :rgb(255, 0, 0);
 $yellow-color:rgb(255, 255, 153);
 $green-color :rgb(0, 255, 0);
 
 & {
     background-color: $black-color;
-    color           : $main-color;
+    color: $main-color;
 }
 
 .layuimini-main {
@@ -43,39 +43,39 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
         padding-right: 25px;
     }
 
-    clip-path       : $box-shape;
-    padding-right   : 10px;
-    position        : relative;
+    clip-path : $box-shape;
+    padding-right : 10px;
+    position : relative;
     background-color: transparent;
-    border          : 1px solid;
-    color           : rgb(126, 252, 246);
-    text-shadow     : rgb(126, 252, 246) 0px 0px 1px;
+    border : 1px solid;
+    color : rgb(126, 252, 246);
+    text-shadow : rgb(126, 252, 246) 0px 0px 1px;
     background-color: rgb(126, 252, 246);
 
 
     &::before {
-        content         : '';
-        display         : block;
-        position        : absolute;
-        z-index         : -1;
-        clip-path       : $box-shape;
-        width           : 100%;
-        height          : 100%;
-        left            : -0.5px;
-        top             : -0.5px;
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: -1;
+        clip-path: $box-shape;
+        width: 100%;
+        height: 100%;
+        left: -0.5px;
+        top: -0.5px;
         background-color: $black-color;
     }
 
     &:hover::after {
-        content         : '';
-        display         : block;
-        position        : absolute;
-        z-index         : -1;
-        clip-path       : $box-shape;
-        width           : 100%;
-        height          : 100%;
-        left            : -0.5px;
-        top             : -0.5px;
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: -1;
+        clip-path: $box-shape;
+        width: 100%;
+        height: 100%;
+        left: -0.5px;
+        top: -0.5px;
         background-color: rgba(126, 252, 246, 0.2);
     }
 
@@ -86,10 +86,10 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     }
 
     &.layui-btn-success {
-        text-shadow     : rgb(0, 255, 0) 0px 0px 1px;
-        color           : rgb(0, 255, 0);
+        text-shadow: rgb(0, 255, 0) 0px 0px 1px;
+        color: rgb(0, 255, 0);
         background-color: rgba(0, 255, 0);
-        border          : unset;
+        border: unset;
 
         &:hover::after {
             background-color: rgba(0, 255, 0, 0.2);
@@ -97,10 +97,10 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     }
 
     &.layui-btn-danger {
-        text-shadow     : rgb(255, 0, 0) 0px 0px 1px;
-        color           : rgb(255, 0, 0);
+        text-shadow: rgb(255, 0, 0) 0px 0px 1px;
+        color: rgb(255, 0, 0);
         background-color: rgb(255, 0, 0);
-        border          : unset;
+        border: unset;
 
         &:hover::after {
             background-color: rgba(255, 0, 0, 0.2);
@@ -108,10 +108,10 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     }
 
     &.layuimini-btn-primary {
-        text-shadow     : rgb(255, 255, 153) 0px 0px 1px;
-        color           : rgb(255, 255, 153);
+        text-shadow: rgb(255, 255, 153) 0px 0px 1px;
+        color: rgb(255, 255, 153);
         background-color: rgb(255, 255, 153);
-        border          : unset;
+        border: unset;
 
         &:hover::after {
             background-color: rgba(255, 255, 153, 0.2);
@@ -124,9 +124,9 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     }
 
     &.layui-btn-normal {
-        color           : $black-color;
+        color: $black-color;
         background-color: $main-color;
-        border          : unset;
+        border: unset;
 
         &::before {
             background-color: $main-color;
@@ -140,7 +140,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-table {
     background: $black-color;
-    color     : $main-color;
+    color: $main-color;
 
 
     tr {
@@ -166,22 +166,22 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .layui-table-tool .layui-inline[lay-event] {
-    color   : $main-color;
-    border  : none;
+    color: $main-color;
+    border: none;
     position: relative;
 
     &::after {
         border-color: $main-color;
         border-width: 1px;
         border-style: solid;
-        clip-path   : $box-shape;
-        position    : absolute;
-        left        : 0;
-        top         : 0;
-        width       : calc(100% - 1px);
-        height      : calc(100% - 1px);
-        content     : '';
-        display     : block;
+        clip-path: $box-shape;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: calc(100% - 1px);
+        height: calc(100% - 1px);
+        content: '';
+        display: block;
     }
 }
 
@@ -209,8 +209,8 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layuimini-color .elem-content li.layui-this {
     background-color: $main-color;
-    color           : $black-color !important;
-    border-color    : $less-main-color;
+    color: $black-color !important;
+    border-color: $less-main-color;
 }
 
 .layuimini-color .more-menu-item {
@@ -227,7 +227,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layuimini-tab .layui-tab-title {
     background-color: $cover-color !important;
-    border-color    : $less-main-color;
+    border-color: $less-main-color;
 
 }
 
@@ -257,7 +257,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layuimini-tab .layui-tab-control>li {
     background-color: $black-color;
-    border-color    : $less-main-color;
+    border-color: $less-main-color;
 }
 
 .layuimini-tab .layui-tab-title li {
@@ -267,16 +267,16 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-flow-more a *,
 .layui-laypage input,
 .layui-table-view select[lay-ignore] {
-    border-color    : $less-main-color;
+    border-color: $less-main-color;
     background-color: $black-color;
-    color           : $main-color;
+    color: $main-color;
 }
 
 .layui-laypage button,
 .layui-laypage input {
-    border-color    : $less-main-color;
+    border-color: $less-main-color;
     background-color: $black-color;
-    color           : $main-color;
+    color: $main-color;
 
 }
 
@@ -301,9 +301,9 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .layui-table-view .layui-form-checkbox.layui-form-checked[lay-skin="primary"] i {
-    border-color    : $main-color;
+    border-color: $main-color;
     background-color: $main-color;
-    color           : $black-color;
+    color: $black-color;
 }
 
 .layui-table-view .layui-form-checkbox[lay-skin="primary"] i {
@@ -315,36 +315,36 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .box-border-line {
-    position      : relative;
-    border        : 1px solid $less-main-color;
-    border-width  : 1px;
+    position: relative;
+    border: 1px solid $less-main-color;
+    border-width: 1px;
     $border-offset: 3px;
 
     &::before {
-        content       : '';
-        position      : absolute;
-        width         : 50px;
-        height        : 20px;
-        transition    : all 0.2s;
-        border        : 1px solid $less-main-color;
-        top           : -$border-offset;
-        left          : -$border-offset;
-        border-right  : none;
-        border-bottom : none;
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 20px;
+        transition: all 0.2s;
+        border: 1px solid $less-main-color;
+        top: -$border-offset;
+        left: -$border-offset;
+        border-right: none;
+        border-bottom: none;
         pointer-events: none;
     }
 
     &::after {
-        content       : "";
-        position      : absolute;
-        width         : 50px;
-        height        : 20px;
-        transition    : all 0.2s;
-        border        : 1px solid $less-main-color;
-        bottom        : -$border-offset;
-        right         : -$border-offset;
-        border-left   : none;
-        border-top    : none;
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 20px;
+        transition: all 0.2s;
+        border: 1px solid $less-main-color;
+        bottom: -$border-offset;
+        right: -$border-offset;
+        border-left: none;
+        border-top: none;
         pointer-events: none;
     }
 
@@ -352,7 +352,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
         &::after,
         &::before {
-            width : calc(100% + $border-offset);
+            width: calc(100% + $border-offset);
             height: calc(100% + $border-offset);
         }
     }
@@ -377,11 +377,11 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-form-pane .layui-form-label {
     background-color: $cover-color;
-    color           : $main-color;
+    color: $main-color;
 }
 
 .layuimini-container .table-search-fieldset {
-    color       : $main-color;
+    color: $main-color;
     border-color: $less-main-color;
 
 }
@@ -390,19 +390,19 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-form-autocomplete {
     dl {
 
-        color           : $main-color;
+        color: $main-color;
         background-color: $black-color;
-        border-color    : $less-main-color;
+        border-color: $less-main-color;
 
         dd {
             &.layui-this {
                 background-color: $main-color !important;
-                color           : $black-color;
+                color: $black-color;
             }
 
             &:hover {
                 background-color: $less-main-color !important;
-                color           : $black-color;
+                color: $black-color;
             }
         }
     }
@@ -411,7 +411,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-iconpicker-item,
 .layui-iconpicker-item:hover {
     border-color: $less-main-color !important;
-    color       : $black-color;
+    color: $black-color;
 
     .layui-iconpicker-icon:hover {
         border-color: $less-main-color !important;
@@ -421,7 +421,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-nav-child {
     background-color: $black-color;
-    color           : $main-color;
+    color: $main-color;
 }
 
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child a {
@@ -467,12 +467,12 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-bg-orange {
     background-color: $yellow-color !important;
-    color           : $black-color !important;
+    color: $black-color !important;
 }
 
 .layui-bg-green {
     background-color: $green-color !important;
-    color           : $black-color !important;
+    color: $black-color !important;
 }
 
 .layui-table-hover {
@@ -481,13 +481,13 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layui-table-grid-down {
     background-color: $black-color;
-    color           : $main-color;
-    border-color    : unset;
+    color: $main-color;
+    border-color: unset;
 }
 
 .layui-table-tips-main {
     background-color: $main-color;
-    color           : $black-color;
+    color: $black-color;
 }
 
 .layui-layout-admin .layui-header .layuimini-tool i {
@@ -505,7 +505,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layui-card {
 
     background-color: $cover-color;
-    border-radius   : 0;
+    border-radius: 0;
 
     @extend .box-border-line;
 
@@ -524,7 +524,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
     a i {
         background-color: $cover-color;
-        color           : $active-color;
+        color: $active-color;
     }
 
     a cite {
@@ -535,7 +535,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     &:hover {
         a i {
             background-color: $active-color;
-            color           : $main-color;
+            color: $main-color;
         }
 
         a cite {
@@ -555,7 +555,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .city-picker-span,
 .main-input {
     background-color: $cover-color;
-    color           : $main-color;
+    color: $main-color;
 }
 
 .city-picker-span>.title>span {
@@ -563,7 +563,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
     &:hover {
         background-color: $main-color;
-        color           : $black-color;
+        color: $black-color;
     }
 }
 
@@ -574,9 +574,9 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .layui-form-checked[lay-skin="primary"] i {
-    border-color    : $main-color !important;
+    border-color: $main-color !important;
     background-color: $main-color;
-    color           : $black-color;
+    color: $black-color;
 }
 
 .layui-input:focus,
@@ -634,18 +634,18 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .layui-layer {
-    border          : 1px solid $main-color;
+    border: 1px solid $main-color;
     background-color: $black-color;
 }
 
 .layui-layer-easy .layui-layer-title {
     background-color: $plus-main-color !important;
-    color           : $main-color !important;
+    color: $main-color !important;
 }
 
 .tableSelect {
     background-color: $black-color !important;
-    border-color    : $less-main-color !important;
+    border-color: $less-main-color !important;
 }
 
 .layui-table td,
@@ -678,21 +678,21 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 }
 
 .hr-line {
-    color           : $main-color;
-    border-color    : $less-main-color;
+    color: $main-color;
+    border-color: $less-main-color;
     background-color: $main-color;
 }
 
 .layui-layer-easy .layui-layer-btn {
     background-color: $black-color;
-    border-top      : 1px solid $less-main-color;
+    border-top: 1px solid $less-main-color;
 }
 
 .layui-layer-easy .layui-layer-btn .layui-layer-btn0 {
     background-color: $main-color;
-    border-color    : $less-main-color;
-    color           : $main-color !important;
-    clip-path       : $box-shape;
+    border-color: $less-main-color;
+    color: $main-color !important;
+    clip-path: $box-shape;
 }
 
 .layui-layer-easy .layui-layer-btn a {
@@ -707,26 +707,26 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     .layui-nav-tree .layui-nav-item {
 
         margin: 5px;
-        width : calc(100% - 10px);
+        width: calc(100% - 10px);
     }
 
     .layui-nav .layui-nav-item {
-        clip-path       : $box-shape;
-        color           : $main-color;
+        clip-path: $box-shape;
+        color: $main-color;
         background-color: $active-color;
 
         &.layui-this a {
             background-color: $main-color !important;
-            color           : $black-color !important;
+            color: $black-color !important;
         }
 
         &.layui-this {
             background-color: $main-color !important;
-            color           : $black-color !important;
+            color: $black-color !important;
 
             span {
                 background-color: $main-color !important;
-                color           : $black-color !important;
+                color: $black-color !important;
 
             }
         }
@@ -771,7 +771,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this,
 .layuimini-menu-left-zoom.layui-nav-tree .layui-nav-child dd.layui-this a {
     background-color: $main-color !important;
-    color           : $black-color !important;
+    color: $black-color !important;
 
     .layui-left-nav {
         color: $black-color !important;
@@ -780,7 +780,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 
 .layui-iconpicker-icon {
-    border-color    : $less-main-color !important;
+    border-color: $less-main-color !important;
     background-color: $less-main-color !important;
 }
 

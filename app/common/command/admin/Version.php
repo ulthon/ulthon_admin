@@ -14,13 +14,14 @@ use think\facade\App;
 
 class Version extends Command
 {
+    public const VERSION = 'v2.0.26';
 
-    const VERSION = 'v2.0.26';
+    public const LAYUI_VERSION = '2.8.1';
 
-    const LAYUI_VERSION = '2.8.0';
-
-    const COMMENT = [
-        '引入并兼容layui2.8.0',
+    public const COMMENT = [
+        '升级layui2.8.1',
+        '新增tableSelect组件支持where条件',
+        '优化特效皮肤的兼容性',
     ];
 
     protected function configure()
