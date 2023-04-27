@@ -687,3 +687,22 @@
         top: 4px;
     }
 }
+
+
+.layui-layer-easy .layui-layer-setwin>span {
+    color: #2e3436;
+}
+
+.layui-layer-easy .layui-layer-setwin>span:after {
+
+    color: #2e3436;
+}
+
+.layui-layer-easy .layui-layer-setwin .layui-layer-max::after,
+.layui-layer-easy .layui-layer-setwin .layui-layer-max::before {
+    border-color: #2e3436;
+}
+
+.layui-layer-easy .layui-layer-setwin .layui-layer-min::before {
+    background-color: #2e3436;
+}
