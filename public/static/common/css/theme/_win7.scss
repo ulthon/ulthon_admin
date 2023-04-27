@@ -54,7 +54,7 @@
     top: 1px;
 }
 
-.layui-layer-easy .layui-layer-title~.layui-layer-setwin>a {
+.layui-layer-easy .layui-layer-title~.layui-layer-setwin>span {
     height: 20px !important;
     line-height: 20px !important;
 
@@ -73,10 +73,6 @@
 
     min-width: 26px;
     text-align: center;
-
-    &::after {
-        position: relative;
-    }
 
     &:hover {
         background: radial-gradient(circle at 50% 100%, #2aceda, transparent 60%), linear-gradient(#a9d2e8 50%, #196c9b 0) !important;
