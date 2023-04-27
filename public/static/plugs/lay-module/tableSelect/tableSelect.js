@@ -200,6 +200,12 @@ layui.define(['table', 'jquery', 'form'], function (exports) {
 
             //关键词搜索
             form.on('submit(tableSelect_btn_search)', function (data) {
+                // 判断 table 中是否存在 where 搜索条件
+                if (opt.table.where) {
+                    $.each(opt.table.where, function (index, item) {
+                        data.field[index] = item
+                    });
+                }
                 tableSelect_table.reload({
                     where: data.field,
                     page: {
