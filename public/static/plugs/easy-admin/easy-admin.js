@@ -2114,7 +2114,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                                         if (extGroup.image.indexOf(ext) != -1) {
                                             // 是图片
-                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="'+uploadFilenameField+'" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
 
                                         } else {
                                             // 不是图片
@@ -2122,7 +2122,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                                             uploadIcon = admin.getExtGroupName(ext);
 
-                                            liHtml += '<li><a title="点击打开文件" target="_blank" href="' + v + '" ><img src="/static/admin/images/upload-icons/' + uploadIcon + '.png"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                            liHtml += '<li><a title="点击打开文件" target="_blank" href="' + v + '" ><img src="/static/admin/images/upload-icons/' + uploadIcon + '.png"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="'+uploadFilenameField+'" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
 
                                         }
 
@@ -2144,19 +2144,29 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     $('body').on('click', '[data-upload-delete]', function () {
                         var uploadName = $(this).attr('data-upload-delete'),
                             deleteUrl = $(this).attr('data-upload-url'),
+                            uploadFilenameField = $(this).attr('data-upload-filename-field'),
                             sign = $(this).attr('data-upload-sign');
                         var confirm = admin.msg.confirm('确定删除？', function () {
                             var elem = "input[name='" + uploadName + "']";
+                            var elemFilenameField = "input[name='" + uploadFilenameField + "']";
                             var currentUrl = $(elem).val();
-                            var url = '';
-                            if (currentUrl !== deleteUrl) {
-                                url = currentUrl.search(deleteUrl) === 0 ? currentUrl.replace(deleteUrl + sign, '') : currentUrl.replace(sign + deleteUrl, '');
-                                $(elem).val(url);
-                                $(elem).trigger("input");
-                            } else {
-                                $(elem).val(url);
-                                $('#bing-' + uploadName).remove();
+                            var currentFilename = $(elemFilenameField).val();
+
+                            var currentUrlList = currentUrl.split(sign);
+                            var deleteIndex = currentUrlList.indexOf(deleteUrl);
+
+                            currentUrlList.splice(deleteIndex, 1)
+                            $(elem).val(currentUrlList.join(sign));
+                            $(elem).trigger("input");
+
+                            if (currentFilename) {
+
+                                var currentFilenameList = currentFilename.split(sign);
+                                currentFilenameList.splice(deleteIndex, 1)
+
+                                $(elemFilenameField).val(currentFilenameList.join(sign));
                             }
+
                             admin.msg.close(confirm);
                         });
                         return false;
