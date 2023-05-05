@@ -69,6 +69,19 @@ php think run
 
 [如何在线上安装数据库](https://doc.ulthon.com/read/augushong/ulthon_admin/online_install.html)
 
+## 为什么要选择ulthon_admin
+
+- 不搞`插件生态`和`应用市场`，没有历史包袱和开发包袱
+- **保持最新技术栈和开发思想**
+- **不断完善开发体验**
+- 你想做一个可以**长远开发**维护的产品或定制项目
+- 你需要一个只要简单的代码开发就能达到一定功能建设水平的项目
+- 你希望有一个完善明了的教程文档
+  - ulthon_admin文档将不断完善
+  - 文档约定详细的目录规范、代码规范、代码规范管理工具配置文件等
+  - 文档展示详细的最佳实践和特性用例用法
+  - 文档包括常见问题和底层介绍
+- 标准的依赖管理，支持根据实际情况精简和定制
 
 ## 站点地址
 
@@ -142,18 +155,6 @@ php think run
 ## 开源协议
 
 木兰开源协议
-
-## 与`EasyAdmin`的关系
-
-`EasyAdmin`是一个优秀和流行的开源后台项目,新版的`ulthon_admin`相当于它的一个分支。
-
-目前ulthon_admin已经重写和新增了大量的底层功能建设。欢迎使用，欢迎star。
-
-`ulthon_admin`将不会向`市场插件`方向发展,只为`开发人员`服务,只为`需求定制`服务.
-
-自然而然的,无论是`ulthon_admin`还是`EasyAdmin`,都会不断优化自己的系统特性,在生态和文档上是互补的.
-
-[easyadmin 项目地址](https://gitee.com/zhongshaofa/easyadmin/)
 
 ## 是什么
 
