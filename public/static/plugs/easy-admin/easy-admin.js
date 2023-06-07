@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'propertyInput', 'miniTab', 'clipboardjs'], function ($, tableSelect, undefined, miniTheme, tableData, citypicker, tagInput, propertyInput, miniTab, ClipboardJS) {
+define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'propertyInput', 'miniTab', 'clipboardjs'], function ($, undefined, miniTheme, tableData, citypicker, tagInput, propertyInput, miniTab, ClipboardJS) {
 
     window.onInitElemStyle = function () {
         miniTheme.renderElemStyle()
@@ -24,7 +24,6 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
         upload = layui.upload,
         element = layui.element,
         laytpl = layui.laytpl,
-        tableSelect = layui.tableSelect,
         util = layui.util;
 
     layer.config({
@@ -476,7 +475,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                             toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
                         }
                     } else if (v === 'selectConfirm') {
-                        toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn select-confirm" data-table-target="' + tableId + '"> 确定选择</button>\n';
+                        toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success select-confirm" data-table-target="' + tableId + '"> 确定选择</button>\n';
                     } else if (typeof v === "object") {
                         $.each(v, function (ii, vv) {
                             vv.class = vv.class || '';
@@ -822,6 +821,9 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     for (index in col) {
                         var val = col[index];
 
+                        if (typeof val.hide == 'function') {
+                            cols[i][index]['hide'] = val.hide(val, cols, init);
+                        }
                         if (val['width'] == undefined && val['minWidth'] == undefined) {
                             var width = null;
                             if (val.title) {
@@ -1153,11 +1155,11 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                 option.filter = option.filter || option.field || null;
                 option.checked = option.checked || 1;
-                option.tips = option.tips || '开|关';
+
 
                 var value = admin.table.returnColumnValue(data);
                 var checked = value === option.checked ? 'checked' : '';
-                return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
+                return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
             },
             price: function (data) {
                 var value = admin.table.returnColumnValue(data);
@@ -2114,7 +2116,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                                         if (extGroup.image.indexOf(ext) != -1) {
                                             // 是图片
-                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="'+uploadFilenameField+'" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="' + uploadFilenameField + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
 
                                         } else {
                                             // 不是图片
@@ -2122,7 +2124,7 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
 
                                             uploadIcon = admin.getExtGroupName(ext);
 
-                                            liHtml += '<li><a title="点击打开文件" target="_blank" href="' + v + '" ><img src="/static/admin/images/upload-icons/' + uploadIcon + '.png"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="'+uploadFilenameField+'" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                            liHtml += '<li><a title="点击打开文件" target="_blank" href="' + v + '" ><img src="/static/admin/images/upload-icons/' + uploadIcon + '.png"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="' + uploadFilenameField + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
 
                                         }
 
@@ -2177,54 +2179,75 @@ define(["jquery", "tableSelect", "ckeditor", 'miniTheme', 'tableData', 'citypick
                     $.each(uploadSelectList, function (i, v) {
                         var uploadName = $(this).attr('data-upload-select'),
                             uploadNumber = $(this).attr('data-upload-number') || 'one',
-                            uploadSign = $(this).attr('data-upload-sign') || '|';
-                        uploadFilenameField = $(this).attr('data-upload-filename-field') || '';
+                            uploadSign = $(this).attr('data-upload-sign') || '|',
+                            uploadFilenameField = $(this).attr('data-upload-filename-field') || '';
 
                         if (uploadFilenameField) {
                             var elemFilenameField = "input[name='" + uploadFilenameField + "']";
+                            var elemFilename = $(elemFilenameField)
                         }
 
                         var selectCheck = uploadNumber === 'one' ? 'radio' : 'checkbox';
-                        var elem = "input[name='" + uploadName + "']",
-                            uploadElem = $(this).attr('id');
+                        var elem = "input[name='" + uploadName + "']";
+                        var width = document.body.clientWidth,
+                            height = document.body.clientHeight;
 
-                        tableSelect.render({
-                            elem: "#" + uploadElem,
-                            checkedKey: 'id',
-                            searchType: 'more',
-                            searchList: [
-                                { searchKey: 'title', searchPlaceholder: '请输入文件名' },
-                            ],
-                            table: {
-                                url: admin.url('ajax/getUploadFiles'),
-                                cols: [[
-                                    { type: selectCheck },
-                                    { field: 'id', title: 'ID' },
-                                    { field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.filePreview },
-                                    { field: 'original_name', width: 150, title: '文件原名', align: "center" },
-                                    { field: 'mime_type', width: 120, title: 'mime类型', align: "center" },
-                                    { field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range' },
-                                ]]
-                            },
-                            done: function (e, data) {
-                                var urlArray = [];
-                                var filenameArray = [];
-                                $.each(data.data, function (index, val) {
-                                    urlArray.push(val.url)
-                                    filenameArray.push(val.original_name)
-                                });
-                                var url = urlArray.join(uploadSign);
-                                var filename = filenameArray.join(uploadSign);
-                                admin.msg.success('选择成功', function () {
-                                    $(elem).val(url);
-                                    if (uploadFilenameField) {
-                                        $(elemFilenameField).val(filename);
+                        if (width >= 800 && height >= 600) {
+                            clienWidth = '800px';
+                            clientHeight = '600px';
+                        } else {
+                            clienWidth = '100%';
+                            clientHeight = '100%';
+                        }
+
+                        $(v).click(function () {
+
+                            layer.open({
+                                title: '选择文件',
+                                type: 2,
+                                area: [clienWidth, clientHeight],
+                                content: admin.url('system.uploadfile/index') + '?select_mode=' + selectCheck,
+                                success(layero, index) {
+                                    window.onTableDataConfirm = function (data) {
+                                        var currentUrl = $(elem).val();
+                                        var urlArray = currentUrl.split(uploadSign);
+                                        if (currentUrl.length == 0 || selectCheck == 'radio') {
+                                            urlArray = [];
+                                        }
+                                        if (uploadFilenameField) {
+                                            var currentFilename = $(elemFilename).val();
+                                            var filenameArray = currentFilename.split(uploadSign);
+                                            if (currentFilename.length == 0 || selectCheck == 'radio') {
+                                                filenameArray = []
+                                            }
+                                        }
+                                        $.each(data, function (index, val) {
+                                            if (urlArray.indexOf(val.url) == -1) {
+                                                urlArray.push(val.url)
+                                            }
+                                            if (uploadFilenameField) {
+                                                if (filenameArray.indexOf(val.original_name) == -1) {
+                                                    filenameArray.push(val.original_name)
+                                                }
+                                            }
+
+                                        });
+                                        var url = urlArray.join(uploadSign);
+
+                                        if (uploadFilenameField) {
+                                            var filename = filenameArray.join(uploadSign);
+                                        }
+                                        $(elem).val(url);
+                                        if (uploadFilenameField) {
+                                            $(elemFilenameField).val(filename);
+                                        }
+                                        $(elem).trigger("input");
+                                        layer.close(index);
+                                        admin.msg.success('选择成功');
                                     }
-                                    $(elem).trigger("input");
-                                });
-                            }
+                                }
+                            })
                         })
-
                     });
 
                 }

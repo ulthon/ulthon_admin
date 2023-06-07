@@ -16,12 +16,13 @@ class Version extends Command
 {
     public const VERSION = 'v2.0.27';
 
-    public const LAYUI_VERSION = '2.8.1';
+    public const LAYUI_VERSION = '2.8.4';
 
     public const COMMENT = [
-        '升级layui2.8.1',
-        '新增tableSelect组件支持where条件',
+        '升级layui2.8.4',
         '优化特效皮肤的兼容性',
+        '优化文件选择组件',
+        '清理tableselect组件和技术债务',
     ];
 
     protected function configure()

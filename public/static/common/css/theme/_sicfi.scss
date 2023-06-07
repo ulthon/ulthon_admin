@@ -282,11 +282,17 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
 
 .layuimini-container .layui-form-switch {
     border-color: $less-main-color !important;
-
     background-color: $black-color !important;
 
 }
 
+.layuimini-container .layui-form-onswitch {
+    background-color: $main-color !important;
+}
+
+.layuimini-container .layui-form-switch.layui-form-onswitch i {
+    background-color: $black-color !important;
+}
 .layuimini-container .layui-laypage .layui-laypage-curr .layui-laypage-em {
     background-color: $main-color !important;
 }
@@ -643,10 +649,7 @@ $box-shape: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%,
     color: $main-color !important;
 }
 
-.tableSelect {
-    background-color: $black-color !important;
-    border-color: $less-main-color !important;
-}
+
 
 .layui-table td,
 .layui-table th,
