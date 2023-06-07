@@ -2104,8 +2104,8 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                 var urlString = $(this).val(),
                                     urlArray = urlString.split(uploadSign),
                                     uploadIcon = $(uploadElem).attr('data-upload-icon') || "file";
-
-                                $('#bing-' + uploadName).remove();
+                                var uploadNameKey = uploadName.replace(/\[/g, "-").replace(/\]/g, "-");
+                                $('#bing-' + uploadNameKey).remove();
                                 if (urlString.length > 0) {
                                     var parant = $(this).parent('div');
                                     var liHtml = '';
@@ -2129,7 +2129,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                         }
 
                                     });
-                                    parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
+                                    parant.after('<ul id="bing-' + uploadNameKey + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
                                 }
 
                             });
