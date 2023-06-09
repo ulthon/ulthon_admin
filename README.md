@@ -2,7 +2,9 @@
 
 ## 项目介绍
 
-只为`开发人员`服务,只为`需求定制`服务.
+为了更好的开发体验。
+
+只为`开发人员`服务,只为`需求定制`服务。
 
 基于ThinkPHP6.1和layui2.8的快速开发的后台管理系统。
 
@@ -102,6 +104,7 @@ php think run
 * 支持移动端表格转卡片
 * 支持多款皮肤
     * 标准
+    * 拟物
     * 原型
     * 科幻
     * GTK
@@ -167,6 +170,9 @@ php think run
 ### 标准
 规规矩矩，简洁大方，稳重不失活泼。
 ![](/public/static/index/images/preview/normal.png)
+### 拟物
+优雅来袭！从现在开始做一个优雅的程序员。
+![](/public/static/index/images/preview/neomorphic.png)
 ### 科幻
 适合夜间使用，适合物联网系统、监控系统、大屏系统等非常规后台使用。
 ![](/public/static/index/images/preview/sifi.png)

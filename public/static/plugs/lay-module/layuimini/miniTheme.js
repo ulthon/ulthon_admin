@@ -483,6 +483,11 @@ define(["jquery"], function ($) {
                     className: 'win7',
                     defaultColorConfig: '12'
                 },
+                {
+                    title: '拟物',
+                    className: 'neomorphic',
+                    
+                },
             ]
             return listElemStyle;
         },

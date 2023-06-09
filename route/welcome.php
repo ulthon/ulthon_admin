@@ -72,37 +72,36 @@ Route::view('/', 'welcome', [
             'name'        => '标准皮肤',
             'description' => '规规矩矩，简洁大方，稳重不失活泼。',
             'preview_image' => '/static/index/images/preview/normal.png',
-            'preview_link' => 'https://doc.ulthon.com/read/augushong/ulthon_admin/63061ab4ab665.html?current_lang_id=15&current_version_id=16',
+        ],
+        [
+            'name'        => '拟物',
+            'description' => '优雅来袭！极简',
+            'preview_image' => '/static/index/images/preview/neomorphic.png',
         ],
         [
             'name'        => '轻科幻',
             'description' => '适合夜间使用，适合物联网系统、监控系统、大屏系统等非常规后台使用。',
             'preview_image' => '/static/index/images/preview/sifi.png',
-            'preview_link' => 'https://doc.ulthon.com/read/augushong/ulthon_admin/63061ab4ab665.html?current_lang_id=15&current_version_id=16',
         ],
         [
             'name'        => 'gnome风',
             'description' => '感受到来自gnome的恐惧了吗？一个“兼容Linux”的后台框架。',
             'preview_image' => '/static/index/images/preview/gtk.png',
-            'preview_link' => 'https://doc.ulthon.com/read/augushong/ulthon_admin/63061ab4ab665.html?current_lang_id=15&current_version_id=16',
         ],
         [
             'name'        => '像素风',
             'description' => '这个系统是不是要插卡才能安装？出BUG的时候，得舔一舔？电脑秒变红白机。',
             'preview_image' => '/static/index/images/preview/nes.png',
-            'preview_link' => 'https://doc.ulthon.com/read/augushong/ulthon_admin/63061ab4ab665.html?current_lang_id=15&current_version_id=16',
         ],
         [
             'name'        => 'Win7',
             'description' => '保证不强制升级。适合在Win7使用。一键开发“原生客户端”。',
             'preview_image' => '/static/index/images/preview/win7.png',
-            'preview_link' => 'https://doc.ulthon.com/read/augushong/ulthon_admin/63061ab4ab665.html?current_lang_id=15&current_version_id=16',
         ],
         [
             'name'        => '原型皮肤',
             'description' => '一键变丑。原型皮肤，以后不用画原型了，用命令行一键生成“高保真”。',
             'preview_image' => '/static/index/images/preview/demo.png',
-            'preview_link' => 'https://doc.ulthon.com/read/augushong/ulthon_admin/63061ab4ab665.html?current_lang_id=15&current_version_id=16',
         ],
     ],
 ]);
