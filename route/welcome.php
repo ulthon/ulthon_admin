@@ -75,7 +75,7 @@ Route::view('/', 'welcome', [
         ],
         [
             'name'        => '拟物',
-            'description' => '优雅来袭！极简',
+            'description' => '优雅来袭！从现在开始做一个优雅的程序员。 ',
             'preview_image' => '/static/index/images/preview/neomorphic.png',
         ],
         [
