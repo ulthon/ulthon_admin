@@ -237,13 +237,16 @@ $main-color:#61677C;
     color: #16b777;
 }
 
-.layui-form-checkbox[lay-skin="primary"] {
-    padding: 13px;
-}
+.layui-tree {
 
-.layui-form-checkbox[lay-skin="primary"]>i {
-    left: 5px;
-    top: 5px
+    .layui-form-checkbox[lay-skin="primary"] {
+        padding: 13px;
+    }
+
+    .layui-form-checkbox[lay-skin="primary"]>i {
+        left: 5px;
+        top: 5px
+    }
 }
 
 .layui-tree-txt {
