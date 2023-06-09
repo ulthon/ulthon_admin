@@ -1986,6 +1986,12 @@
   line-height: 25px;
 }
 
+.elem-style-neomorphic {
+  background-color: #EBECF0;
+}
+.elem-style-neomorphic .layui-layout-admin .layui-header {
+  background-color: #EBECF0 !important;
+}
 .elem-style-neomorphic .layuimini-container .layui-btn-success {
   color: #4bb368;
 }

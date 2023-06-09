@@ -1,5 +1,14 @@
 $main-color:#61677C;
 
+& {
+    background-color: #EBECF0;
+}
+
+.layui-layout-admin .layui-header {
+    background-color: #EBECF0 !important;
+
+}
+
 .layuimini-container .layui-btn-success {
 
     color: #4bb368;
