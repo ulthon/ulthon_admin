@@ -19,10 +19,7 @@ class Version extends Command
     public const LAYUI_VERSION = '2.8.4';
 
     public const COMMENT = [
-        '升级layui2.8.4',
-        '优化特效皮肤的兼容性',
-        '优化文件选择组件',
-        '清理tableselect组件和技术债务',
+        '新增拟物风格特效皮肤',
     ];
 
     protected function configure()
