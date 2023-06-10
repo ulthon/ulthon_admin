@@ -132,10 +132,6 @@ $main-color:#61677C;
     width: calc(100% - 20px);
 }
 
-.layui-nav-child {
-    @extend .layui-btn;
-}
-
 .layuimini-menu-left .layui-nav-itemed>.layui-nav-child {
     background-color: transparent !important;
 }
@@ -280,9 +276,9 @@ $main-color:#61677C;
 }
 
 .layuimini-tab .layui-tab-title {
-    background-color: transparent;
+    background-color: #EBECF0;
 }
 
 .layuimini-tab .layui-tab-control>li {
-    background-color: transparent;
+    background-color: #EBECF0;
 }
