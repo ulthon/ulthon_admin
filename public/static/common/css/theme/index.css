@@ -2159,10 +2159,12 @@
 .elem-style-neomorphic .layui-form-checked > div {
   color: #16b777;
 }
-.elem-style-neomorphic .layui-tree .layui-form-checkbox[lay-skin=primary] {
+.elem-style-neomorphic .layui-tree .layui-form-checkbox[lay-skin=primary],
+.elem-style-neomorphic .laytable-cell-checkbox .layui-form-checkbox[lay-skin=primary] {
   padding: 13px;
 }
-.elem-style-neomorphic .layui-tree .layui-form-checkbox[lay-skin=primary] > i {
+.elem-style-neomorphic .layui-tree .layui-form-checkbox[lay-skin=primary] > i,
+.elem-style-neomorphic .laytable-cell-checkbox .layui-form-checkbox[lay-skin=primary] > i {
   left: 5px;
   top: 5px;
 }
