@@ -2177,6 +2177,12 @@
 .elem-style-neomorphic .layui-table-tips-c {
   text-shadow: 0.5px 0.5px 0 #fff;
 }
+.elem-style-neomorphic .layuimini-tab .layui-tab-title {
+  background-color: transparent;
+}
+.elem-style-neomorphic .layuimini-tab .layui-tab-control > li {
+  background-color: transparent;
+}
 
 @font-face {
   font-family: "ark-pixel";
