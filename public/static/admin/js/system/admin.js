@@ -15,6 +15,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var authList = ea.getDataBrage('auth_list', []);
     var count = ea.getDataBrage('count', 0);
     var tips = ea.getDataBrage('tips', '');
+    var tips = ea.getDataBrage('adminCustomFlag');
 
     console.log(authList);
     console.log(count);

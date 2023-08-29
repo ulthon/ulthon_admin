@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace app\common\controller;
 
 use app\admin\model\SystemAdmin;
@@ -14,23 +12,21 @@ use think\Model;
 use think\Validate;
 
 /**
- * Class AdminController
- * @package app\common\controller
+ * Class AdminController.
  */
 class AdminController extends BaseController
 {
-
     use \app\common\traits\JumpTrait;
 
     /**
-     * 当前模型
+     * 当前模型.
      * @Model
      * @var object
      */
     protected $model;
 
     /**
-     * 字段排序
+     * 字段排序.
      * @var array
      */
     protected $sort = [
@@ -38,7 +34,7 @@ class AdminController extends BaseController
     ];
 
     /**
-     * 允许修改的字段
+     * 允许修改的字段.
      * @var array
      */
     protected $allowModifyFields = [
@@ -51,31 +47,31 @@ class AdminController extends BaseController
     ];
 
     /**
-     * 不导出的字段信息
+     * 不导出的字段信息.
      * @var array
      */
     protected $noExportFields = ['delete_time', 'update_time'];
 
     /**
-     * 下拉选择条件
+     * 下拉选择条件.
      * @var array
      */
     protected $selectWhere = [];
 
     /**
-     * 是否关联查询
+     * 是否关联查询.
      * @var bool
      */
     protected $relationSearch = false;
 
     /**
-     * 模板布局, false取消
+     * 模板布局, false取消.
      * @var string|bool
      */
     protected $layout = 'layout/default';
 
     /**
-     * 是否为演示环境
+     * 是否为演示环境.
      * @var bool
      */
     protected $isDemo = false;
@@ -94,20 +90,20 @@ class AdminController extends BaseController
     protected $batchValidate = false;
 
     /**
-     * 导出文件的名称，支持中文，为空则获取模型名称
+     * 导出文件的名称，支持中文，为空则获取模型名称.
      *
      * @var string
      */
     protected $exportFileName = null;
 
     /**
-     * 当前登陆的管理员
+     * 当前登陆的管理员.
      * @var SystemAdmin
      */
     protected $sessionAdmin;
 
     /**
-     * 初始化方法
+     * 初始化方法.
      */
     protected function initialize()
     {
@@ -137,7 +133,6 @@ class AdminController extends BaseController
      */
     public function assign($name, $value = null, $isAppendToDataBrage = false)
     {
-
         if ($isAppendToDataBrage) {
             $this->dataBrage[$name] = $value;
         }
@@ -146,21 +141,20 @@ class AdminController extends BaseController
     }
 
     /**
-     * 解析和获取模板内容 用于输出
+     * 解析和获取模板内容 用于输出.
      * @param string $template
      * @param array $vars
      * @return mixed
      */
     public function fetch($template = '', $vars = [])
     {
-
         $this->assign('data_brage', json_encode($this->dataBrage));
 
         return $this->app->view->fetch($template, $vars);
     }
 
     /**
-     * 设置dataBrage数据
+     * 设置dataBrage数据.
      *
      * @param string $name
      * @param mixed $value
@@ -174,7 +168,7 @@ class AdminController extends BaseController
     }
 
     /**
-     * 重写验证规则
+     * 重写验证规则.
      * @param array $data
      * @param array|string $validate
      * @param array $message
@@ -184,7 +178,6 @@ class AdminController extends BaseController
     public function validate(array $data, $validate, array $message = [], bool $batch = null)
     {
         try {
-
             $message = array_merge($this->validateMessage, $message);
 
             if (is_null($batch)) {
@@ -200,7 +193,7 @@ class AdminController extends BaseController
                 }
 
                 $this->validateRule->failException(true)->check($data);
-            } else if (is_array($this->validateRule)) {
+            } elseif (is_array($this->validateRule)) {
                 parent::validate($data, $this->validateRule, $message, $batch);
             } else {
                 parent::validate($data, $validate, $message, $batch);
@@ -208,11 +201,12 @@ class AdminController extends BaseController
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
+
         return true;
     }
 
     /**
-     * 构建请求参数
+     * 构建请求参数.
      * @param array $excludeFields 忽略构建搜索的字段
      * @return array
      */
@@ -290,11 +284,12 @@ class AdminController extends BaseController
                     $where[] = [$key, $op, "%{$val}"];
             }
         }
+
         return [$page, $limit, $where, $excludes, $request_options, $group];
     }
 
     /**
-     * 下拉选择列表
+     * 下拉选择列表.
      * @return \think\response\Json
      */
     public function selectList()
@@ -308,7 +303,7 @@ class AdminController extends BaseController
     }
 
     /**
-     * 初始化视图参数
+     * 初始化视图参数.
      */
     private function viewInit()
     {
@@ -323,33 +318,38 @@ class AdminController extends BaseController
         $adminModuleName = config('app.admin_alias_name');
         $isSuperAdmin = session('admin.id') == AdminConstant::SUPER_ADMIN_ID ? true : false;
         $data = [
-            'adminModuleName'      => $adminModuleName,
-            'thisController'       => parse_name($thisController),
-            'thisAction'           => $thisAction,
-            'thisRequest'          => parse_name("{$thisModule}/{$thisController}/{$thisAction}"),
+            'adminModuleName' => $adminModuleName,
+            'thisController' => parse_name($thisController),
+            'thisAction' => $thisAction,
+            'thisRequest' => parse_name("{$thisModule}/{$thisController}/{$thisAction}"),
             'thisControllerJsPath' => "{$thisControllerJsPath}",
-            'autoloadJs'           => $autoloadJs,
-            'isSuperAdmin'         => $isSuperAdmin,
-            'version'              => env('app_debug') ? time() : sysconfig('site', 'site_version')
+            'autoloadJs' => $autoloadJs,
+            'isSuperAdmin' => $isSuperAdmin,
+            'version' => env('app_debug') ? time() : sysconfig('site', 'site_version'),
         ];
 
         View::assign($data);
     }
 
     /**
-     * 检测权限
+     * 检测权限.
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    private function checkAuth()
+    protected function checkAuth($currentNode = null, $haltRequest = true)
     {
         $adminConfig = config('admin');
         $adminId = session('admin.id');
         $expireTime = session('admin.expire_time');
         /** @var AuthService $authService */
         $authService = app(AuthService::class, ['adminId' => $adminId]);
+
         $currentNode = $authService->getCurrentNode();
+        if (is_null($currentNode)) {
+            $currentNode = $authService->getCurrentNode();
+        }
+
         $currentController = parse_name(app()->request->controller());
 
         // 验证登录
@@ -372,7 +372,14 @@ class AdminController extends BaseController
             !in_array($currentNode, $adminConfig['no_auth_node'])
         ) {
             $check = $authService->checkNode($currentNode);
-            !$check && $this->error('无权限访问');
+
+            if ($haltRequest) {
+                if (!$check) {
+                    $this->error('无权限访问');
+                }
+            } else {
+                return $check;
+            }
 
             // 判断是否为演示环境
             if (env('adminsystem.is_demo', false) && app()->request->isPost()) {
@@ -380,11 +387,11 @@ class AdminController extends BaseController
             }
         }
 
-        $model_admin = SystemAdmin::autoCache('read',$adminId)->find($adminId);
+        $model_admin = SystemAdmin::autoCache('read', $adminId)->find($adminId);
 
         $this->sessionAdmin = $model_admin;
 
-        $this->assign('session_admin',$model_admin);
+        $this->assign('session_admin', $model_admin);
     }
 
     /**
@@ -393,7 +400,7 @@ class AdminController extends BaseController
     protected function checkPostRequest()
     {
         if (!$this->request->isPost()) {
-            $this->error("当前请求不合法！");
+            $this->error('当前请求不合法！');
         }
     }
 }

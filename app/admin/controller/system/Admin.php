@@ -1,32 +1,30 @@
 <?php
 
-
 namespace app\admin\controller\system;
 
-
 use app\admin\model\SystemAdmin;
+use app\admin\service\annotation\ControllerAnnotation;
+use app\admin\service\annotation\NodeAnotation;
 use app\admin\service\TriggerService;
 use app\common\constants\AdminConstant;
 use app\common\controller\AdminController;
-use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
 use think\App;
 use think\facade\Validate;
 use think\validate\ValidateRule;
 
 /**
- * Class Admin
- * @package app\admin\controller\system
+ * Class Admin.
  * @ControllerAnnotation(title="管理员管理")
+ *
+ * @NodeAnotation(title="自定义权限标识符",name="customFlag")
  */
 class Admin extends AdminController
 {
-
     use \app\admin\traits\Curd;
 
     protected $sort = [
         'sort' => 'desc',
-        'id'   => 'desc',
+        'id' => 'desc',
     ];
 
     public function __construct(App $app)
@@ -37,6 +35,8 @@ class Admin extends AdminController
 
         $this->setDataBrage('count', 10);
         $this->setDataBrage('tips', '请谨慎操作');
+
+        $this->setDataBrage('adminCustomFlag', $this->checkAuth('system.admin/customFlag', false));
     }
 
     /**
@@ -59,13 +59,15 @@ class Admin extends AdminController
                 ->order($this->sort)
                 ->select();
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
+
             return json($data);
         }
+
         return $this->fetch();
     }
 
@@ -82,10 +84,7 @@ class Admin extends AdminController
             $post['password'] = password(sysconfig('site', 'site_default_password', '123456'));
             $this->validate($post, $rule);
 
-
-
             try {
-
                 $model_admin = SystemAdmin::where('username', $post['username'])->find();
 
                 if (!empty($model_admin)) {
@@ -98,6 +97,7 @@ class Admin extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
+
         return $this->fetch();
     }
 
@@ -127,6 +127,7 @@ class Admin extends AdminController
         }
         $row->auth_ids = explode(',', $row->auth_ids);
         $this->assign('row', $row);
+
         return $this->fetch();
     }
 
@@ -141,7 +142,7 @@ class Admin extends AdminController
             $this->checkPostRequest();
             $post = $this->request->post();
             $rule = [
-                'password|登录密码'       => 'require',
+                'password|登录密码' => 'require',
                 'password_again|确认密码' => 'require',
             ];
             $this->validate($post, $rule);
@@ -159,6 +160,7 @@ class Admin extends AdminController
         }
         $row->auth_ids = explode(',', $row->auth_ids);
         $this->assign('row', $row);
+
         return $this->fetch();
     }
 
@@ -192,9 +194,9 @@ class Admin extends AdminController
         $this->checkPostRequest();
         $post = $this->request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID' => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值' => 'require',
         ];
         $this->validate($post, $rule);
         if (!in_array($post['field'], $this->allowModifyFields)) {
