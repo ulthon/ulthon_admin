@@ -16,7 +16,7 @@ class Version extends Command
 {
     public const VERSION = 'v2.0.29';
 
-    public const LAYUI_VERSION = '2.8.4';
+    public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
         '新增拟物风格特效皮肤',
