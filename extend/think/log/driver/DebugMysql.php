@@ -100,10 +100,6 @@ class DebugMysql  implements LogHandlerInterface
 
         foreach ($log as $log_level => $log_list) {
             foreach ($log_list as $key => $log_item) {
-
-                if (!is_string($log_item)) {
-                    $log_item = print_r($log_item, true);
-                }
                 
                 $log_data = [
                     'level' => $log_level,

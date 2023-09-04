@@ -17,18 +17,18 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
-        "topthink/framework": "^6.0.0",
-        "topthink/think-orm": "^2.0",
-        "topthink/think-multi-app": "^1.0",
-        "topthink/think-view": "^1.0",
-        "topthink/think-captcha": "^3.0",
+        "php": ">=8.0.0",
         "ext-json": "*",
+        "topthink/framework": "^8.0",
+        "topthink/think-orm": "^3.0",
+        "topthink/think-multi-app": "^1.0",
+        "topthink/think-view": "^2.0",
+        "topthink/think-captcha": "^3.0",
+        "topthink/think-filesystem": "^2.0",
+        "topthink/think-migration": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
-        "topthink/think-migration": "^3.0",
         "doctrine/annotations": "^1.13",
-        "topthink/think-filesystem": "^2.0",
         "overtrue/flysystem-qiniu": "^2.0",
         "overtrue/flysystem-cos": "^4.0",
         "iidestiny/flysystem-oss": "^3.0"
@@ -54,5 +54,4 @@
             "@php think vendor:publish"
         ]
     }
-    
 }
