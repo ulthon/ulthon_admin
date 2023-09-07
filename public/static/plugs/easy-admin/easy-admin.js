@@ -778,13 +778,22 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
 
-
                 var titleEndfix = '';
 
                 if (typeof operat.titleField == 'function') {
-                    titleEndfix = operat.titleField(data)
+                    console.log(operat.titleField(data, operat));
+                    titleEndfix = operat.titleField(data, operat)
+
                 } else if (data[operat.titleField]) {
                     titleEndfix = '-' + data[operat.titleField];
+                }
+
+                if (typeof operat.text == 'function') {
+                    operat.text = operat.text(data, operat)
+                }
+
+                if (typeof operat.title == 'function') {
+                    operat.title = operat.title(data, operat)
                 }
 
                 var formatOperat = operat;

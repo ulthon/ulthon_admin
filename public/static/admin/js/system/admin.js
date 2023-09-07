@@ -47,6 +47,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                             'edit',
                             [{
                                 text: '设置密码',
+                                titleField: 'username',
                                 url: init.password_url,
                                 method: 'open',
                                 auth: 'password',
