@@ -1,23 +1,20 @@
 <?php
 
-
 namespace app\admin\controller;
-
 
 use app\admin\model\SystemAdmin;
 use app\common\controller\AdminController;
 use think\captcha\facade\Captcha;
 use think\facade\Env;
+use think\facade\Event;
 
 /**
- * Class Login
- * @package app\admin\controller
+ * Class Login.
  */
 class Login extends AdminController
 {
-
     /**
-     * 初始化方法
+     * 初始化方法.
      */
     public function initialize()
     {
@@ -30,7 +27,7 @@ class Login extends AdminController
     }
 
     /**
-     * 用户登录
+     * 用户登录.
      * @return string
      * @throws \Exception
      */
@@ -40,8 +37,8 @@ class Login extends AdminController
         if ($this->request->isPost()) {
             $post = $this->request->post();
             $rule = [
-                'username|用户名'      => 'require',
-                'password|密码'       => 'require',
+                'username|用户名' => 'require',
+                'password|密码' => 'require',
                 'keep_login|是否保持登录' => 'require',
             ];
             $captcha == 1 && $rule['captcha|验证码'] = 'require|captcha';
@@ -58,19 +55,24 @@ class Login extends AdminController
             }
             $admin->login_num += 1;
             $admin->save();
+
+            Event::trigger('AdminLoginSuccess', $admin);
+
             $admin = $admin->toArray();
             unset($admin['password']);
             $admin['expire_time'] = $post['keep_login'] == 1 ? true : time() + 7200;
             session('admin', $admin);
+
             $this->success('登录成功');
         }
         $this->assign('captcha', $captcha);
         $this->assign('demo', $this->isDemo);
+
         return $this->fetch();
     }
 
     /**
-     * 用户退出
+     * 用户退出.
      * @return mixed
      */
     public function out()
