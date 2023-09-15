@@ -1,14 +1,8 @@
 <?php
 
-
 namespace app\admin\middleware;
 
-
-use app\Request;
-use CsrfVerify\drive\ThinkphpCache;
-use CsrfVerify\entity\CsrfVerifyEntity;
-use CsrfVerify\interfaces\CsrfVerifyInterface;
-use think\facade\Session;
+use think\Request;
 
 class CsrfMiddleware
 {
@@ -18,7 +12,6 @@ class CsrfMiddleware
     {
         if (env('adminsystem.IS_CSRF', true)) {
             if (!in_array($request->method(), ['GET', 'HEAD', 'OPTIONS'])) {
-
                 // 跨域校验
                 $refererUrl = $request->header('REFERER', null);
                 $refererInfo = parse_url($refererUrl);
@@ -36,9 +29,9 @@ class CsrfMiddleware
                 if (!$check) {
                     $this->error('请求验证失败，请重新刷新页面！');
                 }
-
             }
         }
+
         return $next($request);
     }
 }

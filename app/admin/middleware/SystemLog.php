@@ -2,9 +2,9 @@
 
 namespace app\admin\middleware;
 
-use app\Request;
 use think\facade\Log;
 use think\facade\Request as FacadeRequest;
+use think\Request;
 
 /**
  * 系统操作日志中间件

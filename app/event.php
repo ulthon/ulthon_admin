@@ -3,6 +3,7 @@
 // 事件定义文件
 
 use app\common\event\AdminLoginSuccess\LogEvent;
+use app\common\event\AdminLoginType\DemoEvent;
 
 $event = [
     'bind' => [
@@ -16,6 +17,9 @@ $event = [
         'LogWrite' => [],
         'AdminLoginSuccess' => [
             LogEvent::class,
+        ],
+        'AdminLoginType' => [
+            DemoEvent::class,
         ],
     ],
 

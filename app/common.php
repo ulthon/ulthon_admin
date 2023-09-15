@@ -1,14 +1,16 @@
 <?php
+
 // 应用公共文件
 
+use app\commno\exception\EventException;
 use app\common\service\AuthService;
 use think\facade\Cache;
+use think\facade\Env;
+use think\facade\Event;
 use think\facade\Filesystem;
-use think\facade\Request;
 use think\route\Url;
 
 if (!function_exists('__url')) {
-
     /**
      * 构建URL地址
      * @param string $url
@@ -46,9 +48,8 @@ if (!function_exists('__url')) {
 }
 
 if (!function_exists('password')) {
-
     /**
-     * 密码加密算法
+     * 密码加密算法.
      * @param $value 需要加密的值
      * @param $type  加密类型，默认为md5 （md5, hash）
      * @return mixed
@@ -56,14 +57,14 @@ if (!function_exists('password')) {
     function password($value, $salt = '_encrypt')
     {
         $value = sha1('ul_' . $salt) . md5($value) . md5($salt) . sha1($value);
+
         return sha1($value);
     }
 }
 
 if (!function_exists('xdebug')) {
-
     /**
-     * debug调试
+     * debug调试.
      * @deprecated 不建议使用，建议直接使用框架自带的log组件
      * @param string|array $data 打印信息
      * @param string $type 类型
@@ -77,7 +78,7 @@ if (!function_exists('xdebug')) {
         if (is_null($file)) {
             $file = is_null($suffix) ? runtime_path() . 'xdebug/' . date('Ymd') . '.txt' : runtime_path() . 'xdebug/' . date('Ymd') . "_{$suffix}" . '.txt';
         }
-        file_put_contents($file, "[" . date('Y-m-d H:i:s') . "] " . "========================= {$type} ===========================" . PHP_EOL, FILE_APPEND);
+        file_put_contents($file, '[' . date('Y-m-d H:i:s') . '] ' . "========================= {$type} ===========================" . PHP_EOL, FILE_APPEND);
 
         $str = '';
 
@@ -98,16 +99,14 @@ if (!function_exists('xdebug')) {
 }
 
 if (!function_exists('sysconfig')) {
-
     /**
-     * 获取系统配置信息
+     * 获取系统配置信息.
      * @param $group
      * @param null|bool|string $name
      * @return array|mixed
      */
     function sysconfig($group, $name = null, $default = null)
     {
-
         if ($name === true) {
             $value = Cache::get('sysconfig_' . $group);
 
@@ -118,6 +117,7 @@ if (!function_exists('sysconfig')) {
             if (is_null($value)) {
                 return $default;
             }
+
             return $value;
         }
 
@@ -136,14 +136,14 @@ if (!function_exists('sysconfig')) {
         if (is_null($value)) {
             return $default;
         }
+
         return $value;
     }
 }
 
 if (!function_exists('array_format_key')) {
-
     /**
-     * 二位数组重新组合数据
+     * 二位数组重新组合数据.
      * @param $array
      * @param $key
      * @return array
@@ -154,12 +154,12 @@ if (!function_exists('array_format_key')) {
         foreach ($array as $vo) {
             $newArray[$vo[$key]] = $vo;
         }
+
         return $newArray;
     }
 }
 
 if (!function_exists('auth')) {
-
     /**
      * auth权限验证
      * @param $node
@@ -172,52 +172,49 @@ if (!function_exists('auth')) {
     {
         $authService = new AuthService(session('admin.id'));
         $check = $authService->checkNode($node);
+
         return $check;
     }
 }
 
-
 function json_message($data = [], $code = 0, $msg = '')
 {
     if (is_string($data)) {
-
         if (strpos($data, 'http') === 0 || strpos($data, '/') === 0) {
             $data = [
-                'jump_to_url' => $data
+                'jump_to_url' => $data,
             ];
         } else {
-
             $code = $code === 0 ? 500 : $code;
             $msg = $data;
             $data = [];
         }
-    } else if ($data instanceof Url) {
+    } elseif ($data instanceof Url) {
         $data = [
-            'jump_to_url' => (string)$data
+            'jump_to_url' => (string) $data,
         ];
     }
 
     return json([
         'code' => $code,
         'msg' => $msg,
-        'data' => $data
+        'data' => $data,
     ]);
 }
 
-
 if (!function_exists('unparse_url')) {
-
     function unparse_url($parsed_url)
     {
-        $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
-        $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
-        $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
-        $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
-        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
-        $pass     = ($user || $pass) ? "$pass@" : '';
-        $path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
-        $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+        $port = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $user = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+        $pass = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
+        $pass = ($user || $pass) ? "$pass@" : '';
+        $path = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+        $query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+
         return "$scheme$user$pass$host$port$path$query$fragment";
     }
 }
@@ -225,7 +222,6 @@ if (!function_exists('unparse_url')) {
 if (!function_exists('ua_htmlspecialchars')) {
     function ua_htmlspecialchars($string)
     {
-
         if (is_null($string)) {
             $string = '';
         }
@@ -237,7 +233,6 @@ if (!function_exists('ua_htmlspecialchars')) {
 if (!function_exists('ua_htmlentities')) {
     function ua_htmlentities($string)
     {
-
         if (is_null($string)) {
             $string = '';
         }
@@ -249,7 +244,6 @@ if (!function_exists('ua_htmlentities')) {
 if (!function_exists('ua_htmlspecialchars_decode')) {
     function ua_htmlspecialchars_decode($string, $flag = ENT_QUOTES | ENT_SUBSTITUTE)
     {
-
         if (is_null($string)) {
             $string = '';
         }
@@ -258,13 +252,30 @@ if (!function_exists('ua_htmlspecialchars_decode')) {
     }
 }
 
-
-
 function build_upload_url($url, $upload_type = null)
 {
-
     if (is_null($upload_type)) {
         $upload_type = sysconfig('upload', 'upload_type', 'local_public');
     }
+
     return Filesystem::disk($upload_type)->url($url);
+}
+
+function event_view_content($name)
+{
+    $list_result = Event::trigger($name);
+
+    $content = '';
+
+    foreach ($list_result as $key_event => $value_event) {
+        if (!isset($value_event['view_content'])) {
+            if (Env::get('adminsystem.strict_event')) {
+                throw new EventException("Event view {$name} trigger a result without a view_content");
+            }
+            continue;
+        }
+        $content.= $value_event['view_content'];
+    }
+
+    return $content;
 }
