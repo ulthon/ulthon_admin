@@ -10,7 +10,7 @@ use think\facade\Event;
 use think\facade\Filesystem;
 use think\route\Url;
 
-include_once __DIR__ . '/app/common/app/functions.php';
+include_once __DIR__ . '/common/app/functions.php';
 
 if (!function_exists('__url')) {
     /**

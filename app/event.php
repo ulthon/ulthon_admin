@@ -27,7 +27,7 @@ $event = [
     ],
 ];
 
-$listen = include __DIR__ . '/app/common/app/listen.php';
+$listen = include __DIR__ . '/common/app/listen.php';
 
 $event['listen'] = array_merge($event['listen'], $listen);
 

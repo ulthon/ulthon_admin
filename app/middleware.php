@@ -11,7 +11,7 @@ $middleware_default = [
     100 => \think\middleware\SessionInit::class,
 ];
 
-$middleware_common = include_once __DIR__ . '/app/common/app/middleware.php';
+$middleware_common = include_once __DIR__ . '/common/app/middleware.php';
 
 $middleware = array_merge($middleware_default, $middleware_common);
 

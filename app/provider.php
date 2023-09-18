@@ -12,6 +12,6 @@ $provider_default = [
     'think\View' => View::class,
 ];
 
-$provider_common = include_once __DIR__ . '/app/common/app/provider.php';
+$provider_common = include_once __DIR__ . '/common/app/provider.php';
 
 return array_merge($provider_default, $provider_common);

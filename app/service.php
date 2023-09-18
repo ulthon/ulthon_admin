@@ -7,7 +7,7 @@ $service_default = [
     1 => 'think\\app\\Service',
 ];
 
-$service_common = include_once __DIR__ . '/app/common/app/service.php';
+$service_common = include_once __DIR__ . '/common/app/service.php';
 
 $service = array_merge($service_default, $service_common);
 
