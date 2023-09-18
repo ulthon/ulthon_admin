@@ -179,3 +179,45 @@ php think run
 ### gnome
 感受到来自gnome的恐惧了吗？一个“兼容Linux”的后台框架。
 ![](/public/static/index/images/preview/gtk.png)
+
+## 开发依赖
+
+### 基本环境
+
+只需要最基础的PHP开发环境即可。
+
+- PHP8.0（正确设置PATH环境变量）
+- composer
+- Mysql5.7+（开发必备）
+
+开发环境中，并不必须安装nginx、apache、ftp等软件，可以直接通过内置服务器进行开发。
+
+> 实际上，如果你使用sqlite开发，连mysql都不想要安装，但是sqlite并不能很好地调整数据表和列，所以一般使用mysql等常规数据库。
+
+### SASS
+
+框架中部分底层组件使用了SASS特性，但一般不需要关心，如果使用vscode，可参考以下内容：
+
+```
+名称: Live Sass Compiler
+ID: glenn2223.live-sass
+说明: Compile Sass or Scss to CSS at realtime.
+版本: 5.5.1
+发布者: Glenn Marks
+VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass
+```
+
+### 配置
+
+vscode中liveSassCompiler的配置:
+
+```json
+{
+    "liveSassCompile.settings.includeItems": [
+        "/public/static/common/css/theme/*.scss",
+        "/public/static/plugs/lay-module/tableData/tableData.scss",
+        "/public/static/plugs/lay-module/tagInput/tagInput.scss",
+        "/public/static/plugs/lay-module/propertyInput/propertyInput.scss"
+    ]
+}
+```

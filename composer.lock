@@ -1743,16 +1743,16 @@
         },
         {
             "name": "qiniu/php-sdk",
-            "version": "v7.10.1",
+            "version": "v7.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/qiniu/php-sdk.git",
-                "reference": "dfa6893417c126735d9fbeffdb54fe14671dc4d3"
+                "reference": "9ee81f0acd57fa7bb435ffe9e515d7a9fdd0489b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/dfa6893417c126735d9fbeffdb54fe14671dc4d3",
-                "reference": "dfa6893417c126735d9fbeffdb54fe14671dc4d3",
+                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/9ee81f0acd57fa7bb435ffe9e515d7a9fdd0489b",
+                "reference": "9ee81f0acd57fa7bb435ffe9e515d7a9fdd0489b",
                 "shasum": ""
             },
             "require": {
@@ -1795,9 +1795,9 @@
             ],
             "support": {
                 "issues": "https://github.com/qiniu/php-sdk/issues",
-                "source": "https://github.com/qiniu/php-sdk/tree/v7.10.1"
+                "source": "https://github.com/qiniu/php-sdk/tree/v7.11.0"
             },
-            "time": "2023-08-04T13:33:41+00:00"
+            "time": "2023-09-05T12:33:39+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -2122,24 +2122,27 @@
         },
         {
             "name": "topthink/think-migration",
-            "version": "v3.0.6",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-migration.git",
-                "reference": "82c4226cb14f973b9377c7fc6e89c525cbb8b030"
+                "reference": "22c44058e1454f3af1d346e7f6524fbe654de7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-migration/zipball/82c4226cb14f973b9377c7fc6e89c525cbb8b030",
-                "reference": "82c4226cb14f973b9377c7fc6e89c525cbb8b030",
+                "url": "https://api.github.com/repos/top-think/think-migration/zipball/22c44058e1454f3af1d346e7f6524fbe654de7fb",
+                "reference": "22c44058e1454f3af1d346e7f6524fbe654de7fb",
                 "shasum": ""
             },
             "require": {
+                "php": ">=7.2",
                 "topthink/framework": "^6.0 || ^8.0",
                 "topthink/think-helper": "^3.0.3"
             },
             "require-dev": {
-                "fzaninotto/faker": "^1.8"
+                "composer/composer": "^2.5.8",
+                "fzaninotto/faker": "^1.8",
+                "robmorgan/phinx": "^0.13.4"
             },
             "suggest": {
                 "fzaninotto/faker": "Required to use the factory builder (^1.8)."
@@ -2154,7 +2157,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Phinx\\": "phinx/src/Phinx",
+                    "Phinx\\": "phinx",
                     "think\\migration\\": "src"
                 }
             },
@@ -2170,9 +2173,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-migration/issues",
-                "source": "https://github.com/top-think/think-migration/tree/v3.0.6"
+                "source": "https://github.com/top-think/think-migration/tree/v3.1.1"
             },
-            "time": "2023-07-01T11:01:52+00:00"
+            "time": "2023-09-14T05:51:31+00:00"
         },
         {
             "name": "topthink/think-multi-app",

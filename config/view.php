@@ -32,5 +32,5 @@ return [
         '__STATIC__' => Env::get('adminsystem.static_path', '/static'),
         '__JS__' => '/static/javascript',
     ],
-    'default_filter' => 'ua_htmlentities', // 默认过滤方法 用于普通标签输出
+    'default_filter' => '', // 默认过滤方法 用于普通标签输出
 ];

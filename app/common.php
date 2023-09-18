@@ -219,39 +219,6 @@ if (!function_exists('unparse_url')) {
     }
 }
 
-if (!function_exists('ua_htmlspecialchars')) {
-    function ua_htmlspecialchars($string)
-    {
-        if (is_null($string)) {
-            $string = '';
-        }
-
-        return htmlspecialchars($string);
-    }
-}
-
-if (!function_exists('ua_htmlentities')) {
-    function ua_htmlentities($string)
-    {
-        if (is_null($string)) {
-            $string = '';
-        }
-
-        return htmlentities($string);
-    }
-}
-
-if (!function_exists('ua_htmlspecialchars_decode')) {
-    function ua_htmlspecialchars_decode($string, $flag = ENT_QUOTES | ENT_SUBSTITUTE)
-    {
-        if (is_null($string)) {
-            $string = '';
-        }
-
-        return htmlspecialchars_decode($string, $flag);
-    }
-}
-
 function build_upload_url($url, $upload_type = null)
 {
     if (is_null($upload_type)) {
