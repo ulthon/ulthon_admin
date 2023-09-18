@@ -1,15 +1,17 @@
-define(['jquery', 'vue'], function ($, Vue) {
+(function () {
     const tagInputCss = '/static/plugs/lay-module/tagInput/tagInput.css';
     const tagInputHtml = '/static/plugs/lay-module/tagInput/tagInput.html';
 
     var tagInput = function () {
-        var cssElement = document.createElement('link');
+        $(function () {
+            var cssElement = document.createElement('link');
 
-        cssElement.setAttribute('rel', 'stylesheet');
+            cssElement.setAttribute('rel', 'stylesheet');
 
-        cssElement.setAttribute('href', tagInputCss);
+            cssElement.setAttribute('href', tagInputCss);
 
-        document.body.appendChild(cssElement);
+            document.body.appendChild(cssElement);
+        });
     };
     var tagInputTemplate = '';
 
@@ -29,7 +31,7 @@ define(['jquery', 'vue'], function ($, Vue) {
         var defaultOption = {
             placeholder: '请选择',
             required: ''
-        }
+        };
 
         var options = $.extend(defaultOption, data);
 
@@ -45,21 +47,21 @@ define(['jquery', 'vue'], function ($, Vue) {
                     inputWidth: 100,
                     inputValuePreview: '',
                     listTag: []
-                }
+                };
             },
             watch: {
                 inputValue(value) {
 
                     this.inputValuePreview = value;
-                    this.updateInputWidth()
+                    this.updateInputWidth();
                 },
                 listTag(value) {
-                    this.value = value.join(',')
+                    this.value = value.join(',');
                 }
             },
             created() {
                 if (options.value.length > 0) {
-                    this.listTag = options.value.split(',')
+                    this.listTag = options.value.split(',');
 
                 }
 
@@ -80,12 +82,12 @@ define(['jquery', 'vue'], function ($, Vue) {
                         return false;
                     }
 
-                    this.listTag.push(this.inputValue)
+                    this.listTag.push(this.inputValue);
                     this.inputValue = '';
                     return false;
                 },
                 onContainerClick() {
-                    $(this.$refs['tagInputMain']).focus()
+                    $(this.$refs['tagInputMain']).focus();
                 },
                 onInputChange(e) {
 
@@ -102,13 +104,13 @@ define(['jquery', 'vue'], function ($, Vue) {
                     this.inputWidth = width + 60;
                 },
                 removeItem(item, index) {
-                    this.listTag.splice(index, 1)
+                    this.listTag.splice(index, 1);
                 }
             }
-        })
+        });
 
         return app;
-    }
+    };
 
-    return new tagInput();
-})
+    window.tagInput = new tagInput();
+})();

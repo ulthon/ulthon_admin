@@ -15,7 +15,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
 
         index: function () {
             var uidList = [];
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 size: 'sm',
                 limit: 50,
@@ -51,13 +51,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 ]
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
-            ea.listen();
+            ua.listen();
         },
     };
     return Controller;

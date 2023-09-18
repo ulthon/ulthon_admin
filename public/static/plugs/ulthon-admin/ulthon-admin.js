@@ -1,16 +1,16 @@
-define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput', 'propertyInput', 'miniTab', 'clipboardjs'], function ($, undefined, miniTheme, tableData, citypicker, tagInput, propertyInput, miniTab, ClipboardJS) {
+(function () {
 
     window.onInitElemStyle = function () {
-        miniTheme.renderElemStyle()
+        miniTheme.renderElemStyle();
 
         $('iframe').each(function (index, iframe) {
 
             if (typeof iframe.contentWindow.onInitElemStyle == "function") {
                 iframe.contentWindow.onInitElemStyle();
             }
-        })
+        });
 
-    }
+    };
     window.onInitElemStyle();
 
     var lastTableWhere = {};
@@ -60,7 +60,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
         // visio扩展名数组
         'visio': ['vsd', 'vsdx'],
         'file': []
-    }
+    };
 
     var allExtGroup = [];
 
@@ -68,14 +68,14 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
         if (Object.hasOwnProperty.call(extGroup, extGroupName)) {
             const extGroupList = extGroup[extGroupName];
 
-            allExtGroup = allExtGroup.concat(extGroupList)
+            allExtGroup = allExtGroup.concat(extGroupList);
 
         }
     }
-    init.upload_exts += allExtGroup.join('|')
+    init.upload_exts += allExtGroup.join('|');
 
-    extGroup['office'] = [].concat(extGroup['word'], extGroup['excel'], extGroup['ppt'], extGroup['pdf'])
-    extGroup['media'] = [].concat(extGroup['image'], extGroup['music'], extGroup['video'])
+    extGroup['office'] = [].concat(extGroup['word'], extGroup['excel'], extGroup['ppt'], extGroup['pdf']);
+    extGroup['media'] = [].concat(extGroup['image'], extGroup['music'], extGroup['video']);
 
     var admin = {
         config: {
@@ -143,7 +143,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 if (option.prefix == true) {
                     option.url = admin.url(option.url);
                 }
-                loading.show()
+                loading.show();
                 $.ajax({
                     url: option.url,
                     type: type,
@@ -202,7 +202,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             success: function (msg, callback) {
                 if (callback === undefined) {
                     callback = function () {
-                    }
+                    };
                 }
                 var index = layer.msg(msg, { icon: 1, shade: admin.config.shade, scrollbar: false, time: 800, shadeClose: true }, callback);
                 return index;
@@ -211,7 +211,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             error: function (msg, callback) {
                 if (callback === undefined) {
                     callback = function () {
-                    }
+                    };
                 }
                 var index = layer.msg(msg, { icon: 2, shade: admin.config.shade, scrollbar: false, time: 3000, shadeClose: true }, callback);
                 return index;
@@ -272,10 +272,10 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         layEvent: 'TABLE_SEARCH',
                         icon: 'layui-icon-search',
                         extend: 'data-table-id="' + options.id + '"'
-                    })
+                    });
                 }
                 if (options.defaultToolbar === undefined) {
-                    options.defaultToolbar = defaultToolbar
+                    options.defaultToolbar = defaultToolbar;
                 }
 
                 var table2card = function () {
@@ -289,20 +289,20 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             if ($(cell).hasClass('laytable-cell-checkbox')) {
                                 colsHeader.push('选择');
                             } else {
-                                colsHeader.push($(cell).find('span').first().text())
+                                colsHeader.push($(cell).find('span').first().text());
                             }
-                        })
+                        });
 
                         domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
 
                             $(domTr).find('td').each(function (indexTd, domTd) {
 
-                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
-                            })
-                        })
+                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'));
+                            });
+                        });
                     }
 
-                }
+                };
 
                 var tableFixedAutoHeight = function () {
                     $(".layui-table-main tr").each(function (index, val) {
@@ -310,20 +310,20 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
                         });
                     });
-                }
+                };
 
-                var optionDone = function () { }
+                var optionDone = function () { };
                 if (options.done != undefined) {
                     optionDone = options.done;
                 }
                 options.done = function () {
-                    optionDone()
-                    table2card()
-                    tableFixedAutoHeight()
+                    optionDone();
+                    table2card();
+                    tableFixedAutoHeight();
 
                     // 监听表格内的复制组件
                     admin.api.copyText('[lay-id=' + options.id + ']');
-                }
+                };
 
 
                 selectMode = admin.getQueryVariable("select_mode");
@@ -343,7 +343,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                     options.page = {
                         layout: ['first', 'prev', 'page', 'next', 'last', 'count']
-                    }
+                    };
                 }
 
 
@@ -353,7 +353,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     } else if (options.cols[0][0].type != 'checkbox') {
                         options.cols[0].unshift({
                             type: 'checkbox'
-                        })
+                        });
                     }
                 } else if (selectMode == 'radio') {
                     if (options.cols[0][0].type == 'checkbox') {
@@ -362,7 +362,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     } else if (options.cols[0][0].type != 'radio') {
                         options.cols[0].unshift({
                             type: 'radio'
-                        })
+                        });
 
                     }
                 }
@@ -384,13 +384,13 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 if (selectMode == 'checkbox' || selectMode == 'radio') {
                     options.toolbar.unshift('selectConfirm');
 
-                    options.height = 'full-85'
+                    options.height = 'full-85';
                 }
 
                 if (options.init.formFullScreen == true) {
-                    options.init.formFullScreen = 'true'
+                    options.init.formFullScreen = 'true';
                 } else {
-                    options.init.formFullScreen = 'false'
+                    options.init.formFullScreen = 'false';
                 }
 
                 options.toolbar = admin.table.renderToolbar(options.toolbar, options.elem, options.id, options.init);
@@ -402,7 +402,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 options.cols = admin.table.renderTrueHide(options.cols, options);
 
 
-                var parseData = function (res) { return res }
+                var parseData = function (res) { return res; };
 
                 if (typeof options.parseData === 'function') {
                     parseData = options.parseData;
@@ -428,9 +428,9 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         }
                     }
 
-                    res = parseData(res)
+                    res = parseData(res);
                     return res;
-                }
+                };
 
 
                 // 初始化表格
@@ -452,7 +452,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 admin.table.listenExport(options);
 
                 // 监听表格选择器
-                admin.table.listenTableSelectConfirm(options)
+                admin.table.listenTableSelectConfirm(options);
 
                 return newTable;
             },
@@ -523,7 +523,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                             var fieldPlusArr = d.fieldAlias.replace('[').split(']');
 
-                            d.elemIdName = fieldPlusArr.join('-')
+                            d.elemIdName = fieldPlusArr.join('-');
                         }
 
                         d.elemIdName = d.elemIdName.replace('.', '-');
@@ -543,7 +543,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     var formSearchHideClass = '';
 
                     if (d.searchHide) {
-                        formSearchHideClass = ' search-hide-item'
+                        formSearchHideClass = ' search-hide-item';
                     }
 
                     if (d.field !== false && d.search !== false) {
@@ -653,7 +653,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 options.where = {
                     filter: JSON.stringify(formatFilter),
                     op: JSON.stringify(formatOp)
-                }
+                };
 
                 lastTableWhere[tableId] = options.where;
 
@@ -689,7 +689,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                 for (k in item) {
                                     var v = item[k];
                                     if (v.auth == undefined) {
-                                        v.auth = 'add'
+                                        v.auth = 'add';
                                     }
                                     if (admin.checkAuth(v.auth, elem)) {
                                         check = true;
@@ -699,7 +699,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             }
                         }
                         if (!check) {
-                            data[dk].pop()
+                            data[dk].pop();
                         }
                     }
 
@@ -715,7 +715,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     col.forEach(colItem => {
                         var trueHide = false;
                         if (typeof colItem.trueHide == 'function') {
-                            trueHide = colItem.trueHide(colItem, col, options)
+                            trueHide = colItem.trueHide(colItem, col, options);
                         } else if (typeof colItem.trueHide == 'string') {
                             trueHide = !admin.checkAuth(colItem.trueHide, options.elem);
                         } else {
@@ -723,11 +723,11 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         }
 
                         if (!trueHide) {
-                            newCol.push(colItem)
+                            newCol.push(colItem);
                         }
                     });
 
-                    newData.push(newCol)
+                    newData.push(newCol);
                 }
 
                 return newData;
@@ -782,18 +782,18 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                 if (typeof operat.titleField == 'function') {
                     console.log(operat.titleField(data, operat));
-                    titleEndfix = operat.titleField(data, operat)
+                    titleEndfix = operat.titleField(data, operat);
 
                 } else if (data[operat.titleField]) {
                     titleEndfix = '-' + data[operat.titleField];
                 }
 
                 if (typeof operat.text == 'function') {
-                    operat.text = operat.text(data, operat)
+                    operat.text = operat.text(data, operat);
                 }
 
                 if (typeof operat.title == 'function') {
-                    operat.title = operat.title(data, operat)
+                    operat.title = operat.title(data, operat);
                 }
 
                 var formatOperat = operat;
@@ -813,7 +813,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                 formatOperat.dataBind = ' ';
                 operat.data.forEach((item, index) => {
-                    formatOperat.dataBind += 'data-' + item + '="' + data[item] + '" '
+                    formatOperat.dataBind += 'data-' + item + '="' + data[item] + '" ';
                 });
 
                 html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + formatOperat.dataBind + '>' + formatOperat.icon + formatOperat.text + '</a>';
@@ -836,11 +836,11 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         if (val['width'] == undefined && val['minWidth'] == undefined) {
                             var width = null;
                             if (val.title) {
-                                width = val.title.length * 15 + 55
+                                width = val.title.length * 15 + 55;
                             }
 
                             if (width != null) {
-                                cols[i][index]['minWidth'] = width
+                                cols[i][index]['minWidth'] = width;
                             }
                         }
 
@@ -953,11 +953,11 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         endVal.endTemplet = endVal.templet;
                         endVal.templet = function (data) {
                             if (!data.LAY_COL) {
-                                data.LAY_COL = this
+                                data.LAY_COL = this;
                             }
 
-                            return this.endTemplet(data)
-                        }
+                            return this.endTemplet(data);
+                        };
 
                         cols[i][index] = endVal;
 
@@ -1023,7 +1023,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
 
-                            operat._if = operat._if || function () { return true };
+                            operat._if = operat._if || function () { return true; };
 
                             if (typeof operat._if == 'function') {
                                 if (operat._if(data, operat) !== true) {
@@ -1032,7 +1032,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             } else if (typeof operat._if == 'string') {
                                 var ifValue = admin.table.returnColumnValue(data, operat._if, false);
                                 if (!ifValue) {
-                                    return ''
+                                    return '';
                                 }
                             }
 
@@ -1056,17 +1056,17 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                 var fieldParam = operat.field(data, operat);
 
                                 if (typeof fieldParam == 'string') {
-                                    operat.url = fieldParam
+                                    operat.url = fieldParam;
                                 } else {
                                     var querys = '';
                                     if (operat.url.indexOf("?") !== -1) {
                                         if (operat.url.indexOf("?") !== operat.url.length - 1) {
-                                            querys = '&'
+                                            querys = '&';
                                         }
                                     } else {
-                                        querys = '?'
+                                        querys = '?';
                                     }
-                                    operat.url += querys + $.param(fieldParam)
+                                    operat.url += querys + $.param(fieldParam);
                                 }
 
                             }
@@ -1101,7 +1101,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                     var groupName = admin.getExtGroupName(data.file_ext);
 
-                    return '<a href="' + value + '"><img style="height:40px;width:40px" src="/static/admin/images/upload-icons/' + groupName + '.png" /></a>'
+                    return '<a href="' + value + '"><img style="height:40px;width:40px" src="/static/admin/images/upload-icons/' + groupName + '.png" /></a>';
                 }
 
             },
@@ -1133,7 +1133,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                 var value = admin.table.returnColumnValue(data);
 
                 if (admin.empty(value)) {
-                    return ''
+                    return '';
                 }
 
                 var urlName = value;
@@ -1143,9 +1143,9 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         var urlNameFieldType = typeof urlNameField;
 
                         if (urlNameFieldType == 'string') {
-                            urlName = data[urlNameField]
+                            urlName = data[urlNameField];
                         } else if (urlNameFieldType == 'function') {
-                            urlName = urlNameField(data)
+                            urlName = urlNameField(data);
                         }
 
                     } catch (e) {
@@ -1202,8 +1202,8 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             },
             bytes: (data) => {
                 var size = admin.table.returnColumnValue(data);
-                sizeReadable = admin.bytes(size)
-                return sizeReadable
+                sizeReadable = admin.bytes(size);
+                return sizeReadable;
             },
             copyText(data) {
                 var option = data.LAY_COL;
@@ -1248,7 +1248,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         if (val !== '') {
                             formatFilter[key] = val;
 
-                            var elemId = admin.table.renderSearchFormItemElementId(key)
+                            var elemId = admin.table.renderSearchFormItemElementId(key);
 
                             var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
@@ -1259,8 +1259,8 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     var where = {
                         filter: JSON.stringify(formatFilter),
                         op: JSON.stringify(formatOp)
-                    }
-                    lastTableWhere[tableId] = where
+                    };
+                    lastTableWhere[tableId] = where;
                     table.reloadData(tableId, {
                         page: {
                             curr: 1
@@ -1313,7 +1313,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                     var lastWhere = lastTableWhere[option.id] ?? {};
 
-                    lastWhere.sort = {}
+                    lastWhere.sort = {};
                     lastWhere.sort[obj.field] = obj.type;
 
                     table.reloadData(option.id, {
@@ -1383,7 +1383,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     }
 
                     parent.window[selectConfirmCallback](checkStatus.data);
-                })
+                });
             },
             listenExport: function (options) {
 
@@ -1407,7 +1407,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                                 switch (col.fieldFormat) {
                                     case 'image':
-                                        imageFields.push(col.field)
+                                        imageFields.push(col.field);
                                         break;
 
                                     case 'select':
@@ -1417,7 +1417,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                         break;
                                     case 'date':
 
-                                        dateFields.push(col.field)
+                                        dateFields.push(col.field);
                                         break;
 
                                     default:
@@ -1445,7 +1445,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         if (val !== '') {
                             formatFilter[key] = val;
 
-                            var elemId = admin.table.renderSearchFormItemElementId(key)
+                            var elemId = admin.table.renderSearchFormItemElementId(key);
 
                             var op = $('#c-' + elemId).attr('data-search-op');
                             op = op || '%*%';
@@ -1460,7 +1460,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         image_fields: JSON.stringify(imageFields),
                         select_fields: JSON.stringify(selectFields),
                         date_fields: JSON.stringify(dateFields),
-                    }
+                    };
 
                     var query = $.param(searchQuery);
 
@@ -1470,11 +1470,11 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         if (toUrl.indexOf('?') < 0) {
                             toUrl += '?';
                         } else {
-                            toUrl += '&'
+                            toUrl += '&';
                         }
                         toUrl += query;
 
-                        window.open(toUrl)
+                        window.open(toUrl);
 
                         layer.close(index);
                     });
@@ -1538,7 +1538,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     }
                 },
                 end: function () {
-                    index = null
+                    index = null;
                 }
             });
             if (admin.checkMobile() || width === undefined || height === undefined) {
@@ -1547,7 +1547,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             if (isResize) {
                 $(window).on("resize", function () {
                     index && layer.full(index);
-                })
+                });
             }
         },
         listen: function (preposeCallback, ok, no, ex) {
@@ -1785,7 +1785,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                 location.reload();
                             }
                         });
-                    })
+                    });
                 });
                 return false;
             });
@@ -1827,8 +1827,8 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
         api: {
             button: function () {
                 $('button[target="_blank"]').click(function () {
-                    window.open(admin.url($(this).attr('href')))
-                })
+                    window.open(admin.url($(this).attr('href')));
+                });
             },
             form: function (url, data, ok, no, ex, refreshTable) {
                 if (refreshTable === undefined) {
@@ -1881,7 +1881,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             // var options = {
             //     url :'system.menu/index?id=1'
             // }
-            // ea.api.reloadTable('currentTableRenderId',options)
+            // ua.api.reloadTable('currentTableRenderId',options)
             reloadTable: function (tableName, options, mode) {
                 tableName = tableName || 'currentTableRenderId';
                 if (mode == 'table') {
@@ -1936,7 +1936,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         // 自动添加layui事件过滤器
                         if (filter === undefined || filter === '') {
                             filter = 'save_form_' + (i + 1);
-                            $(this).attr('lay-filter', filter)
+                            $(this).attr('lay-filter', filter);
                         }
                         if (url === undefined || url === '' || url === null) {
                             url = window.location.href;
@@ -1946,9 +1946,9 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                         form.on('submit(' + filter + ')', function (data) {
                             var dataField = data.field;
 
-                            dataField = admin.api.formSubmitEditor(dataField, v)
+                            dataField = admin.api.formSubmitEditor(dataField, v);
 
-                            dataField = admin.api.formSubmitCity(dataField, v)
+                            dataField = admin.api.formSubmitCity(dataField, v);
 
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
@@ -1963,7 +1963,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             },
             formSubmitEditor(dataField, form) {
                 // 富文本数据处理
-                var editorList = $(form).closest('.layui-form').find('.editor')
+                var editorList = $(form).closest('.layui-form').find('.editor');
                 if (editorList.length > 0) {
                     $.each(editorList, function (i, v) {
                         var name = $(this).attr("name");
@@ -2005,9 +2005,9 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                 formatTargetList[targetType] = 0;
                             }
 
-                        })
+                        });
 
-                        var codeArr = code.split('/')
+                        var codeArr = code.split('/');
                         var textArr = text.split('/');
 
                         if (formatTargetList['name'] == 1) {
@@ -2035,9 +2035,9 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             dataField[fieldName + '_code_district'] = codeArr[2] || '';
                         }
 
-                    })
+                    });
                 }
-                return dataField
+                return dataField;
             },
             upload: function () {
                 var uploadList = document.querySelectorAll("[data-upload]");
@@ -2125,8 +2125,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                                         if (extGroup.image.indexOf(ext) != -1) {
                                             // 是图片
-                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="' + uploadFilenameField + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
-
+                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'/admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="' + uploadFilenameField + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                         } else {
                                             // 不是图片
                                             // 遍历extGroup数组找到扩展名所在的索引
@@ -2166,14 +2165,14 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                             var currentUrlList = currentUrl.split(sign);
                             var deleteIndex = currentUrlList.indexOf(deleteUrl);
 
-                            currentUrlList.splice(deleteIndex, 1)
+                            currentUrlList.splice(deleteIndex, 1);
                             $(elem).val(currentUrlList.join(sign));
                             $(elem).trigger("input");
 
                             if (currentFilename) {
 
                                 var currentFilenameList = currentFilename.split(sign);
-                                currentFilenameList.splice(deleteIndex, 1)
+                                currentFilenameList.splice(deleteIndex, 1);
 
                                 $(elemFilenameField).val(currentFilenameList.join(sign));
                             }
@@ -2193,7 +2192,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
 
                         if (uploadFilenameField) {
                             var elemFilenameField = "input[name='" + uploadFilenameField + "']";
-                            var elemFilename = $(elemFilenameField)
+                            var elemFilename = $(elemFilenameField);
                         }
 
                         var selectCheck = uploadNumber === 'one' ? 'radio' : 'checkbox';
@@ -2227,16 +2226,16 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                             var currentFilename = $(elemFilename).val();
                                             var filenameArray = currentFilename.split(uploadSign);
                                             if (currentFilename.length == 0 || selectCheck == 'radio') {
-                                                filenameArray = []
+                                                filenameArray = [];
                                             }
                                         }
                                         $.each(data, function (index, val) {
                                             if (urlArray.indexOf(val.url) == -1) {
-                                                urlArray.push(val.url)
+                                                urlArray.push(val.url);
                                             }
                                             if (uploadFilenameField) {
                                                 if (filenameArray.indexOf(val.original_name) == -1) {
-                                                    filenameArray.push(val.original_name)
+                                                    filenameArray.push(val.original_name);
                                                 }
                                             }
 
@@ -2253,10 +2252,10 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                                         $(elem).trigger("input");
                                         layer.close(index);
                                         admin.msg.success('选择成功');
-                                    }
+                                    };
                                 }
-                            })
-                        })
+                            });
+                        });
                     });
 
                 }
@@ -2291,7 +2290,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     if (typeof template != 'function') {
                         template = function (data, fields) {
                             return data[fields[1]];
-                        }
+                        };
                     }
 
                     var fields = selectFields.replace(/\s/g, "").split(',');
@@ -2356,7 +2355,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             tableData() {
                 var tableList = document.querySelectorAll('[data-toggle="table-data"]');
                 $.each(tableList, function (i, v) {
-                    var data = $(v).data()
+                    var data = $(v).data();
                     tableData.render(v, data, admin);
                 });
 
@@ -2364,7 +2363,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             tagInput() {
                 var list = document.querySelectorAll('[data-toggle="tag-input"]');
                 $.each(list, function (i, v) {
-                    var data = $(v).data()
+                    var data = $(v).data();
                     tagInput.render(v, data, admin);
                 });
 
@@ -2372,8 +2371,8 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             propertyInput() {
                 var list = document.querySelectorAll('[data-toggle="property-input"]');
                 $.each(list, function (i, v) {
-                    var data = $(v).data()
-                    data.value = $(v).text()
+                    var data = $(v).data();
+                    data.value = $(v).text();
 
                     propertyInput.render(v, data, admin);
                 });
@@ -2381,7 +2380,7 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             },
             copyText(elem) {
                 if (elem == undefined) {
-                    elem = 'body'
+                    elem = 'body';
                 }
                 var list = $(elem).find('[data-toggle="copy-text"]');
 
@@ -2395,11 +2394,11 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
                     var clipboard = new ClipboardJS(v);
 
                     clipboard.on('success', function (e) {
-                        admin.msg.success('复制成功')
+                        admin.msg.success('复制成功');
                     });
 
                     clipboard.on('error', function (e) {
-                        admin.msg.error('复制失败')
+                        admin.msg.error('复制失败');
 
                     });
                 });
@@ -2456,23 +2455,24 @@ define(["jquery", "ckeditor", 'miniTheme', 'tableData', 'citypicker', 'tagInput'
             for (t = 0, e = f.length; t < e; t++) if (r === f[t]) return !0;
             if ("object" == typeof r) {
                 for (n in r) if (r.hasOwnProperty(n)) return !1;
-                return !0
+                return !0;
             }
-            return !1
+            return !1;
         },
 
         bytes(size) {
             if (size > 0) {
-                const kb = 1024
-                const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-                const i = Math.floor(Math.log(size) / Math.log(kb))
-                const num = (size / Math.pow(kb, i)).toPrecision(3)
-                const u = unit[i]
+                const kb = 1024;
+                const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                const i = Math.floor(Math.log(size) / Math.log(kb));
+                const num = (size / Math.pow(kb, i)).toPrecision(3);
+                const u = unit[i];
                 return num + u;
             }
             return '0B';
         }
 
     };
-    return admin;
-});
+
+    window.ulAdmin = window.ua = admin;
+})();

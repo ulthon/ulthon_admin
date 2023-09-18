@@ -274,7 +274,7 @@ function event_view_content($name)
             }
             continue;
         }
-        $content.= $value_event['view_content'];
+        $content .= $value_event['view_content'];
     }
 
     return $content;

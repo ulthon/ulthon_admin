@@ -3,8 +3,8 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin"], functi
     var Controller = {
         index: function () {
             var options = {
-                iniUrl: ea.url('ajax/initAdmin'),    // 初始化接口
-                clearUrl: ea.url("ajax/clearCache"), // 缓存清理接口
+                iniUrl: ua.url('ajax/initAdmin'),    // 初始化接口
+                clearUrl: ua.url("ajax/clearCache"), // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位
                 bgColorDefault: false,      // 主题默认配置
                 multiModule: true,          // 是否开启多模块
@@ -16,12 +16,12 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin"], functi
             miniAdmin.render(options);
 
             $('.login-out').on("click", function () {
-                ea.request.get({
+                ua.request.get({
                     url: 'login/out',
                     prefix: true,
                 }, function (res) {
-                    ea.msg.success(res.msg, function () {
-                        window.location = ea.url('login/index');
+                    ua.msg.success(res.msg, function () {
+                        window.location = ua.url('login/index');
                     })
                 });
             });
@@ -108,13 +108,13 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin"], functi
                     clearInterval(checkChartVisibleTimer)
                 }
             }, 3000);
-            ea.listen();
+            ua.listen();
         },
         editAdmin: function () {
-            ea.listen();
+            ua.listen();
         },
         editPassword: function () {
-            ea.listen();
+            ua.listen();
         }
     };
     return Controller;

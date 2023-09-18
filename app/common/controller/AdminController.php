@@ -9,6 +9,7 @@ use app\common\service\AuthService;
 use think\facade\Env;
 use think\facade\View;
 use think\Model;
+use think\template\exception\TemplateNotFoundException;
 use think\Validate;
 
 /**
@@ -140,6 +141,29 @@ class AdminController extends BaseController
         return $this->app->view->assign($name, $value);
     }
 
+    protected function fetchJS()
+    {
+        $content_js = '';
+
+        try {
+            $content_js .= View::layout(false)
+            ->config([
+                'view_suffix' => 'js',
+            ])->fetch('_common');
+
+            $content_js .= View::layout(false)
+            ->config([
+                'view_suffix' => 'js',
+            ])->fetch();
+        } catch (TemplateNotFoundException $th) {
+            if (Env::get('adminsystem.strict_view_js', true)) {
+                throw $th;
+            }
+        }
+
+        return "<script>{$content_js}</script>";
+    }
+
     /**
      * 解析和获取模板内容 用于输出.
      * @param string $template
@@ -150,7 +174,17 @@ class AdminController extends BaseController
     {
         $this->assign('data_brage', json_encode($this->dataBrage));
 
-        return $this->app->view->fetch($template, $vars);
+        $vars['content_js'] = $this->fetchJS();
+
+        $content_main = View::layout($this->layout)
+        ->config([
+            'view_suffix' => 'html',
+        ])->fetch($template, $vars);
+
+        $html = '';
+        $html .= $content_main;
+
+        return $html;
     }
 
     /**

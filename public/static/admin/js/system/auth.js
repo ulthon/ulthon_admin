@@ -15,7 +15,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var Controller = {
 
         index: function () {
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 cols: [[
                     {type: "checkbox"},
@@ -23,12 +23,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
                     {field: 'title', minWidth: 80, title: '权限名称'},
                     {field: 'remark', minWidth: 80, title: '备注信息'},
-                    {field: 'status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
+                    {field: 'status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ua.table.switch},
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
                     {
                         width: 250,
                         title: '操作',
-                        templet: ea.table.tool,
+                        templet: ua.table.tool,
                         operat: [
                             'edit',
                             [{
@@ -44,18 +44,18 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 ]],
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
-            ea.listen();
+            ua.listen();
         },
         authorize: function () {
             var tree = layui.tree;
 
-            ea.request.get(
+            ua.request.get(
                 {
                     url: window.location.href,
                 }, function (res) {
@@ -69,7 +69,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 }
             );
 
-            ea.listen(function (data) {
+            ua.listen(function (data) {
                 var checkedData = tree.getChecked('nodeDataId');
                 var ids = [];
                 $.each(checkedData, function (i, v) {

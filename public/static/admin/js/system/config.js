@@ -13,7 +13,7 @@ define(["jquery", "easy-admin", "vue"], function ($, ea, Vue) {
                 $('.show-type-item.' + this.value).show();
             });
 
-            ea.listen();
+            ua.listen();
         }
     };
     return Controller;

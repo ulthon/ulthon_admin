@@ -7,14 +7,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!--[if lt IE 9]>
-    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" href="__STATIC__/admin/css/public.css?v={$version}" media="all">
-
-    <link rel="stylesheet" href="__STATIC__/common/css/theme/index.css?v={$version}">
-
+    {include file='common/_require'/}
     <script>
         window.CONFIG = {
             ADMIN: "{$adminModuleName|default='admin'}",
@@ -25,11 +18,15 @@
             VERSION: "{$version|default='1.0.0'}",
             CSRF_TOKEN: "{:token()}",
         };
+
+        var PATH_CONFIG = {
+            iconLess: "__STATIC__/plugs/font-awesome-4.7.0/less/variables.less",
+        };
+        window.PATH_CONFIG = PATH_CONFIG;
     </script>
-    <script src="__STATIC__/common/js/app.js"></script>
-    <script src="__STATIC__/plugs/layui-v2.8.16/layui.js?v={$version}" charset="utf-8"></script>
-    <script src="__STATIC__/plugs/require-2.3.6/require.js?v={$version}" charset="utf-8"></script>
-    <script src="__STATIC__/config-admin.js?v={$version}" charset="utf-8"></script>
+
+    {$content_js|raw}
+
 </head>
 
 <body>

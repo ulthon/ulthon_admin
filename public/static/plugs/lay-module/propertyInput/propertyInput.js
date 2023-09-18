@@ -1,15 +1,17 @@
-define(['jquery', 'vue'], function ($, Vue) {
+(function () {
     const propertyInputCss = '/static/plugs/lay-module/propertyInput/propertyInput.css';
     const propertyInputHtml = '/static/plugs/lay-module/propertyInput/propertyInput.html';
 
     var propertyInput = function () {
-        var cssElement = document.createElement('link');
+        $(function () {
+            var cssElement = document.createElement('link');
 
-        cssElement.setAttribute('rel', 'stylesheet');
+            cssElement.setAttribute('rel', 'stylesheet');
 
-        cssElement.setAttribute('href', propertyInputCss);
+            cssElement.setAttribute('href', propertyInputCss);
 
-        document.body.appendChild(cssElement);
+            document.body.appendChild(cssElement);
+        });
     };
     var propertyInputTemplate = '';
 
@@ -29,11 +31,11 @@ define(['jquery', 'vue'], function ($, Vue) {
         var defaultOption = {
             placeholder: '请选择',
             required: ''
-        }
+        };
 
         var options = $.extend(defaultOption, data);
 
-        options.value = $.trim(options.value)
+        options.value = $.trim(options.value);
 
 
         app = new Vue({
@@ -48,7 +50,7 @@ define(['jquery', 'vue'], function ($, Vue) {
                             value: ''
                         }
                     ]
-                }
+                };
             },
             watch: {
                 listItem: {
@@ -63,7 +65,7 @@ define(['jquery', 'vue'], function ($, Vue) {
 
             created() {
                 if (this.setting.value) {
-                    if(typeof this.setting.value === 'string'){
+                    if (typeof this.setting.value === 'string') {
                         this.setting.value = JSON.parse(this.setting.value);
                     }
                     this.listItem = this.setting.value;
@@ -81,13 +83,13 @@ define(['jquery', 'vue'], function ($, Vue) {
             methods: {
 
                 removeItem(item, index) {
-                    this.listTag.splice(index, 1)
+                    this.listTag.splice(index, 1);
                 },
                 onAddItem() {
                     this.listItem.push({
                         name: '',
                         value: ''
-                    })
+                    });
                 },
                 onItemNameChange(item, index, event) {
                     this.listItem[index].name = event.target.value;
@@ -99,17 +101,17 @@ define(['jquery', 'vue'], function ($, Vue) {
                 onItemMoveUp(item, index) {
                     var arr = this.listItem;
                     if (index != 0) {
-                        arr[index] = arr.splice(index - 1, 1, arr[index])[0]
+                        arr[index] = arr.splice(index - 1, 1, arr[index])[0];
                     } else {
-                        arr.push(arr.shift())
+                        arr.push(arr.shift());
                     }
                 },
                 onItemMoveDown(item, index) {
                     var arr = this.listItem;
                     if (index != arr.length - 1) {
-                        arr[index] = arr.splice(index + 1, 1, arr[index])[0]
+                        arr[index] = arr.splice(index + 1, 1, arr[index])[0];
                     } else {
-                        arr.unshift(arr.splice(index, 1)[0])
+                        arr.unshift(arr.splice(index, 1)[0]);
                     }
 
                 },
@@ -120,16 +122,16 @@ define(['jquery', 'vue'], function ($, Vue) {
                                 name: '',
                                 value: ''
                             }
-                        ]
+                        ];
                     } else {
-                        this.listItem.splice(index, 1)
+                        this.listItem.splice(index, 1);
                     }
                 },
             }
-        })
+        });
 
         return app;
-    }
+    };
 
-    return new propertyInput();
-})
+    window.propertyInput = new propertyInput();
+})();

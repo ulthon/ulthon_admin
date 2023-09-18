@@ -1,10 +1,4 @@
-/**
- * date:2020/02/28
- * author:Mr.Chung
- * version:2.0
- * description:layuimini tab框架扩展
- */
-define(["jquery"], function ($) {
+(function () {
     var $ = layui.$,
         layer = layui.layer;
 
@@ -486,7 +480,7 @@ define(["jquery"], function ($) {
                 {
                     title: '拟物',
                     className: 'neomorphic',
-                    
+
                 },
             ]
             return listElemStyle;
@@ -606,6 +600,5 @@ define(["jquery"], function ($) {
         }
     };
 
-    return miniTheme;
-})
-    ;
+    window.miniTheme = miniTheme;
+})();

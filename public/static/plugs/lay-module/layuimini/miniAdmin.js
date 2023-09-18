@@ -1,16 +1,11 @@
-/**
- * date:2020/02/27
- * author:Mr.Chung
- * version:2.0
- * description:layuimini 主体框架扩展
- */
-
-
-define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, miniTheme, miniTab) {
+(function () {
 
     var $ = layui.$,
         layer = layui.layer,
-        element = layui.element;
+        element = layui.element
+        miniMenu = window.miniMenu
+        miniTheme = window.miniTheme
+        miniTab = window.miniTab;
 
     if (!/http(s*):\/\//.test(location.href)) {
         var tips = "请先将项目部署至web容器（Apache/Tomcat/Nginx/IIS/等），否则部分数据将无法显示";
@@ -108,7 +103,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
          * @param clearUrl
          */
         renderClear: function (clearUrl) {
-            $('.layuimini-clear').attr('data-href',clearUrl);
+            $('.layuimini-clear').attr('data-href', clearUrl);
         },
 
         /**
@@ -175,7 +170,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                 el.msExitFullscreen();
             } else if (el.oRequestFullscreen) {
                 el.oCancelFullScreen();
-            }else if (el.mozCancelFullScreen) {
+            } else if (el.mozCancelFullScreen) {
                 el.mozCancelFullScreen();
             } else if (el.webkitCancelFullScreen) {
                 el.webkitCancelFullScreen();
@@ -211,7 +206,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
          * @returns {*}
          */
         success: function (title) {
-            return layer.msg(title, {icon: 1, shade: this.shade, scrollbar: false, time: 2000, shadeClose: true});
+            return layer.msg(title, { icon: 1, shade: this.shade, scrollbar: false, time: 2000, shadeClose: true });
         },
 
         /**
@@ -220,7 +215,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
          * @returns {*}
          */
         error: function (title) {
-            return layer.msg(title, {icon: 2, shade: this.shade, scrollbar: false, time: 3000, shadeClose: true});
+            return layer.msg(title, { icon: 2, shade: this.shade, scrollbar: false, time: 3000, shadeClose: true });
         },
 
         /**
@@ -251,7 +246,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
              * 清理
              */
             $('body').on('click', '[data-clear]', function () {
-                var loading = layer.load(0, {shade: false, time: 2 * 1000});
+                var loading = layer.load(0, { shade: false, time: 2 * 1000 });
                 sessionStorage.clear();
 
                 // 判断是否清理服务端
@@ -293,14 +288,14 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                     tips = $(this).prop("innerHTML"),
                     isShow = $('.layuimini-tool i').attr('data-side-fold');
                 if (isShow == 0 && tips) {
-                    tips = "<ul class='layuimini-menu-left-zoom layui-nav layui-nav-tree layui-this'><li class='layui-nav-item layui-nav-itemed'>"+tips+"</li></ul>" ;
+                    tips = "<ul class='layuimini-menu-left-zoom layui-nav layui-nav-tree layui-this'><li class='layui-nav-item layui-nav-itemed'>" + tips + "</li></ul>";
                     window.openTips = layer.tips(tips, $(this), {
                         tips: [2, '#2f4056'],
                         time: 300000,
-                        skin:"popup-tips",
-                        success:function (el) {
-                            var left = $(el).position().left - 10 ;
-                            $(el).css({ left:left });
+                        skin: "popup-tips",
+                        success: function (el) {
+                            var left = $(el).position().left - 10;
+                            $(el).css({ left: left });
                             element.render();
                         }
                     });
@@ -350,5 +345,5 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
 
 
 
-    return miniAdmin;
-});
+    window.miniAdmin = miniAdmin;
+})()

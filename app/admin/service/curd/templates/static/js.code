@@ -14,20 +14,20 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var Controller = {
 
         index: function () {
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 cols: [[
                 {{indexCols}}
                 ]],
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
-            ea.listen();
+            ua.listen();
         },
     };
     return Controller;

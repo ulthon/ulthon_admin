@@ -17,23 +17,23 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
     var Controller = {
 
         index: function () {
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 cols: [[
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID'},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
                     {field: 'title', minWidth: 80, title: '权限名称'},
-                    {field: 'icon', width: 80, title: '图标', templet: ea.table.icon},
+                    {field: 'icon', width: 80, title: '图标', templet: ua.table.icon},
                     {field: 'href', minWidth: 120, title: '快捷链接'},
                     {field: 'remark', minWidth: 80, title: '备注信息'},
-                    {field: 'status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
+                    {field: 'status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ua.table.switch},
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
-                    {width: 250, title: '操作', templet: ea.table.tool, operat: ['edit', 'delete']}
+                    {width: 250, title: '操作', templet: ua.table.tool, operat: ['edit', 'delete']}
                 ]],
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
             iconPickerFa.render({
@@ -49,14 +49,14 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
             });
             autocomplete.render({
                 elem: $('#href')[0],
-                url: ea.url('system.menu/getMenuTips'),
+                url: ua.url('system.menu/getMenuTips'),
                 template_val: '{{d.node}}',
                 template_txt: '{{d.node}} <span class=\'layui-badge layui-bg-gray\'>{{d.title}}</span>',
                 onselect: function (resp) {
                 }
             });
 
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
             iconPickerFa.render({
@@ -72,14 +72,14 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
             });
             autocomplete.render({
                 elem: $('#href')[0],
-                url: ea.url('system.menu/getMenuTips'),
+                url: ua.url('system.menu/getMenuTips'),
                 template_val: '{{d.node}}',
                 template_txt: '{{d.node}} <span class=\'layui-badge layui-bg-gray\'>{{d.title}}</span>',
                 onselect: function (resp) {
                 }
             });
 
-            ea.listen();
+            ua.listen();
         },
     };
     return Controller;

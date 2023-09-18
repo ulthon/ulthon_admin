@@ -1,15 +1,14 @@
-define(['jquery', 'vue'], function ($, Vue) {
+(function () {
     const tableDataCss = '/static/plugs/lay-module/tableData/tableData.css';
     const tableDataHtml = '/static/plugs/lay-module/tableData/tableData.html';
 
     var tableData = function () {
-        var cssElement = document.createElement('link');
-
-        cssElement.setAttribute('rel', 'stylesheet');
-
-        cssElement.setAttribute('href', tableDataCss);
-
-        document.body.appendChild(cssElement);
+        $(function () {
+            var cssElement = document.createElement('link');
+            cssElement.setAttribute('rel', 'stylesheet');
+            cssElement.setAttribute('href', tableDataCss);
+            document.body.appendChild(cssElement);
+        });
     };
     var tableDataTemplate = '';
 
@@ -42,19 +41,19 @@ define(['jquery', 'vue'], function ($, Vue) {
             height: clientHeight,
             placeholder: '请选择',
             selectConfirmCallback: 'onTableDataConfirm',
-        }
+        };
 
         var options = $.extend(defaultOption, data);
 
         var valueField = options.valueField;
 
         if (options.index.indexOf('?') > -1) {
-            options.index += '&'
+            options.index += '&';
         } else {
-            options.index += '?'
+            options.index += '?';
         }
 
-        options.index += 'select_mode=' + options.selectType
+        options.index += 'select_mode=' + options.selectType;
 
         app = new Vue({
             el: elem,
@@ -63,14 +62,14 @@ define(['jquery', 'vue'], function ($, Vue) {
                     setting: options,
                     listSelected: [],
                     value: ''
-                }
+                };
             },
             watch: {
                 listSelected(value) {
 
-                    var valueList = value.map(itemValue => itemValue[valueField])
+                    var valueList = value.map(itemValue => itemValue[valueField]);
 
-                    this.value = valueList.join(',')
+                    this.value = valueList.join(',');
                 }
             },
             created() {
@@ -87,9 +86,9 @@ define(['jquery', 'vue'], function ($, Vue) {
                     op: JSON.stringify({ [options.valueField]: 'in' }),
                     group: options.valueField
                 }, (result) => {
-                    loading.hide()
+                    loading.hide();
                     this.listSelected = result.data;
-                })
+                });
 
             },
             mounted() {
@@ -102,7 +101,7 @@ define(['jquery', 'vue'], function ($, Vue) {
             methods: {
                 openSelectPage() {
 
-                    if(options.readonly == 1){
+                    if (options.readonly == 1) {
                         return false;
                     }
 
@@ -124,17 +123,17 @@ define(['jquery', 'vue'], function ($, Vue) {
                                         this.listSelected = [];
                                     }
 
-                                    var itemFind = this.listSelected.find(itemSelect => itemSelect[valueField] == dataItem[valueField])
+                                    var itemFind = this.listSelected.find(itemSelect => itemSelect[valueField] == dataItem[valueField]);
 
                                     if (itemFind == undefined) {
-                                        this.listSelected.push(dataItem)
+                                        this.listSelected.push(dataItem);
                                     }
 
 
                                 });
                                 this.$forceUpdate();
                                 layer.close(index);
-                            }
+                            };
 
                         },
                         end: function () {
@@ -148,10 +147,10 @@ define(['jquery', 'vue'], function ($, Vue) {
                     this.listSelected.splice(index, 1);
                 }
             }
-        })
+        });
 
         return app;
-    }
+    };
 
-    return new tableData();
-})
+    window.tableData = new tableData();
+})();

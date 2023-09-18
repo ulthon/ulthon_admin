@@ -17,21 +17,21 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var Controller = {
 
         index: function () {
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 totalRow: true,
                 cols: [[
                     { type: "checkbox" },
                     { field: 'id', width: 80, title: 'ID', totalRowText: '合计：' },
                     { field: 'sort', width: 80, title: '排序', edit: 'text' },
-                    { field: 'cate_id', minWidth: 80, title: '商品分类', selectList: ea.getDataBrage('select_list_cate'), selectValue: 'id', selectLabel: 'title', defaultSearchValue: ea.getQueryVariable('cate_id', '') },
-                    { field: 'cate.image', minWidth: 80, title: '分类图片', search: false, templet: ea.table.image },
+                    { field: 'cate_id', minWidth: 80, title: '商品分类', selectList: ua.getDataBrage('select_list_cate'), selectValue: 'id', selectLabel: 'title', defaultSearchValue: ua.getQueryVariable('cate_id', '') },
+                    { field: 'cate.image', minWidth: 80, title: '分类图片', search: false, templet: ua.table.image },
                     { field: 'title', minWidth: 80, title: '商品名称', },
-                    { field: 'logo', minWidth: 80, title: '商品图片', search: false, templet: ea.table.image },
-                    { field: 'market_price', width: 100, title: '市场价', templet: ea.table.price },
+                    { field: 'logo', minWidth: 80, title: '商品图片', search: false, templet: ua.table.image },
+                    { field: 'market_price', width: 100, title: '市场价', templet: ua.table.price },
                     {
-                        field: 'discount_price', width: 120, title: '折扣价', templet: ea.table.price, totalRow: true,
-                        templet: ea.table.copyText,
+                        field: 'discount_price', width: 120, title: '折扣价', templet: ua.table.price, totalRow: true,
+                        templet: ua.table.copyText,
                         valueParser(value) {
                             return '￥' + value
                         },
@@ -53,12 +53,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     },
                     { field: 'virtual_sales', width: 100, title: '虚拟销量' },
                     { field: 'sales', width: 80, title: '销量' },
-                    { field: 'status', title: '状态', width: 85, selectList: { 0: '禁用', 1: '启用' }, templet: ea.table.switch },
+                    { field: 'status', title: '状态', width: 85, selectList: { 0: '禁用', 1: '启用' }, templet: ua.table.switch },
                     { field: 'create_time', minWidth: 80, title: '创建时间', search: 'range' },
                     {
                         width: 250,
                         title: '操作',
-                        templet: ea.table.tool,
+                        templet: ua.table.tool,
                         fixed: 'right',
                         operat: [
                             'edit',
@@ -81,19 +81,19 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 ]],
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
-            ea.listen();
+            ua.listen();
         },
         stock: function () {
-            ea.listen();
+            ua.listen();
         },
         read: function () {
-            ea.listen();
+            ua.listen();
         },
     };
     return Controller;

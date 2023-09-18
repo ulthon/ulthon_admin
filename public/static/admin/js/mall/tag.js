@@ -14,23 +14,23 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var Controller = {
 
         index: function () {
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
                     {field: 'title', title: '名称'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ua.table.tool},
                 ]],
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
-            ea.listen();
+            ua.listen();
         },
     };
     return Controller;

@@ -13,7 +13,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var Controller = {
 
         index: function () {
-            ea.table.render({
+            ua.table.render({
                 init: init,
                 search: false,
                 page: false,
@@ -52,17 +52,17 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     { field: 'node', sort: false, minWidth: 200, align: 'left', title: '系统节点' },
                     { field: 'title', sort: false, minWidth: 80, title: '节点名称 <i class="table-edit-tips color-red">*</i>', edit: 'text' },
                     { field: 'update_time', sort: false, minWidth: 80, title: '更新时间', search: 'range' },
-                    { field: 'is_auth', sort: false, title: '节点控制', width: 85, search: 'select', selectList: { 0: '禁用', 1: '启用' }, templet: ea.table.switch },
+                    { field: 'is_auth', sort: false, title: '节点控制', width: 85, search: 'select', selectList: { 0: '禁用', 1: '启用' }, templet: ua.table.switch },
                 ]],
             });
 
-            ea.listen();
+            ua.listen();
         },
         add: function () {
-            ea.listen();
+            ua.listen();
         },
         edit: function () {
-            ea.listen();
+            ua.listen();
         }
     };
     return Controller;

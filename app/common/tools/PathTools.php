@@ -7,7 +7,7 @@ use think\facade\App;
 class PathTools
 {
     /**
-     * 系统生成的文件,这些文件应当是可以任意删除的
+     * 系统生成的文件,这些文件应当是可以任意删除的.
      *
      * @param string $file_name
      * @return string
@@ -49,6 +49,29 @@ class PathTools
         if (!is_dir($dir_name)) {
             mkdir($dir_name, 0777, true);
         }
+
         return $file_path;
+    }
+
+    public static function mapDir($dir, $callback = null)
+    {
+        $result = [];
+        $cdir = scandir($dir);
+        foreach ($cdir as $key => $value) {
+            if (!in_array($value, ['.', '..'])) {
+                $current_path = $dir . DS . $value;
+                if (is_dir($current_path)) {
+                    $result[$value] = self::mapDir($current_path, $callback);
+                } else {
+                    if (is_callable($callback)) {
+                        $result[$value] = $callback($current_path, $value, $dir);
+                    } else {
+                        $result[$value] = $current_path;
+                    }
+                }
+            }
+        }
+
+        return $result;
     }
 }

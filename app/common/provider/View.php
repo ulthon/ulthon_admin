@@ -36,4 +36,16 @@ class View extends ThinkView
 
         return $this;
     }
+
+    /**
+     * 配置模板引擎.
+     * @param  array  $config 参数
+     * @return $this
+     */
+    public function config(array $config)
+    {
+        $this->driver()->config($config);
+
+        return $this;
+    }
 }

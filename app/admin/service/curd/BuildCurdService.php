@@ -1473,11 +1473,11 @@ class BuildCurdService
             $var_name = $this->getFieldVarName($field);
 
             if ($val['formType'] == 'image') {
-                $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.image}";
+                $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ua.table.image}";
             } elseif ($val['formType'] == 'images') {
                 continue;
             } elseif ($val['formType'] == 'file') {
-                $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.url}";
+                $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ua.table.url}";
             } elseif ($val['formType'] == 'files') {
                 continue;
             } elseif ($val['formType'] == 'editor') {
@@ -1486,18 +1486,18 @@ class BuildCurdService
                 continue;
             } elseif (in_array($field, $this->switchFields)) {
                 if (isset($val['define']) && !empty($val['define'])) {
-                    $templateValue = "{field: '{$field}', search: 'select', selectList: ea.getDataBrage('{$var_name}'), title: '{$val['comment']}', templet: ea.table.switch}";
+                    $templateValue = "{field: '{$field}', search: 'select', selectList: ua.getDataBrage('{$var_name}'), title: '{$val['comment']}', templet: ua.table.switch}";
                 } else {
-                    $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.switch}";
+                    $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ua.table.switch}";
                 }
             } elseif (in_array($val['formType'], ['select', 'checkbox', 'radio', 'switch'])) {
                 if (isset($val['define']) && !empty($val['define'])) {
-                    $templateValue = "{field: '{$field}', search: 'select', selectList: ea.getDataBrage('{$var_name}'), title: '{$val['comment']}'}";
+                    $templateValue = "{field: '{$field}', search: 'select', selectList: ua.getDataBrage('{$var_name}'), title: '{$val['comment']}'}";
                 } else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}'}";
                 }
             } elseif (in_array($field, ['remark'])) {
-                $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.text}";
+                $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ua.table.text}";
             } elseif (in_array($field, $this->sortFields)) {
                 $templateValue = "{field: '{$field}', title: '{$val['comment']}', edit: 'text'}";
             } else {
@@ -1512,11 +1512,11 @@ class BuildCurdService
             $table = Str::camel($table);
             foreach ($tableVal['tableColumns'] as $field => $val) {
                 if ($val['formType'] == 'image') {
-                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ea.table.image}";
+                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ua.table.image}";
                 } elseif ($val['formType'] == 'images') {
                     continue;
                 } elseif ($val['formType'] == 'file') {
-                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ea.table.url}";
+                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ua.table.url}";
                 } elseif ($val['formType'] == 'files') {
                     continue;
                 } elseif ($val['formType'] == 'editor') {
@@ -1526,9 +1526,9 @@ class BuildCurdService
                 } elseif ($val['formType'] == 'select') {
                     $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}'}";
                 } elseif (in_array($field, ['remark'])) {
-                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ea.table.text}";
+                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ua.table.text}";
                 } elseif (in_array($field, $this->switchFields)) {
-                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ea.table.switch}";
+                    $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', templet: ua.table.switch}";
                 } elseif (in_array($field, $this->sortFields)) {
                     $templateValue = "{field: '{$table}.{$field}', title: '{$val['comment']}', edit: 'text'}";
                 } else {
@@ -1539,7 +1539,7 @@ class BuildCurdService
             }
         }
 
-        $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool , fixed:'right'},\r");
+        $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ua.table.tool , fixed:'right'},\r");
 
         $jsValue = $this->replaceTemplate(
             $this->getTemplate("static{$this->DS}js"),
