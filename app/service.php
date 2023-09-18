@@ -1,7 +1,14 @@
 <?php
-declare (strict_types=1);
 
-return [
+declare(strict_types=1);
+
+$service_default = [
     0 => 'think\\captcha\\CaptchaService',
     1 => 'think\\app\\Service',
 ];
+
+$service_common = include_once __DIR__ . '/app/common/app/service.php';
+
+$service = array_merge($service_default, $service_common);
+
+return ksort($service);
