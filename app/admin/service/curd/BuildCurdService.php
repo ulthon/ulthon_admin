@@ -1,6 +1,5 @@
 <?php
 
-
 namespace app\admin\service\curd;
 
 use app\admin\service\curd\exceptions\TableException;
@@ -10,31 +9,30 @@ use think\helper\Str;
 
 /**
  * 快速构建系统CURD
- * Class BuildCurd
+ * Class BuildCurd.
  */
 class BuildCurdService
 {
-
     /**
-     * 当前目录
+     * 当前目录.
      * @var string
      */
     protected $dir;
 
     /**
-     * 应用目录
+     * 应用目录.
      * @var string
      */
     protected $rootDir;
 
     /**
-     * 分隔符
+     * 分隔符.
      * @var string
      */
     protected $DS = DIRECTORY_SEPARATOR;
 
     /**
-     * 数据库名
+     * 数据库名.
      * @var string
      */
     protected $dbName;
@@ -46,92 +44,91 @@ class BuildCurdService
     protected $tablePrefix = 'ul';
 
     /**
-     * 主表
+     * 主表.
      * @var string
      */
     protected $table;
 
     /**
-     * 表注释名
+     * 表注释名.
      * @var string
      */
     protected $tableComment;
 
     /**
-     * 主表列信息
+     * 主表列信息.
      * @var array
      */
     protected $tableColumns;
 
     /**
-     * 数据列表可见字段
+     * 数据列表可见字段.
      * @var string
      */
     protected $fields;
 
     /**
-     * 是否软删除模式
+     * 是否软删除模式.
      * @var bool
      */
     protected $delete = false;
 
     /**
-     * 是否强制覆盖
+     * 是否强制覆盖.
      * @var bool
      */
     protected $force = false;
 
     /**
-     * 关联模型
+     * 关联模型.
      * @var array
      */
     protected $relationArray = [];
 
     /**
-     * 控制器对应的URL
+     * 控制器对应的URL.
      * @var string
      */
     protected $controllerUrl;
 
     /**
-     * 生成的控制器名
+     * 生成的控制器名.
      * @var string
      */
     protected $controllerFilename;
 
-
     /**
-     * 控制器命名
+     * 控制器命名.
      * @var string
      */
     protected $controllerName;
 
     /**
-     * 控制器命名空间
+     * 控制器命名空间.
      * @var string
      */
     protected $controllerNamespace;
 
     /**
-     * 视图名
+     * 视图名.
      * @var string
      */
     protected $viewFilename;
 
     /**
-     * js文件名
+     * js文件名.
      * @var string
      */
     protected $jsFilename;
 
     /**
-     * 生成的模型文件名
+     * 生成的模型文件名.
      * @var string
      */
     protected $modelFilename;
 
     /**
-     * 主表模型命名
+     * 主表模型命名.
      * @var string
      */
     protected $modelName;
@@ -179,49 +176,49 @@ class BuildCurdService
     protected $dateFieldSuffix = ['time', 'date'];
 
     /**
-     * 开关组件字段
+     * 开关组件字段.
      * @var array
      */
     protected $switchFields = ['status'];
 
     /**
-     * 下拉选择字段
+     * 下拉选择字段.
      * @var array
      */
     protected $selectFileds = [];
 
     /**
-     * 富文本字段
+     * 富文本字段.
      * @var array
      */
     protected $editorFields = [];
 
     /**
-     * 排序字段
+     * 排序字段.
      * @var array
      */
     protected $sortFields = [];
 
     /**
-     * 忽略字段
+     * 忽略字段.
      * @var array
      */
     protected $ignoreFields = ['update_time', 'delete_time'];
 
     /**
-     * 外键字段
+     * 外键字段.
      * @var array
      */
     protected $foreignKeyFields = [];
 
     /**
-     * 相关生成文件
+     * 相关生成文件.
      * @var array
      */
     protected $fileList = [];
 
     /**
-     * 表单类型
+     * 表单类型.
      * @var array
      */
     protected $formTypeArray = ['text', 'image', 'images', 'file', 'files', 'select', 'switch', 'date', 'editor', 'textarea', 'checkbox', 'radio', 'relation', 'table', 'city', 'tag'];
@@ -236,6 +233,7 @@ class BuildCurdService
         $this->dbName = config('database.connections.mysql.database');
         $this->dir = __DIR__;
         $this->rootDir = root_path();
+
         return $this;
     }
 
@@ -251,9 +249,8 @@ class BuildCurdService
         return $this;
     }
 
-
     /**
-     * 设置主表
+     * 设置主表.
      * @param $table
      * @return $this
      * @throws TableException
@@ -262,7 +259,6 @@ class BuildCurdService
     {
         $this->table = $table;
         try {
-
             // 获取表列注释
             $colums = Db::query("SHOW FULL COLUMNS FROM {$this->tablePrefix}{$this->table}");
 
@@ -270,9 +266,9 @@ class BuildCurdService
                 $colum = [
                     'type' => $vo['Type'],
                     'comment' => !empty($vo['Comment']) ? $vo['Comment'] : $vo['Field'],
-                    'required' => $vo['Null'] == "NO" ? true : false,
+                    'required' => $vo['Null'] == 'NO' ? true : false,
                     'default' => $vo['Default'],
-                    'field' => $vo['Field']
+                    'field' => $vo['Field'],
                 ];
 
                 // 格式化列数据
@@ -291,7 +287,6 @@ class BuildCurdService
         } catch (\Exception $e) {
             throw new TableException($e->getMessage());
         }
-
 
         $this->controllerFilename = $this->getTableControllerName($this->table);
 
@@ -332,7 +327,7 @@ class BuildCurdService
     }
 
     /**
-     * 设置关联表
+     * 设置关联表.
      * @param $relationTable
      * @param $foreignKey
      * @param null $primaryKey
@@ -368,7 +363,7 @@ class BuildCurdService
                     'type' => $vo['Type'],
                     'comment' => $vo['Comment'],
                     'default' => $vo['Default'],
-                    'field' => $vo['Field']
+                    'field' => $vo['Field'],
                 ];
 
                 $this->buildColum($colum);
@@ -402,11 +397,12 @@ class BuildCurdService
         } catch (\Exception $e) {
             throw new TableException($e->getMessage());
         }
+
         return $this;
     }
 
     /**
-     * 设置控制器名
+     * 设置控制器名.
      * @param $controllerFilename
      * @return $this
      */
@@ -414,11 +410,12 @@ class BuildCurdService
     {
         $this->controllerFilename = str_replace('/', $this->DS, $controllerFilename);
         $this->buildViewJsUrl();
+
         return $this;
     }
 
     /**
-     * 设置模型名
+     * 设置模型名.
      * @param $modelFilename
      * @return $this
      */
@@ -426,39 +423,43 @@ class BuildCurdService
     {
         $this->modelFilename = str_replace('/', $this->DS, $modelFilename);
         $this->buildViewJsUrl();
+
         return $this;
     }
 
     /**
-     * 设置显示字段
+     * 设置显示字段.
      * @param $fields
      * @return $this
      */
     public function setFields($fields)
     {
         $this->fields = $fields;
+
         return $this;
     }
 
     /**
-     * 设置删除模式
+     * 设置删除模式.
      * @param $delete
      * @return $this
      */
     public function setDelete($delete)
     {
         $this->delete = $delete;
+
         return $this;
     }
 
     /**
-     * 设置是否强制替换
+     * 设置是否强制替换.
      * @param $force
      * @return $this
      */
     public function setForce($force)
     {
         $this->force = $force;
+
         return $this;
     }
 
@@ -470,6 +471,7 @@ class BuildCurdService
     public function setCheckboxFieldSuffix($array)
     {
         $this->checkboxFieldSuffix = array_merge($this->checkboxFieldSuffix, $array);
+
         return $this;
     }
 
@@ -481,6 +483,7 @@ class BuildCurdService
     public function setRadioFieldSuffix($array)
     {
         $this->radioFieldSuffix = array_merge($this->radioFieldSuffix, $array);
+
         return $this;
     }
 
@@ -492,6 +495,7 @@ class BuildCurdService
     public function setImageFieldSuffix($array)
     {
         $this->imageFieldSuffix = array_merge($this->imageFieldSuffix, $array);
+
         return $this;
     }
 
@@ -503,6 +507,7 @@ class BuildCurdService
     public function setImagesFieldSuffix($array)
     {
         $this->imagesFieldSuffix = array_merge($this->imagesFieldSuffix, $array);
+
         return $this;
     }
 
@@ -514,6 +519,7 @@ class BuildCurdService
     public function setFileFieldSuffix($array)
     {
         $this->fileFieldSuffix = array_merge($this->fileFieldSuffix, $array);
+
         return $this;
     }
 
@@ -525,6 +531,7 @@ class BuildCurdService
     public function setFilesFieldSuffix($array)
     {
         $this->filesFieldSuffix = array_merge($this->filesFieldSuffix, $array);
+
         return $this;
     }
 
@@ -536,55 +543,60 @@ class BuildCurdService
     public function setDateFieldSuffix($array)
     {
         $this->dateFieldSuffix = array_merge($this->dateFieldSuffix, $array);
+
         return $this;
     }
 
     /**
-     * 设置开关字段
+     * 设置开关字段.
      * @param $array
      * @return $this
      */
     public function setSwitchFields($array)
     {
         $this->switchFields = array_merge($this->switchFields, $array);
+
         return $this;
     }
 
     /**
-     * 设置下拉选择字段
+     * 设置下拉选择字段.
      * @param $array
      * @return $this
      */
     public function setSelectFileds($array)
     {
         $this->selectFileds = array_merge($this->selectFileds, $array);
+
         return $this;
     }
 
     /**
-     * 设置排序字段
+     * 设置排序字段.
      * @param $array
      * @return $this
      */
     public function setSortFields($array)
     {
         $this->sortFields = array_merge($this->sortFields, $array);
+
         return $this;
     }
 
     /**
-     * 设置忽略字段
+     * 设置忽略字段.
      * @param $array
      * @return $this
      */
     public function setIgnoreFields($array)
     {
         $this->ignoreFields = array_merge($this->ignoreFields, $array);
+
         return $this;
     }
 
     /**
-     * 获取相关的文件
+     * 获取相关的文件.
      * @return array
      */
     public function getFileList()
@@ -592,10 +604,8 @@ class BuildCurdService
         return $this->fileList;
     }
 
-
-
     /**
-     * 构建基础视图、JS、URL
+     * 构建基础视图、JS、URL.
      * @return $this
      */
     protected function buildViewJsUrl()
@@ -615,19 +625,16 @@ class BuildCurdService
         $namespaceSuffix = implode('\\', $namespaceArray);
         $this->controllerNamespace = empty($namespaceSuffix) ? "app\admin\controller" : "app\admin\controller\\{$namespaceSuffix}";
 
-
-
         return $this;
     }
 
     /**
-     * 构建字段
+     * 构建字段.
      * @return $this
      */
     protected function buildStructure()
     {
         foreach ($this->tableColumns as $key => $val) {
-
             // 排序
             if (in_array($key, ['sort'])) {
                 $this->sortFields[] = $key;
@@ -638,27 +645,27 @@ class BuildCurdService
                 $this->editorFields[] = $key;
             }
         }
+
         return $this;
     }
 
     /**
-     * 构建必填
+     * 构建必填.
      * @param $require
      * @return string
      */
     protected function buildRequiredHtml($require)
     {
-        return $require ? 'lay-verify="required"' : "";
+        return $require ? 'lay-verify="required"' : '';
     }
 
     /**
-     * 构建初始化字段信息
+     * 构建初始化字段信息.
      * @param $colum
      * @return mixed
      */
     protected function buildColum(&$colum)
     {
-
         $string = $colum['comment'];
 
         // 处理定义类型
@@ -706,7 +713,7 @@ class BuildCurdService
                 $relation_model_name = '\\app\\admin\\model\\' . Str::studly($colum['define']['table']);
                 $colum['property_type'] = $relation_model_name;
                 $colum['property_name'] = Str::camel($colum['define']['table']);
-            } else if (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox',])) {
+            } elseif (in_array($colum['formType'], ['select', 'switch', 'radio', 'checkbox'])) {
                 $data_list = '';
 
                 foreach ($colum['define'] as $define_key => $define_value) {
@@ -715,20 +722,18 @@ class BuildCurdService
                 $data_list = substr($data_list, 0, -1);
                 $colum['data_list'] = $data_list;
             }
-
         }
 
         return $colum;
     }
 
     /**
-     * 构建下拉控制器
+     * 构建下拉控制器.
      * @param $field
      * @return mixed
      */
     protected function buildSelectController($field)
     {
-
         $name = $this->getFieldConstentName($field);
         $var_name = $this->getFieldVarName($field);
 
@@ -739,18 +744,18 @@ class BuildCurdService
                 'var_name' => $var_name,
             ]
         );
+
         return $selectCode;
     }
 
     /**
-     * 构架下拉模型
+     * 构架下拉模型.
      * @param $field
      * @param $array
      * @return mixed
      */
     protected function buildSelectModel($field, $array)
     {
-
         $name = $this->getFieldConstentName($field);
 
         $values = '[';
@@ -765,11 +770,12 @@ class BuildCurdService
                 'values' => $values,
             ]
         );
+
         return $selectCode;
     }
 
     /**
-     * 构建下拉框视图
+     * 构建下拉框视图.
      * @param $field
      * @param string $select
      * @return mixed
@@ -784,26 +790,21 @@ class BuildCurdService
                 'select' => $select,
             ]
         );
+
         return $optionCode;
     }
 
     protected function buildCityView($field, $options, $value)
     {
-
-
         $default_define = [
             'comment' => $options['comment'],
             'field' => $field,
             'required' => $this->buildRequiredHtml($options['required']),
             'value' => $value,
-            'level' => ''
+            'level' => '',
         ];
 
-
-
-
         $define = array_merge($default_define, $options['define']);
-
 
         $formatTargetList = [];
         $formatTargetList['name'] = 1;
@@ -825,7 +826,6 @@ class BuildCurdService
 
         $define['submit_field_content'] = $submit_field_content;
 
-
         $city_main_code = $this->replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}cityMain"),
             $define
@@ -835,7 +835,7 @@ class BuildCurdService
     }
 
     /**
-     * 构建表格选择器视图
+     * 构建表格选择器视图.
      * @param $field
      * @param string $select
      * @return mixed
@@ -877,7 +877,7 @@ class BuildCurdService
     }
 
     /**
-     * 构建单选框视图
+     * 构建单选框视图.
      * @param $field
      * @param string $select
      * @return mixed
@@ -893,11 +893,12 @@ class BuildCurdService
                 'select' => $select,
             ]
         );
+
         return $optionCode;
     }
 
     /**
-     * 构建多选框视图
+     * 构建多选框视图.
      * @param $field
      * @param string $select
      * @return mixed
@@ -913,16 +914,16 @@ class BuildCurdService
                 'select' => $select,
             ]
         );
+
         return $optionCode;
     }
 
     /**
-     * 初始化
+     * 初始化.
      * @return $this
      */
     public function render()
     {
-
         // 初始化数据
         $this->renderData();
 
@@ -942,15 +943,13 @@ class BuildCurdService
     }
 
     /**
-     * 初始化数据
+     * 初始化数据.
      * @return $this
      */
     protected function renderData()
     {
-
         // 主表
         foreach ($this->tableColumns as $field => $val) {
-
             // 过滤字段
             if (in_array($field, $this->ignoreFields)) {
                 unset($this->tableColumns[$field]);
@@ -1018,7 +1017,6 @@ class BuildCurdService
         // 关联表
         foreach ($this->relationArray as $table => $tableVal) {
             foreach ($tableVal['tableColumns'] as $field => $val) {
-
                 // 过滤字段
                 if (in_array($field, $this->ignoreFields)) {
                     unset($this->relationArray[$table]['tableColumns'][$field]);
@@ -1088,7 +1086,7 @@ class BuildCurdService
     }
 
     /**
-     * 初始化控制器
+     * 初始化控制器.
      * @return $this
      */
     protected function renderController()
@@ -1142,11 +1140,12 @@ class BuildCurdService
             ]
         );
         $this->fileList[$controllerFile] = $controllerValue;
+
         return $this;
     }
 
     /**
-     * 初始化模型
+     * 初始化模型.
      * @return $this
      */
     protected function renderModel()
@@ -1184,8 +1183,6 @@ class BuildCurdService
         }
 
         $doc_content = substr($doc_content, 0, -1);
-
-
 
         $extendNamespaceArray = explode($this->DS, $this->modelFilename);
         $extendNamespace = null;
@@ -1241,11 +1238,12 @@ class BuildCurdService
             );
             $this->fileList[$relationModelFile] = $relationModelValue;
         }
+
         return $this;
     }
 
     /**
-     * 初始化视图
+     * 初始化视图.
      * @return $this
      */
     protected function renderView()
@@ -1264,7 +1262,6 @@ class BuildCurdService
         $viewAddFile = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}add.html";
         $addFormList = '';
         foreach ($this->tableColumns as $field => $val) {
-
             if (in_array($field, ['id', 'create_time'])) {
                 continue;
             }
@@ -1316,8 +1313,6 @@ class BuildCurdService
             } elseif (in_array($field, ['remark']) || $val['formType'] == 'textarea') {
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
             } elseif ($val['formType'] == 'relation') {
-
-
                 $val['define']['type'] = 'radio';
                 $val['define']['valueField'] = 'id';
                 $val['define']['fieldName'] = $val['define']['relationBindSelect'];
@@ -1334,7 +1329,6 @@ class BuildCurdService
             } elseif ($val['formType'] == 'tag') {
                 $templateFile = "view{$this->DS}module{$this->DS}tag";
             }
-
 
             $addFormList .= $this->replaceTemplate(
                 $this->getTemplate($templateFile),
@@ -1356,12 +1350,10 @@ class BuildCurdService
         );
         $this->fileList[$viewAddFile] = $viewAddValue;
 
-
         // 编辑页面
         $viewEditFile = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}edit.html";
         $editFormList = '';
         foreach ($this->tableColumns as $field => $val) {
-
             if (in_array($field, ['id', 'create_time'])) {
                 continue;
             }
@@ -1415,8 +1407,6 @@ class BuildCurdService
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
                 $value = '{$row.' . $field . '|raw|default=\'\'}';
             } elseif ($val['formType'] == 'relation') {
-
-
                 $val['define']['type'] = 'radio';
                 $val['define']['valueField'] = 'id';
                 $val['define']['fieldName'] = $val['define']['relationBindSelect'];
@@ -1458,18 +1448,17 @@ class BuildCurdService
     }
 
     /**
-     * 初始化JS
+     * 初始化JS.
      * @return $this
      */
     protected function renderJs()
     {
-        $jsFile = "{$this->rootDir}public{$this->DS}static{$this->DS}admin{$this->DS}js{$this->DS}{$this->jsFilename}.js";
+        $index_js_file = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}index.js";
 
         $indexCols = "    {type: 'checkbox'},\r";
 
         // 主表字段
         foreach ($this->tableColumns as $field => $val) {
-
             $var_name = $this->getFieldVarName($field);
 
             if ($val['formType'] == 'image') {
@@ -1541,19 +1530,38 @@ class BuildCurdService
 
         $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ua.table.tool , fixed:'right'},\r");
 
-        $jsValue = $this->replaceTemplate(
-            $this->getTemplate("static{$this->DS}js"),
+        $js_index = $this->replaceTemplate(
+            $this->getTemplate("js{$this->DS}index"),
             [
-                'controllerUrl' => $this->controllerUrl,
                 'indexCols' => $indexCols,
             ]
         );
-        $this->fileList[$jsFile] = $jsValue;
+        $this->fileList[$index_js_file] = $js_index;
+
+        $js_common_file = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}_common.js";
+
+        $js_common = $this->replaceTemplate(
+            $this->getTemplate("js{$this->DS}_common"),
+            [
+                'controllerUrl' => $this->controllerUrl,
+            ]
+        );
+        $this->fileList[$js_common_file] = $js_common;
+
+        $js_add_file = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}add.js";
+        $js_edit_file = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}edit.js";
+
+        $js_add = $this->replaceTemplate($this->getTemplate("js{$this->DS}add"));
+        $this->fileList[$js_add_file] = $js_add;
+
+        $js_edit = $this->replaceTemplate($this->getTemplate("js{$this->DS}edit"));
+        $this->fileList[$js_edit_file] = $js_edit;
+        
         return $this;
     }
 
     /**
-     * 检测文件
+     * 检测文件.
      * @return $this
      */
     protected function check()
@@ -1567,18 +1575,18 @@ class BuildCurdService
                 throw new FileException("文件已存在：{$key}");
             }
         }
+
         return $this;
     }
 
     /**
-     * 开始生成
+     * 开始生成.
      * @return array
      */
     public function create()
     {
         $this->check();
         foreach ($this->fileList as $key => $val) {
-
             // 判断文件夹是否存在,不存在就创建
             $fileArray = explode($this->DS, $key);
             array_pop($fileArray);
@@ -1590,11 +1598,12 @@ class BuildCurdService
             // 写入
             file_put_contents($key, $val);
         }
+
         return array_keys($this->fileList);
     }
 
     /**
-     * 开始删除
+     * 开始删除.
      * @return array
      */
     public function delete()
@@ -1606,6 +1615,7 @@ class BuildCurdService
                 $deleteFile[] = $key;
             }
         }
+
         return $deleteFile;
     }
 
@@ -1622,11 +1632,12 @@ class BuildCurdService
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * 格式化表单行
+     * 格式化表单行.
      * @param $value
      * @return string
      */
@@ -1636,7 +1647,7 @@ class BuildCurdService
     }
 
     /**
-     * 获取对应的模板信息
+     * 获取对应的模板信息.
      * @param $name
      * @return false|string
      */
@@ -1663,33 +1674,35 @@ class BuildCurdService
         $field = Str::studly($field);
         $name = "SelectList{$field}";
         $name = Str::snake($name);
+
         return $name;
     }
+
     public function getFieldMethodName($field)
     {
         $field = Str::studly($field);
         $name = "getList{$field}";
+
         return $name;
     }
 
     /**
-     * 模板值替换
+     * 模板值替换.
      * @param $string
      * @param $array
      * @return mixed
      */
-    public function replaceTemplate($string, $array)
+    public function replaceTemplate($string, $array = [])
     {
         foreach ($array as $key => $val) {
-            $string = str_replace("{{" . $key . "}}", $val, $string);
+            $string = str_replace('{{' . $key . '}}', $val, $string);
         }
+
         return $string;
     }
 
     public function fieldTypeToVarType($type)
     {
-
-
         $type_prefix_map = [
             'BIT' => 'bool',
             'TINYINT' => 'int',
@@ -1724,7 +1737,6 @@ class BuildCurdService
             'SET' => 'string',
             'JSON' => 'string',
         ];
-
 
         foreach ($type_prefix_map as $sql_type => $var_type) {
             if (Str::startsWith(strtolower($type), strtolower($sql_type))) {

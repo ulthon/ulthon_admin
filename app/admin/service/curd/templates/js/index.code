@@ -1,0 +1,10 @@
+$(function(){
+     ua.table.render({
+        init: init,
+        cols: [[
+        {{indexCols}}
+        ]],
+    });
+
+    ua.listen();
+})
