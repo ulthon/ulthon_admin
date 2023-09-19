@@ -31,7 +31,8 @@
         "league/flysystem": "^3.0",
         "overtrue/flysystem-qiniu": "^3.0",
         "overtrue/flysystem-cos": "^5.0",
-        "iidestiny/flysystem-oss": "^4.0"
+        "iidestiny/flysystem-oss": "^4.0",
+        "czproject/git-php": "^4.2"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"

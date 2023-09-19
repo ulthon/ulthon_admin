@@ -14,12 +14,12 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.29';
+    public const VERSION = 'v2.0.30-beta';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '新增拟物风格特效皮肤',
+        '修复文件',
     ];
 
     protected function configure()

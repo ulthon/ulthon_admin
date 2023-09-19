@@ -6,6 +6,7 @@
 use app\common\command\admin\Clear;
 use app\common\command\admin\Version;
 use app\common\command\admin\ResetPassword;
+use app\common\command\admin\Update;
 use app\common\command\curd\Migrate;
 use app\common\command\Timer;
 
@@ -19,6 +20,7 @@ return [
         Timer::class,
         Version::class,
         Migrate::class,
-        Clear::class
+        Clear::class,
+        Update::class
     ],
 ];

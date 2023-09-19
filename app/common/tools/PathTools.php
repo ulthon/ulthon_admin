@@ -53,6 +53,30 @@ class PathTools
         return $file_path;
     }
 
+    public static function removeDir($dir_name)
+    {
+        if (!is_dir($dir_name)) {
+            return false;
+        }
+
+        if (strpos(strtolower(PHP_OS), 'win') === 0) {
+            $dir_name = static::formatWinPath($dir_name);
+            exec("rd /s /q {$dir_name}", $output);
+
+            return;
+        }
+
+        $handle = opendir($dir_name);
+        while (false !== ($file = readdir($handle))) {
+            if ($file != '.' && $file != '..') {
+                is_dir("$dir_name/$file") ? self::removeDir("$dir_name/$file") : unlink("$dir_name/$file");
+            }
+        }
+        closedir($handle);
+
+        return rmdir($dir_name);
+    }
+
     public static function mapDir($dir, $callback = null)
     {
         $result = [];
@@ -73,5 +97,10 @@ class PathTools
         }
 
         return $result;
+    }
+
+    public static function formatWinPath($content)
+    {
+        return str_replace('/', '\\', $content);
     }
 }
