@@ -14,7 +14,7 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.30-beta';
+    public const VERSION = 'v2.0.30-dev';
 
     public const LAYUI_VERSION = '2.8.16';
 

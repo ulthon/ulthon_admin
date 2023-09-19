@@ -2,6 +2,7 @@
 
 namespace app\common\tools;
 
+use Diff;
 use think\facade\App;
 
 class PathTools
@@ -102,5 +103,51 @@ class PathTools
     public static function formatWinPath($content)
     {
         return str_replace('/', '\\', $content);
+    }
+
+    public static function compareFiles($a, $b)
+    {
+        $text_mime_type = [];
+        $text_mime_type[] = 'text/html';
+        $text_mime_type[] = 'text/plain';
+        $text_mime_type[] = 'text/css';
+        $text_mime_type[] = 'image/svg+xml';
+        $text_mime_type[] = 'text/x-php';
+        $text_mime_type[] = 'application/json';
+        $text_mime_type[] = 'application/x-wine-extension-ini';
+
+        if (in_array(mime_content_type($a), $text_mime_type) && in_array(mime_content_type($b), $text_mime_type)) {
+            // 如果都是文本文件，则执行内容对比
+            $diff = new Diff(file_get_contents($a), file_get_contents($b));
+            $diff_content = $diff->getGroupedOpcodes();
+
+            if (!empty($diff_content)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        // Check if filesize is different
+        if (filesize($a) !== filesize($b)) {
+            return false;
+        }
+
+        // Check if content is different
+        $ah = fopen($a, 'rb');
+        $bh = fopen($b, 'rb');
+
+        $result = true;
+        while (!feof($ah)) {
+            if (fread($ah, 8192) != fread($bh, 8192)) {
+                $result = false;
+                break;
+            }
+        }
+
+        fclose($ah);
+        fclose($bh);
+
+        return $result;
     }
 }
