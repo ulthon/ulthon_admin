@@ -11,4 +11,6 @@ $service_common = include_once __DIR__ . '/common/app/service.php';
 
 $service = array_merge($service_default, $service_common);
 
-return ksort($service);
+ksort($service);
+
+return $service;

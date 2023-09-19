@@ -69,6 +69,7 @@ class Ajax extends AdminController
 
             $result = $upload_service->save($data['file']);
         } catch (\Exception $e) {
+            throw $e;
             $this->error($e->getMessage());
         }
 

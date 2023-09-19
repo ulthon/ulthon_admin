@@ -51,7 +51,7 @@
         <label class="layui-form-label required">数据中心</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_endpoint" class="layui-input" lay-verify="required" lay-reqtext="请输入数据中心" placeholder="请输入数据中心" value="{:sysconfig('upload','alioss_endpoint')}">
-            <tip>例子：https://oss-cn-shenzhen.aliyuncs.com</tip>
+            <tip>endpoint，例子：oss-cn-shenzhen.aliyuncs.com</tip>
         </div>
     </div>
 
@@ -67,7 +67,7 @@
         <label class="layui-form-label required">访问域名</label>
         <div class="layui-input-block">
             <input type="text" name="alioss_domain" class="layui-input" lay-verify="required" lay-reqtext="请输入访问域名" placeholder="请输入访问域名" value="{:sysconfig('upload','alioss_domain')}">
-            <tip>例子：ulthon-admin.oss-cn-shenzhen.aliyuncs.com</tip>
+            <tip>例子：http://ulthon-admin.oss-cn-shenzhen.aliyuncs.com</tip>
         </div>
     </div>
 
@@ -106,7 +106,7 @@
         <label class="layui-form-label required">存储桶名称</label>
         <div class="layui-input-block">
             <input type="text" name="txcos_bucket" class="layui-input" lay-verify="required" lay-reqtext="请输入存储桶名称" placeholder="请输入存储桶名称" value="{:sysconfig('upload','txcos_bucket')}">
-            <tip>例子：ulthon-admin-1251997243</tip>
+            <tip>例子：ulthon-admin ,注意不需要拼接appid等数字</tip>
         </div>
     </div>
     <div class="layui-form-item show-type-item txcos">

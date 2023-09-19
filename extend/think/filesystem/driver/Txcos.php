@@ -26,10 +26,7 @@ class Txcos extends Driver
             'bucket' => $bucket,
 
             // 可选，如果 bucket 为私有访问请打开此项
-            'signed_url' => false,
-
-            // 可选，是否使用 https，默认 false
-            'use_https' => true,
+            'signed_url' => false
         ];
 
         $adapter = new CosAdapter($config);

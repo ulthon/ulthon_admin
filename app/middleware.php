@@ -15,4 +15,6 @@ $middleware_common = include_once __DIR__ . '/common/app/middleware.php';
 
 $middleware = array_merge($middleware_default, $middleware_common);
 
-return ksort($middleware);
+ksort($middleware);
+
+return $middleware;

@@ -24,14 +24,14 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-view": "^2.0",
         "topthink/think-captcha": "^3.0",
-        "topthink/think-filesystem": "^2.0",
         "topthink/think-migration": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
         "doctrine/annotations": "^1.13",
-        "overtrue/flysystem-qiniu": "^2.0",
-        "overtrue/flysystem-cos": "^4.0",
-        "iidestiny/flysystem-oss": "^3.0"
+        "league/flysystem": "^3.0",
+        "overtrue/flysystem-qiniu": "^3.0",
+        "overtrue/flysystem-cos": "^5.0",
+        "iidestiny/flysystem-oss": "^4.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
