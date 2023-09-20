@@ -1,9 +1,8 @@
 <?php
 
-
 use app\admin\model\SystemConfig;
-use app\admin\service\TriggerService;
 use app\admin\service\InitAdminService;
+use app\admin\service\TriggerService;
 use think\migration\Seeder;
 
 class InitBaseAdminData extends Seeder
@@ -16,9 +15,8 @@ class InitBaseAdminData extends Seeder
      * More information on writing seeders is available here:
      * http://docs.phinx.org/en/latest/seeding.html
      */
-    public function run()
+    public function run():void
     {
-
         $output = $this->getOutput();
 
         TriggerService::updateSysconfig();
@@ -26,9 +24,9 @@ class InitBaseAdminData extends Seeder
         $install_lock = sysconfig('base_admin_install', true, 0);
 
         if ($install_lock == 1) {
-
             $output->writeln('系统已初始化，跳过当前程序');
-            return false;
+
+            return;
         }
 
         $model_config = SystemConfig::where('group', 'system')

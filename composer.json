@@ -24,7 +24,6 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-view": "^2.0",
         "topthink/think-captcha": "^3.0",
-        "topthink/think-migration": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
         "doctrine/annotations": "^1.13",
@@ -40,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "app\\": "app"
+            "app\\": "app",
+            "Phinx\\": "extend/phinx"
         },
         "psr-0": {
             "": "extend/"
