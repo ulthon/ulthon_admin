@@ -41,7 +41,7 @@ class Update extends Command
 
         $version_file_regx = "/\bconst VERSION\s*=\s*'[\d\.a-z]+'/";
 
-        $output->writeln('下载最新代码');
+        $output->writeln('获取最新代码');
         $last_version_git = new Git();
 
         $last_version_repo = $last_version_git->cloneRepository(self::REPO, $last_version_dir);
@@ -88,7 +88,7 @@ class Update extends Command
 
         // 获取当前版本要替换的文件
         $current_version_filesystem = new Filesystem(new LocalFilesystemAdapter($current_version_dir));
-        $current_version_list_files = $current_version_filesystem->listContents('', Filesystem::LIST_DEEP)
+        $current_version_list_files = $current_version_filesystem->listContents('/', Filesystem::LIST_DEEP)
         ->filter(function (StorageAttributes $attributes) use ($current_version_update_config) {
             if ($attributes->isDir()) {
                 return false;
@@ -121,6 +121,9 @@ class Update extends Command
         $output->writeln('对比源码是否被定制');
         $now_dir = App::getRootPath();
 
+        /**
+         * @var array<bool|string>
+         */
         $changed_files = [];
 
         foreach ($current_version_list_files as $file_path) {
@@ -128,8 +131,10 @@ class Update extends Command
 
             $current_version_file_path = $current_version_dir . '/' . $file_path;
 
-            if (!PathTools::compareFiles($now_file_path, $current_version_file_path)) {
-                $changed_files[] = $file_path;
+            $compare_result = PathTools::compareFiles($now_file_path, $current_version_file_path, true);
+
+            if (!$compare_result || is_string($compare_result)) {
+                $changed_files[$file_path] = $compare_result;
             }
         }
 
@@ -138,18 +143,77 @@ class Update extends Command
         if (!empty($changed_files)) {
             $output->warning('无法自动更新，以下文件被定制，请还原或手动升级:');
 
-            foreach ($changed_files as $file_path) {
+            foreach ($changed_files as $file_path => $compare_result) {
                 $output->warning($file_path);
+
+                if (is_string($compare_result)) {
+                    $output->writeln($compare_result);
+                }
             }
 
-            return;
+            $file_count = count($changed_files);
+
+            $ask_result = $output->ask($input, "发现{$file_count}个文件被修改，如果您认为以上文件可以被覆盖或为检测错误，可以强制覆盖。\n是否强制继续更新？(y/n)");
+
+            if (!$ask_result) {
+                return;
+            }
         }
 
         // 获取最新版本需要跳过的文件
+
+        $last_version_skip_config = include $last_version_dir . '/config/update.php';
         // 获取最新版本要替换的文件
+        $last_version_filesystem = new Filesystem(new LocalFilesystemAdapter($last_version_dir));
+        $last_version_list_files = $last_version_filesystem->listContents('/', Filesystem::LIST_DEEP)
+        ->filter(function (StorageAttributes $attributes) use ($last_version_skip_config) {
+            if ($attributes->isDir()) {
+                return false;
+            }
+
+            $path = $attributes->path();
+
+            $skip_files = $last_version_skip_config['skip_files'] ?? [];
+
+            if (in_array($path, $skip_files)) {
+                return false;
+            }
+
+            $skip_dir = $last_version_skip_config['skip_dir'] ?? [];
+            $skip_dir[] = '.git';
+
+            foreach ($skip_dir as $dir) {
+                if (str_starts_with($path, $dir)) {
+                    return false;
+                }
+            }
+
+            return true;
+        })
+        ->map(fn (StorageAttributes $attributes) => $attributes->path())
+        ->toArray();
 
         // 删除当前版本要替换的文件
+        foreach ($current_version_list_files as $file_path) {
+            $now_file_path = $now_dir . '/' . $file_path;
+            unlink($now_file_path);
+        }
         // 将最新版本要替换的文件替换到项目代码中
+        foreach ($last_version_list_files as $file_path) {
+            $last_file_path = $last_version_dir . '/' . $file_path;
+            $now_file_path = $now_dir . '/' . $file_path;
+            PathTools::intiDir($now_file_path);
+
+            copy($last_file_path, $now_file_path);
+        }
+
+        // 检测now的composer依赖和最新的composer依赖
+
+        // 分析出最新需要的但now没有的
+
+        // 为用户整理出要手动调整的composer命令
+
+        $output->writeln('更新完成');
 
         // 更新完成
     }

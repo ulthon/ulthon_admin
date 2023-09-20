@@ -33,7 +33,7 @@
         "overtrue/flysystem-cos": "^5.0",
         "iidestiny/flysystem-oss": "^4.0",
         "czproject/git-php": "^4.2",
-        "phpspec/php-diff": "^1.1"
+        "localheinz/diff": "^1.1"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"

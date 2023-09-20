@@ -2,7 +2,7 @@
 
 namespace app\common\tools;
 
-use Diff;
+use Localheinz\Diff\Differ;
 use think\facade\App;
 
 class PathTools
@@ -105,48 +105,57 @@ class PathTools
         return str_replace('/', '\\', $content);
     }
 
-    public static function compareFiles($a, $b)
+    public static function compareFiles($a, $b, $return_diff = false):bool|string
     {
-        $text_mime_type = [];
-        $text_mime_type[] = 'text/html';
-        $text_mime_type[] = 'text/plain';
-        $text_mime_type[] = 'text/css';
-        $text_mime_type[] = 'image/svg+xml';
-        $text_mime_type[] = 'text/x-php';
-        $text_mime_type[] = 'application/json';
-        $text_mime_type[] = 'application/x-wine-extension-ini';
-
-        if (in_array(mime_content_type($a), $text_mime_type) && in_array(mime_content_type($b), $text_mime_type)) {
-            // 如果都是文本文件，则执行内容对比
-            $diff = new Diff(file_get_contents($a), file_get_contents($b));
-            $diff_content = $diff->getGroupedOpcodes();
-
-            if (!empty($diff_content)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
+        $result = true;
 
         // Check if filesize is different
         if (filesize($a) !== filesize($b)) {
-            return false;
+            $result = false;
         }
 
-        // Check if content is different
-        $ah = fopen($a, 'rb');
-        $bh = fopen($b, 'rb');
+        if ($result) {
+            // Check if content is different
+            $ah = fopen($a, 'rb');
+            $bh = fopen($b, 'rb');
 
-        $result = true;
-        while (!feof($ah)) {
-            if (fread($ah, 8192) != fread($bh, 8192)) {
-                $result = false;
-                break;
+            while (!feof($ah)) {
+                if (fread($ah, 8192) != fread($bh, 8192)) {
+                    $result = false;
+                    break;
+                }
+            }
+
+            fclose($ah);
+            fclose($bh);
+        }
+
+        if (!$result) {
+            // 如果前面的方法认为文件变化，那么以文本变化的方式识别是否变化，并给出变化的内容
+            $text_mime_type = [];
+            $text_mime_type[] = 'text/html';
+            $text_mime_type[] = 'text/plain';
+            $text_mime_type[] = 'text/css';
+            $text_mime_type[] = 'image/svg+xml';
+            $text_mime_type[] = 'text/x-php';
+            $text_mime_type[] = 'application/json';
+            $text_mime_type[] = 'application/x-wine-extension-ini';
+
+            if (in_array(mime_content_type($a), $text_mime_type) && in_array(mime_content_type($b), $text_mime_type)) {
+                $a_content = file_get_contents($a);
+                $b_content = file_get_contents($b);
+
+                $diff = new Differ();
+
+                $diff_content = $diff->diff($a_content, $b_content);
+
+                if (!empty($diff_content)) {
+                    $result = $return_diff ? $diff_content : false;
+                } else {
+                    $result = true;
+                }
             }
         }
-
-        fclose($ah);
-        fclose($bh);
 
         return $result;
     }
