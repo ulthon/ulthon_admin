@@ -14,23 +14,12 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.30-dev';
+    public const VERSION = 'v2.0.31-dev';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '新增拟物特效皮肤',
-        '修复特效皮肤多选框样式错误',
-        '修改首页等描述内容',
-        '引入代码规范配置文件',
-        '新增节点管理控制器中增加自定义注解',
-        '升级layui版本',
-        '升级为TP8',
-        '增加表格operat的title/text的回调用法',
-        '清理技术债务',
-        '修改js业务文件规则',
-        '修改curd为新的js文件规则',
-        '重新实现filesystem类，更新到最新',
+        '完成更新的基本流程',
     ];
 
     protected function configure()
