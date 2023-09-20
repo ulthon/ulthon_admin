@@ -11,6 +11,7 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\StorageAttributes;
 use think\console\Command;
 use think\console\Input;
+use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
 use think\facade\Env;
@@ -23,7 +24,8 @@ class Update extends Command
     {
         // 指令配置
         $this->setName('admin:update')
-            ->setDescription('the admin:update command');
+        ->addOption('show-diff', null, Option::VALUE_NONE, 'show changed files diff')
+        ->setDescription('the admin:update command');
     }
 
     protected function execute(Input $input, Output $output)
@@ -146,8 +148,10 @@ class Update extends Command
             foreach ($changed_files as $file_path => $compare_result) {
                 $output->warning($file_path);
 
-                if (is_string($compare_result)) {
-                    $output->writeln($compare_result);
+                if ($input->hasOption('show-diff')) {
+                    if (is_string($compare_result)) {
+                        $output->writeln($compare_result);
+                    }
                 }
             }
 
