@@ -14,12 +14,12 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.31-dev';
+    public const VERSION = 'v2.0.31';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '完成更新的基本流程',
+        '完善更新流程',
     ];
 
     protected function configure()

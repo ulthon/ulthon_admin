@@ -209,12 +209,17 @@ class Update extends Command
 
         // 检测now的composer依赖和最新的composer依赖
 
+        $last_composer_json = file_get_contents($last_version_dir . '/composer.json');
+
+        $output->writeln($last_composer_json);
+        $output->writeln('请参考以上最新composer文件调整您的依赖');
+
         // 分析出最新需要的但now没有的
 
         // 为用户整理出要手动调整的composer命令
 
+        $this->cleanWorkpaceDir();
         $output->writeln('更新完成');
-
         // 更新完成
     }
 
