@@ -14,12 +14,12 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.32';
+    public const VERSION = 'v2.0.33';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '重新集成数据库迁移工具',
+        '调整更新的文件替换逻辑；',
     ];
 
     protected function configure()

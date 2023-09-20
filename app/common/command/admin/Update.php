@@ -11,7 +11,6 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\StorageAttributes;
 use think\console\Command;
 use think\console\Input;
-use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
 use think\facade\Env;
@@ -24,8 +23,7 @@ class Update extends Command
     {
         // 指令配置
         $this->setName('admin:update')
-        ->addOption('show-diff', null, Option::VALUE_NONE, 'show changed files diff')
-        ->setDescription('the admin:update command');
+            ->setDescription('the admin:update command');
     }
 
     protected function execute(Input $input, Output $output)
@@ -148,10 +146,8 @@ class Update extends Command
             foreach ($changed_files as $file_path => $compare_result) {
                 $output->warning($file_path);
 
-                if ($input->hasOption('show-diff')) {
-                    if (is_string($compare_result)) {
-                        $output->writeln($compare_result);
-                    }
+                if (is_string($compare_result)) {
+                    $output->writeln($compare_result);
                 }
             }
 
@@ -197,18 +193,21 @@ class Update extends Command
         ->map(fn (StorageAttributes $attributes) => $attributes->path())
         ->toArray();
 
-        // 删除当前版本要替换的文件
-        foreach ($current_version_list_files as $file_path) {
+        $delete_files = array_diff($last_version_list_files, $current_version_list_files);
+
+        foreach ($delete_files as $file_path) {
             $now_file_path = $now_dir . '/' . $file_path;
             unlink($now_file_path);
         }
-        // 将最新版本要替换的文件替换到项目代码中
-        foreach ($last_version_list_files as $file_path) {
-            $last_file_path = $last_version_dir . '/' . $file_path;
-            $now_file_path = $now_dir . '/' . $file_path;
-            PathTools::intiDir($now_file_path);
 
-            copy($last_file_path, $now_file_path);
+        foreach ($last_version_list_files as $file_path) {
+            $now_file_path = $now_dir . '/' . $file_path;
+            $last_file_path = $last_version_dir . '/' . $file_path;
+
+            $file_content = file_get_contents($last_file_path);
+
+            PathTools::intiDir($now_file_path);
+            file_put_contents($now_file_path, $file_content);
         }
 
         // 检测now的composer依赖和最新的composer依赖
