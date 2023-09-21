@@ -14,12 +14,13 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.33';
+    public const VERSION = 'v2.0.34';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '调整更新的文件替换逻辑；',
+        '调整更新的append的逻辑',
+        '为login增加trait扩展机制',
     ];
 
     protected function configure()

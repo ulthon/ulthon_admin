@@ -7,12 +7,15 @@ use app\common\controller\AdminController;
 use think\captcha\facade\Captcha;
 use think\facade\Env;
 use think\facade\Event;
+use trait\admin\controller\LoginTrait;
 
 /**
  * Class Login.
  */
 class Login extends AdminController
 {
+    use LoginTrait;
+
     /**
      * 初始化方法.
      */
@@ -33,7 +36,6 @@ class Login extends AdminController
      */
     public function index()
     {
-
         $captcha = Env::get('adminsystem.captcha', 1);
         if ($this->request->isPost()) {
             $post = $this->request->post();

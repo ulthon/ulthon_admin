@@ -210,6 +210,67 @@ class Update extends Command
             file_put_contents($now_file_path, $file_content);
         }
 
+        // 处理append的文件
+        $last_version_list_skip_files = $last_version_filesystem->listContents('/', Filesystem::LIST_DEEP)
+        ->filter(function (StorageAttributes $attributes) use ($last_version_skip_config) {
+            if ($attributes->isDir()) {
+                return false;
+            }
+
+            $path = $attributes->path();
+
+            if (str_starts_with($path, '.git')) {
+                return false;
+            }
+
+            $skip_files = $last_version_skip_config['skip_files'] ?? [];
+
+            if (in_array($path, $skip_files)) {
+                return true;
+            }
+
+            $skip_dir = $last_version_skip_config['skip_dir'] ?? [];
+
+            foreach ($skip_dir as $dir) {
+                if (str_starts_with($path, $dir)) {
+                    return true;
+                }
+            }
+
+            return true;
+        })
+        ->map(fn (StorageAttributes $attributes) => $attributes->path())
+        ->toArray();
+
+        $last_version_list_append_files = [];
+
+        foreach ($last_version_list_skip_files as $file_path) {
+            if (in_array($file_path, $last_version_skip_config['append_files'])) {
+                $last_version_list_append_files[] = $file_path;
+                continue;
+            }
+
+            foreach ($last_version_skip_config['append_dir'] as $dir) {
+                if(str_starts_with($file_path,$dir)){
+                    continue;
+                }
+            }
+        }
+
+        foreach ($last_version_list_append_files as $file_path) {
+            $now_file_path = $now_dir. '/'. $file_path;
+            $last_file_path = $last_version_dir. '/'. $file_path;
+
+            if(file_exists($now_file_path)){
+                continue;
+            }
+
+            $file_content = file_get_contents($last_file_path);
+
+            PathTools::intiDir($now_file_path);
+            file_put_contents($now_file_path, $file_content);
+        }
+
         // 检测now的composer依赖和最新的composer依赖
 
         $last_composer_json = file_get_contents($last_version_dir . '/composer.json');

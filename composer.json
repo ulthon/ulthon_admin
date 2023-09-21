@@ -40,6 +40,7 @@
     "autoload": {
         "psr-4": {
             "app\\": "app",
+            "trait\\": "extend/trait",
             "Phinx\\": "extend/phinx"
         },
         "psr-0": {
