@@ -252,6 +252,7 @@ class Update extends Command
 
             foreach ($last_version_skip_config['append_dir'] as $dir) {
                 if(str_starts_with($file_path,$dir)){
+                    $last_version_list_append_files[] = $file_path;
                     continue;
                 }
             }
