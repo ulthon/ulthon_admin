@@ -12,12 +12,13 @@ use think\console\Output;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.40';
+    public const VERSION = 'v2.0.41';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '删除事件代码',
+        '调整主要代码的扩展方式；',
+        '调整更新逻辑',
         '发布新版本',
     ];
 
