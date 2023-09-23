@@ -11,6 +11,7 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\StorageAttributes;
 use think\console\Command;
 use think\console\Input;
+use think\console\input\Option;
 use think\console\Output;
 use think\facade\App;
 use think\facade\Env;
@@ -23,6 +24,7 @@ class Update extends Command
     {
         // 指令配置
         $this->setName('admin:update')
+            ->addOption('reinstall', null, Option::VALUE_NONE, '重装版本')
             ->setDescription('the admin:update command');
     }
 
@@ -70,7 +72,11 @@ class Update extends Command
             $output->writeln('当前版本为最新版本');
             $this->cleanWorkpaceDir();
 
-            return;
+            if ($input->hasOption('reinstall')) {
+                $output->writeln('重装代码');
+            } else {
+                return;
+            }
         }
 
         // 将最新代码切换到最新版本，因为最新的提交可能没有发布版本
@@ -193,7 +199,7 @@ class Update extends Command
         ->map(fn (StorageAttributes $attributes) => $attributes->path())
         ->toArray();
 
-        $delete_files = array_diff($last_version_list_files, $current_version_list_files);
+        $delete_files = array_diff($current_version_list_files, $last_version_list_files);
 
         foreach ($delete_files as $file_path) {
             $now_file_path = $now_dir . '/' . $file_path;
@@ -291,6 +297,8 @@ class Update extends Command
             foreach (Version::UPDATE_TIPS as $content) {
                 $output->writeln($content);
             }
+            $output->writeln('删除对应文件之后，可以通过以下命令重新安装');
+            $output->writeln('php think admin:update --resinstall');
         }
     }
 
