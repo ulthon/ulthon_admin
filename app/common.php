@@ -230,21 +230,50 @@ function build_upload_url($url, $upload_type = null)
     return Filesystem::disk($upload_type)->url($url);
 }
 
-function event_view_content($name)
+function event_handle_result($name, $key, $type = 'all')
 {
     $list_result = Event::trigger($name);
 
-    $content = '';
+    $result = [];
 
     foreach ($list_result as $key_event => $value_event) {
-        if (!isset($value_event['view_content'])) {
+        if (!isset($value_event[$key])) {
             if (Env::get('adminsystem.strict_event')) {
-                throw new EventException("Event view {$name} trigger a result without a view_content");
+                throw new EventException("Event view {$name} trigger a result without a {$key}");
             }
             continue;
         }
-        $content .= $value_event['view_content'];
+        if ($type == 'all') {
+            $result[] = $value_event[$key];
+        } elseif ($type == 'last') {
+            $result = $value_event[$key];
+        } elseif ($type == 'first') {
+            $result = $value_event[$key];
+            break;
+        }
     }
 
+    return $result;
+}
+
+function event_view_content($name)
+{
+    $list_result = event_handle_result($name, 'view_content');
+
+    $content = implode('', $list_result);
+
     return $content;
+}
+
+function event_view_replace($content, $name)
+{
+    $list_result = event_handle_result($name, 'view_replace');
+
+    $content_event = implode('', $list_result);
+
+    if (empty($content_event)) {
+        return $content;
+    }
+
+    return $content_event;
 }
