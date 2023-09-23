@@ -9,10 +9,8 @@ use think\helper\Str;
 
 class Query extends DbQuery
 {
-
-
     /**
-     * autoCache 自动生成缓存
+     * autoCache 自动生成缓存.
      *
      * @param null|string $key
      * @param null|string|int $field_key_value
@@ -22,7 +20,6 @@ class Query extends DbQuery
      */
     public function autoCache($key = null, $field_key_value = null, $tag = null, $field_tag_value = null)
     {
-
         $table_name = Str::snake($this->getName());
 
         if (is_null($key)) {
@@ -35,7 +32,6 @@ class Query extends DbQuery
         $key = $table_name . '_' . $key;
 
         if (!is_null($tag)) {
-
             if (!is_null($field_tag_value)) {
                 $tag = $tag . '_' . $field_tag_value;
             }

@@ -2,16 +2,8 @@
 
 namespace app\admin\model;
 
-use app\common\model\TimeModel;
+use base\admin\model\DebugLogClass;
 
-class DebugLog extends TimeModel
+class DebugLog extends DebugLogClass
 {
-
-    protected $name = "debug_log";
-
-    protected $deleteTime = false;
-
-    
-    
-
 }

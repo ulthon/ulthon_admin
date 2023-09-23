@@ -1,13 +1,9 @@
 <?php
 
-
-
 namespace app\admin\model;
 
+use base\admin\model\SystemConfigClass;
 
-use app\common\model\TimeModel;
-
-class SystemConfig extends TimeModel
+class SystemConfig extends SystemConfigClass
 {
-    protected $deleteTime = false;
 }

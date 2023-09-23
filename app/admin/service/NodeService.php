@@ -1,28 +1,9 @@
 <?php
 
-
 namespace app\admin\service;
 
+use base\admin\service\NodeServiceClass;
 
-use app\admin\service\node\Node;
-
-class NodeService
+class NodeService extends NodeServiceClass
 {
-
-    /**
-     * 获取节点服务
-     * @return array
-     * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \ReflectionException
-     */
-    public function getNodelist()
-    {
-        $basePath = base_path() . 'admin' . DIRECTORY_SEPARATOR . 'controller';
-        $baseNamespace = "app\admin\controller";
-
-        $nodeList  = (new Node($basePath, $baseNamespace))
-            ->getNodelist();
-
-        return $nodeList;
-    }
 }

@@ -2,17 +2,8 @@
 
 namespace app\admin\model;
 
-use app\common\model\TimeModel;
+use base\admin\model\MallTagClass;
 
-class MallTag extends TimeModel
+class MallTag extends MallTagClass
 {
-
-    protected $name = "mall_tag";
-
-    protected $deleteTime = "delete_time";
-
-    
-    
-    
-
 }

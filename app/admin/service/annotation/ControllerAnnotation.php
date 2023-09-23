@@ -5,19 +5,19 @@
 // +----------------------------------------------------------------------
 // | PHP交流群: 763822524
 // +----------------------------------------------------------------------
-// | 开源协议  https://mit-license.org 
+// | 开源协议  https://mit-license.org
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
 
 namespace app\admin\service\annotation;
 
+use base\admin\service\annotation\ControllerAnnotationClass;
 use Doctrine\Common\Annotations\Annotation\Attributes;
-use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\Common\Annotations\Annotation\Target;
 
 /**
- * Class ControllerAnnotation
+ * Class ControllerAnnotation.
  *
  * @Annotation
  * @Target("CLASS")
@@ -27,23 +27,6 @@ use Doctrine\Common\Annotations\Annotation\Target;
  *
  * @since 2.0
  */
-final class ControllerAnnotation
+final class ControllerAnnotation extends ControllerAnnotationClass
 {
-
-    /**
-     * Route group prefix for the controller
-     *
-     * @Required()
-     *
-     * @var string
-     */
-    public $title = '';
-
-    /**
-     * 是否开启权限控制
-     * @Enum({true,false})
-     * @var bool
-     */
-    public $auth = true;
-
 }

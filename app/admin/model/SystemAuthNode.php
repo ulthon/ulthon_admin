@@ -1,15 +1,9 @@
 <?php
 
-
 namespace app\admin\model;
 
+use base\admin\model\SystemAuthNodeClass;
 
-use app\common\model\TimeModel;
-
-class SystemAuthNode extends TimeModel
+class SystemAuthNode extends SystemAuthNodeClass
 {
-
-    protected $autoWriteTimestamp = false;
-
-    protected $deleteTime = false;
 }

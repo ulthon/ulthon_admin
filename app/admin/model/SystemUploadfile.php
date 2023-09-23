@@ -1,12 +1,9 @@
 <?php
 
-
 namespace app\admin\model;
 
+use base\admin\model\SystemUploadfileClass;
 
-use app\common\model\TimeModel;
-
-class SystemUploadfile extends TimeModel
+class SystemUploadfile extends SystemUploadfileClass
 {
-
 }

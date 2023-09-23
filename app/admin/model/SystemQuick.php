@@ -1,19 +1,9 @@
 <?php
 
-
 namespace app\admin\model;
 
+use base\admin\model\SystemQuickClass;
 
-use app\common\model\TimeModel;
-
-class SystemQuick extends TimeModel
+class SystemQuick extends SystemQuickClass
 {
-
-    protected $deleteTime = 'delete_time';
-
-    public static $autoCache = [
-        [
-            'name' => 'welcome_list'
-        ]
-    ];
 }

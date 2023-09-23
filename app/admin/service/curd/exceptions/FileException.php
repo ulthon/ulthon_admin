@@ -1,10 +1,9 @@
 <?php
 
-
 namespace app\admin\service\curd\exceptions;
 
+use base\admin\service\curd\exceptions\FileExceptionClass;
 
-class FileException extends \Exception
+class FileException extends FileExceptionClass
 {
-
 }

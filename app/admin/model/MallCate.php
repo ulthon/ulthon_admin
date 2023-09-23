@@ -1,16 +1,9 @@
 <?php
 
-
 namespace app\admin\model;
 
+use base\admin\model\MallCateClass;
 
-use app\common\model\TimeModel;
-/**
- * 
- */
-class MallCate extends TimeModel
+class MallCate extends MallCateClass
 {
-
-    protected $deleteTime = 'delete_time';
-
 }

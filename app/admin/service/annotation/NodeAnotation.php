@@ -12,6 +12,7 @@
 
 namespace app\admin\service\annotation;
 
+use base\admin\service\annotation\NodeAnotationClass;
 use Doctrine\Common\Annotations\Annotation\Attributes;
 
 /**
@@ -23,25 +24,6 @@ use Doctrine\Common\Annotations\Annotation\Attributes;
  *   @Attribute("time", type = "int")
  * })
  */
-final class NodeAnotation
+final class NodeAnotation extends NodeAnotationClass
 {
-    /**
-     * 节点名称.
-     * @Required()
-     * @var string
-     */
-    public $title;
-
-    /**
-     * 是否开启权限控制.
-     * @Enum({true,false})
-     * @var bool
-     */
-    public $auth = true;
-
-    /**
-     * 节点 一般无需设置.
-     * @var string
-     */
-    public $name;
 }
