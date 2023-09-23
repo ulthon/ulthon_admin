@@ -19,7 +19,10 @@ class Version extends Command
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '发布新版本，更新配置项',
+        '修改事件处理函数的逻辑',
+        '修改忘记密码提示',
+        '忘记密码增加view_replace事件',
+        '发布新版本',
     ];
 
     protected function configure()
