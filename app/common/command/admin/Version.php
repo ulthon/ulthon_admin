@@ -14,13 +14,12 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.39';
+    public const VERSION = 'v2.0.40';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '增加response的事件机制',
-        '为login增加事件',
+        '删除事件代码',
         '发布新版本',
     ];
 
