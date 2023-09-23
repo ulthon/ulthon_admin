@@ -4,10 +4,12 @@
 
 use app\commno\exception\EventException;
 use app\common\service\AuthService;
+use think\exception\HttpResponseException;
 use think\facade\Cache;
 use think\facade\Env;
 use think\facade\Event;
 use think\facade\Filesystem;
+use think\response\View;
 use think\route\Url;
 
 include_once __DIR__ . '/common/app/functions.php';
@@ -230,9 +232,9 @@ function build_upload_url($url, $upload_type = null)
     return Filesystem::disk($upload_type)->url($url);
 }
 
-function event_handle_result($name, $key, $type = 'all') : array
+function event_handle_result($name, $key, $type = 'all', $params = []) : array
 {
-    $list_result = Event::trigger($name);
+    $list_result = Event::trigger($name, $params);
 
     $result = [];
 
@@ -286,4 +288,21 @@ function event_view_replace_js($name)
     $content_event = implode('', $list_result);
 
     return "<script id='event-replace-js-{$name}' type='text/plain'>{$content_event}</script>";
+}
+
+function event_response($name, $params = [])
+{
+    $list_result = event_handle_result($name, 'response', 'last', $params);
+
+    if (empty($list_result)) {
+        return;
+    }
+
+    $response = $list_result[0];
+
+    if (is_string($response)) {
+        $response = View::create($response);
+    }
+
+    throw new HttpResponseException($response);
 }

@@ -36,6 +36,10 @@ class Login extends AdminController
      */
     public function index()
     {
+        event_response('AdminLoginIndex', [
+            'controller' => $this,
+        ]);
+
         $captcha = Env::get('adminsystem.captcha', 1);
         if ($this->request->isPost()) {
             $post = $this->request->post();

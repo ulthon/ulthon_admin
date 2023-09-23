@@ -48,4 +48,36 @@ class View extends ThinkView
 
         return $this;
     }
+
+    /**
+     * 解析和获取模板内容 用于输出.
+     * @param string $template 模板文件名或者内容
+     * @param array  $vars     模板变量
+     * @return string
+     * @throws \Exception
+     */
+    public function fetch(string $template = '', array $vars = []): string
+    {
+        return $this->config([
+            'view_suffix' => 'html',
+        ])->getContent(function () use ($vars, $template) {
+            $this->engine()->fetch($template, array_merge($this->data, $vars));
+        });
+    }
+
+    /**
+     * 解析和获取模板内容 用于输出.
+     * @param string $template 模板文件名或者内容
+     * @param array  $vars     模板变量
+     * @return string
+     * @throws \Exception
+     */
+    public function fetchJS(string $template = '', array $vars = []): string
+    {
+        return $this->config([
+            'view_suffix' => 'js',
+        ])->getContent(function () use ($vars, $template) {
+            $this->engine()->fetch($template, array_merge($this->data, $vars));
+        });
+    }
 }

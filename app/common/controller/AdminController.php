@@ -141,20 +141,22 @@ class AdminController extends BaseController
         return $this->app->view->assign($name, $value);
     }
 
-    protected function fetchJS()
+    public function fetchJS($template = '')
     {
         $content_js = '';
 
-        try {
-            $content_js .= View::layout(false)
-            ->config([
-                'view_suffix' => 'js',
-            ])->fetch('_common');
+        $common_template = '_common';
 
-            $content_js .= View::layout(false)
-            ->config([
-                'view_suffix' => 'js',
-            ])->fetch();
+        if (!empty($template)) {
+            $template_arr = explode('/', $template);
+            unset($template_arr[count($template_arr) - 1]);
+            $template_arr[] = '_common';
+            $common_template = implode('/', $template_arr);
+        }
+
+        try {
+            $content_js .= View::layout(false)->fetchJS($common_template);
+            $content_js .= View::layout(false)->fetchJS($template);
         } catch (TemplateNotFoundException $th) {
             if (Env::get('adminsystem.strict_view_js', true)) {
                 throw $th;
@@ -174,7 +176,7 @@ class AdminController extends BaseController
     {
         $this->assign('data_brage', json_encode($this->dataBrage));
 
-        $vars['content_js'] = $this->fetchJS();
+        $vars['content_js'] = $this->fetchJS($template);
 
         $content_main = View::layout($this->layout)
         ->config([
