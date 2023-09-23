@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\MallGoodsClass;
+use base\admin\model\MallGoodsBase;
 
-class MallGoods extends MallGoodsClass
+class MallGoods extends MallGoodsBase
 {
 }

@@ -2,8 +2,8 @@
 
 namespace app\admin\service;
 
-use base\admin\service\TriggerServiceClass;
+use base\admin\service\TriggerServiceBase;
 
-class TriggerService extends TriggerServiceClass
+class TriggerService extends TriggerServiceBase
 {
 }

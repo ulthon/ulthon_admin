@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\MallTagClass;
+use base\admin\model\MallTagBase;
 
-class MallTag extends MallTagClass
+class MallTag extends MallTagBase
 {
 }

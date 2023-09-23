@@ -3,12 +3,12 @@
 namespace app\admin\controller\system;
 
 use app\admin\service\annotation\ControllerAnnotation;
-use base\admin\controller\system\AuthClass;
+use base\admin\controller\system\AuthBase;
 
 /**
  * @ControllerAnnotation(title="角色权限管理")
  * Class Auth
  */
-class Auth extends AuthClass
+class Auth extends AuthBase
 {
 }

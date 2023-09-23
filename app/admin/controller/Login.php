@@ -2,11 +2,11 @@
 
 namespace app\admin\controller;
 
-use base\admin\controller\LoginClass;
+use base\admin\controller\LoginBase;
 
 /**
  * Class Login.
  */
-class Login extends LoginClass
+class Login extends LoginBase
 {
 }

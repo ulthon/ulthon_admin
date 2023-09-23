@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\SystemQuickClass;
+use base\admin\model\SystemQuickBase;
 
-class SystemQuick extends SystemQuickClass
+class SystemQuick extends SystemQuickBase
 {
 }

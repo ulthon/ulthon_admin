@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\SystemAuthNodeClass;
+use base\admin\model\SystemAuthNodeBase;
 
-class SystemAuthNode extends SystemAuthNodeClass
+class SystemAuthNode extends SystemAuthNodeBase
 {
 }

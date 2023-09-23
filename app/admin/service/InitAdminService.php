@@ -2,8 +2,8 @@
 
 namespace app\admin\service;
 
-use base\admin\service\InitAdminServiceClass;
+use base\admin\service\InitAdminServiceBase;
 
-class InitAdminService extends InitAdminServiceClass
+class InitAdminService extends InitAdminServiceBase
 {
 }

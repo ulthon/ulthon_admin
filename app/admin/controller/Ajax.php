@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use base\admin\controller\AjaxClass;
+use base\admin\controller\AjaxBase;
 
-class Ajax extends AjaxClass
+class Ajax extends AjaxBase
 {
 }

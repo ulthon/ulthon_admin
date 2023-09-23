@@ -2,8 +2,8 @@
 
 namespace app\admin\service\curd\exceptions;
 
-use base\admin\service\curd\exceptions\TableExceptionClass;
+use base\admin\service\curd\exceptions\TableExceptionBase;
 
-class TableException extends TableExceptionClass
+class TableException extends TableExceptionBase
 {
 }

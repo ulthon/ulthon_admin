@@ -12,7 +12,7 @@
 
 namespace app\admin\service\annotation;
 
-use base\admin\service\annotation\NodeAnotationClass;
+use base\admin\service\annotation\NodeAnotationBase;
 use Doctrine\Common\Annotations\Annotation\Attributes;
 
 /**
@@ -24,6 +24,6 @@ use Doctrine\Common\Annotations\Annotation\Attributes;
  *   @Attribute("time", type = "int")
  * })
  */
-final class NodeAnotation extends NodeAnotationClass
+final class NodeAnotation extends NodeAnotationBase
 {
 }

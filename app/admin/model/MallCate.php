@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\MallCateClass;
+use base\admin\model\MallCateBase;
 
-class MallCate extends MallCateClass
+class MallCate extends MallCateBase
 {
 }

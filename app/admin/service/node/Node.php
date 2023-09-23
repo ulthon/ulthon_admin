@@ -12,12 +12,12 @@
 
 namespace app\admin\service\node;
 
-use base\admin\service\node\NodeClass;
+use base\admin\service\node\NodeBase;
 
 /**
  * 节点处理类
  * Class Node.
  */
-class Node extends NodeClass
+class Node extends NodeBase
 {
 }

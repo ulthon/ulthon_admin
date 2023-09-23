@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\SystemAdminClass;
+use base\admin\model\SystemAdminBase;
 
-class SystemAdmin extends SystemAdminClass
+class SystemAdmin extends SystemAdminBase
 {
 }

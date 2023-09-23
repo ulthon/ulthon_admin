@@ -12,7 +12,7 @@
 
 namespace app\admin\service\annotation;
 
-use base\admin\service\annotation\ControllerAnnotationClass;
+use base\admin\service\annotation\ControllerAnnotationBase;
 use Doctrine\Common\Annotations\Annotation\Attributes;
 use Doctrine\Common\Annotations\Annotation\Target;
 
@@ -27,6 +27,6 @@ use Doctrine\Common\Annotations\Annotation\Target;
  *
  * @since 2.0
  */
-final class ControllerAnnotation extends ControllerAnnotationClass
+final class ControllerAnnotation extends ControllerAnnotationBase
 {
 }

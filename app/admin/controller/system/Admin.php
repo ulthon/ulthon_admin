@@ -4,7 +4,7 @@ namespace app\admin\controller\system;
 
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnotation;
-use base\admin\controller\system\AdminClass;
+use base\admin\controller\system\AdminBase;
 
 /**
  * Class Admin.
@@ -12,6 +12,6 @@ use base\admin\controller\system\AdminClass;
  *
  * @NodeAnotation(title="自定义权限标识符",name="customFlag")
  */
-class Admin extends AdminClass
+class Admin extends AdminBase
 {
 }

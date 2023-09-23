@@ -41,7 +41,7 @@
         "psr-4": {
             "app\\": "app",
             "trait\\": "extend/trait",
-            "class\\": "extend/class",
+            "base\\": "extend/base",
             "Phinx\\": "extend/phinx"
         },
         "psr-0": {

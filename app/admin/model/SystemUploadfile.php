@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\SystemUploadfileClass;
+use base\admin\model\SystemUploadfileBase;
 
-class SystemUploadfile extends SystemUploadfileClass
+class SystemUploadfile extends SystemUploadfileBase
 {
 }

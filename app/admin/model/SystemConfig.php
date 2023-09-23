@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\SystemConfigClass;
+use base\admin\model\SystemConfigBase;
 
-class SystemConfig extends SystemConfigClass
+class SystemConfig extends SystemConfigBase
 {
 }

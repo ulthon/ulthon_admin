@@ -2,8 +2,8 @@
 
 namespace app\admin\service\curd\exceptions;
 
-use base\admin\service\curd\exceptions\CurdExceptionClass;
+use base\admin\service\curd\exceptions\CurdExceptionBase;
 
-class CurdException extends CurdExceptionClass
+class CurdException extends CurdExceptionBase
 {
 }

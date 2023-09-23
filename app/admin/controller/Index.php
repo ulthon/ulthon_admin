@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use base\admin\controller\IndexClass;
+use base\admin\controller\IndexBase;
 
-class Index extends IndexClass
+class Index extends IndexBase
 {
 }

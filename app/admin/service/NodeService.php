@@ -2,8 +2,8 @@
 
 namespace app\admin\service;
 
-use base\admin\service\NodeServiceClass;
+use base\admin\service\NodeServiceBase;
 
-class NodeService extends NodeServiceClass
+class NodeService extends NodeServiceBase
 {
 }

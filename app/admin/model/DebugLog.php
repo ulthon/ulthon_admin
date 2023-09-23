@@ -2,8 +2,8 @@
 
 namespace app\admin\model;
 
-use base\admin\model\DebugLogClass;
+use base\admin\model\DebugLogBase;
 
-class DebugLog extends DebugLogClass
+class DebugLog extends DebugLogBase
 {
 }

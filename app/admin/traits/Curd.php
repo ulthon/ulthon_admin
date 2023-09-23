@@ -2,7 +2,7 @@
 
 namespace app\admin\traits;
 
-use base\admin\traits\CurdTraitClass;
+use base\admin\traits\CurdTraitBase;
 
 /**
  * 后台CURD复用
@@ -10,5 +10,5 @@ use base\admin\traits\CurdTraitClass;
  */
 trait Curd
 {
-    use CurdTraitClass;
+    use CurdTraitBase;
 }
