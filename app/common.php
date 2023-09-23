@@ -230,7 +230,7 @@ function build_upload_url($url, $upload_type = null)
     return Filesystem::disk($upload_type)->url($url);
 }
 
-function event_handle_result($name, $key, $type = 'all')
+function event_handle_result($name, $key, $type = 'all') : array
 {
     $list_result = Event::trigger($name);
 
@@ -246,9 +246,10 @@ function event_handle_result($name, $key, $type = 'all')
         if ($type == 'all') {
             $result[] = $value_event[$key];
         } elseif ($type == 'last') {
-            $result = $value_event[$key];
+            $result = [];
+            $result[] = $value_event[$key];
         } elseif ($type == 'first') {
-            $result = $value_event[$key];
+            $result[] = $value_event[$key];
             break;
         }
     }
@@ -276,4 +277,13 @@ function event_view_replace($content, $name)
     }
 
     return $content_event;
+}
+
+function event_view_replace_js($name)
+{
+    $list_result = event_handle_result($name, 'view_replace_js');
+
+    $content_event = implode('', $list_result);
+
+    return "<script id='event-replace-js-{$name}' type='text/plain'>{$content_event}</script>";
 }

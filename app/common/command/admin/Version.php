@@ -14,14 +14,13 @@ use think\facade\App;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.37';
+    public const VERSION = 'v2.0.38';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '修改事件处理函数的逻辑',
-        '修改忘记密码提示',
-        '忘记密码增加view_replace事件',
+        '增加js的事件处理',
+        '增加忘记密码的js替换事件',
         '发布新版本',
     ];
 

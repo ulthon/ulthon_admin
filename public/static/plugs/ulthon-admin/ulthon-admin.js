@@ -2470,8 +2470,16 @@
                 return num + u;
             }
             return '0B';
-        }
+        },
+        triggerEventReplaceJs(name, defaultCallback, replaceCallback) {
+            var code = $('#event-replace-js-' + name).html();
 
+            if (admin.empty(code)) {
+                defaultCallback();
+            } else {
+                replaceCallback(code);
+            }
+        }
     };
 
     window.ulAdmin = window.ua = admin;
