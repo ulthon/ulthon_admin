@@ -7,10 +7,8 @@ namespace app\common\command\admin;
 use think\App as ThinkApp;
 use think\console\Command;
 use think\console\Input;
-use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
-use think\facade\App;
 
 class Version extends Command
 {
@@ -23,6 +21,11 @@ class Version extends Command
         '发布新版本',
     ];
 
+    public const UPDATE_TIPS = [
+        '本次调整了append类型的更新文件列表，',
+        '建议删除以下目录的内容，再重新获取更新，以便初始化相关类，但如果您定制了相关文件，请不要删除，可以参考最新版本的代码调整文件',
+    ];
+
     protected function configure()
     {
         // 指令配置
@@ -33,7 +36,6 @@ class Version extends Command
 
     protected function execute(Input $input, Output $output)
     {
-
         // 指令输出
         $output->info('当前版本号为：' . $this::VERSION);
         $output->info('当前Layui版本号为：' . $this::LAYUI_VERSION);
@@ -56,12 +58,12 @@ class Version extends Command
             $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
             $version = $this::VERSION;
-            $comment = implode(";", $this::COMMENT);
+            $comment = implode(';', $this::COMMENT);
             $output->info('生成标签：' . $version);
             $output->info('标签描述：' . $comment);
             exec("git tag -a $version -m \"$comment\"");
             $output->info('推送到远程仓库');
-            exec("git push --tags");
+            exec('git push --tags');
         }
     }
 }

@@ -251,7 +251,7 @@ class Update extends Command
             }
 
             foreach ($last_version_skip_config['append_dir'] as $dir) {
-                if(str_starts_with($file_path,$dir)){
+                if (str_starts_with($file_path, $dir)) {
                     $last_version_list_append_files[] = $file_path;
                     continue;
                 }
@@ -259,10 +259,10 @@ class Update extends Command
         }
 
         foreach ($last_version_list_append_files as $file_path) {
-            $now_file_path = $now_dir. '/'. $file_path;
-            $last_file_path = $last_version_dir. '/'. $file_path;
+            $now_file_path = $now_dir . '/' . $file_path;
+            $last_file_path = $last_version_dir . '/' . $file_path;
 
-            if(file_exists($now_file_path)){
+            if (file_exists($now_file_path)) {
                 continue;
             }
 
@@ -286,6 +286,12 @@ class Update extends Command
         $this->cleanWorkpaceDir();
         $output->writeln('更新完成');
         // 更新完成
+
+        if (!empty(Version::UPDATE_TIPS)) {
+            foreach (Version::UPDATE_TIPS as $content) {
+                $output->writeln($content);
+            }
+        }
     }
 
     protected function cleanWorkpaceDir()
