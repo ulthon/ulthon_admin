@@ -23,6 +23,7 @@ $skip_dir[] = 'app/admin/middleware';
 $skip_dir[] = 'app/admin/model';
 $skip_dir[] = 'app/admin/service';
 $skip_dir[] = 'app/admin/traits';
+$skip_dir[] = 'app/admin/view';
 
 $config['skip_dir'] = $skip_dir;
 
@@ -36,6 +37,7 @@ $append_dir[] = 'app/admin/middleware';
 $append_dir[] = 'app/admin/model';
 $append_dir[] = 'app/admin/service';
 $append_dir[] = 'app/admin/traits';
+$append_dir[] = 'app/admin/view';
 
 $config['append_dir'] = $append_dir;
 

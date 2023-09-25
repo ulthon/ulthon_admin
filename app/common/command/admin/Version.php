@@ -12,7 +12,7 @@ use think\console\Output;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.44';
+    public const VERSION = 'v2.0.45';
 
     public const LAYUI_VERSION = '2.8.16';
 
@@ -24,6 +24,7 @@ class Version extends Command
 
     public const UPDATE_TIPS = [
         '本次更新调整了composer依赖，请根据实际情况调整',
+        '可以删除app下admin的view目录了',
         '删除 think-view',
         '引入 topthink/think-template-view',
     ];
