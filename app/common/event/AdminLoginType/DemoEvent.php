@@ -2,22 +2,8 @@
 
 namespace app\common\event\AdminLoginType;
 
-use think\facade\Env;
-use think\facade\View;
+use base\common\event\AdminLoginType\DemoEventBase;
 
-class DemoEvent
+class DemoEvent extends DemoEventBase
 {
-    public function handle()
-    {
-        $content = '';
-
-        if (Env::get('adminsystem.is_demo', false)) {
-            $content = View::layout(false)->fetch('login/ext/demo');
-        }
-
-        // 事件监听处理
-        return [
-            'view_content' => $content,
-        ];
-    }
 }

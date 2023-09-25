@@ -2,10 +2,8 @@
 
 namespace app\common\controller;
 
-use app\BaseController;
-use app\common\traits\JumpTrait;
+use base\common\controller\ToolsControllerBase;
 
-class ToolsController extends BaseController
+class ToolsController extends ToolsControllerBase
 {
-    use JumpTrait;
 }

@@ -1,24 +1,13 @@
 <?php
 
-
 namespace app\common\constants;
+
+use base\common\constants\MenuConstantBase;
 
 /**
  * 菜单常量
- * Class MenuConstant
- * @package app\common\constants
+ * Class MenuConstant.
  */
-class MenuConstant
+class MenuConstant extends MenuConstantBase
 {
-
-    /**
-     * 首页的PID
-     */
-    const HOME_PID = 99999999;
-
-    /**
-     * 模块名前缀
-     */
-    const MODULE_PREFIX = 'ulthon_admin_';
-
 }

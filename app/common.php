@@ -5,6 +5,7 @@
 use app\commno\exception\EventException;
 use app\common\service\AuthService;
 use think\exception\HttpResponseException;
+use think\facade\App;
 use think\facade\Cache;
 use think\facade\Env;
 use think\facade\Event;
@@ -305,4 +306,20 @@ function event_response($name, $params = [])
     }
 
     throw new HttpResponseException($response);
+}
+
+/**
+ * 以扩展的架构定位app下的文件位置
+ *
+ * @param string $file_path 文件路径，不要以/开头，不需要以app开头，会自动定位app或extend/base。
+ * @return string
+ */
+function app_file_path($file_path)
+{
+    $app_file_path = App::getRootPath() . 'app' . DIRECTORY_SEPARATOR . $file_path;
+    if (!is_file($app_file_path)) {
+        $app_file_path = App::getRootPath() . 'extend' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . $file_path;
+    }
+
+    return $app_file_path;
 }

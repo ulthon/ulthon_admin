@@ -2,8 +2,8 @@
 
 namespace app\commno\exception;
 
-use Exception;
+use extend\base\commno\exception\EventExceptionBase;
 
-class EventException extends Exception
+class EventException extends EventExceptionBase
 {
 }

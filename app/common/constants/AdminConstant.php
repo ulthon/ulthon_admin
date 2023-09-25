@@ -1,19 +1,13 @@
 <?php
 
-
 namespace app\common\constants;
+
+use base\common\constants\AdminConstantBase;
 
 /**
  * 管理员常量
- * Class AdminConstant
- * @package app\common\constants
+ * Class AdminConstant.
  */
-class AdminConstant
+class AdminConstant extends AdminConstantBase
 {
-
-    /**
-     * 超级管理员，不受权限控制
-     */
-    const SUPER_ADMIN_ID = 1;
-
 }

@@ -4,69 +4,8 @@ declare(strict_types=1);
 
 namespace app\common\command\admin;
 
-use think\App as ThinkApp;
-use think\console\Command;
-use think\console\Input;
-use think\console\input\Option;
-use think\console\Output;
+use base\common\command\admin\VersionBase;
 
-class Version extends Command
+class Version extends VersionBase
 {
-    public const VERSION = 'v2.0.45';
-
-    public const LAYUI_VERSION = '2.8.16';
-
-    public const COMMENT = [
-        '实现view的扩展架构',
-        '调整think-view依赖',
-        '发布新版本',
-    ];
-
-    public const UPDATE_TIPS = [
-        '本次更新调整了composer依赖，请根据实际情况调整',
-        '可以删除app下admin的view目录了',
-        '删除 think-view',
-        '引入 topthink/think-template-view',
-    ];
-
-    protected function configure()
-    {
-        // 指令配置
-        $this->setName('admin:version')
-            ->addOption('push-tag', null, Option::VALUE_NONE, '使用git命令生成tag并推送')
-            ->setDescription('查看当前ulthon_admin的版本号');
-    }
-
-    protected function execute(Input $input, Output $output)
-    {
-        // 指令输出
-        $output->info('当前版本号为：' . $this::VERSION);
-        $output->info('当前Layui版本号为：' . $this::LAYUI_VERSION);
-        $output->info('当前ThinkPHP版本号为：' . ThinkApp::VERSION);
-
-        $output->writeln('当前的修改说明:');
-        $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
-        foreach ($this::COMMENT as  $comment) {
-            $output->info($comment);
-        }
-        $output->writeln('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-
-        $output->highlight('代码托管地址：https://gitee.com/ulthon/ulthon_admin');
-        $output->highlight('开发文档地址：http://doc.ulthon.com/home/read/ulthon_admin/home.html');
-
-        $is_push_tag = $input->hasOption('push-tag');
-
-        if ($is_push_tag) {
-            $output->writeln('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
-            $version = $this::VERSION;
-            $comment = implode(';', $this::COMMENT);
-            $output->info('生成标签：' . $version);
-            $output->info('标签描述：' . $comment);
-            exec("git tag -a $version -m \"$comment\"");
-            $output->info('推送到远程仓库');
-            exec('git push --tags');
-        }
-    }
 }
