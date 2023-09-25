@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eabe0953a10d42f429663eb3c42834a5",
+    "content-hash": "cf930a793fc0588ec1f01c7e8bfb5ea6",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -2458,47 +2458,6 @@
                 "source": "https://github.com/top-think/think-template/tree/v3.0.0"
             },
             "time": "2023-02-25T12:11:14+00:00"
-        },
-        {
-            "name": "topthink/think-view",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/top-think/think-view.git",
-                "reference": "d2a076011c96d2edd8016703a827fb54b2683c62"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-view/zipball/d2a076011c96d2edd8016703a827fb54b2683c62",
-                "reference": "d2a076011c96d2edd8016703a827fb54b2683c62",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.0",
-                "topthink/think-template": "^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "think\\view\\driver\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "liu21st",
-                    "email": "liu21st@gmail.com"
-                }
-            ],
-            "description": "thinkphp template driver",
-            "support": {
-                "issues": "https://github.com/top-think/think-view/issues",
-                "source": "https://github.com/top-think/think-view/tree/v2.0.0"
-            },
-            "time": "2023-02-25T12:18:09+00:00"
         }
     ],
     "packages-dev": [

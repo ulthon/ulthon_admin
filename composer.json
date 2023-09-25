@@ -22,7 +22,6 @@
         "topthink/framework": "^8.0",
         "topthink/think-orm": "^3.0",
         "topthink/think-multi-app": "^1.0",
-        "topthink/think-view": "^2.0",
         "topthink/think-captcha": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
         "phpoffice/phpspreadsheet": "^1.22",
@@ -32,7 +31,8 @@
         "overtrue/flysystem-cos": "^5.0",
         "iidestiny/flysystem-oss": "^4.0",
         "czproject/git-php": "^4.2",
-        "localheinz/diff": "^1.1"
+        "localheinz/diff": "^1.1",
+        "topthink/think-template": "^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"

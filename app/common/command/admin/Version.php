@@ -12,18 +12,20 @@ use think\console\Output;
 
 class Version extends Command
 {
-    public const VERSION = 'v2.0.43';
+    public const VERSION = 'v2.0.44';
 
     public const LAYUI_VERSION = '2.8.16';
 
     public const COMMENT = [
-        '调整更新逻辑',
+        '实现view的扩展架构',
+        '调整think-view依赖',
         '发布新版本',
     ];
 
     public const UPDATE_TIPS = [
-        '本次调整了append类型的更新文件列表，',
-        '建议删除以下目录的内容，再重新获取更新，以便初始化相关类，但如果您定制了相关文件，请不要删除，可以参考最新版本的代码调整文件',
+        '本次更新调整了composer依赖，请根据实际情况调整',
+        '删除 think-view',
+        '引入 topthink/think-template-view',
     ];
 
     protected function configure()
