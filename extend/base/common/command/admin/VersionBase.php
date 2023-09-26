@@ -12,23 +12,19 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.47';
+    public const VERSION = 'v2.0.48';
 
-    public const LAYUI_VERSION = '2.8.16';
+    public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '将topthink/think-template引入到框架内；',
-        '增加fetch和include的文件目录的@和@/开头的定位方法',
-        '将fetch方法改为return的模式',
+        '更新底层layui',
+        '修改time字段默认宽度',
+        '修改底层js',
         '发布新版本',
     ];
 
     public const UPDATE_TIPS = [
-        '本次调整了composer依赖，应按照新的composer 调整',
-        '删除 topthink/think-template',
-        '引入 psr/simple-cache>=1.0',
-        '然后重新执行更新命令，删除后会自动初始化新的代码',
-
+        '',
     ];
 
     protected function configure()

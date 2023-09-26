@@ -304,13 +304,7 @@
 
                 };
 
-                var tableFixedAutoHeight = function () {
-                    $(".layui-table-main tr").each(function (index, val) {
-                        $(".layui-table-fixed").each(function () {
-                            $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
-                        });
-                    });
-                };
+
 
                 var optionDone = function () { };
                 if (options.done != undefined) {
@@ -319,7 +313,6 @@
                 options.done = function () {
                     optionDone();
                     table2card();
-                    tableFixedAutoHeight();
 
                     // 监听表格内的复制组件
                     admin.api.copyText('[lay-id=' + options.id + ']');
@@ -844,6 +837,12 @@
                             }
                         }
 
+                        // if str end with _time
+                        if (val.field && val.field.indexOf('_time') !== -1) {
+                            cols[i][index]['minWidth'] = 160;
+                        }
+
+
                         if (val.sort === undefined) {
 
                             cols[i][index]['sort'] = true;
@@ -875,7 +874,7 @@
 
                         // 判断是否初始化对齐方式
                         if (val.align === undefined) {
-                            cols[i][index]['align'] = 'center';
+                            cols[i][index]['align'] = 'left';
                         }
 
                         // 部分字段开启排序
@@ -886,7 +885,7 @@
 
                         // 初始化图片高度
                         if (val.templet === admin.table.image && val.imageHeight === undefined) {
-                            cols[i][index]['imageHeight'] = 40;
+                            cols[i][index]['imageHeight'] = 26;
                             cols[i][index]['sort'] = false;
                         }
 
@@ -1108,19 +1107,19 @@
             image: function (data) {
                 var option = data.LAY_COL;
                 option.imageWidth = option.imageWidth || 200;
-                option.imageHeight = option.imageHeight || 40;
+                option.imageHeight = option.imageHeight || 26;
                 option.imageSplit = option.imageSplit || '|';
                 option.imageJoin = option.imageJoin || '<br>';
                 option.title = option.title || option.field;
                 var title = data[option.title];
                 var value = admin.table.returnColumnValue(data);
                 if (value === undefined || value === null) {
-                    return '<img style="max-width: ' + option.imageWidth + 'px; height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
+                    return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
                 } else {
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
                     });
                     return valuesHtml.join(option.imageJoin);
                 }
