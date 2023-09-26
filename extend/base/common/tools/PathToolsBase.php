@@ -107,6 +107,10 @@ class PathToolsBase
 
     public static function compareFiles($a, $b, $return_diff = false):bool|string
     {
+        if(file_exists($a) !== file_exists($b)) {
+            return false;
+        }
+
         $result = true;
 
         // Check if filesize is different
