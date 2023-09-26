@@ -97,9 +97,9 @@ class Think
      * 渲染模板文件.
      * @param  string $template 模板文件
      * @param  array  $data 模板变量
-     * @return void
+     * @return string
      */
-    public function fetch(string $template, array $data = []): void
+    public function fetch(string $template, array $data = []): string
     {
         if ('' == pathinfo($template, PATHINFO_EXTENSION)) {
             // 获取模板文件名
@@ -111,7 +111,7 @@ class Think
             throw new TemplateNotFoundException('template not exists:' . $template, $template);
         }
 
-        $this->template->fetch($template, $data);
+        return $this->template->fetch($template, $data);
     }
 
     /**

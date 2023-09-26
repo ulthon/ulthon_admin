@@ -210,9 +210,9 @@ class Template
      * 渲染模板文件.
      * @param  string $template 模板文件
      * @param  array  $vars 模板变量
-     * @return void
+     * @return string
      */
-    public function fetch(string $template, array $vars = []): void
+    public function fetch(string $template, array $vars = []): string
     {
         if ($vars) {
             $this->data = array_merge($this->data, $vars);
@@ -220,9 +220,7 @@ class Template
 
         if ($this->isCache($this->config['cache_id'])) {
             // 读取渲染缓存
-            echo $this->cache->get($this->config['cache_id']);
-
-            return;
+            return $this->cache->get($this->config['cache_id']);
         }
 
         $template = $this->parseTemplateFile($template);
@@ -251,7 +249,7 @@ class Template
                 $this->cache->set($this->config['cache_id'], $content, $this->config['cache_time']);
             }
 
-            echo $content;
+            return $content;
         }
     }
 

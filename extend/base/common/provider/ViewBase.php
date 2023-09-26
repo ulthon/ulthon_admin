@@ -61,7 +61,7 @@ class ViewBase extends ThinkView
         return $this->config([
             'view_suffix' => 'html',
         ])->getContent(function () use ($vars, $template) {
-            $this->engine()->fetch($template, array_merge($this->data, $vars));
+            return $this->engine()->fetch($template, array_merge($this->data, $vars));
         });
     }
 
@@ -77,7 +77,30 @@ class ViewBase extends ThinkView
         return $this->config([
             'view_suffix' => 'js',
         ])->getContent(function () use ($vars, $template) {
-            $this->engine()->fetch($template, array_merge($this->data, $vars));
+            return $this->engine()->fetch($template, array_merge($this->data, $vars));
         });
+    }
+
+        /**
+     * 获取模板引擎渲染内容.
+     * @param $callback
+     * @return string
+     * @throws \Exception
+     */
+    protected function getContent($callback): string
+    {
+        // 渲染输出
+        try {
+            $content = $callback();
+        } catch (\Exception $e) {
+            ob_end_clean();
+            throw $e;
+        }
+
+        if ($this->filter) {
+            $content = call_user_func_array($this->filter, [$content]);
+        }
+
+        return $content;
     }
 }
