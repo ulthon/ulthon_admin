@@ -29,8 +29,6 @@ class Think
         'auto_rule' => 1,
         // 视图目录名
         'view_dir_name' => 'view',
-        // 模板起始路径
-        'view_path' => '',
         // 模板文件后缀
         'view_suffix' => 'html',
         // 模板文件名分隔符
@@ -138,7 +136,7 @@ class Think
         $request = $this->app['request'];
 
         // 获取视图根目录
-        if (strpos($template, '@')) {
+        if (strpos($template, '@') !== false) {
             // 跨模块调用
             list($app, $template) = explode('@', $template);
         } else {
@@ -147,9 +145,30 @@ class Think
 
         $view = $this->config['view_dir_name'];
 
-        $app_path = $this->app->getAppPath() . $view . DIRECTORY_SEPARATOR;
-        $base_app_path = $this->app->getRootPath() . 'extend' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR;
-        $view_app_path = $this->app->getRootPath() . $view . DIRECTORY_SEPARATOR . ($app ? $app . DIRECTORY_SEPARATOR : '');
+        if (empty($app)) {
+            if (str_starts_with($template, '/')) {
+                $app_path = $this->app->getRootPath();
+                $base_app_path = $this->app->getRootPath();
+                $view_app_path = $this->app->getRootPath();
+            } else {
+                // $app不应该为空，如果为空，说明是@开头的用法，此时定位当前应用控制器下的用法
+                $app = $this->app->http->getName();
+
+                $app_path = $this->app->getAppPath() . $view . DIRECTORY_SEPARATOR;
+                $base_app_path = $this->app->getRootPath() . 'extend' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR;
+                $view_app_path = $this->app->getRootPath() . $view . DIRECTORY_SEPARATOR . ($app ? $app . DIRECTORY_SEPARATOR : '');
+            }
+        } else {
+            $app_path = $this->app->getAppPath() . $view . DIRECTORY_SEPARATOR;
+            $base_app_path = $this->app->getRootPath() . 'extend' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . $app . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR;
+            $view_app_path = $this->app->getRootPath() . $view . DIRECTORY_SEPARATOR . ($app ? $app . DIRECTORY_SEPARATOR : '');
+        }
+
+        $this->template->view_root_path = $this->app->getRootPath();
+
+        $this->template->app_path = $app_path;
+        $this->template->base_app_path = $base_app_path;
+        $this->template->view_app_path = $view_app_path;
 
         $depr = $this->config['view_depr'];
 
@@ -186,23 +205,19 @@ class Think
 
         $view_file_path = ltrim($template, '/') . '.' . ltrim($this->config['view_suffix'], '.');
 
-        $view_path = '';
         $file_path = '';
         if (is_file($app_path . $view_file_path)) {
             // 优先app下的view
-            $view_path = $app_path;
             $file_path = $app_path . $view_file_path;
         } elseif (is_file($base_app_path . $view_file_path)) {
             // 查找extend下的view
-            $view_path = $base_app_path;
             $file_path = $base_app_path . $view_file_path;
         } else {
             // 查找根目录下的view
-            $view_path = $view_app_path;
             $file_path = $view_app_path . $view_file_path;
         }
 
-        $this->template->view_path = $view_path;
+        $this->template->base_view_path = dirname($file_path) . DIRECTORY_SEPARATOR;
 
         return $file_path;
     }

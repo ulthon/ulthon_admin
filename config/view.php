@@ -26,7 +26,9 @@ return [
     // 标签库标签结束标记
     'taglib_end' => '}',
     // 模板缓存
-    'display_cache' => true,
+    'display_cache' => false,
+    // 模板编译缓存
+    'tpl_cache' => true,
     // 字符替换
     'tpl_replace_string' => [
         '__STATIC__' => Env::get('adminsystem.static_path', '/static'),
