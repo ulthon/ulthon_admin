@@ -12,14 +12,12 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.48';
+    public const VERSION = 'v2.0.49';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '更新底层layui',
-        '修改time字段默认宽度',
-        '修改底层js',
+        '修改密码标题',
         '发布新版本',
     ];
 
