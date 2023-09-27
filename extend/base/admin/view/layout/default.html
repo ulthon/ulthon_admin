@@ -30,6 +30,38 @@
 </head>
 
 <body>
+    {if $Request.isMobile }
+    <link rel="stylesheet" href="//layui.ulthon.com/cdn/layui-ul.css">
+    <div class="ul-section">
+        <div class="ul-header">
+            <div class="ul-header-main" style="max-width: 600px;">
+                <div class="ul-header-left">
+                    <a href="{:__url('admin/index/mobile')}" class="">
+                        <img class="ul-header-logo" src="{$logo_info.image}" alt="">
+                    </a>
+                </div>
+                {notempty name='session_admin'}   
+                <div class="ul-header-right">
+                    <div class="ul-header-user">
+                        <div class="ul-header-user-avatar" style="background-image: url('{$session_admin.head_img}');">
+                        </div>
+                        <div class="ul-header-user-info">
+                            <div class="ul-header-user-name">
+                                {$session_admin.username}
+                            </div>
+                            <div class="ul-header-user-options">
+                                <i class="ul-icon-exit"></i>
+                                <span>退出</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/notempty}
+            </div>
+        </div>
+    </div>
+    {/if}
+
     {__CONTENT__}
     <script style="display: none;" id="data-brage" type="text/plain">{$data_brage|raw|default='[]'}</script>
 </body>

@@ -19,7 +19,6 @@
 
     var form = layui.form,
         layer = layui.layer,
-        table = layui.table,
         laydate = layui.laydate,
         upload = layui.upload,
         element = layui.element,
@@ -37,6 +36,13 @@
         upload_exts: '',
     };
 
+    var table;
+
+    if (tools.checkMobile()) {
+        table = window.uaTable;
+    } else {
+        table = layui.table;
+    }
 
     var extGroup = {
         // 图片扩展名数组
@@ -1445,23 +1451,7 @@
             }
         },
         checkMobile: function () {
-            var userAgentInfo = navigator.userAgent;
-            var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
-            var mobile_flag = false;
-            //根据userAgent判断是否是手机
-            for (var v = 0; v < mobileAgents.length; v++) {
-                if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
-                    mobile_flag = true;
-                    break;
-                }
-            }
-            var screen_width = window.screen.width;
-            var screen_height = window.screen.height;
-            //根据屏幕分辨率判断是否是手机
-            if (screen_width < 600 && screen_height < 800) {
-                mobile_flag = true;
-            }
-            return mobile_flag;
+            return tools.checkMobile();
         },
         open: function (title, url, width, height, isResize, shadeClose = false) {
             isResize = isResize === undefined ? true : isResize;
@@ -1591,12 +1581,18 @@
                     clientHeight = '100%';
                 }
 
-                admin.open(
-                    $(this).attr('data-title'),
-                    external ? url : admin.url(url),
-                    clienWidth,
-                    clientHeight,
-                );
+                // 如果是手机版，则直接跳转
+                if (admin.checkMobile()) {
+                    location.href = external ? url : admin.url(url);
+                } else {
+                    admin.open(
+                        $(this).attr('data-title'),
+                        external ? url : admin.url(url),
+                        clienWidth,
+                        clientHeight,
+                    );
+                }
+
             });
 
             // 放大图片

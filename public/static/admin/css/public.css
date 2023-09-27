@@ -337,6 +337,11 @@ table样式
     padding: 10px 0px;
 }
 
+/* 手机端的表格头部操作 */
+.layuimini-container .main-tool {
+    padding: 15px;
+}
+
 /**
 开关
  */
@@ -560,4 +565,24 @@ table样式
 }
 
 
-@media (max-width: 768px) {}
+@media (max-width: 768px) {
+    .layuimini-form .layui-form-item {
+        padding-right: 0;
+    }
+
+    .layuimini-form .layui-form-item .layui-form-label {
+        float: unset;
+        display: inline-block;
+        width: auto;
+        padding-left: 0;
+        padding-bottom: 0px;
+    }
+
+    .layuimini-form .layui-form-item .layui-input-block {
+        margin-left: 0;
+    }
+
+    .layuimini-form.multiple-columns .layui-form-item.full-line {
+        width: calc(100% - 0px);
+    }
+}

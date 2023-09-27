@@ -3,8 +3,10 @@
 namespace base\admin\controller;
 
 use app\admin\model\SystemAdmin;
+use app\admin\model\SystemMenu;
 use app\admin\model\SystemQuick;
 use app\common\controller\AdminController;
+use app\common\service\MenuService;
 
 class IndexBase extends AdminController
 {
@@ -113,6 +115,41 @@ class IndexBase extends AdminController
             }
         }
         $this->assign('row', $row);
+
+        return $this->fetch();
+    }
+
+    public function mobile()
+    {
+        $pid = $this->request->param('pid', 0);
+
+        $menuService = new MenuService(session('admin.id'));
+
+        $home_info = $menuService->getHomeInfo();
+
+        $list_menu = SystemMenu::with(['children' => function ($query) {
+            $query->order('sort', 'desc')->order('id', 'asc');
+        }])->where('pid', $pid)->order([
+            'sort' => 'desc',
+            'id' => 'asc',
+        ])
+        ->where('status', 1)
+        ->select();
+
+        $list_menu_pid = SystemMenu::group('pid')->column('pid');
+
+        foreach ($list_menu as $model_menu) {
+            foreach ($model_menu->children as $model_child) {
+                if (in_array($model_child->id, $list_menu_pid)) {
+                    $model_child->href = __url('mobile', ['pid' => $model_child->pid]);
+                } else {
+                    $model_child->href = __url($model_child->href);
+                }
+            }
+        }
+
+        $this->assign('home_info', $home_info);
+        $this->assign('list_menu', $list_menu);
 
         return $this->fetch();
     }

@@ -366,6 +366,15 @@ class AdminControllerBase extends BaseController
         ];
 
         View::assign($data);
+
+        if ($this->request->isMobile()) {
+            $logo_info = [
+                'title' => sysconfig('site', 'logo_title'),
+                'image' => sysconfig('site', 'logo_image'),
+                'href' => __url('index/index'),
+            ];
+            $this->assign('logo_info', $logo_info);
+        }
     }
 
     /**

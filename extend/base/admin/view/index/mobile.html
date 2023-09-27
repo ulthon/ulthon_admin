@@ -1,0 +1,31 @@
+
+
+<div class="ul-section ul-padding-md">
+    <div class="ul-group-title">基本</div>
+    <div class="ul-nav-grid colord box">
+        <a href="{:__url('admin/index/welcome')}" class="item">
+            <div class="icon">
+                <div class="main"><i class="{$home_info.icon}"></i></div>
+            </div>
+            <div class="title">{$home_info.title}</div>
+        </a>
+    </div>
+</div>
+
+{volist name='list_menu' id='vo'}
+{notempty name='vo.children'}
+<div class="ul-section ul-padding-md">
+    <div class="ul-group-title">{$vo.title}</div>
+    <div class="ul-nav-grid colord box">
+        {volist name='vo.children' id='vovo'}
+        <a href="{$vovo.href}" class="item">
+            <div class="icon">
+                <div class="main"><i class="{$vovo.icon}"></i></div>
+            </div>
+            <div class="title">{$vovo.title}</div>
+        </a>
+        {/volist}
+    </div>
+</div>
+{/notempty}
+{/volist}

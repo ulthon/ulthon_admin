@@ -2,12 +2,18 @@
 
 namespace base\admin\model;
 
+use app\admin\model\SystemMenu;
 use app\common\constants\MenuConstant;
 use app\common\model\TimeModel;
 
 class SystemMenuBase extends TimeModel
 {
     protected $deleteTime = 'delete_time';
+
+    public function children()
+    {
+        return $this->hasMany(SystemMenu::class, 'pid', 'id');
+    }
 
     public function getPidMenuList()
     {
