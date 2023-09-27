@@ -10,6 +10,7 @@ $skip_files[] = 'app/common/app/middleware.php';
 $skip_files[] = 'app/common/app/service.php';
 $skip_files[] = 'app/common/app/provider.php';
 $skip_files[] = 'composer.lock';
+$skip_files[] = '.example.env';
 $skip_files[] = 'README.md';
 $skip_files[] = 'README.en.md';
 $skip_files[] = 'composer.json';
@@ -54,6 +55,8 @@ $append_files[] = 'app/common/app/listen.php';
 $append_files[] = 'app/common/app/middleware.php';
 $append_files[] = 'app/common/app/service.php';
 $append_files[] = 'app/common/app/provider.php';
+
+$append_files[] = '.example.env';
 
 $append_files[] = 'app/common/event/AdminLoginSuccess/LogEvent.php';
 $append_files[] = 'app/common/event/AdminLoginType/DemoEvent.php';

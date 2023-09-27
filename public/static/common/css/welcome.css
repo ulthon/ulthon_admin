@@ -2,7 +2,9 @@
  content from file: common.css
 */
 /******************  系統配置  ******************/
-html, body, p {
+html,
+body,
+p {
     padding: 0;
     margin: 0;
 }
@@ -13,30 +15,6 @@ html, body, p {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto
-}
-
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 720px
-    }
-}
-
-@media (min-width: 992px) {
-    .container {
-        max-width: 960px
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1140px
-    }
 }
 
 .float-left {
@@ -90,7 +68,8 @@ table {
     margin-top: 15px;
 }
 
-.clearfix:after, .clearfix:before {
+.clearfix:after,
+.clearfix:before {
     content: " ";
     display: table
 }
@@ -104,6 +83,7 @@ header {
     padding: 10px 16.8%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .logo-box {
@@ -117,18 +97,24 @@ header {
 header .right {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .navbar {
     margin-right: 40px;
     display: flex;
+    padding: 10px 0
 }
 
 .navbar-item {
-    margin-left: 30px;
+
     font-size: 16px;
     cursor: pointer;
     white-space: nowrap;
+}
+
+.navbar-item:not(:first-child) {
+    margin-left: 30px;
 }
 
 .navbar-item.active {
@@ -153,7 +139,8 @@ header iframe {
 
 /******************  捐赠  ******************/
 
-.d-banner h1, .d-banner p {
+.d-banner h1,
+.d-banner p {
     text-align: center;
 }
 
@@ -190,7 +177,7 @@ header iframe {
     border-bottom: 2px solid #dee2e6;
 }
 
-.table tbody + tbody {
+.table tbody+tbody {
     border-top: 2px solid #dee2e6;
 }
 
@@ -254,8 +241,7 @@ footer a {
     margin-bottom: 15px;
 }
 
-.beian-number {
-}
+.beian-number {}
 
 /**
  content from file: home.css
@@ -281,7 +267,7 @@ footer a {
 }
 
 .title .desc {
-    width: 729px;
+
     font-size: 22px;
     font-family: MicrosoftYaHei;
     font-weight: 400;
@@ -297,7 +283,8 @@ footer a {
     justify-content: center;
 }
 
-.title .operation button, .title .operation a {
+.title .operation button,
+.title .operation a {
     width: 123px;
     height: 47px;
     border: 1px solid rgb(0, 177, 236);
@@ -356,7 +343,7 @@ footer a {
 }
 
 .introduction {
-    padding: 75px 0 110px;
+    padding: 75px 15px 110px;
     background: #f8f8f8;
 }
 
@@ -386,7 +373,6 @@ footer a {
 }
 
 .introduction .top .part-desc {
-    width: 808px;
     font-size: 14px;
     font-family: MicrosoftYaHei;
     font-weight: 400;
@@ -400,26 +386,20 @@ footer a {
     max-width: 1100px;
     margin: 110px auto 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
 .introduction .bottom .item {
-    width: 294px;
-    margin-right: 108px;
+    width: 25%;
+    margin: 3%;
+
 }
 
-.introduction .bottom .item.shadow{
+.introduction .bottom .item.shadow {
     box-shadow: 0 0 6px #999;
 }
 
-.introduction .bottom .item:nth-child(n+4) {
-    margin-top: 90px;
-}
-
-.introduction .bottom .item:nth-child(3n+3) {
-    margin-right: 0;
-}
 
 .introduction .bottom .item-title {
     display: flex;
@@ -467,14 +447,15 @@ footer a {
     }
 }
 
-.site-footer ul, .site-footer li {
+.site-footer ul,
+.site-footer li {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .site-footer a {
-    color:rgb(60, 85, 93);
+    color: rgb(60, 85, 93);
     line-height: 1.6em;
     font-weight: normal;
 }
@@ -718,7 +699,7 @@ footer a {
     border-bottom: 1px dotted #cfcfcf;
 }
 
-.info-item + .info-item {
+.info-item+.info-item {
     padding-top: 20px;
 }
 
@@ -740,7 +721,7 @@ footer a {
 
 }
 
-.info-item .detail p + p {
+.info-item .detail p+p {
     margin-top: 8px;
 }
 
@@ -757,4 +738,39 @@ footer a {
     color: rgba(51, 51, 51, 1);
     line-height: 36px;
     margin-bottom: 12px;
+}
+
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px
+    }
+}
+
+@media (max-width:768px) {
+    header {
+        padding: 10px;
+    }
+
+    .introduction .bottom .item {
+        width: 80%;
+    }
 }
