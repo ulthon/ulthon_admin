@@ -22,9 +22,30 @@
 
         loadPage();
 
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            var windowHeight = $(this).height();
+
+            var scrollHeight = $(document).height();
+
+            if (scrollTop + windowHeight > scrollHeight - windowHeight) {
+                loadPage();
+            }
+        });
+
         var page = 1;
+        var isLoading = false;
         function loadPage() {
+            if (isLoading) {
+                return;
+            }
+            isLoading = true;
+            loading.show();
             $.get(options.url, { page: page }, function (res) {
+                isLoading = false;
+                page++;
+
+                loading.hide();
 
                 res.data.forEach(row => {
 
