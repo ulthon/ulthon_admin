@@ -2124,7 +2124,7 @@
 
                                         if (extGroup.image.indexOf(ext) != -1) {
                                             // 是图片
-                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'/admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="' + uploadFilenameField + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                            liHtml += '<li><a title="点击预览"><img src="' + v + '" data-images  onerror="this.src=\'/static/admin/images/upload-icons/image-error.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-filename-field="' + uploadFilenameField + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                         } else {
                                             // 不是图片
                                             // 遍历extGroup数组找到扩展名所在的索引
