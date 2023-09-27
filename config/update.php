@@ -15,6 +15,9 @@ $skip_files[] = 'README.md';
 $skip_files[] = 'README.en.md';
 $skip_files[] = 'composer.json';
 
+$skip_files[] = 'view/index/welcome.html';
+$skip_files[] = 'public/static/common/css/welcome.css';
+
 $skip_files[] = 'app/common/event/AdminLoginSuccess/LogEvent.php';
 $skip_files[] = 'app/common/event/AdminLoginType/DemoEvent.php';
 
@@ -57,6 +60,9 @@ $append_files[] = 'app/common/app/service.php';
 $append_files[] = 'app/common/app/provider.php';
 
 $append_files[] = '.example.env';
+
+$append_files[] = 'view/index/welcome.html';
+$append_files[] = 'public/static/common/css/welcome.css';
 
 $append_files[] = 'app/common/event/AdminLoginSuccess/LogEvent.php';
 $append_files[] = 'app/common/event/AdminLoginType/DemoEvent.php';
