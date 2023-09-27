@@ -119,8 +119,6 @@
                        
                     </div>
                     <div class="plus">
-                        <div class="layui-btn layui-btn-sm layui-btn-normal">删除</div>
-                        <div class="layui-btn layui-btn-sm layui-btn-primary">修改</div>
                     </div>
                 </div>
             </div>`;
