@@ -173,7 +173,7 @@ php think admin:update
 
 ## 是什么
 
-`tp6后台`，`thinkphp6后台`，`layui后台`,`curd后台`
+`tp8后台`，`thinkphp8后台`，`layui后台`,`curd后台`
 
 ## 皮肤预览
 
