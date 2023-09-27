@@ -102,4 +102,19 @@ class BaseModelBase extends Model
     {
         return str_replace('\\', '_', static::class);
     }
+
+    public static function uGet($id, $cache = false)
+    {
+        if (!isset(static::$uGetList[static::class])) {
+            static::$uGetList[static::class] = [];
+        }
+
+        if (isset(static::$uGetList[static::class][$id])) {
+            return static::$uGetList[static::class][$id];
+        }
+
+        static::$uGetList[static::class][$id] = static::find($id);
+
+        return static::$uGetList[static::class][$id];
+    }
 }
