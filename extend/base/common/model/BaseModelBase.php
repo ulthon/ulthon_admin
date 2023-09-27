@@ -23,6 +23,8 @@ class BaseModelBase extends Model
      */
     public static $autoCache = [];
 
+    protected static $uGetList = [];
+
     public static function onAfterWrite($model)
     {
         static::autoRemoveCache($model);
