@@ -437,15 +437,7 @@ footer a {
     width: 58%;
 }
 
-@media (max-width: 768px) {
-    .footer-nav-box {
-        width: 95%;
-    }
 
-    .footer-proto-box {
-        width: 95%;
-    }
-}
 
 .site-footer ul,
 .site-footer li {
@@ -772,5 +764,13 @@ footer a {
 
     .introduction .bottom .item {
         width: 80%;
+    }
+
+    .footer-nav-box {
+        width: 95%;
+    }
+
+    .footer-proto-box {
+        width: 95%;
     }
 }

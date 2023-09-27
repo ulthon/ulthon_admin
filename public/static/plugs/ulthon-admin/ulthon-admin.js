@@ -278,31 +278,6 @@
                     options.defaultToolbar = defaultToolbar;
                 }
 
-                var table2card = function () {
-
-                    if (admin.checkMobile()) {
-                        var domTable = $('[lay-id="' + options.id + '"]');
-
-                        var colsHeader = [];
-                        domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
-
-                            if ($(cell).hasClass('laytable-cell-checkbox')) {
-                                colsHeader.push('选择');
-                            } else {
-                                colsHeader.push($(cell).find('span').first().text());
-                            }
-                        });
-
-                        domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
-
-                            $(domTr).find('td').each(function (indexTd, domTd) {
-
-                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'));
-                            });
-                        });
-                    }
-
-                };
 
 
 
@@ -312,7 +287,6 @@
                 }
                 options.done = function () {
                     optionDone();
-                    table2card();
 
                     // 监听表格内的复制组件
                     admin.api.copyText('[lay-id=' + options.id + ']');
@@ -939,29 +913,6 @@
                                     break;
                             }
                         }
-
-                        if (admin.checkMobile()) {
-                            if (val.fixed !== undefined) {
-                                val.fixed = false;
-                            }
-                        }
-
-                        // 重新整理配置参数，兼容templet在edit时缺少LAY_COL的问题，如果在layui2.8解决，那么应当删除这些代码
-
-                        var endVal = { ...col[index] };
-                        endVal.endTemplet = endVal.templet;
-                        endVal.templet = function (data) {
-                            if (!data.LAY_COL) {
-                                data.LAY_COL = this;
-                            }
-
-                            return this.endTemplet(data);
-                        };
-
-                        cols[i][index] = endVal;
-
-
-
                     }
                 }
                 return cols;
