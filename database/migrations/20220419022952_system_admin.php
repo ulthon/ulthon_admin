@@ -36,7 +36,7 @@ class SystemAdmin extends Migrator
             ->addColumn(Column::char('password', 40)->setDefault('')->setComment('用户密码'))
             ->addColumn(Column::char('phone',16)->setDefault('')->setComment('联系手机号'))
             ->addColumn(Column::char('remark')->setDefault('')->setComment('备注说明'))
-            ->addColumn(Column::bigInteger('login_num')->setUnsigned()->setDefault(0)->setComment('登录次数'))
+            ->addColumn(Column::bigInteger('login_num')->setDefault(0)->setUnsigned()->setDefault(0)->setComment('登录次数'))
             ->addColumn(Column::integer('sort')->setDefault(0)->setComment('排序'))
             ->addColumn(Column::tinyInteger('status')->setLimit(1)->setUnsigned()->setDefault(1)->setComment('状态 {radio} (0:禁用,1:启用,)'))
             ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))

@@ -34,7 +34,7 @@ class SystemQuick extends Migrator
             ->addColumn(Column::char('icon', 100)->setDefault('')->setComment('图标'))
             ->addColumn(Column::char('href')->setComment('快捷链接'))
             ->addColumn(Column::integer('sort')->setDefault(0)->setComment('排序'))
-            ->addColumn(Column::tinyInteger('status')->setLimit(1)->setUnsigned()->setComment('状态 {radio} (1:禁用,2:启用)'))
+            ->addColumn(Column::tinyInteger('status')->setDefault(2)->setLimit(1)->setUnsigned()->setComment('状态 {radio} (1:禁用,2:启用)'))
             ->addColumn(Column::char('remark')->setDefault('')->setComment('备注说明'))
             ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))
             ->addColumn(Column::integer('update_time')->setLimit(11)->setUnsigned()->setDefault(0))

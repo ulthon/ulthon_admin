@@ -32,7 +32,7 @@ class SystemConfig extends Migrator
             ->setComment('系统配置表')
             ->addColumn(Column::char('name', 30)->setDefault('')->setComment('变量名'))
             ->addColumn(Column::char('group', 30)->setDefault('')->setComment('分组'))
-            ->addColumn(Column::text('value')->setComment('变量值'))
+            ->addColumn(Column::text('value')->setDefault('')->setComment('变量值'))
             ->addColumn(Column::char('remark', 100)->setDefault('')->setComment('备注信息'))
             ->addColumn(Column::integer('sort')->setDefault(0)->setComment('排序'))
             ->addColumn(Column::integer('create_time')->setLimit(11)->setUnsigned()->setDefault(0)->setComment('创建时间'))
