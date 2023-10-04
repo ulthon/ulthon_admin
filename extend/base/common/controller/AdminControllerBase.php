@@ -398,17 +398,19 @@ class AdminControllerBase extends BaseController
 
         $currentController = parse_name(app()->request->controller());
 
+        $back_url = $this->request->url();
+
         // 验证登录
         if (
             !in_array($currentController, $adminConfig['no_login_controller']) &&
             !in_array($currentNode, $adminConfig['no_login_node'])
         ) {
-            empty($adminId) && $this->error('请先登录后台', [], __url('admin/login/index'));
+            empty($adminId) && $this->error('请先登录后台', [], __url('admin/login/index', ['back_url' => $back_url]));
 
             // 判断是否登录过期
             if ($expireTime !== true && time() > $expireTime) {
                 session('admin', null);
-                $this->error('登录已过期，请重新登录', [], __url('admin/login/index'));
+                $this->error('登录已过期，请重新登录', [], __url('admin/login/index', ['back_url' => $back_url]));
             }
         }
 

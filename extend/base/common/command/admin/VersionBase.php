@@ -12,16 +12,12 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.53';
+    public const VERSION = 'v2.0.54';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '优化首页移动端兼容性',
-        '修改说明文件和版本信息',
-        '清理遗留技术代码',
-        '移除表格转卡片',
-        '新增手机端浏览模式和基本分页查询',
+        '增加登录跳转到指定页面',
         '发布新版本',
     ];
 

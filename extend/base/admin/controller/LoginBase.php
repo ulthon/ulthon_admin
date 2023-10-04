@@ -7,6 +7,7 @@ use app\common\controller\AdminController;
 use think\captcha\facade\Captcha;
 use think\facade\Env;
 use think\facade\Event;
+use think\facade\Session;
 
 /**
  * Class Login.
@@ -36,6 +37,18 @@ class LoginBase extends AdminController
         event_response('AdminLoginIndex', [
             'controller' => $this,
         ]);
+
+        $back_url = $this->request->param('back_url');
+
+        if (!empty($back_url)) {
+            Session::set('back-url', $back_url);
+        } else {
+            $back_url = Session::get('back-url');
+        }
+
+        if (empty($back_url)) {
+            $back_url = null;
+        }
 
         $captcha = Env::get('adminsystem.captcha', 1);
         if ($this->request->isPost()) {
@@ -67,7 +80,8 @@ class LoginBase extends AdminController
             $admin['expire_time'] = $post['keep_login'] == 1 ? true : time() + 7200;
             session('admin', $admin);
 
-            $this->success('登录成功');
+            Session::delete('back-url');
+            $this->success('登录成功', '', $back_url);
         }
         $this->assign('captcha', $captcha);
         $this->assign('demo', $this->isDemo);

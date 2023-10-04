@@ -30,7 +30,7 @@ $(function () {
         return data;
     }, function (res) {
         ua.msg.success(res.msg, function () {
-            window.location = ua.url('index');
+            window.location = res.url;
         });
     }, function (res) {
         ua.msg.error(res.msg, function () {
