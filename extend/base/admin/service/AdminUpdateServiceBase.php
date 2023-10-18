@@ -233,7 +233,7 @@ class AdminUpdateServiceBase
             $output->writeln('但此目录原则上应当由您手动处理，如果您使用了以下文件，可能会发生错误，');
             $output->writeln('如果您没有关心过这些文件，您可以放心更新。');
 
-            $is_udpate_optinal_files = $output->ask($input, '确定要更新吗？', true);
+            $is_udpate_optinal_files = $output->confirm($input, '确定要更新吗？', true);
 
             if ($is_udpate_optinal_files) {
                 $need_process_files = array_merge($need_process_files, $optional_update_waring_files);
@@ -248,7 +248,7 @@ class AdminUpdateServiceBase
             $output->writeln('但您出于某些原因修改了他们，如果继续更新，则会覆盖至最新版本，');
             $output->writeln('这些改动不应该发生，继续自动升级可能会导致错误');
 
-            $is_udpate_force_files = $output->ask($input, '确定要更新吗？', false);
+            $is_udpate_force_files = $output->confirm($input, '确定要更新吗？', false);
 
             if ($is_udpate_force_files) {
                 $need_process_files = array_merge($need_process_files, $force_update_waring_files);
