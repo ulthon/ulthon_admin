@@ -1,7 +1,7 @@
 <?php
 
 use app\admin\model\SystemConfig;
-use app\admin\service\InitAdminService;
+use app\admin\service\AdminInitService;
 use app\admin\service\TriggerService;
 use think\migration\Seeder;
 
@@ -47,6 +47,6 @@ class InitBaseAdminData extends Seeder
 
         TriggerService::updateSysconfig();
 
-        (new InitAdminService($output))->init();
+        (new AdminInitService($output))->init();
     }
 }
