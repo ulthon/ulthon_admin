@@ -12,17 +12,13 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.56';
+    public const VERSION = 'v2.0.57';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '修复默认安装数据库的兼容性问题',
+        '调整源码对比方式',
         '发布新版本',
-    ];
-
-    public const UPDATE_TIPS = [
-        '',
     ];
 
     protected function configure()

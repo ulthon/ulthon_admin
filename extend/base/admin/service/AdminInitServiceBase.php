@@ -14,7 +14,7 @@ use app\admin\model\SystemNode;
 use app\admin\model\SystemQuick;
 use app\common\constants\AdminConstant;
 
-class InitAdminServiceBase
+class AdminInitServiceBase
 {
     protected $output = null;
 
@@ -142,6 +142,6 @@ class InitAdminServiceBase
 
     protected function requireData($table_name)
     {
-        return include __DIR__ . '/initAdminData/' . $table_name . '.php';
+        return include __DIR__ . '/adminInitData/' . $table_name . '.php';
     }
 }

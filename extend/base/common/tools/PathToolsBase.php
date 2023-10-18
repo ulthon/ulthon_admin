@@ -2,7 +2,6 @@
 
 namespace base\common\tools;
 
-use Localheinz\Diff\Differ;
 use think\facade\App;
 
 class PathToolsBase
@@ -105,9 +104,9 @@ class PathToolsBase
         return str_replace('/', '\\', $content);
     }
 
-    public static function compareFiles($a, $b, $return_diff = false):bool|string
+    public static function compareFiles($a, $b):bool
     {
-        if(file_exists($a) !== file_exists($b)) {
+        if (file_exists($a) !== file_exists($b)) {
             return false;
         }
 
@@ -149,14 +148,18 @@ class PathToolsBase
                 $a_content = file_get_contents($a);
                 $b_content = file_get_contents($b);
 
-                $diff = new Differ();
+                $a_content_length = strlen($a_content);
+                $b_content_length = strlen($b_content);
 
-                $diff_content = $diff->diff($a_content, $b_content);
-
-                if (!empty($diff_content)) {
-                    $result = $return_diff ? $diff_content : false;
+                if ($a_content_length !== $b_content_length) {
+                    $result = false;
                 } else {
-                    $result = true;
+                    for ($i = 0; $i < $a_content_length; $i++) {
+                        if ($a_content[$i] !== $b_content[$i]) {
+                            $result = false;
+                            break;
+                        }
+                    }
                 }
             }
         }
