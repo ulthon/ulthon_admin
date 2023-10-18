@@ -73,11 +73,12 @@ class AdminUpdateServiceBase
 
         if ($last_version == $current_version) {
             $output->writeln('当前版本为最新版本');
-            
+
             if ($input->hasOption('reinstall')) {
                 $output->writeln('重装代码');
             } else {
                 $this->cleanWorkpaceDir();
+
                 return;
             }
         }
@@ -126,23 +127,23 @@ class AdminUpdateServiceBase
             ->toArray()
         );
 
+        $ignore_prefix = [
+            'runtime',
+            'vendor',
+            '.git',
+        ];
+
         // 当前版本的所有文件
         $current_version_files = $current_version_filesystem->listContents('/', true)
-        ->filter(function (StorageAttributes $attributes) {
+        ->filter(function (StorageAttributes $attributes) use ($ignore_prefix) {
             if ($attributes->isDir()) {
                 return false;
             }
 
-            if (strpos($attributes->path(), 'runtime') === 0) {
-                return false;
-            }
-
-            if (strpos($attributes->path(), 'vendor') === 0) {
-                return false;
-            }
-
-            if (strpos($attributes->path(), '.git') === 0) {
-                return false;
+            foreach ($ignore_prefix as $prefix) {
+                if (str_starts_with($attributes->path(), $prefix)) {
+                    return false;
+                }
             }
 
             return true;
@@ -152,17 +153,15 @@ class AdminUpdateServiceBase
 
         // 最新版本的所有文件
         $last_version_files = $last_version_filesystem->listContents('/', true)
-        ->filter(function (StorageAttributes $attributes) {
+        ->filter(function (StorageAttributes $attributes) use ($ignore_prefix) {
             if ($attributes->isDir()) {
                 return false;
             }
 
-            if (strpos($attributes->path(), 'runtime') === 0) {
-                return false;
-            }
-
-            if (strpos($attributes->path(), 'vendor') === 0) {
-                return false;
+            foreach ($ignore_prefix as $prefix) {
+                if (str_starts_with($attributes->path(), $prefix)) {
+                    return false;
+                }
             }
 
             return true;
@@ -255,14 +254,15 @@ class AdminUpdateServiceBase
             }
         }
 
-        if(empty($need_process_files)){
+        if (empty($need_process_files)) {
             $output->writeln('没有需要更新的文件');
             $this->cleanWorkpaceDir();
+
             return;
         }
 
         // 处理需要更新的文件
-        
+
         foreach ($need_process_files as $file_path => $type) {
             $now_file_path = $now_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
