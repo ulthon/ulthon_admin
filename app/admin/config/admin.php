@@ -1,5 +1,5 @@
 <?php
-
+// 当前文件的内容应当兼容 /extend/base/admin/config/admin.php的内容
 
 use think\facade\Env;
 

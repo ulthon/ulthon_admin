@@ -1,7 +1,4 @@
 <?php
-
-// 当前文件的内容应当兼容 /extend/base/admin/middleware.php的内容
-
 // 全局中间件定义文件
 return [
 

@@ -1,7 +1,6 @@
 <?php
 
 // 事件定义文件
-
 return [
     'bind' => [
     ],
@@ -12,12 +11,6 @@ return [
         'HttpEnd' => [],
         'LogLevel' => [],
         'LogWrite' => [],
-        'AdminLoginSuccess' => [
-
-        ],
-        'AdminLoginType' => [
-
-        ],
     ],
 
     'subscribe' => [

@@ -199,7 +199,7 @@ class MigrateBase extends Command
         $data['table_keys_uni'] = $table_keys_uni;
         $data['table_keys_text'] = $table_keys_text;
 
-        $migrate_content = View::fetch(__DIR__ . '/migrate.tpl', $data);
+        $migrate_content = View::fetch(app_file_path('common/command/curd/migrate.tpl'), $data);
 
         file_put_contents(__DIR__ . '/migrate_output.php', "<?php\n\n" . $migrate_content);
         file_put_contents($dist_file_path, "<?php\n\n" . $migrate_content);

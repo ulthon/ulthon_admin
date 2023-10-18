@@ -45,7 +45,7 @@ class TimerBase extends Command
 
         while (true) {
             try {
-                $config_list = include __DIR__ . '/timer/config.php';
+                $config_list = include app_file_path('common/command/timer/config.php');
 
                 $list_promises = [];
                 foreach ($config_list as  $config_item) {
