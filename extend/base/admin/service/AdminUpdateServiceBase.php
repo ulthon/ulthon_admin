@@ -73,11 +73,11 @@ class AdminUpdateServiceBase
 
         if ($last_version == $current_version) {
             $output->writeln('当前版本为最新版本');
-            $this->cleanWorkpaceDir();
-
+            
             if ($input->hasOption('reinstall')) {
                 $output->writeln('重装代码');
             } else {
+                $this->cleanWorkpaceDir();
                 return;
             }
         }
