@@ -104,6 +104,13 @@ class PathToolsBase
         return str_replace('/', '\\', $content);
     }
 
+    /**
+     * 比较两个文件是否相同
+     *
+     * @param string $a
+     * @param string $b
+     * @return boolean 如果一致返回true，否则返回false
+     */
     public static function compareFiles($a, $b):bool
     {
         if (file_exists($a) !== file_exists($b)) {

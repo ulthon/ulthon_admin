@@ -8,6 +8,8 @@ use CzProject\GitPhp\Git;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\StorageAttributes;
+use think\console\Input;
+use think\console\Output;
 use think\facade\App;
 use think\facade\Env;
 
@@ -15,8 +17,14 @@ class AdminUpdateServiceBase
 {
     public const REPO = 'https://gitee.com/ulthon/ulthon_admin.git';
 
+    /**
+     * @var Input
+     */
     public $input;
 
+    /**
+     * @var Output
+     */
     public $output;
 
     public function __construct()
@@ -84,32 +92,57 @@ class AdminUpdateServiceBase
         $output->writeln('切换版本' . $current_version);
         $current_version_repo->checkout($current_version);
 
-        // 获取当前版本需要跳过的文件
-        $current_version_update_config = include $current_version_dir . '/config/update.php';
+        $output->writeln('开始比较版本差异');
 
-        // 获取当前版本要替换的文件
         $current_version_filesystem = new Filesystem(new LocalFilesystemAdapter($current_version_dir));
-        $current_version_list_files = $current_version_filesystem->listContents('/', Filesystem::LIST_DEEP)
-        ->filter(function (StorageAttributes $attributes) use ($current_version_update_config) {
+        $last_version_filesystem = new Filesystem(new LocalFilesystemAdapter($last_version_dir));
+
+        // app、config下的所有文件和根目录下的几个文件
+        // 如果与当前版本一致（没有定制过），则将这种文件增加到完全跟踪列表，（新版覆盖、新版删除），
+        // 否则不会覆盖和删除，但会将新文件追加到相应目录下
+
+        // 其余的所有代码都应当完全跟踪
+
+        // 完全跳过runtime、vendor、.git目录
+
+        $list_optional_update_files = [];
+
+        $list_optional_update_files = array_merge(
+            $list_optional_update_files,
+            $current_version_filesystem->listContents('/app', true)
+            ->map(fn (StorageAttributes $attributes) => $attributes->path())
+            ->toArray()
+        );
+        $list_optional_update_files = array_merge(
+            $list_optional_update_files,
+            $current_version_filesystem->listContents('/config', true)
+            ->map(fn (StorageAttributes $attributes) => $attributes->path())
+            ->toArray()
+        );
+        $list_optional_update_files = array_merge(
+            $list_optional_update_files,
+            $current_version_filesystem->listContents('/')
+            ->map(fn (StorageAttributes $attributes) => $attributes->path())
+            ->toArray()
+        );
+
+        // 当前版本的所有文件
+        $current_version_files = $current_version_filesystem->listContents('/', true)
+        ->filter(function (StorageAttributes $attributes) {
             if ($attributes->isDir()) {
                 return false;
             }
 
-            $path = $attributes->path();
-
-            $skip_files = $current_version_update_config['skip_files'] ?? [];
-
-            if (in_array($path, $skip_files)) {
+            if (strpos($attributes->path(), 'runtime') === 0) {
                 return false;
             }
 
-            $skip_dir = $current_version_update_config['skip_dir'] ?? [];
-            $skip_dir[] = '.git';
+            if (strpos($attributes->path(), 'vendor') === 0) {
+                return false;
+            }
 
-            foreach ($skip_dir as $dir) {
-                if (str_starts_with($path, $dir)) {
-                    return false;
-                }
+            if (strpos($attributes->path(), '.git') === 0) {
+                return false;
             }
 
             return true;
@@ -117,160 +150,133 @@ class AdminUpdateServiceBase
         ->map(fn (StorageAttributes $attributes) => $attributes->path())
         ->toArray();
 
-        // 对比现在的代码，检查是否有定制修改
+        // 最新版本的所有文件
+        $last_version_files = $last_version_filesystem->listContents('/', true)
+        ->filter(function (StorageAttributes $attributes) {
+            if ($attributes->isDir()) {
+                return false;
+            }
 
-        $output->writeln('对比源码是否被定制');
-        $now_dir = App::getRootPath();
+            if (strpos($attributes->path(), 'runtime') === 0) {
+                return false;
+            }
 
-        /**
-         * @var array<bool|string>
-         */
+            if (strpos($attributes->path(), 'vendor') === 0) {
+                return false;
+            }
+
+            return true;
+        })
+        ->map(fn (StorageAttributes $attributes) => $attributes->path())
+        ->toArray();
+
         $changed_files = [];
 
-        foreach ($current_version_list_files as $file_path) {
-            $now_file_path = $now_dir . '/' . $file_path;
+        // 需要删除的文件
+        $need_delete_files = array_diff($current_version_files, $last_version_files);
 
-            $current_version_file_path = $current_version_dir . '/' . $file_path;
-
-            $compare_result = PathTools::compareFiles($now_file_path, $current_version_file_path, true);
-
-            if (!$compare_result) {
-                $changed_files[$file_path] = $compare_result;
-            }
+        foreach ($need_delete_files as $file_path) {
+            $changed_files[$file_path] = 'delete';
         }
 
-        // 有定制修改则退出
+        // 需要增加的文件
+        $need_add_files = array_diff($last_version_files, $current_version_files);
 
-        if (!empty($changed_files)) {
-            $output->warning('无法自动更新，以下文件被定制，请还原或手动升级:');
-
-            foreach ($changed_files as $file_path => $compare_result) {
-                $output->warning($file_path);
-
-                if (is_string($compare_result)) {
-                    $output->writeln($compare_result);
-                }
-            }
-
-            $file_count = count($changed_files);
-
-            $ask_result = $output->ask($input, "发现{$file_count}个文件被修改，如果您认为以上文件可以被覆盖或为检测错误，可以强制覆盖。\n是否强制继续更新？(y/n)");
-
-            if (!$ask_result) {
-                return;
-            }
+        foreach ($need_add_files as $file_path) {
+            $changed_files[$file_path] = 'add';
         }
 
-        // 获取最新版本需要跳过的文件
+        // 需要更新的文件
+        $need_update_files = array_intersect($current_version_files, $last_version_files);
 
-        $last_version_skip_config = include $last_version_dir . '/config/update.php';
-        // 获取最新版本要替换的文件
-        $last_version_filesystem = new Filesystem(new LocalFilesystemAdapter($last_version_dir));
-        $last_version_list_files = $last_version_filesystem->listContents('/', Filesystem::LIST_DEEP)
-        ->filter(function (StorageAttributes $attributes) use ($last_version_skip_config) {
-            if ($attributes->isDir()) {
-                return false;
-            }
-
-            $path = $attributes->path();
-
-            $skip_files = $last_version_skip_config['skip_files'] ?? [];
-
-            if (in_array($path, $skip_files)) {
-                return false;
-            }
-
-            $skip_dir = $last_version_skip_config['skip_dir'] ?? [];
-            $skip_dir[] = '.git';
-
-            foreach ($skip_dir as $dir) {
-                if (str_starts_with($path, $dir)) {
-                    return false;
-                }
-            }
-
-            return true;
-        })
-        ->map(fn (StorageAttributes $attributes) => $attributes->path())
-        ->toArray();
-
-        $delete_files = array_diff($current_version_list_files, $last_version_list_files);
-
-        foreach ($delete_files as $file_path) {
-            $now_file_path = $now_dir . '/' . $file_path;
-            unlink($now_file_path);
+        foreach ($need_update_files as $file_path) {
+            $changed_files[$file_path] = 'update';
         }
 
-        foreach ($last_version_list_files as $file_path) {
+        // 提示用户有一些完全跟踪的文件被修改了
+
+        $optional_update_waring_files = [];
+        $force_update_waring_files = [];
+
+        $now_dir = App::getRootPath();
+
+        $need_process_files = [];
+
+        foreach ($changed_files as $file_path => $type) {
             $now_file_path = $now_dir . '/' . $file_path;
+            $current_file_path = $current_version_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
 
-            $file_content = file_get_contents($last_file_path);
-
-            PathTools::intiDir($now_file_path);
-            file_put_contents($now_file_path, $file_content);
-        }
-
-        // 处理append的文件
-        $last_version_list_skip_files = $last_version_filesystem->listContents('/', Filesystem::LIST_DEEP)
-        ->filter(function (StorageAttributes $attributes) use ($last_version_skip_config) {
-            if ($attributes->isDir()) {
-                return false;
-            }
-
-            $path = $attributes->path();
-
-            if (str_starts_with($path, '.git')) {
-                return false;
-            }
-
-            $skip_files = $last_version_skip_config['skip_files'] ?? [];
-
-            if (in_array($path, $skip_files)) {
-                return true;
-            }
-
-            $skip_dir = $last_version_skip_config['skip_dir'] ?? [];
-
-            foreach ($skip_dir as $dir) {
-                if (str_starts_with($path, $dir)) {
-                    return true;
-                }
-            }
-
-            return true;
-        })
-        ->map(fn (StorageAttributes $attributes) => $attributes->path())
-        ->toArray();
-
-        $last_version_list_append_files = [];
-
-        foreach ($last_version_list_skip_files as $file_path) {
-            if (in_array($file_path, $last_version_skip_config['append_files'])) {
-                $last_version_list_append_files[] = $file_path;
+            // 如果新老版本文件一致，则不需要处理
+            if (PathTools::compareFiles($current_file_path, $last_file_path)) {
                 continue;
             }
 
-            foreach ($last_version_skip_config['append_dir'] as $dir) {
-                if (str_starts_with($file_path, $dir)) {
-                    $last_version_list_append_files[] = $file_path;
-                    continue;
+            if (in_array($file_path, $list_optional_update_files)) {
+                // 可选的文件没有被定制，需要跟踪变化，需要提醒
+                if (PathTools::compareFiles($now_file_path, $current_file_path)) {
+                    $optional_update_waring_files[$file_path] = $type;
+                }
+            } else {
+                // 强制更新的文件被定制了，需要提醒
+                if (!PathTools::compareFiles($now_file_path, $current_file_path)) {
+                    $force_update_waring_files[$file_path] = $type;
                 }
             }
         }
 
-        foreach ($last_version_list_append_files as $file_path) {
+        if (!empty($optional_update_waring_files)) {
+            foreach ($optional_update_waring_files as $file_path => $type) {
+                $output->writeln($file_path . ' ' . $type);
+            }
+            $output->writeln('以上文件没有被您定制，您可以放心更新文件，');
+            $output->writeln('但此目录原则上应当由您手动处理，如果您使用了以下文件，可能会发生错误，');
+            $output->writeln('如果您没有关心过这些文件，您可以放心更新。');
+
+            $is_udpate_optinal_files = $output->ask($input, '确定要更新吗？', true);
+
+            if ($is_udpate_optinal_files) {
+                $need_process_files = array_merge($need_process_files, $optional_update_waring_files);
+            }
+        }
+
+        if (!empty($force_update_waring_files)) {
+            foreach ($force_update_waring_files as $file_path => $type) {
+                $output->writeln($file_path . ' ' . $type);
+            }
+            $output->writeln('以上文件被您定制了，您不应该修改这些文件，');
+            $output->writeln('但您出于某些原因修改了他们，如果继续更新，则会覆盖至最新版本，');
+            $output->writeln('这些改动不应该发生，继续自动升级可能会导致错误');
+
+            $is_udpate_force_files = $output->ask($input, '确定要更新吗？', false);
+
+            if ($is_udpate_force_files) {
+                $need_process_files = array_merge($need_process_files, $force_update_waring_files);
+            }
+        }
+
+        if(empty($need_process_files)){
+            $output->writeln('没有需要更新的文件');
+            $this->cleanWorkpaceDir();
+            return;
+        }
+
+        // 处理需要更新的文件
+        
+        foreach ($need_process_files as $file_path => $type) {
             $now_file_path = $now_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
 
-            if (file_exists($now_file_path)) {
-                continue;
+            if ($type == 'delete') {
+                $output->writeln('删除文件' . $now_file_path);
+                unlink($now_file_path);
+            } elseif ($type == 'add') {
+                $output->writeln('增加文件' . $now_file_path);
+                copy($last_file_path, $now_file_path);
+            } elseif ($type == 'update') {
+                $output->writeln('更新文件' . $now_file_path);
+                copy($last_file_path, $now_file_path);
             }
-
-            $file_content = file_get_contents($last_file_path);
-
-            PathTools::intiDir($now_file_path);
-            file_put_contents($now_file_path, $file_content);
         }
 
         // 检测now的composer依赖和最新的composer依赖
@@ -296,7 +302,7 @@ class AdminUpdateServiceBase
         });
 
         foreach ($update_tips as $tips_item) {
-            if(version_compare($tips_item['version'], $current_version) <= 0) {
+            if (version_compare($tips_item['version'], $current_version) <= 0) {
                 continue;
             }
 
