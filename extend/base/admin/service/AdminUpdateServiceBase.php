@@ -202,6 +202,11 @@ class AdminUpdateServiceBase
         $need_process_files = [];
 
         foreach ($changed_files as $file_path => $type) {
+            if ($type == 'add') {
+                $need_process_files[$file_path] = $type;
+                continue;
+            }
+
             $now_file_path = $now_dir . '/' . $file_path;
             $current_file_path = $current_version_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
@@ -211,17 +216,20 @@ class AdminUpdateServiceBase
                 continue;
             }
 
+            if (PathTools::compareFiles($now_file_path, $current_file_path)) {
+                // 如果当前代码 和 当前版本 一致
+                $need_process_files[$file_path] = $type;
+                continue;
+            }
+
             if (in_array($file_path, $list_optional_update_files)) {
                 // 可选更新的文件发生了变化，提示用户手动维护上游信息
                 $optional_update_waring_files[$file_path] = $type;
-
             } else {
                 // 强制更新的文件被定制了，需要提醒可能会产生错误
                 $force_update_waring_files[$file_path] = $type;
-                
             }
         }
-
 
         if (!empty($optional_update_waring_files)) {
             foreach ($optional_update_waring_files as $file_path => $type) {
