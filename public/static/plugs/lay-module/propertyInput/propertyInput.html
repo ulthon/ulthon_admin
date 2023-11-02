@@ -1,23 +1,30 @@
 <div class="property-input-container" ref="propertyInput">
     <input type="hidden" :name="setting.name" :value="value" :lay-verify="setting.required == 1?'required':''">
 
-    <draggable tag="div" :list="listItem" class="input-list" handle=".drag-item">
+    <draggable tag="table" :list="listItem" class="input-list" handle=".drag-item">
 
-        <div class="input-item" v-for="(item,index) in listItem">
-            <div class="input-name"><input type="text" class="layui-input" placeholder="请输入名称" :value="item.name" @change="onItemNameChange(item,index,$event)"></div>
-            <div class="input-value"><input type="text" class="layui-input" placeholder="请输入数据" :value="item.value" @change="onItemValueChange(item,index,$event)"></div>
-            <div class="input-option">
+        <tr class="input-item" slot="header">
+            <td class="input-item-name" :class="'input-item-name-'+item.key" v-for="(item,index) in field">{{item.title}}</td>
+            <td class="input-item-name input-item-name-options">操作</td>
+        </tr>
+        <tr class="input-item" :key="index" v-for="(item,index) in listItem">
+            <td class="input-value" :class="'input-item-value-'+itemField.key" v-for="(itemField,indexField) in field">
+                <input type="text" class="layui-input" :placeholder="'请输入'+itemField.title" :value="item[itemField.key]" @change="onItemChange(item,index,itemField,$event)">
+            </td>
+            <td class="input-option">
                 <div class="layui-btn-group">
                     <div class="layui-btn layui-btn-primary drag-item"><i class=" fa fa-arrows"></i></div>
 
                     <div class="layui-btn layui-btn-primary" @click="onItemDelete(item,index)"><i class="fa fa-close"></i></div>
                 </div>
-            </div>
-        </div>
-        <div class="input-item" slot="footer">
-            <div class="layui-btn layui-btn-primary" @click="onAddItem" title="增加"><i class="layui-icon layui-icon-add-1"></i></div>
-            <div class="layui-btn layui-btn-primary" @click="onResetItem" title="重置"><i class="layui-icon layui-icon-refresh"></i></div>
-        </div>
+            </td>
+        </tr>
+        <tr class="input-item" slot="footer">
+            <td>
+                <div class="layui-btn layui-btn-primary" @click="onAddItem" title="增加"><i class="layui-icon layui-icon-add-1"></i></div>
+                <div class="layui-btn layui-btn-primary" @click="onResetItem" title="重置"><i class="layui-icon layui-icon-refresh"></i></div>
+            </td>
+        </tr>
     </draggable>
 
 </div>
