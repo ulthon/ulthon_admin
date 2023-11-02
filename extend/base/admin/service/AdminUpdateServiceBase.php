@@ -298,11 +298,11 @@ class AdminUpdateServiceBase
 
         // 为用户整理出要手动调整的composer命令
 
-        $this->cleanWorkpaceDir();
+        
         $output->writeln('更新完成');
         // 更新完成
 
-        $update_tips = include $last_version_dir . '/config/tips.php';
+        $update_tips = include $last_version_dir . '/extend/base/admin/service/adminUpdateData/tips.php';
 
         // 按照版本号排序
         usort($update_tips, function ($a, $b) {
@@ -321,6 +321,8 @@ class AdminUpdateServiceBase
                 $output->writeln($desc);
             }
         }
+
+        $this->cleanWorkpaceDir();
     }
 
     protected function cleanWorkpaceDir()
