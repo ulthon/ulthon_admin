@@ -73,6 +73,18 @@
             </div>
         </div>
         <div class="layui-form-item full-line">
+            <label class="layui-form-label">属性（指定列）</label>
+            <div class="layui-input-block">
+                <div data-toggle="property-input" data-name="property_static">{$row.property_static|raw|default=''}</div>
+            </div>
+        </div>
+        <div class="layui-form-item full-line">
+            <label class="layui-form-label">属性（动态）</label>
+            <div class="layui-input-block">
+                <div data-toggle="property-input" data-name="property_dynamic">{$row.property_dynamic|raw|default=''}</div>
+            </div>
+        </div>
+        <div class="layui-form-item full-line">
             <label class="layui-form-label">商品描述</label>
             <div class="layui-input-block">
                 <textarea name="describe" rows="20" class="layui-textarea editor" placeholder="请输入商品描述">{$row.describe|raw|default=''}</textarea>
