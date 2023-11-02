@@ -109,6 +109,13 @@
             }
         }
 
+        // 如果value缺少uid，则生成
+        for (var i = 0; i < options.value.length; i++) {
+            if (!options.value[i].uid) {
+                options.value[i].uid = ua.randdomString();
+            }
+        }
+
         app = new Vue({
             el: elem,
             data() {
@@ -126,8 +133,8 @@
             created() {
                 if (this.setting.value) {
                     this.originalValue = $.extend(true, [], this.setting.value);
-                    this.listItem = this.setting.value;
-                    this.value = this.setting.value;
+                    this.listItem = $.extend(true, [], this.setting.value);
+                    this.updateValue(this.listItem);
                 }
 
             },
@@ -142,9 +149,6 @@
                 onResetItem() {
                     this.listItem = $.extend(true, [], this.originalValue);
                 },
-                removeItem(item, index) {
-                    this.listItem.splice(index, 1);
-                },
                 onAddItem() {
 
                     var emptyItem = {};
@@ -152,6 +156,8 @@
                     for (var i = 0; i < this.field.length; i++) {
                         emptyItem[this.field[i].key] = '';
                     }
+
+                    emptyItem.uid = ua.randdomString();
 
                     this.listItem.push(emptyItem);
                 },

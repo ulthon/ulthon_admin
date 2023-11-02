@@ -1,14 +1,12 @@
 <div class="property-input-container" ref="propertyInput">
     <input type="hidden" :name="setting.name" :value="value" :lay-verify="setting.required == 1?'required':''">
 
-    <draggable tag="table" :list="listItem" class="input-list" handle=".drag-item">
+    <draggable tag="table" v-model="listItem" class="input-list" handle=".drag-item" draggable=".input-item">
 
-        <tr class="input-item" slot="header">
-            <td class="input-item-name" :class="'input-item-name-'+item.key" v-for="(item,index) in field">{{item.title}}</td>
-            <td class="input-item-name input-item-name-options">操作</td>
-        </tr>
-        <tr class="input-item" :key="index" v-for="(item,index) in listItem">
-            <td class="input-value" :class="'input-item-value-'+itemField.key" v-for="(itemField,indexField) in field">
+
+
+        <tr class="input-item" :key="item.uid" v-for="(item,index) in listItem">
+            <td class="input-value" :class="item.uid+itemField.key" :key="'drag-item-'+indexField" v-for="(itemField,indexField) in field">
                 <input type="text" class="layui-input" :placeholder="'请输入'+itemField.title" :value="item[itemField.key]" @change="onItemChange(item,index,itemField,$event)">
             </td>
             <td class="input-option">
@@ -18,6 +16,10 @@
                     <div class="layui-btn layui-btn-primary" @click="onItemDelete(item,index)"><i class="fa fa-close"></i></div>
                 </div>
             </td>
+        </tr>
+        <tr class="input-item" slot="header">
+            <td class="input-item-name" :class="'input-item-name-'+item.key" v-for="(item,index) in field">{{item.title}}</td>
+            <td class="input-item-name input-item-name-options">操作</td>
         </tr>
         <tr class="input-item" slot="footer">
             <td>
