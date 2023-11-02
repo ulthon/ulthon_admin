@@ -126,7 +126,7 @@
 
                     ],
                     originalValue: '',
-                    field: options.field
+                    field: options.field,
                 };
             },
 
