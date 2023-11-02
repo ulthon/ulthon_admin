@@ -135,6 +135,10 @@
                     this.originalValue = $.extend(true, [], this.setting.value);
                     this.listItem = $.extend(true, [], this.setting.value);
                     this.updateValue(this.listItem);
+
+                    if (this.listItem.length == 0) {
+                        this.onAddItem();
+                    }
                 }
 
             },
