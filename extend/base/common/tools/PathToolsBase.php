@@ -113,7 +113,7 @@ class PathToolsBase
      */
     public static function compareFiles($a, $b):bool
     {
-        if (file_exists($a) !== file_exists($b)) {
+        if (!file_exists($a) || !file_exists($b)) {
             return false;
         }
 

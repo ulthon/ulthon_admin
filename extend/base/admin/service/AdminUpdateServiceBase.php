@@ -212,27 +212,26 @@ class AdminUpdateServiceBase
             }
 
             if (in_array($file_path, $list_optional_update_files)) {
-                // 可选的文件没有被定制，需要跟踪变化，需要提醒
-                if (PathTools::compareFiles($now_file_path, $current_file_path)) {
-                    $optional_update_waring_files[$file_path] = $type;
-                }
+                // 可选更新的文件发生了变化，提示用户手动维护上游信息
+                $optional_update_waring_files[$file_path] = $type;
+
             } else {
-                // 强制更新的文件被定制了，需要提醒
-                if (!PathTools::compareFiles($now_file_path, $current_file_path)) {
-                    $force_update_waring_files[$file_path] = $type;
-                }
+                // 强制更新的文件被定制了，需要提醒可能会产生错误
+                $force_update_waring_files[$file_path] = $type;
+                
             }
         }
+
 
         if (!empty($optional_update_waring_files)) {
             foreach ($optional_update_waring_files as $file_path => $type) {
                 $output->writeln($file_path . ' ' . $type);
             }
-            $output->writeln('以上文件没有被您定制，您可以放心更新文件，');
-            $output->writeln('但此目录原则上应当由您手动处理，如果您使用了以下文件，可能会发生错误，');
-            $output->writeln('如果您没有关心过这些文件，您可以放心更新。');
+            $output->writeln('以上文件被您修改了，这些文件是默认的系统文件，并非您的主要业务代码，');
+            $output->writeln('您可能通过扩展机制修改了以上文件来定制系统代码的逻辑');
+            $output->writeln('您可能需要根据扩展规则查看系统逻辑是否发生了变化，如果发生了变化，您需要手动修改这些文件');
 
-            $is_udpate_optinal_files = $output->confirm($input, '确定要更新吗？', true);
+            $is_udpate_optinal_files = $output->confirm($input, '确定要更新吗？（建议不更新）', false);
 
             if ($is_udpate_optinal_files) {
                 $need_process_files = array_merge($need_process_files, $optional_update_waring_files);
@@ -244,10 +243,11 @@ class AdminUpdateServiceBase
                 $output->writeln($file_path . ' ' . $type);
             }
             $output->writeln('以上文件被您定制了，您不应该修改这些文件，');
-            $output->writeln('但您出于某些原因修改了他们，如果继续更新，则会覆盖至最新版本，');
-            $output->writeln('这些改动不应该发生，继续自动升级可能会导致错误');
+            $output->writeln('但您出于某些原因修改了他们，如果继续更新，会覆盖至最新版本，');
+            $output->writeln('这些改动不应该发生，继续自动升级可能会导致错误，');
+            $output->writeln('建议您选择更新，然后将这些改动的逻辑通过扩展的机制重新实现');
 
-            $is_udpate_force_files = $output->confirm($input, '确定要更新吗？', false);
+            $is_udpate_force_files = $output->confirm($input, '确定要更新吗？（建议更新）', false);
 
             if ($is_udpate_force_files) {
                 $need_process_files = array_merge($need_process_files, $force_update_waring_files);
