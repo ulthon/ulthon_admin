@@ -152,6 +152,9 @@
             methods: {
                 onResetItem() {
                     this.listItem = $.extend(true, [], this.originalValue);
+                    if (this.listItem.length == 0) {
+                        this.onAddItem();
+                    }
                 },
                 onAddItem() {
 
