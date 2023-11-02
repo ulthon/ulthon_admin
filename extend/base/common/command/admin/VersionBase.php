@@ -12,7 +12,7 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.64';
+    public const VERSION = 'v2.0.65';
 
     public const LAYUI_VERSION = '2.8.17';
 
