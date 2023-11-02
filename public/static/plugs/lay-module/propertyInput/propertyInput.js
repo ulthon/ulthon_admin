@@ -49,7 +49,8 @@
                             name: '',
                             value: ''
                         }
-                    ]
+                    ],
+                    originalValue: ''
                 };
             },
             watch: {
@@ -65,6 +66,7 @@
 
             created() {
                 if (this.setting.value) {
+                    this.originalValue = this.setting.value;
                     if (typeof this.setting.value === 'string') {
                         this.setting.value = JSON.parse(this.setting.value);
                     }
@@ -81,7 +83,13 @@
             template: propertyInputTemplate,
 
             methods: {
-
+                onResetItem() {
+                    if (typeof this.originalValue === 'string') {
+                        this.listItem = JSON.parse(this.originalValue);
+                    } else {
+                        this.listItem = this.originalValue;
+                    }
+                },
                 removeItem(item, index) {
                     this.listTag.splice(index, 1);
                 },
