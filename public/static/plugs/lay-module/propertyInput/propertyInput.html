@@ -1,7 +1,7 @@
 <div class="property-input-container" ref="propertyInput">
     <input type="hidden" :name="setting.name" :value="value" :lay-verify="setting.required == 1?'required':''">
 
-    <draggable tag="table" v-model="listItem" class="input-list" handle=".drag-item" draggable=".input-item">
+    <draggable tag="table" v-model="listItem" class="input-list" handle=".drag-item" draggable=".input-item" @update="updateValue(listItem)">
 
         <tr class="input-item" :key="item.uid" v-for="(item,index) in listItem">
             <td class="input-value" :class="item.uid+itemField.key" :key="'drag-item-'+indexField" v-for="(itemField,indexField) in field">

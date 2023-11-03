@@ -155,6 +155,8 @@
                     if (this.listItem.length == 0) {
                         this.onAddItem();
                     }
+
+                    this.updateValue(this.listItem);
                 },
                 onAddItem() {
 
@@ -167,6 +169,8 @@
                     emptyItem.uid = ua.randdomString();
 
                     this.listItem.push(emptyItem);
+
+                    this.updateValue(this.listItem);
                 },
                 onItemChange(item, index, itemField, event) {
                     this.listItem[index][itemField.key] = event.target.value;
@@ -184,6 +188,8 @@
                     } else {
                         this.listItem.splice(index, 1);
                     }
+
+                    this.updateValue(this.listItem);
                 },
                 updateValue(newValue) {
                     this.value = JSON.stringify(newValue);
