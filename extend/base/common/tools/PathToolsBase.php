@@ -47,7 +47,15 @@ class PathToolsBase
         }
 
         if (!is_dir($dir_name)) {
-            mkdir($dir_name, 0777, true);
+            try {
+                mkdir($dir_name, 0777, true);
+            } catch (\Exception $th) {
+                if (!is_dir($dir_name)) {
+                    throw $th;
+                }
+
+                return $file_path;
+            }
         }
 
         return $file_path;
@@ -105,11 +113,11 @@ class PathToolsBase
     }
 
     /**
-     * 比较两个文件是否相同
+     * 比较两个文件是否相同.
      *
      * @param string $a
      * @param string $b
-     * @return boolean 如果一致返回true，否则返回false
+     * @return bool 如果一致返回true，否则返回false
      */
     public static function compareFiles($a, $b):bool
     {
