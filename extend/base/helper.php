@@ -13,8 +13,6 @@ use think\facade\Filesystem;
 use think\response\View;
 use think\route\Url;
 
-include_once __DIR__ . '/common/app/functions.php';
-
 if (!function_exists('__url')) {
     /**
      * 构建URL地址
