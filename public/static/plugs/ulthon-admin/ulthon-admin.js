@@ -1890,6 +1890,16 @@
                             url = admin.url(url);
                         }
                         form.on('submit(' + filter + ')', function (data) {
+
+                            var btnElem = data.elem;
+
+                            // 判断btn是否具备name和value属性，如果有，则加到表单数据里
+                            var btnName = $(btnElem).attr('name');
+                            var btnValue = $(btnElem).attr('value');
+                            if (btnName !== undefined && btnValue !== undefined) {
+                                data.field[btnName] = btnValue;
+                            }
+
                             var dataField = data.field;
 
                             dataField = admin.api.formSubmitEditor(dataField, v);
