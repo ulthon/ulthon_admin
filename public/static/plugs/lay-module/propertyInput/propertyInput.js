@@ -36,7 +36,6 @@
         var options = $.extend(defaultOption, data);
 
         options.value = $.trim(options.value);
-
         // 处理field参数
         // 如果是字符串，则转为json
         if (typeof options.field === 'string') {
@@ -47,6 +46,7 @@
                     options.field = eval('(' + options.field + ')');
                 } catch (e) {
                     options.field = [];
+                    console.error('field参数格式错误');
                 }
             }
         }
@@ -89,13 +89,81 @@
             }
         }
 
-        // 如果field没有key或title，则初始化
+        // 如果field没有key、title、type、default，则初始化
         for (var i = 0; i < options.field.length; i++) {
             if (!options.field[i].key) {
                 options.field[i].key = 'name';
             }
             if (!options.field[i].title) {
                 options.field[i].title = '名称';
+            }
+            if (!options.field[i].type) {
+                options.field[i].type = 'text';
+            }
+            if (!options.field[i].default) {
+                options.field[i].default = '';
+            }
+
+
+
+            // 如果type是textarea且没有定义height，则高度为40px
+            if (options.field[i].type == 'textarea' && !options.field[i].height) {
+                options.field[i].height = '40px';
+            }
+
+            // 如果type是radio
+            if (options.field[i].type == 'radio') {
+
+                // selectList支持以下三种形式的数据
+                // 1 ['string1','string2']
+                // 2 [{title:'string1',value:'string1'},{title:'string2',value:'string2'}]
+                // 3 {string1:'string1',string2:'string2'}
+                // 第2个是标准格式
+
+
+                // 如果没有定义selectList
+                if (!options.field[i].selectList) {
+                    options.field[i].selectList = [
+                        {
+                            title: '是',
+                            value: 1
+                        },
+                        {
+                            title: '否',
+                            value: 0
+                        }
+                    ];
+                }
+
+                // 如果selectList是数组，但是数组的元素是字符串，则将该元素转为对象，title和value都为该元素
+                if (Array.isArray(options.field[i].selectList)) {
+                    for (var j = 0; j < options.field[i].selectList.length; j++) {
+                        if (typeof options.field[i].selectList[j] === 'string') {
+                            options.field[i].selectList[j] = {
+                                title: options.field[i].selectList[j],
+                                value: options.field[i].selectList[j]
+                            };
+                        }
+                    }
+                } else if (typeof options.field[i].selectList === 'object') {
+                    // 如果selectList是对象，则将该对象转为数组
+                    var selectList = [];
+                    for (var key in options.field[i].selectList) {
+                        selectList.push({
+                            title: options.field[i].selectList[key],
+                            value: key
+                        });
+                    }
+                    options.field[i].selectList = selectList;
+                }
+
+                // selectList必须包含title和value，如果没有则报错
+                for (var j = 0; j < options.field[i].selectList.length; j++) {
+                    if (!options.field[i].selectList[j].title || !options.field[i].selectList[j].value) {
+                        console.error('selectList的元素必须包含title和value');
+                    }
+                }
+
             }
         }
 
@@ -162,11 +230,11 @@
 
                     var emptyItem = {};
 
-                    for (var i = 0; i < this.field.length; i++) {
-                        emptyItem[this.field[i].key] = '';
-                    }
-
                     emptyItem.uid = ua.randdomString();
+
+                    for (var i = 0; i < this.field.length; i++) {
+                        emptyItem[this.field[i].key] = this.field[i].default;
+                    }
 
                     this.listItem.push(emptyItem);
 

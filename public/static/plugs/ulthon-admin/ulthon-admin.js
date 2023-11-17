@@ -2328,6 +2328,7 @@
                 var list = document.querySelectorAll('[data-toggle="property-input"]');
                 $.each(list, function (i, v) {
                     var data = $(v).data();
+
                     data.value = $(v).text();
 
                     propertyInput.render(v, data, admin);

@@ -7,5 +7,23 @@
         .input-option{
             white-space: nowrap;
         }
+
+        .layui-textarea{
+            min-height: auto;
+        }
+
+        td{
+            vertical-align: top;
+        }
+
+        .input-radio{
+            label{
+                margin-right: 10px;
+            }
+
+            .item-radio{
+                display: inline-block;
+            }
+        }
     }
 }

@@ -5,7 +5,21 @@
 
         <tr class="input-item" :key="item.uid" v-for="(item,index) in listItem">
             <td class="input-value" :class="item.uid+itemField.key" :key="'drag-item-'+indexField" v-for="(itemField,indexField) in field">
-                <input type="text" class="layui-input" :placeholder="'请输入'+itemField.title" :value="item[itemField.key]" @change="onItemChange(item,index,itemField,$event)">
+
+                <template v-if="itemField.type == 'text'">
+                    <input type="text" class="layui-input" :placeholder="'请输入'+itemField.title" :value="item[itemField.key]" @change="onItemChange(item,index,itemField,$event)">
+                </template>
+                <template v-else-if="itemField.type == 'textarea'">
+                    <textarea class="layui-textarea" :style="{height: itemField.height}" :placeholder="'请输入'+itemField.title" :value="item[itemField.key]" @change="onItemChange(item,index,itemField,$event)" rows="1"></textarea>
+                </template>
+                <template v-else-if="itemField.type == 'radio'">
+                    <div class="input-radio">
+                        <template v-for="(itemSelect,indexSelect) in itemField.selectList">
+                            <input lay-ignore class="item-radio" type="radio" :name="itemField.key+item.uid" :id="itemField.key+item.uid+indexSelect" :value="itemSelect.value" :checked="item[itemField.key] == itemSelect.value" @change="onItemChange(item,index,itemField,$event)">
+                            <label :for="itemField.key+item.uid+indexSelect">{{itemSelect.title}}</label>
+                        </template>
+                    </div>
+
             </td>
             <td class="input-option">
                 <div class="layui-btn-group">

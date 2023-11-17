@@ -75,7 +75,7 @@
         <div class="layui-form-item full-line">
             <label class="layui-form-label">属性（指定列）</label>
             <div class="layui-input-block">
-                <div data-toggle="property-input" data-name="property_static" data-field='{memory_size:"内存",disk_size:"硬盘",cpu_nums:"CPU核心数"}'>{$row.property_static|raw|default=''}</div>
+                <div data-toggle="property-input" data-name="property_static" data-field='[{key:"type",title:"类型",type:"radio",selectList:["单行文本","多行文本","单选"],default:"单行文本"},{key:"title",title:"名称"},{key:"data",title:"数据",type:"textarea",height:"80px",default:"请注意填写内容"}]'>{$row.property_static|raw|default=''}</div>
             </div>
         </div>
         <div class="layui-form-item full-line">

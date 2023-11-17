@@ -4,3 +4,15 @@
 .property-input-container .input-item .input-option {
   white-space: nowrap;
 }
+.property-input-container .input-item .layui-textarea {
+  min-height: auto;
+}
+.property-input-container .input-item td {
+  vertical-align: top;
+}
+.property-input-container .input-item .input-radio label {
+  margin-right: 10px;
+}
+.property-input-container .input-item .input-radio .item-radio {
+  display: inline-block;
+}
