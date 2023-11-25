@@ -6,6 +6,7 @@ use app\admin\model\SystemAdmin;
 use app\BaseController;
 use app\common\constants\AdminConstant;
 use app\common\service\AuthService;
+use app\common\tools\PathTools;
 use think\facade\Env;
 use think\facade\View;
 use think\Model;
@@ -158,7 +159,12 @@ class AdminControllerBase extends BaseController
             $content_js .= View::layout(false)->fetchJS($common_template);
             $content_js .= View::layout(false)->fetchJS($template);
         } catch (TemplateNotFoundException $th) {
-            if (Env::get('adminsystem.strict_view_js', true)) {
+            if (Env::get('adminsystem.make_view_js_while_missing', false)) {
+                $template_file_path = $th->getTemplate();
+                PathTools::intiDir($template_file_path);
+                file_put_contents($template_file_path, '');
+                $content_js = '';
+            } elseif (Env::get('adminsystem.strict_view_js', true)) {
                 throw $th;
             }
         }

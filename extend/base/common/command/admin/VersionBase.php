@@ -12,13 +12,12 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.71';
+    public const VERSION = 'v2.0.72';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '清理技术债务update配置文件',
-        '优化sqlite的安装兼容性',
+        '增加自动创建缺失的js配置项；',
         '发布新版本',
     ];
 
