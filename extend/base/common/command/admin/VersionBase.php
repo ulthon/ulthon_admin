@@ -12,12 +12,12 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.72';
+    public const VERSION = 'v2.0.73';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '增加自动创建缺失的js配置项；',
+        '修改创建缺失文件逻辑；',
         '发布新版本',
     ];
 

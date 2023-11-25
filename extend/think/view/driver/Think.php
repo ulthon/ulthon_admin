@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace think\view\driver;
 
+use app\common\tools\PathTools;
 use think\App;
+use think\facade\Env;
 use think\helper\Str;
 use think\Template;
 use think\template\exception\TemplateNotFoundException;
@@ -206,15 +208,22 @@ class Think
         $view_file_path = ltrim($template, '/') . '.' . ltrim($this->config['view_suffix'], '.');
 
         $file_path = '';
-        if (is_file($app_path . $view_file_path)) {
+        $default_file_path = $app_path . $view_file_path;
+        if (is_file($default_file_path)) {
             // 优先app下的view
-            $file_path = $app_path . $view_file_path;
+            $file_path = $default_file_path;
         } elseif (is_file($base_app_path . $view_file_path)) {
             // 查找extend下的view
             $file_path = $base_app_path . $view_file_path;
-        } else {
+        } elseif (is_file($view_app_path . $view_file_path)) {
             // 查找根目录下的view
             $file_path = $view_app_path . $view_file_path;
+        } else {
+            $file_path = $default_file_path;
+            if (Env::get('adminsystem.make_view_while_missing', false)) {
+                PathTools::intiDir($file_path);
+                file_put_contents($file_path, '');
+            }
         }
 
         $this->template->base_view_path = dirname($file_path) . DIRECTORY_SEPARATOR;
