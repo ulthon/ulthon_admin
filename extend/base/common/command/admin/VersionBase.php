@@ -12,12 +12,13 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.73';
+    public const VERSION = 'v2.0.74';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '修改创建缺失文件逻辑；',
+        '将ext通过ua暴露',
+        '修改系统的js代码规范',
         '发布新版本',
     ];
 
