@@ -13,7 +13,7 @@ $(function () {
                 auth: 'refresh',
                 class: 'layui-btn layui-btn-success layui-btn-sm',
                 icon: 'fa fa-hourglass',
-                extend: 'data-table="' + init.table_render_id + '"',
+                extend: 'data-table="' + init.tableRenderId + '"',
             }, {
                 text: '强制更新节点',
                 title: '该操作会覆盖已存在的节点信息。<br>确定强制更新节点？',
@@ -22,7 +22,7 @@ $(function () {
                 auth: 'refresh',
                 class: 'layui-btn layui-btn-sm layui-btn-normal',
                 icon: 'fa fa-hourglass',
-                extend: 'data-table="' + init.table_render_id + '"',
+                extend: 'data-table="' + init.tableRenderId + '"',
             }, {
 
                 text: '清除失效节点',
@@ -32,7 +32,7 @@ $(function () {
                 auth: 'clear',
                 class: 'layui-btn layui-btn-sm layui-btn-danger',
                 icon: 'fa fa-trash-o',
-                extend: 'data-table="' + init.table_render_id + '"',
+                extend: 'data-table="' + init.tableRenderId + '"',
             }
             ]],
         cols: [[

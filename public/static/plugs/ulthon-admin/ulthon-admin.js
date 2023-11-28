@@ -30,10 +30,11 @@
     });
 
     var init = {
-        table_elem: '#currentTable',
-        table_render_id: 'currentTableRenderId',
-        upload_url: 'ajax/upload',
-        upload_exts: '',
+        tableElem: '#currentTable',
+        tableRenderId: 'currentTableRenderId',
+        uploadUrl: 'ajax/upload',
+        uploadExts: '',
+        extGroup:{}
     };
 
     var table;
@@ -78,12 +79,15 @@
 
         }
     }
-    init.upload_exts += allExtGroup.join('|');
-
+    
     extGroup['office'] = [].concat(extGroup['word'], extGroup['excel'], extGroup['ppt'], extGroup['pdf']);
     extGroup['media'] = [].concat(extGroup['image'], extGroup['music'], extGroup['video']);
 
+    init.uploadExts += allExtGroup.join('|');
+    init.extGroup = extGroup;
+
     var admin = {
+        init: init,
         config: {
             shade: [0.02, '#000'],
         },
@@ -256,11 +260,11 @@
             render: function (options) {
                 options.init = options.init || init;
                 options.modifyReload = admin.parame(options.modifyReload, true);
-                options.elem = options.elem || options.init.table_elem;
-                options.id = options.id || options.init.table_render_id;
+                options.elem = options.elem || options.init.tableElem;
+                options.id = options.id || options.init.tableRenderId;
                 options.scrollPos = options.scrollPos || 'fixed';
                 options.layFilter = options.id + '_LayFilter';
-                options.url = options.url || admin.url(options.init.index_url);
+                options.url = options.url || admin.url(options.init.indexUrl);
                 options.headers = admin.headers();
                 options.page = admin.parame(options.page, true);
                 options.search = admin.parame(options.search, true);
@@ -437,15 +441,15 @@
                         toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
                     } else if (v === 'add') {
                         if (admin.checkAuth('add', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加" data-full="' + init.formFullScreen + '"><i class="fa fa-plus"></i> 添加</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.addUrl + '" data-title="添加" data-full="' + init.formFullScreen + '"><i class="fa fa-plus"></i> 添加</button>\n';
                         }
                     } else if (v === 'delete') {
                         if (admin.checkAuth('delete', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.deleteUrl + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
                         }
                     } else if (v === 'export') {
                         if (admin.checkAuth('export', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.exportUrl + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
                         }
                     } else if (v === 'selectConfirm') {
                         toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success select-confirm" data-table-target="' + tableId + '"> 确定选择</button>\n';
@@ -633,14 +637,14 @@
                 return options;
             },
             renderSwitch: function (cols, tableInit, tableId, modifyReload) {
-                tableInit.modify_url = tableInit.modify_url || false;
+                tableInit.modifyUrl = tableInit.modifyUrl || false;
                 cols = cols[0] || {};
-                tableId = tableId || init.table_render_id;
+                tableId = tableId || init.tableRenderId;
                 if (cols.length > 0) {
                     $.each(cols, function (i, v) {
                         v.filter = v.filter || false;
-                        if (v.filter !== false && tableInit.modify_url !== false) {
-                            admin.table.listenSwitch({ filter: v.filter, url: tableInit.modify_url, tableId: tableId, modifyReload: modifyReload });
+                        if (v.filter !== false && tableInit.modifyUrl !== false) {
+                            admin.table.listenSwitch({ filter: v.filter, url: tableInit.modifyUrl, tableId: tableId, modifyReload: modifyReload });
                         }
                     });
                 }
@@ -926,7 +930,7 @@
             tool: function (data) {
                 var option = data.LAY_COL;
                 option.operat = option.operat || ['edit', 'delete'];
-                var elem = option.init.table_elem || init.table_elem;
+                var elem = option.init.tableElem || init.tableElem;
                 var html = '';
                 $.each(option.operat, function (i, item) {
                     if (typeof item === 'string') {
@@ -940,7 +944,7 @@
                                     text: '编辑',
                                     title: '编辑信息',
                                     auth: 'edit',
-                                    url: option.init.edit_url,
+                                    url: option.init.editUrl,
                                     extend: option.init.formFullScreen == 'true' ? ' data-full="true"' : ''
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
@@ -957,7 +961,7 @@
                                     text: '删除',
                                     title: '确定删除？',
                                     auth: 'delete',
-                                    url: option.init.delete_url,
+                                    url: option.init.deleteUrl,
                                     extend: ""
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
@@ -1114,7 +1118,7 @@
             switch: function (data) {
                 var option = data.LAY_COL;
 
-                if (!admin.checkAuth('modify', option.init.table_elem)) {
+                if (!admin.checkAuth('modify', option.init.tableElem)) {
                     return admin.table.list(data);
                 }
 
@@ -1230,7 +1234,7 @@
                 option.filter = option.filter || '';
                 option.url = option.url || '';
                 option.field = option.field || option.filter || '';
-                option.tableId = option.tableId || init.table_render_id;
+                option.tableId = option.tableId || init.tableRenderId;
                 option.modifyReload = option.modifyReload || false;
                 form.on('switch(' + option.filter + ')', function (obj) {
                     var checked = obj.elem.checked ? 1 : 0;
@@ -1298,9 +1302,9 @@
                 });
             },
             listenEdit: function (tableInit, layFilter, tableId, modifyReload) {
-                tableInit.modify_url = tableInit.modify_url || false;
-                tableId = tableId || init.table_render_id;
-                if (tableInit.modify_url !== false) {
+                tableInit.modifyUrl = tableInit.modifyUrl || false;
+                tableId = tableId || init.tableRenderId;
+                if (tableInit.modifyUrl !== false) {
                     table.on('edit(' + layFilter + ')', function (obj) {
                         var value = obj.value,
                             data = obj.data,
@@ -1312,7 +1316,7 @@
                             value: value,
                         };
                         admin.request.post({
-                            url: tableInit.modify_url,
+                            url: tableInit.modifyUrl,
                             prefix: true,
                             data: _data,
                         }, function (res) {
@@ -1547,7 +1551,7 @@
                     tableId = $(this).attr('data-table');
 
                 if (checkbox === 'true') {
-                    tableId = tableId || init.table_render_id;
+                    tableId = tableId || init.tableRenderId;
                     var checkStatus = table.checkStatus(tableId),
                         data = checkStatus.data;
                     if (data.length <= 0) {
@@ -1658,7 +1662,7 @@
             $('body').on('click', '[data-table-refresh]', function () {
                 var tableId = $(this).attr('data-table-refresh');
                 if (tableId === undefined || tableId === '' || tableId == null) {
-                    tableId = init.table_render_id;
+                    tableId = init.tableRenderId;
                 }
                 table.reloadData(tableId);
             });
@@ -1667,7 +1671,7 @@
             $('body').on('click', '[data-table-reset]', function () {
                 var tableId = $(this).attr('data-table-reset');
                 if (tableId === undefined || tableId === '' || tableId == null) {
-                    tableId = init.table_render_id;
+                    tableId = init.tableRenderId;
                 }
                 var where = {
                     filter: '{}',
@@ -1702,7 +1706,7 @@
 
                 var postData = {};
                 if (checkbox === 'true') {
-                    tableId = tableId || init.table_render_id;
+                    tableId = tableId || init.tableRenderId;
                     var checkStatus = table.checkStatus(tableId),
                         data = checkStatus.data;
                     if (data.length <= 0) {
@@ -1725,7 +1729,7 @@
                     }, function (res) {
                         admin.msg.success(res.msg, function () {
                             if (endMethod == 'reload-table') {
-                                tableId = tableId || init.table_render_id;
+                                tableId = tableId || init.tableRenderId;
                                 table.reloadData(tableId);
                             } else if (endMethod == 'refresh-page') {
                                 location.reload();
@@ -1742,7 +1746,7 @@
             $('body').on('click', '[data-table-delete]', function () {
                 var tableId = $(this).attr('data-table-delete'),
                     url = $(this).attr('data-url');
-                tableId = tableId || init.table_render_id;
+                tableId = tableId || init.tableRenderId;
                 url = url !== undefined ? admin.url(url) : window.location.href;
                 var checkStatus = table.checkStatus(tableId),
                     data = checkStatus.data;
@@ -1800,7 +1804,7 @@
                 option.refreshTable = option.refreshTable || false;
                 option.refreshFrame = option.refreshFrame || false;
                 if (option.refreshTable === true) {
-                    option.refreshTable = init.table_render_id;
+                    option.refreshTable = init.tableRenderId;
                 }
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
@@ -2016,7 +2020,7 @@
                             var elemFilenameField = "input[name='" + uploadFilenameField + "']";
                         }
                         if (uploadExts == '*') {
-                            uploadExts = init.upload_exts;
+                            uploadExts = init.uploadExts;
                         } else if (uploadExts.charAt(0) == '*') {
                             var extGroupName = uploadExts.slice(1);
                             if (extGroup[extGroupName]) {
@@ -2027,7 +2031,7 @@
                         // 监听上传事件
                         upload.render({
                             elem: this,
-                            url: admin.url(init.upload_url),
+                            url: admin.url(init.uploadUrl),
                             exts: uploadExts,
                             accept: uploadAccept,//指定允许上传时校验的文件类型
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型

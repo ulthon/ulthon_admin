@@ -8,9 +8,9 @@ $(function () {
             homdPid: 99999999,
             treeIdName: 'id',
             treePidName: 'pid',
-            url: ua.url(init.index_url),
-            elem: init.table_elem,
-            id: init.table_render_id,
+            url: ua.url(init.indexUrl),
+            elem: init.tableElem,
+            id: init.tableRenderId,
             toolbar: '#toolbar',
             page: false,
             skin: 'line',
@@ -46,7 +46,7 @@ $(function () {
                     operat: [
                         [{
                             text: '添加下级',
-                            url: init.add_url,
+                            url: init.addUrl,
                             method: 'open',
                             auth: 'add',
                             class: 'layui-btn layui-btn-xs layui-btn-normal',
@@ -61,7 +61,7 @@ $(function () {
 
                         }, {
                             text: '编辑',
-                            url: init.edit_url,
+                            url: init.editUrl,
                             method: 'open',
                             auth: 'edit',
                             class: 'layui-btn layui-btn-xs layui-btn-success',
@@ -72,7 +72,7 @@ $(function () {
                             method: 'none',
                             auth: 'delete',
                             class: 'layui-btn layui-btn-xs layui-btn-danger',
-                            extend: 'data-treetable-delete-item="1" data-url="' + init.delete_url + '"',
+                            extend: 'data-treetable-delete-item="1" data-url="' + init.deleteUrl + '"',
                             data: ['id', 'title'],
                             _if(data) {
 
@@ -127,7 +127,7 @@ $(function () {
     $('body').on('click', '[data-treetable-delete]', function () {
         var tableId = $(this).attr('data-treetable-delete'),
             url = $(this).attr('data-url');
-        tableId = tableId || init.table_render_id;
+        tableId = tableId || init.tableRenderId;
         url = url != undefined ? ua.url(url) : window.location.href;
         var checkStatus = table.checkStatus(tableId),
             data = checkStatus.data;
@@ -154,9 +154,9 @@ $(function () {
         return false;
     });
 
-    ua.table.listenSwitch({ filter: 'status', url: init.modify_url });
+    ua.table.listenSwitch({ filter: 'status', url: init.modifyUrl });
 
-    ua.table.listenEdit(init, 'currentTable', init.table_render_id, false);
+    ua.table.listenEdit(init, 'currentTable', init.tableRenderId, false);
 
     ua.listen();
 });

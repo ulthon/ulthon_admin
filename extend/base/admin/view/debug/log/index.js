@@ -1,13 +1,13 @@
 $(function () {
     var init = {
-        table_elem: '#currentTable',
-        table_render_id: 'currentTableRenderId',
-        index_url: 'debug.log/index',
-        add_url: 'debug.log/add',
-        edit_url: 'debug.log/edit',
-        delete_url: 'debug.log/delete',
-        export_url: 'debug.log/export',
-        modify_url: 'debug.log/modify',
+        tableElem: '#currentTable',
+        tableRenderId: 'currentTableRenderId',
+        indexUrl: 'debug.log/index',
+        addUrl: 'debug.log/add',
+        editUrl: 'debug.log/edit',
+        deleteUrl: 'debug.log/delete',
+        exportUrl: 'debug.log/export',
+        modifyUrl: 'debug.log/modify',
     };
 
     var uidList = [];
