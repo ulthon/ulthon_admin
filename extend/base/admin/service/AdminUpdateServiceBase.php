@@ -193,6 +193,31 @@ class AdminUpdateServiceBase
                 continue;
             }
 
+            if ($type == 'delete') {
+                if ($this->testIsOptionalFiles($file_path)) {
+                    // 最新版本没有，但是现存版本有，有可能是新版本删除的，也有可能是用户增加的
+
+                    if (in_array($file_path, $current_version_files)) {
+                        // 如果这个文件在当前版本中存在，则是新版本删除的，提示用户处理，因为用户改动了他，可能不希望被删除
+                        $optional_update_waring_files[$file_path] = $type;
+                        continue;
+                    }
+
+                    // 如果这个文件在当前版本中不存在，则是用户增加的，跳过
+                    continue;
+                }
+                // 如果是强制更新的部分
+
+                if (in_array($file_path, $current_version_files)) {
+                    // 如果这个新建的文件，在当前版本中存在，则是新版本删除的，直接处理
+                    $need_process_files[$file_path] = $type;
+                    continue;
+                }
+
+                // 如果这个文件在当前版本中不存在，则是用户增加的，跳过
+                continue;
+            }
+
             $now_file_path = $now_dir . '/' . $file_path;
             $current_file_path = $current_version_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
@@ -210,18 +235,6 @@ class AdminUpdateServiceBase
             }
 
             if ($this->testIsOptionalFiles($file_path)) {
-                if ($type == 'delete') {
-                    // 最新版本没有，但是现存版本有，有可能是新版本删除的，也有可能是用户增加的
-
-                    if (in_array($file_path, $current_version_files)) {
-                        // 如果这个文件在当前版本中存在，则是新版本删除的，提示用户处理，因为用户改动了他，可能不希望被删除
-                        $optional_update_waring_files[$file_path] = $type;
-                        continue;
-                    }
-
-                    // 如果这个文件在当前版本中不存在，则是用户增加的，跳过
-                    continue;
-                }
                 // 可选更新的文件发生了变化，提示用户手动维护上游信息
                 $optional_update_waring_files[$file_path] = $type;
             } else {
