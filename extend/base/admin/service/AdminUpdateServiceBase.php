@@ -41,10 +41,8 @@ class AdminUpdateServiceBase
         $current_version = Version::VERSION;
 
         $current_version_dir = App::getRuntimePath() . '/update/' . $current_version;
-
         $last_version_dir = App::getRuntimePath() . '/update/last';
-
-        $version_file_regx = "/\bconst VERSION\s*=\s*'[\d\.a-z]+'/";
+        $now_dir = App::getRootPath();
 
         $output->writeln('获取最新代码');
         $last_version_git = new Git();
@@ -97,6 +95,7 @@ class AdminUpdateServiceBase
 
         $current_version_filesystem = new Filesystem(new LocalFilesystemAdapter($current_version_dir));
         $last_version_filesystem = new Filesystem(new LocalFilesystemAdapter($last_version_dir));
+        $now_filesystem = new Filesystem(new LocalFilesystemAdapter($now_dir));
 
         // app、config下的所有文件和根目录下的几个文件
         // 如果与当前版本一致（没有定制过），则将这种文件增加到完全跟踪列表，（新版覆盖、新版删除），
@@ -106,36 +105,13 @@ class AdminUpdateServiceBase
 
         // 完全跳过runtime、vendor、.git目录
 
-        $list_optional_update_files = [];
-
-        $list_optional_update_files = array_merge(
-            $list_optional_update_files,
-            $current_version_filesystem->listContents('/app', true)
-            ->map(fn (StorageAttributes $attributes) => $attributes->path())
-            ->toArray()
-        );
-        $list_optional_update_files = array_merge(
-            $list_optional_update_files,
-            $current_version_filesystem->listContents('/config', true)
-            ->map(fn (StorageAttributes $attributes) => $attributes->path())
-            ->toArray()
-        );
-        $list_optional_update_files = array_merge(
-            $list_optional_update_files,
-            $current_version_filesystem->listContents('/')
-            ->map(fn (StorageAttributes $attributes) => $attributes->path())
-            ->toArray()
-        );
-
         $ignore_prefix = [
-            'runtime',
-            'vendor',
-            '.git',
+            'runtime' => 'recursive',
+            'vendor' => 'recursive',
+            '.git' => 'recursive',
         ];
 
-        // 当前版本的所有文件
-        $current_version_files = $current_version_filesystem->listContents('/', true)
-        ->filter(function (StorageAttributes $attributes) use ($ignore_prefix) {
+        $filter_files_function = function (StorageAttributes $attributes) use ($ignore_prefix) {
             if ($attributes->isDir()) {
                 return false;
             }
@@ -147,46 +123,44 @@ class AdminUpdateServiceBase
             }
 
             return true;
-        })
+        };
+
+        // 当前版本的应该被处理所有文件
+        $current_version_files = $current_version_filesystem->listContents('/', true)
+        ->filter($filter_files_function)
         ->map(fn (StorageAttributes $attributes) => $attributes->path())
         ->toArray();
 
         // 最新版本的所有文件
         $last_version_files = $last_version_filesystem->listContents('/', true)
-        ->filter(function (StorageAttributes $attributes) use ($ignore_prefix) {
-            if ($attributes->isDir()) {
-                return false;
-            }
+        ->filter($filter_files_function)
+        ->map(fn (StorageAttributes $attributes) => $attributes->path())
+        ->toArray();
 
-            foreach ($ignore_prefix as $prefix) {
-                if (str_starts_with($attributes->path(), $prefix)) {
-                    return false;
-                }
-            }
-
-            return true;
-        })
+        // 本身的所有文件
+        $now_files = $now_filesystem->listContents('/', true)
+        ->filter($filter_files_function)
         ->map(fn (StorageAttributes $attributes) => $attributes->path())
         ->toArray();
 
         $changed_files = [];
 
         // 需要删除的文件
-        $need_delete_files = array_diff($current_version_files, $last_version_files);
+        $need_delete_files = array_diff($now_files, $last_version_files);
 
         foreach ($need_delete_files as $file_path) {
             $changed_files[$file_path] = 'delete';
         }
 
         // 需要增加的文件
-        $need_add_files = array_diff($last_version_files, $current_version_files);
+        $need_add_files = array_diff($last_version_files, $now_files);
 
         foreach ($need_add_files as $file_path) {
             $changed_files[$file_path] = 'add';
         }
 
         // 需要更新的文件
-        $need_update_files = array_intersect($current_version_files, $last_version_files);
+        $need_update_files = array_intersect($now_files, $last_version_files);
 
         foreach ($need_update_files as $file_path) {
             $changed_files[$file_path] = 'update';
@@ -196,8 +170,6 @@ class AdminUpdateServiceBase
 
         $optional_update_waring_files = [];
         $force_update_waring_files = [];
-
-        $now_dir = App::getRootPath();
 
         $need_process_files = [];
 
@@ -211,18 +183,19 @@ class AdminUpdateServiceBase
             $current_file_path = $current_version_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
 
-            // 如果新老版本文件一致，则不需要处理
-            if (PathTools::compareFiles($current_file_path, $last_file_path)) {
+            // 如果现存文件和新版本一致，则无需处理
+            if (PathTools::compareFiles($now_file_path, $last_file_path)) {
                 continue;
             }
 
+            // 如果现存版本和当前版本一致，则直接处理
             if (PathTools::compareFiles($now_file_path, $current_file_path)) {
                 // 如果当前代码 和 当前版本 一致
                 $need_process_files[$file_path] = $type;
                 continue;
             }
 
-            if (in_array($file_path, $list_optional_update_files)) {
+            if ($this->testIsOptionalFiles($file_path)) {
                 // 可选更新的文件发生了变化，提示用户手动维护上游信息
                 $optional_update_waring_files[$file_path] = $type;
             } else {
@@ -298,7 +271,6 @@ class AdminUpdateServiceBase
 
         // 为用户整理出要手动调整的composer命令
 
-        
         $output->writeln('更新完成');
         // 更新完成
 
@@ -323,6 +295,29 @@ class AdminUpdateServiceBase
         }
 
         $this->cleanWorkpaceDir();
+    }
+
+    protected function testIsOptionalFiles($file_path)
+    {
+        // 如果file_path以app或config开头，则是可选更新的文件
+        $optional_files_prefix = [
+            'app',
+            'config',
+            'route',
+        ];
+
+        foreach ($optional_files_prefix as $prefix) {
+            if (str_starts_with($file_path, $prefix)) {
+                return true;
+            }
+        }
+
+        // 如果file_path不存在目录分隔符，则是可选更新的文件
+        if (strpos($file_path, '/') === false) {
+            return true;
+        }
+
+        return false;
     }
 
     protected function cleanWorkpaceDir()
