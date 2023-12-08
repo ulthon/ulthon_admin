@@ -229,6 +229,12 @@ class AdminUpdateServiceBase
 
             // 如果现存版本和当前版本一致，则直接处理
             if (PathTools::compareFiles($now_file_path, $current_file_path)) {
+
+                if(PathTools::compareFiles($current_file_path,$last_file_path)){
+                    // 如果当前版本和新版本一致，则无需处理
+                    continue;
+                }
+
                 // 如果当前代码 和 当前版本 一致
                 $need_process_files[$file_path] = $type;
                 continue;
