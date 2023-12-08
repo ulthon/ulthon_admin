@@ -34,7 +34,7 @@
         tableRenderId: 'currentTableRenderId',
         uploadUrl: 'ajax/upload',
         uploadExts: '',
-        extGroup:{}
+        extGroup: {}
     };
 
     var table;
@@ -79,7 +79,7 @@
 
         }
     }
-    
+
     extGroup['office'] = [].concat(extGroup['word'], extGroup['excel'], extGroup['ppt'], extGroup['pdf']);
     extGroup['media'] = [].concat(extGroup['image'], extGroup['music'], extGroup['video']);
 
@@ -512,8 +512,25 @@
                             d.searchValue = d.defaultSearchValue;
                         }
 
-                        formatFilter[d.field] = d.defaultSearchValue;
-                        formatOp[d.field] = d.searchOp;
+                        if (d.search == 'number_limit') {
+                            var a = '';
+                            var b = '';
+                            if (d.searchValue) {
+                                var paramsArr = d.searchValue.split(',');
+                                a = paramsArr[0];
+                                b = paramsArr[1];
+                            }
+
+                            formatFilter['[' + d.field + ']min'] = a;
+                            formatOp['[' + d.field + ']min'] = 'min';
+
+                            formatFilter['[' + d.field + ']max'] = b;
+                            formatOp['[' + d.field + ']max'] = 'max';
+                        } else {
+                            formatFilter[d.field] = d.defaultSearchValue;
+                            formatOp[d.field] = d.searchOp;
+                        }
+
                     }
 
 
