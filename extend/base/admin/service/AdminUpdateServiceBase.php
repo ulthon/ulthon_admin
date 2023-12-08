@@ -248,6 +248,7 @@ class AdminUpdateServiceBase
             $now_file_path = $now_dir . '/' . $file_path;
             $last_file_path = $last_version_dir . '/' . $file_path;
 
+            PathTools::intiDir($now_file_path);
             if ($type == 'delete') {
                 $output->writeln('删除文件' . $now_file_path);
                 unlink($now_file_path);
@@ -261,7 +262,6 @@ class AdminUpdateServiceBase
         }
 
         // 检测now的composer依赖和最新的composer依赖
-
         $last_composer_json = file_get_contents($last_version_dir . '/composer.json');
 
         $output->writeln($last_composer_json);
