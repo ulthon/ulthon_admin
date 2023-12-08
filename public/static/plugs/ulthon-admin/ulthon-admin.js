@@ -494,6 +494,9 @@
 
                     d.elemIdName = d.fieldAlias;
 
+                    var a = '';
+                    var b = '';
+                    
                     if (typeof d.fieldAlias == 'string') {
 
                         if (d.fieldAlias.indexOf('[') == 0) {
@@ -513,8 +516,6 @@
                         }
 
                         if (d.search == 'number_limit') {
-                            var a = '';
-                            var b = '';
                             if (d.searchValue) {
                                 var paramsArr = d.searchValue.split(',');
                                 a = paramsArr[0];
