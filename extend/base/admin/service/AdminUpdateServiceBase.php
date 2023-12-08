@@ -175,6 +175,20 @@ class AdminUpdateServiceBase
 
         foreach ($changed_files as $file_path => $type) {
             if ($type == 'add') {
+                // 最新版本有，但是现存版本没有，有可能是新版本增加的，也有可能是用户删除的
+                if ($this->testIsOptionalFiles($file_path)) {
+                    // 判断是否是新版本增加的
+                    if(in_array($file_path, $current_version_files)){
+                        // 如果是新版本增加的，则直接处理
+                        $need_process_files[$file_path] = $type;
+                        continue;
+                    }
+                    
+                    // 如果是用户删除了的，则提示用户处理
+                    $optional_update_waring_files[$file_path] = $type;
+                    continue;
+                }
+                // 如果是强制更新的部分，则应当直接处理
                 $need_process_files[$file_path] = $type;
                 continue;
             }
@@ -196,6 +210,19 @@ class AdminUpdateServiceBase
             }
 
             if ($this->testIsOptionalFiles($file_path)) {
+
+                if($type == 'delete'){
+                    // 最新版本没有，但是现存版本有，有可能是新版本删除的，也有可能是用户增加的
+
+                    if(in_array($file_path, $current_version_files)){
+                        // 如果这个文件在当前版本中存在，则是新版本删除的，提示用户处理，因为用户改动了他，可能不希望被删除
+                        $optional_update_waring_files[$file_path] = $type;
+                        continue;
+                    }
+
+                    // 如果这个文件在当前版本中不存在，则是用户增加的，跳过
+                    continue;
+                }
                 // 可选更新的文件发生了变化，提示用户手动维护上游信息
                 $optional_update_waring_files[$file_path] = $type;
             } else {
