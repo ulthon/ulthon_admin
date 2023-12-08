@@ -604,8 +604,8 @@
                                 formHtml += '\t<div class="layui-form-item form-item-number-limit layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + d.searchValue + '" placeholder="最小值" class="layui-input">\n' +
-                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + d.searchValue + '" placeholder="最大值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min" name="[' + d.fieldAlias + ']min"  data-search-op="min" type="text" value="' + a + '" placeholder="最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max" name="[' + d.fieldAlias + ']max"  data-search-op="max" type="text" value="' + b + '" placeholder="最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
