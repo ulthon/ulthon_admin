@@ -309,7 +309,7 @@ function event_response($name, $params = [])
 /**
  * 以扩展的架构定位app下的文件位置.
  *
- * @param string $file_path 文件路径，不要以/开头，不需要以app开头，会自动定位app或extend/base。
+ * @param string $file_path 文件路径，不要以/开头，不需要以app开头，会自动定位 app 或 extend/base。
  * @return string
  */
 function app_file_path($file_path)

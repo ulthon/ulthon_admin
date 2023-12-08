@@ -23,4 +23,11 @@ return [
             '本次更新修改了database/migrations/20220419030557_system_auth.php文件，修复了安装到sqlite的问题，如果你使用sqlite，需要有意识的解决这个问题',
         ],
     ],
+    [
+        'version' => 'v2.0.74',
+        'desc' => [
+            '本次更新修改了js中init的各项属性的大小写规范，你需要将蛇形命名全局替换为小驼峰命名，比如:table_elem改为tableElem',
+            '可以运行 php think admin:update:code --update-version v2.0.74 命令自动替换',
+        ],
+    ],
 ];
