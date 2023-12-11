@@ -272,10 +272,6 @@ class AdminControllerBase extends BaseController
                 continue;
             }
 
-            if ($val === '') {
-                continue;
-            }
-
             $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
 
             if (strpos($key, '[') === 0) {

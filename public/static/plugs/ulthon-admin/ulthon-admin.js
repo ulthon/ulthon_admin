@@ -486,7 +486,7 @@
                     d.selectList = d.selectList || {};
                     d.search = admin.parame(d.search, true);
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
-                    d.searchValue = d.searchValue || '';
+                    d.searchValue = d.searchValue || undefined;
                     d.searchHide = d.searchHide || '';
                     d.defaultSearchValue = d.defaultSearchValue;
                     d.searchOp = d.searchOp || '%*%';
@@ -510,44 +510,57 @@
                     }
 
                     if (d.defaultSearchValue != undefined) {
-                        if (d.searchValue.length == 0) {
+                        if (!d.searchValue || d.searchValue.length == 0) {
                             d.searchValue = d.defaultSearchValue;
                         }
                     }
 
-                    if (d.search == 'number_limit') {
-                        if (d.searchValue) {
+                    if (d.searchValue !== undefined) {
+
+                        if (d.search == 'number_limit') {
                             var paramsArr = d.searchValue.split(',');
+
                             a = paramsArr[0];
                             b = paramsArr[1];
-                        }
 
-                        formatFilter['[' + d.field + ']min'] = a;
-                        formatOp['[' + d.field + ']min'] = 'min';
+                            if (a) {
+                                formatFilter['[' + d.field + ']min'] = a;
+                                formatOp['[' + d.field + ']min'] = 'min';
+                            }
 
-                        formatFilter['[' + d.field + ']max'] = b;
-                        formatOp['[' + d.field + ']max'] = 'max';
-                    } else if (d.search == 'time_limit') {
-                        if (d.searchValue) {
+                            if (b) {
+                                formatFilter['[' + d.field + ']max'] = b;
+                                formatOp['[' + d.field + ']max'] = 'max';
+                            }
+                        } else if (d.search == 'time_limit') {
                             var paramsArr = d.searchValue.split(',');
+
                             a = paramsArr[0];
                             b = paramsArr[1];
+
+                            if (a) {
+                                formatFilter['[' + d.field + ']min_date'] = a;
+                                formatOp['[' + d.field + ']min_date'] = 'min_date';
+                            }
+
+                            if (b) {
+                                formatFilter['[' + d.field + ']max_date'] = b;
+                                formatOp['[' + d.field + ']max_date'] = 'max_date';
+                            }
+                        } else {
+                            formatFilter[d.field] = d.searchValue;
+                            formatOp[d.field] = d.searchOp;
                         }
-
-                        formatFilter['[' + d.field + ']min_date'] = a;
-                        formatOp['[' + d.field + ']min_date'] = 'min_date';
-
-                        formatFilter['[' + d.field + ']max_date'] = b;
-                        formatOp['[' + d.field + ']max_date'] = 'max_date';
-                    } else {
-                        formatFilter[d.field] = d.defaultSearchValue;
-                        formatOp[d.field] = d.searchOp;
                     }
 
                     var formSearchHideClass = '';
 
                     if (d.searchHide) {
                         formSearchHideClass = ' search-hide-item';
+                    }
+
+                    if (d.searchValue === undefined) {
+                        d.searchValue = '';
                     }
 
                     if (d.field !== false && d.search !== false) {
@@ -623,6 +636,8 @@
                         newCols.push(d);
                     }
                 });
+
+
                 if (formHtml !== '') {
 
                     $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="table-search-fieldset layui-hide">\n' +
