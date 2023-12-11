@@ -295,8 +295,8 @@
                 if (options.done != undefined) {
                     optionDone = options.done;
                 }
-                options.done = function () {
-                    optionDone();
+                options.done = function (res, curr, count) {
+                    optionDone(res, curr, count);
 
                     // 监听表格内的复制组件
                     admin.api.copyText('[lay-id=' + options.id + ']');
@@ -496,7 +496,7 @@
 
                     var a = '';
                     var b = '';
-                    
+
                     if (typeof d.fieldAlias == 'string') {
 
                         if (d.fieldAlias.indexOf('[') == 0) {
