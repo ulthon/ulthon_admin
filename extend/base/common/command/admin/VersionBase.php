@@ -12,13 +12,12 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.83';
+    public const VERSION = 'v2.0.84';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '增加表格done的回调参数',
-        '增加require的扩展事件',
+        '完成timer_limit的预搜索传值',
         '发布新版本',
     ];
 

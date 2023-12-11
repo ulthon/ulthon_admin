@@ -36,7 +36,7 @@ $(function () {
                     return '<div class="' + className + '">' + data.content + '</div>';
                 }
             },
-            { field: 'create_time', title: '记录时间', minWidth: 160, search: 'time_limit' },
+            { field: 'create_time', title: '记录时间', minWidth: 160, search: 'time_limit', defaultSearchValue: ua.getQueryVariable('create_time') },
             { field: 'app_name', title: 'app_name' },
             { field: 'controller_name', title: 'controller_name', },
             { field: 'action_name', title: 'action_name' },

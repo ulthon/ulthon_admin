@@ -509,31 +509,43 @@
                         d.elemIdName = d.elemIdName.replace('.', '-');
                     }
 
-
                     if (d.defaultSearchValue != undefined) {
                         if (d.searchValue.length == 0) {
                             d.searchValue = d.defaultSearchValue;
                         }
 
-                        if (d.search == 'number_limit') {
-                            if (d.searchValue) {
-                                var paramsArr = d.searchValue.split(',');
-                                a = paramsArr[0];
-                                b = paramsArr[1];
-                            }
-
-                            formatFilter['[' + d.field + ']min'] = a;
-                            formatOp['[' + d.field + ']min'] = 'min';
-
-                            formatFilter['[' + d.field + ']max'] = b;
-                            formatOp['[' + d.field + ']max'] = 'max';
-                        } else {
-                            formatFilter[d.field] = d.defaultSearchValue;
-                            formatOp[d.field] = d.searchOp;
-                        }
 
                     }
+                    console.log(d.defaultSearchValue);
 
+                    if (d.search == 'number_limit') {
+                        if (d.searchValue) {
+                            var paramsArr = d.searchValue.split(',');
+                            a = paramsArr[0];
+                            b = paramsArr[1];
+                        }
+
+                        formatFilter['[' + d.field + ']min'] = a;
+                        formatOp['[' + d.field + ']min'] = 'min';
+
+                        formatFilter['[' + d.field + ']max'] = b;
+                        formatOp['[' + d.field + ']max'] = 'max';
+                    } else if (d.search == 'time_limit') {
+                        if (d.searchValue) {
+                            var paramsArr = d.searchValue.split(',');
+                            a = paramsArr[0];
+                            b = paramsArr[1];
+                        }
+
+                        formatFilter['[' + d.field + ']min_date'] = a;
+                        formatOp['[' + d.field + ']min_date'] = 'min_date';
+
+                        formatFilter['[' + d.field + ']max_date'] = b;
+                        formatOp['[' + d.field + ']max_date'] = 'max_date';
+                    } else {
+                        formatFilter[d.field] = d.defaultSearchValue;
+                        formatOp[d.field] = d.searchOp;
+                    }
 
                     var formSearchHideClass = '';
 
@@ -595,8 +607,8 @@
                                 formHtml += '\t<div class="layui-form-item form-item-time-limit layui-inline ' + formSearchHideClass + ' ">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + d.searchValue + '" placeholder="最小值" class="layui-input">\n' +
-                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + d.searchValue + '" placeholder="最大值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-min_date" name="[' + d.fieldAlias + ']min_date"  data-search-op="min_date"  value="' + a + '" placeholder="最小值" class="layui-input">\n' +
+                                    '<input id="c-' + d.elemIdName + '-max_date" name="[' + d.fieldAlias + ']max_date"  data-search-op="max_date"  value="' + b + '" placeholder="最大值" class="layui-input">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -2389,10 +2401,13 @@
             }
 
             var query = window.location.search.substring(1);
+            query = query.replace(/\+/g, ' ');
             var vars = query.split("&");
             for (var i = 0; i < vars.length; i++) {
                 var pair = vars[i].split("=");
-                if (pair[0] == variable) { return decodeURIComponent(pair[1]); }
+                if (pair[0] == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
             }
             return defaultValue;
         },
