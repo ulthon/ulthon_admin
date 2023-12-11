@@ -513,10 +513,7 @@
                         if (d.searchValue.length == 0) {
                             d.searchValue = d.defaultSearchValue;
                         }
-
-
                     }
-                    console.log(d.defaultSearchValue);
 
                     if (d.search == 'number_limit') {
                         if (d.searchValue) {
