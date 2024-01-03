@@ -27,6 +27,7 @@ class Service extends \think\Service
 
     public function boot()
     {
+
         $this->app->bind(FakerGenerator::class, function () {
             return FakerFactory::create($this->app->config->get('app.faker_locale', 'zh_CN'));
         });
@@ -47,5 +48,6 @@ class Service extends \think\Service
             SeedRun::class,
             FactoryCreate::class,
         ]);
+
     }
 }

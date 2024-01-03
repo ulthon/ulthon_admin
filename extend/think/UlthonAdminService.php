@@ -2,6 +2,7 @@
 
 namespace think;
 
+use app\common\command\Test;
 use app\common\event\AdminLoginSuccess\LogEvent;
 use app\common\event\AdminLoginType\DemoEvent;
 use app\common\provider\ExceptionHandle;
@@ -10,9 +11,9 @@ use app\common\provider\View;
 use think\app\Service as AppService;
 use think\captcha\CaptchaService;
 use think\facade\App;
-use think\migration\Service;
+use think\migration\Service as MigrateService;
 
-class UlthonAdminService extends \think\Service
+class UlthonAdminService extends Service
 {
     public function boot()
     {
@@ -40,10 +41,14 @@ class UlthonAdminService extends \think\Service
         $this->app->register(AppService::class);
 
         // 注册数据库迁移服务
-        $this->app->register(Service::class);
+        $this->app->register(MigrateService::class);
+
+        // 绑定命令行
+        $this->commands([
+            Test::class,
+        ]);
 
         // 绑定标识容器
-
         $provider_default = [
             'think\Request' => Request::class,
             'think\exception\Handle' => ExceptionHandle::class,
@@ -68,7 +73,7 @@ class UlthonAdminService extends \think\Service
             // 多语言加载
             // \think\middleware\LoadLangPack::class,
             // Session初始化
-            100 => \think\middleware\SessionInit::class,
+            100 => middleware\SessionInit::class,
         ];
 
         $this->app->middleware->import($middleware);
