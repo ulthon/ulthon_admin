@@ -1,8 +1,8 @@
 <?php
 
-namespace app\commno\exception;
+namespace app\common\exception;
 
-use extend\base\commno\exception\EventExceptionBase;
+use extend\base\common\exception\EventExceptionBase;
 
 class EventException extends EventExceptionBase
 {

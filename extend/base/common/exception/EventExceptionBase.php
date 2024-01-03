@@ -1,6 +1,6 @@
 <?php
 
-namespace extend\base\commno\exception;
+namespace extend\base\common\exception;
 
 use Exception;
 

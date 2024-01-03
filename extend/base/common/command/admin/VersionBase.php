@@ -12,14 +12,12 @@ use think\console\Output;
 
 class VersionBase extends Command
 {
-    public const VERSION = 'v2.0.86';
+    public const VERSION = 'v2.0.87';
 
     public const LAYUI_VERSION = '2.8.17';
 
     public const COMMENT = [
-        '增加测试机制',
-        '完善DebugMysql日志逻辑',
-        '更新debug_log表字段格式',
+        '修复命名空间错误',
         '发布新版本',
     ];
 

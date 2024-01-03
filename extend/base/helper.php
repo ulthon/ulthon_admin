@@ -2,7 +2,7 @@
 
 // 应用公共文件
 
-use app\commno\exception\EventException;
+use app\common\exception\EventException;
 use app\common\service\AuthService;
 use think\exception\HttpResponseException;
 use think\facade\App;
