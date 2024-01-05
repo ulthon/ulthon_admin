@@ -27,7 +27,7 @@ class DebugMysql implements LogHandlerInterface
 
     protected $fileLogTimes = 0;
 
-    public $devMode = true;
+    public $devMode = false;
 
     /**
      * 服务器断线标识字符.
@@ -178,7 +178,6 @@ class DebugMysql implements LogHandlerInterface
                 $this->devLog('reconnect ' . $this->reConnectTimes);
                 $this->saveByConnect($log_data);
             } else {
-                dump($th);
                 $this->saveByFile($log_data);
             }
         }
