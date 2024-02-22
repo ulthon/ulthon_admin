@@ -6,6 +6,11 @@ use think\facade\App;
 
 class PathToolsBase
 {
+    public static function publicPath($save_name)
+    {
+        return App::getRootPath() . 'public' . DS . $save_name;
+    }
+
     /**
      * 系统生成的文件,这些文件应当是可以任意删除的.
      *
