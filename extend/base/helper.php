@@ -4,6 +4,7 @@
 
 use app\common\exception\EventException;
 use app\common\service\AuthService;
+use app\common\tools\StoreValueTools;
 use think\exception\HttpResponseException;
 use think\facade\App;
 use think\facade\Cache;
@@ -348,4 +349,14 @@ function format_bytes($size, $delimiter = '')
     }
 
     return round($size, 2) . $delimiter . $units[$i];
+}
+
+function get_store_value($key, $default = null)
+{
+    return StoreValueTools::get($key, $default);
+}
+
+function set_store_value($key, $value)
+{
+    return StoreValueTools::set($key, $value);
 }

@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace base;
 
+use app\common\tools\StoreValueTools;
 use think\App;
 use think\exception\ValidateException;
 use think\facade\Log;
 use think\Validate;
 
 /**
- * 控制器基础类
+ * 控制器基础类.
  */
 abstract class BaseControllerBase
 {
     /**
-     * Request实例
+     * Request实例.
      * @var \think\Request
      */
     protected $request;
 
     /**
-     * 应用实例
-     * @var \think\App
+     * 应用实例.
+     * @var App
      */
     protected $app;
 
@@ -33,19 +34,18 @@ abstract class BaseControllerBase
     protected $batchValidate = false;
 
     /**
-     * 控制器中间件
+     * 控制器中间件.
      * @var array
      */
     protected $middleware = [];
 
     /**
-     * 构造方法
-     * @access public
+     * 构造方法.
      * @param  App  $app  应用对象
      */
     public function __construct(App $app)
     {
-        $this->app     = $app;
+        $this->app = $app;
         $this->request = $this->app->request;
 
         // 控制器初始化
@@ -55,13 +55,12 @@ abstract class BaseControllerBase
     // 初始化
     protected function initialize()
     {
-
         Log::debug('request url :' . $this->request->url());
+        StoreValueTools::set('request_uid', uniqid());
     }
 
     /**
-     * 验证数据
-     * @access protected
+     * 验证数据.
      * @param  array        $data     数据
      * @param  string|array $validate 验证器名或者验证规则数组
      * @param  array        $message  提示信息
@@ -74,7 +73,7 @@ abstract class BaseControllerBase
         if (is_array($validate)) {
             $v = new Validate();
             $v->rule($validate);
-        } else if ($validate instanceof Validate) {
+        } elseif ($validate instanceof Validate) {
             $v = $validate;
         } else {
             if (strpos($validate, '.')) {
@@ -82,7 +81,7 @@ abstract class BaseControllerBase
                 list($validate, $scene) = explode('.', $validate);
             }
             $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-            $v     = new $class();
+            $v = new $class();
             if (!empty($scene)) {
                 $v->scene($scene);
             }

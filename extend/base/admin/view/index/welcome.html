@@ -125,7 +125,8 @@
                                 </tr>
                                 <tr>
                                     <td>当前版本</td>
-                                    <td data-toggle="copy-text" data-clipboard-text="{:\\app\\common\\command\\admin\\Version::VERSION}">{:\\app\\common\\command\\admin\\Version::VERSION} <i class="fa fa-copy"></i></td>
+                                    <td data-toggle="copy-text" data-clipboard-text="{:\\app\\common\\command\\admin\\Version::VERSION}">
+                                        {:\\app\\common\\command\\admin\\Version::VERSION} <i class="fa fa-copy"></i></td>
                                 </tr>
                                 <tr>
                                     <td>最新修改</td>
@@ -139,8 +140,10 @@
                                     <td>Gitee</td>
                                     <td style="padding-bottom: 0;">
                                         <div class="layui-btn-container">
-                                            <a href='https://gitee.com/ulthon/ulthon_admin/stargazers'><img src='https://gitee.com/ulthon/ulthon_admin/badge/star.svg?theme=dark' alt='star'></img></a>
-                                            <a href='https://gitee.com/ulthon/ulthon_admin/members'><img src='https://gitee.com/ulthon/ulthon_admin/badge/fork.svg?theme=dark' alt='fork'></img></a>
+                                            <a href='https://gitee.com/ulthon/ulthon_admin/stargazers'><img
+                                                     src='https://gitee.com/ulthon/ulthon_admin/badge/star.svg?theme=dark' alt='star'></img></a>
+                                            <a href='https://gitee.com/ulthon/ulthon_admin/members'><img
+                                                     src='https://gitee.com/ulthon/ulthon_admin/badge/fork.svg?theme=dark' alt='fork'></img></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -159,7 +162,11 @@
                                 <tr>
                                     <td>日志</td>
                                     <td>
-                                        <div layuimini-content-href="{:url('admin/Debug.Log/index',['create_time'=>date('Y-m-d 00:00:00').','])}" data-title="日志管理" class="layui-btn layui-btn-xs layui-btn-primary">今日日志</div>
+                                        <div layuimini-content-href="{:url('admin/debug.Log/index',['create_time'=>date('Y-m-d 00:00:00').','])}"
+                                             data-title="日志管理" class="layui-btn layui-btn-xs layui-btn-primary">
+                                            今日日志
+                                        </div>
+                                        <div class="layui-badge">请求ID:{:get_store_value('request_uid')}</div>
                                     </td>
                                 </tr>
 
@@ -170,8 +177,10 @@
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-paper-plane-o icon"></i>作者心语</div>
                     <div class="layui-card-body layui-text layadmin-text">
-                        <p>本模板基于layui{:\\app\\common\\command\\admin\\Version::LAYUI_VERSION}以及font-awesome-4.7.0进行实现。layui开发文档地址：<a class="layui-btn layui-btn-xs layui-btn-danger" target="_blank" href="https://layui.gitee.io/v2/">layui文档</a></p>
-                        <p>技术交流QQ群：<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=TULvsosz"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="ulthon_admin" title="ulthon_admin"></a>（加群请备注来源：如gitee、github、官网等）</p>
+                        <p>本模板基于layui{:\\app\\common\\command\\admin\\Version::LAYUI_VERSION}以及font-awesome-4.7.0进行实现。layui开发文档地址：<a
+                               class="layui-btn layui-btn-xs layui-btn-danger" target="_blank" href="https://layui.gitee.io/v2/">layui文档</a></p>
+                        <p>技术交流QQ群：<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=TULvsosz"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png"
+                                     alt="ulthon_admin" title="ulthon_admin"></a>（加群请备注来源：如gitee、github、官网等）</p>
                         <p>喜欢此后台模板的可以给我的GitHub和Gitee加个Star支持一下</p>
                         <p class="layui-red">备注：此后台框架永久开源，但请勿进行出售或者上传到任何素材网站，否则将追究相应的责任。</p>
                     </div>
