@@ -9,6 +9,8 @@ use think\helper\Arr;
  *
  * 可以在当前生命周期内，存储一些全局数据，
  * 相比SESSION，性能更高，但是只能在当前生命周期内使用（常驻内存服务时除外）
+ *
+ * @mixin Arr
  */
 class StoreValueToolsBase
 {
